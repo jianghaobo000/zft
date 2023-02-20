@@ -1,0 +1,18 @@
+project:
+  name: start
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/zft?useUnicode=true&characterEncoding=utf-8&createDatabaseIfNotExist=true
+  thymeleaf:
+    cache: false
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
+
+mybatis-plus:
+  mapper-locations: classpath*:mybatis/*Mapper.xml
+

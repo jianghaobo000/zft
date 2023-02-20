@@ -1,0 +1,240 @@
+a{
+    text-decoration: none !important;
+}
+a:hover{
+    color: rgb(253,106,34) !important;
+}
+.btn-color{
+    background-color: rgb(73,78,83);
+    border-color: rgb(83,88,93);
+}
+.btn-color:hover{
+    background-color: rgb(40,50,50);
+}
+.btn-color:active{
+    background-color: rgb(83,88,93);
+}
+.btn-color2{
+    background-color: rgb(100,100,100);
+    border-color: rgb(111,111,111);
+}
+.btn-color2:hover{
+    background-color: rgb(60,60,60);
+}
+.btn-color2:active{
+    background-color: rgb(83,88,93);
+}
+.btn-size{
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+.input-size{
+    width: 200px;
+    height: 40px;
+}
+.nowrap{
+    white-space:nowrap;
+}
+.text-white{
+    color: white;
+}
+.table-userInfo{
+    padding: 5px;
+    margin: 0 auto;
+    text-align: center;
+}
+.table-userInfo2{
+    width: 60%;
+}
+.index-button{
+    width: 100%;
+    border-radius: 20px;
+    font-family: '黑体';
+    font-size: 50px;
+    padding: 25px;
+    height: 100px;
+    background: rgba(100,100,100,0.9);
+    text-decoration:none;
+}
+.font-style{
+    font-size: 25px;
+}
+.input-width-60{
+    width: 60%;
+    margin: 0 auto;
+}
+.img-fix{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+.img-fix2{
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+.img-full {
+    width: 100%;
+}
+.img-full:hover{
+    padding: 1%;
+}
+.bottom-navigation{
+    position: fixed;
+    width: 100%;
+    height: 80px;
+    background-color: rgb(40,40,40);
+    bottom: 0px;
+}
+.middle-width{
+    width: 1200px;
+    margin: 0 auto;
+}
+.font-style2{
+    background-color: rgb(52,58,64);
+    text-align: center;
+}
+.font-style2 a{
+    font-size: 18px;
+    color: white;
+    text-decoration:none;
+    font-family: -apple-system;
+}
+.font-style2:hover{
+    text-align: center;
+    background-color: rgb(255,245,0);
+}
+.font-style2:active{
+    text-align: center;
+    background-color: rgb(255,245,0);
+}
+.font-style2:hover a{
+    font-size: 18px;
+    color: black;
+    text-decoration:none;
+    font-family: -apple-system;
+}
+.img-div{
+    width: 276px;
+    height: 340px;
+    float: left;
+    margin:12px;
+}
+.img-div2{
+    width: 220px;
+    height: 270px;
+    float: left;
+    margin:10px;
+}
+.img-div3{
+    width: 80px;
+    height: 120px;
+    float: left;
+    margin:8px;
+}
+.img-div4{
+    width: 150px;
+    height: 190px;
+    float: left;
+    margin:10px;
+}
+.null-div{
+    width: 33px;
+    height: 340px;
+    float: left;
+}
+.sheet-div{
+    background-color: rgb(250,250,250);
+    margin-bottom: 3px;
+}
+.sheet-div:hover{
+    background-color: rgb(250,240,230);
+}
+.song-div{
+    background-color: rgb(245,245,245);
+    margin: 10px;
+}
+.song-div:hover{
+    background-color: rgb(250,240,230);
+}
+.song-div2{
+    background-color: rgb(255,240,230);
+    margin: 10px;
+}
+.singer-div{
+    margin-bottom: 10px;
+}
+.singer-div2{
+    margin-bottom: 10px;
+    border: 1px rgb(211,211,211) solid;
+}
+.singer-div2 a{
+    color: rgb(253,106,34);
+}
+.tr-hover tr:nth-child(odd){
+    background-color: rgb(233,233,233);
+}
+.tr-hover tr:nth-child(odd):hover{
+    background-color: rgb(250,240,230);
+}
+.tr-hover tr:nth-child(even){
+    background-color: rgb(255,255,255);
+}
+.tr-hover tr:nth-child(even):hover{
+    background-color: rgb(250,240,230);
+}
+.tr-hover thead tr:nth-child(1){
+    background-color: rgb(255,255,255);
+}
+.tr-hover thead tr:nth-child(1):hover{
+    background-color: rgb(255,255,255);
+}
+.td-hover{
+    display: none;
+}
+.tr-hover tr:nth-child(odd):hover .td-hover{
+    display: block;
+}
+.tr-hover tr:nth-child(even):hover .td-hover{
+    display: block;
+}
+.a-hover a{
+    font-size: 30px;
+    font-family: '黑体';
+}
+.a-hover a:hover{
+    color: rgb(253,106,34) !important;
+}
+input[type='range'] {
+    outline: none;
+    -webkit-appearance: none; /*清除系统默认样式*/
+    width: 100% !important;
+    background: -webkit-linear-gradient(#10a9ff, #10a9ff) no-repeat, #dddddd; /*背景颜色，俩个颜色分别对应上下*/
+    background-size: 0% 100%; /*设置左右宽度比例，这里可以设置为拖动条属性*/
+    height: 2px; /*横条的高度，细的真的比较好看嗯*/
+}
+/*拖动块的样式*/
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none; /*清除系统默认样式*/
+    height: 10px; /*拖动块高度*/
+    width: 3px; /*拖动块宽度*/
+    background: white; /*拖动块背景*/
+}
+::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+    color: transparent;
+}
+
+
+
+
+
+
+
+
+
