@@ -18,17 +18,17 @@ public class AccountDTO {
     /**
      * 账户ID
      */
-    private Long accountId;
+    private Long account_id;
     /**
      * 账户名
      */
-    private String accountName;
+    private String account_name;
     /**
      * 账户密码
      */
-    private String accountPassword;
+    private String account_password;
     /**
      * 账户所属租户
      */
-    private Long accountTenantId;
+    private Long account_tenant_id;
 }
