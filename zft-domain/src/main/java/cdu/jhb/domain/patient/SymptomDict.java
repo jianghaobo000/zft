@@ -1,19 +1,19 @@
-package cdu.jhb.patient.dto.data;
+package cdu.jhb.domain.patient;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
-* @description: 症状字典DTO
+* @description: 症状字典实体
 * @author jhb
-* @date 2023/2/20 22:01
+* @date 2023/2/21 11:25
 * @version 1.0
 */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SymptomDictDTO {
+public class SymptomDict {
     /**
      * 症状ID
      */

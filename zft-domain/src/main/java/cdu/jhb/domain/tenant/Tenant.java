@@ -1,19 +1,19 @@
-package cdu.jhb.tenant.dto.data;
+package cdu.jhb.domain.tenant;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
-* @description: 诊所DTO
+* @description: 诊所实体
 * @author jhb
-* @date 2023/2/19 13:09
+* @date 2023/2/21 11:29
 * @version 1.0
 */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TenantDTO {
+public class Tenant {
     /**
      * 诊所ID
      */

@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <div th:replace="~{common/common::cjbar}"/>
+    <link th:href="@{/bootstrap/css/signin.css}" rel="stylesheet">
+    <title>登录</title>
 </head>
 <body>
-    <p>66</p>
+    <form th:action="@{/account/login}" method="post">
+        <h1 class="h3 mb-3 font-weight-normal">用户登录</h1>
+        <label for="inputAccount" class="sr-only">账号</label>
+        <input type="text" id="inputAccount" name="account_name" class="form-control" style="background-color: rgba(255,255,255,0.2)" placeholder="账号" required autofocus>
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" id="inputPassword" name="account_password" class="form-control" style="background-color: rgba(255,255,255,0.2)" placeholder="密码" required>
+        <label for="inputCountryCode" class="sr-only">国家码</label>
+        <input type="text" id="inputCountryCode" name="country_code" class="form-control" style="background-color: rgba(255,255,255,0.2)" placeholder="国家码" required><br>
+        <label for="inputVerificationCode" class="sr-only">验证码</label>
+        <input type="text" id="inputVerificationCode" name="code" class="form-control" style="background-color: rgba(255,255,255,0.2)" placeholder="验证码" required><br>
+        <div th:faragment="yanzhengma" th:onclick="getImg()"><img style="width: 300px;height: 100px;" id="img"></div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+    </form>
+    <script>
+        const img = document.getElementById("img");
+
+        // 页面刷新时调用请求验证码图片
+        window.onload = function(){
+            getImg();
+        };
+
+        // 请求验证码图片方法
+        function getImg(){
+            axios({
+                method: 'GET',
+                url: 'http://localhost:8080/account/getImg',
+                responseType: 'blob',
+            }).then(response => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    if (img) {
+                        img.src = e.target.result;
+                    }
+                };
+                reader.readAsDataURL(response.data)
+            })
+        }
+    </script>
 </body>
 </html>

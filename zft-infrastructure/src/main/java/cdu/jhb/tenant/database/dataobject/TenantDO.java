@@ -1,19 +1,21 @@
-package cdu.jhb.tenant.dto.data;
+package cdu.jhb.tenant.database.dataobject;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
-* @description: 诊所DTO
+* @description: TODO
 * @author jhb
-* @date 2023/2/19 13:09
+* @date 2023/3/1 20:19
 * @version 1.0
 */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TenantDTO {
+@TableName("tenant_table")
+public class TenantDO {
     /**
      * 诊所ID
      */
