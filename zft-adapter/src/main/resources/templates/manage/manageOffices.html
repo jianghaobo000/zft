@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="~{common/common::cjbar}"/>
+    <title>管理-科室管理</title>
+</head>
+<body style="background-color: rgb(225,228,232);">
+<div th:replace="~{common/common::headbar}"/>
+<div class="manage">
+    <div class="left">
+        <div th:replace="~{common/common::manageMeau}"/>
+    </div>
+    <div class="right">
+        <div class="top">
+            <p>科室管理</p>
+        </div>
+        <div class="info">
+            <div class="info-left">
+                <div class="title">
+                    <div class="form-group float-left" style="width: 150px;">
+                        <input type="text" class="form-control" name="" placeholder="查询科室">
+                    </div>
+                    <div class="add" id="addOffices">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill svg-text" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                        </svg>
+                        新增科室
+                    </div>
+                </div>
+                <div class="name">
+                    儿科 (1102)
+                </div>
+                <div class="name">
+                    消化内科 (2045)
+                </div>
+                <div class="name">
+                    肿瘤科 (2871)
+                </div>
+                <div class="name">
+                    骨科 (1774)
+                </div>
+                <div class="name">
+                    泌尿科 (1023)
+                </div>
+                <div class="name">
+                    呼吸内科 (2650)
+                </div>
+            </div>
+            <div class="info-right">
+                <div class="title">
+                    <p>新增科室</p>
+                    <div style="float: right;margin-left: 10px;">
+                        <button type="button" class="btn btn-primary">保存</button>
+                    </div>
+                    <div style="float: right;">
+                        <button type="button" class="btn btn-outline-primary">删除</button>
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        诊所编码
+                    </div>
+                    <div class="form-group" style="float: left;width: 350px;margin-right: 50px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入诊所编码">
+                    </div>
+                    <div class="text">
+                        <span style="color: red;">* </span>科室编码
+                    </div>
+                    <div class="form-group" style="float: left;width: 350px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入科室编码">
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        <span style="color: red;">* </span>科室名称
+                    </div>
+                    <div class="form-group" style="float: left;width: 350px;margin-right: 50px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入科室名称">
+                    </div>
+                    <div class="text">
+                        <span style="color: red;">* </span>科室类型
+                    </div>
+                    <div class="form-group" style="float: left;width: 350px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入科室类型">
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        批准床位数
+                    </div>
+                    <div class="form-group" style="float: left;width: 350px;margin-right: 50px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入批准床位数">
+                    </div>
+                    <div class="text">
+                        <span style="color: red;">* </span>科室负责人
+                    </div>
+                    <div class="form-group" style="float: left;width: 350px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入科室负责人">
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        科室联系电话
+                    </div>
+                    <div class="form-group" style="float: left;width: 350px;margin-right: 50px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入科室联系电话">
+                    </div>
+                    <div class="text">
+                        <span style="color: red;">* </span>科室成员
+                    </div>
+                    <div style="float: left;width: 350px;">
+                        <button type="button" class="btn btn-outline-primary btn-sm float-left" style="margin-right: 5px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            </svg>
+                            姜昊波
+                        </button>
+                        <button type="button" class="btn btn-outline-primary btn-sm float-left" style="margin-right: 5px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            </svg>
+                            张医生
+                        </button>
+                        <button type="button" class="btn btn-outline-primary btn-sm float-left" style="margin-right: 5px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            </svg>
+                            刘医生
+                        </button>
+                        <button type="button" class="btn btn-outline-primary btn-sm float-left">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        科室介绍
+                    </div>
+                    <div style="float: left;width: 350px;">
+                        <textarea class="form-control" style="resize:none;" rows="5" placeholder="请输入科室介绍"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+</script>
+</body>
+</html>
+

@@ -1,0 +1,927 @@
+/* 诊付通公用CSS */
+body{
+    position: fixed;
+    width: 100%;
+}
+
+.header{
+    width: 100%;
+    height: 70px;
+    background-color: #005cbf;
+}
+
+.header .title{
+    width: 400px;
+    height: 70px;
+    float: left;
+    position: relative;
+}
+
+.header .title .myImg{
+    float: left;
+    margin: 10px 30px 10px 70px;
+}
+
+.header .title p{
+    font-family: '黑体';
+    font-size: 35px;
+    font-weight: 800;
+    color: white;
+    float: left;
+    margin: 15px 10px 25px 0px;
+}
+
+.header .header-left{
+    border: 0;
+    width: 120px;
+    height: 70px;
+    float: left;
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+}
+
+.header .header-left:hover{
+    background-color: #167bff;
+}
+
+.header .header-left p{
+    margin-top: 20px;
+    font-family: '黑体';
+    font-size: 25px;
+    font-weight: 100;
+    color: #f9fffd;
+}
+
+.header .header-right{
+    border: 0;
+    width: 300px;
+    height: 70px;
+    float: right;
+    position: relative;
+    text-align: right;
+}
+
+.header .header-right p{
+    margin-top: 23px;
+    margin-right: 10px;
+    font-family: '黑体';
+    font-size: 18px;
+    color: #f9fffd;
+}
+/* 遮罩层 */
+.shadow{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 888;
+    display: none;
+}
+
+.svg-text{
+    position:relative;
+    top:3px;
+}
+
+.float-left{
+    float: left;
+}
+
+.float-right{
+    float: right;
+}
+
+tr .td-hover{
+    display: none;
+}
+
+tr:hover .td-hover{
+    display: block;
+}
+
+.display-none{
+    display: none;
+}
+
+.display-block{
+    display: block;
+}
+
+/* 门诊CSS */
+.clinic{
+    width: 100%;
+    padding: 10px 15px 10px 15px;
+    position: relative;
+}
+
+.clinic .left{
+    width: 15%;
+    height: 880px;
+    margin-right: 0.5%;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 10px;
+    background-color: white;
+    float: left;
+}
+
+.clinic .left .top{
+    width: 100%;
+    height: 50px;
+    background-color: rgb(240,241,246);
+    border-bottom: 1px rgb(225,228,232) solid;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.clinic .left .top .text1{
+    width: 45%;
+    float: left;
+    margin-left: 10px;
+    margin-top: 15px;
+}
+
+.clinic .left .top .text1 p{
+    font-family: '黑体';
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.clinic .left .top .text2{
+    width: 45%;
+    float: right;
+    padding-top: 9px;
+    cursor: pointer;
+}
+
+.clinic .left .visit-div{
+    width: 100%;
+    height: 500px;
+    overflow: auto;
+    border-bottom: 3px rgb(225,228,232) solid;;
+}
+
+.clinic .left .visit-div .visit{
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px rgb(225,228,232) solid;
+    float: left;
+    color: rgb(116,116,116);
+    cursor: pointer;
+}
+
+.clinic .left .visit-div .visit:hover{
+    color: rgb(54,85,204);
+    background-color: rgb(212,218,240);
+}
+
+.clinic .left .visit-div .visit .name {
+    font-family: '黑体';
+    font-size: 18px;
+    float: left;
+    padding: 16px 0 16px 16px;
+}
+
+.clinic .left .visit-div .visit .time{
+    font-family: '黑体';
+    font-size: 18px;
+    float: right;
+    padding: 16px 25px 16px 0;
+}
+
+.clinic .left .info-title{
+    width: 100%;
+    height: 30px;
+    background-color: rgb(240,241,246);
+}
+
+.clinic .left .info-title p{
+    padding-top: 5px;
+    padding-left: 16px;
+    font-size: 15px;
+    font-family: '黑体';
+    font-weight: 400;
+}
+
+.clinic .left .info-div{
+    width: 100%;
+    height: 300px;
+    overflow: auto;
+}
+
+.clinic .left .info-div .info{
+    cursor: pointer;
+    height: 100px;
+    font-size: 16px;
+    color: rgb(116,116,116);
+    padding: 5px 16px 5px 16px;
+    border-bottom: 1px rgb(225,228,232) solid;
+}
+
+.clinic .left .info-div .info:hover{
+    color: rgb(54,85,204);
+    background-color: rgb(212,218,240);
+}
+
+.clinic .middle{
+    width: 34%;
+    height: 880px;
+    margin-right: 0.5%;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 10px;
+    background-color: white;
+    float: left;
+}
+
+.clinic .middle .top{
+    width: 100%;
+    height: 50px;
+    background-color: rgb(240,241,246);
+    border-bottom: 1px rgb(225,228,232) solid;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.clinic .middle .top p{
+    font-family: '黑体';
+    font-size: 20px;
+    font-weight: 400;
+    position: relative;
+    top: 15px;
+    left: 10px;
+}
+
+.clinic .middle .info{
+    width: 95%;
+    padding: 10px 2.5% 10px 2.5%;
+}
+
+.clinic .middle .info .order{
+    width: 100%;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 5px;
+    margin: 10px 10px 10px 10px;
+    float: left;
+    padding-top: 10px;
+}
+
+.clinic .middle .info .order .order-div{
+    width: 100%;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    float: left;
+}
+
+.clinic .middle .info .order .order-div .order-text{
+    width: 15%;
+    float: left;
+}
+
+.clinic .middle .info .order .order-div .order-text p{
+    font-size: 16px;
+    color: rgb(116,116,116);
+}
+
+.clinic .middle .info .order .order-div .order-input{
+    width: 85%;
+    margin-top: 3px;
+    float: left;
+}
+
+.clinic .right{
+    width: 50%;
+    height: 880px;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 10px;
+    background-color: white;
+    float: left;
+}
+
+.clinic .right .top{
+    width: 100%;
+    height: 50px;
+    background-color: rgb(240,241,246);
+    border-bottom: 1px rgb(225,228,232) solid;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.clinic .right .top .text1{
+    width: 20%;
+    float: left;
+    margin-left: 10px;
+    margin-top: 15px;
+}
+
+.clinic .right .top .text1 p{
+    font-family: '黑体';
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.clinic .right .top .text2{
+    width: 70%;
+    float: right;
+    margin-right: 15px;
+    margin-top: 5px;
+}
+
+.clinic .right .top .text2 p{
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: 300;
+    float: right;
+}
+
+.clinic .right .prescription{
+    width: 95%;
+    margin: 2.5% 2.5% 2.5% 2.5%;
+}
+
+.clinic .right .prescription .prescription-div{
+    width: 100%;
+    border: 1px rgb(207,213,215) solid;
+}
+
+.clinic .right .prescription .prescription-div .title{
+    width: 95%;
+    height: 80px;
+    margin: 10px 10px 10px 10px;
+}
+
+.clinic .right .prescription .prescription-div .title p{
+    font-family: '黑体';
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.clinic .right .prescription .prescription-div .center{
+    width: 95%;
+    height: 520px;
+    overflow: auto;
+    margin: 10px 10px 10px 10px;
+}
+
+.clinic .right .prescription .prescription-div .bottom{
+    width: 95%;
+    height: 120px;
+    margin: 10px 10px 10px 10px;
+}
+
+.clinic .right .prescription .prescription-div .bottom p{
+    font-family: '黑体';
+    font-weight: 400;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.clinic .right .prescription .prescription-div .bottom .textarea{
+    width: 95%;
+    margin: 0 auto;
+    height: 110px;
+    font-size: 16px;
+}
+
+/** 收费发药CSS **/
+.charge{
+    width: 100%;
+    padding: 10px 15px 10px 15px;
+    position: relative;
+}
+
+.charge .left{
+    width: 15%;
+    height: 880px;
+    margin-right: 0.5%;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 10px;
+    background-color: white;
+    float: left;
+}
+
+.charge .left .top{
+    width: 100%;
+    height: 50px;
+    background-color: rgb(240,241,246);
+    border-bottom: 1px rgb(225,228,232) solid;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.charge .left .top .text1{
+    width: 45%;
+    float: left;
+    margin-left: 10px;
+    margin-top: 15px;
+}
+
+.charge .left .top .text1 p{
+    font-family: '黑体';
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.charge .left .top .text2{
+    width: 45%;
+    float: right;
+    padding-top: 9px;
+    cursor: pointer;
+}
+
+.charge .left .charge-div{
+    width: 100%;
+    height: 500px;
+    overflow: auto;
+    border-bottom: 3px rgb(225,228,232) solid;
+}
+
+.charge .left .charge-div .charge1{
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px rgb(225,228,232) solid;
+    float: left;
+    color: rgb(116,116,116);
+    cursor: pointer;
+}
+
+.charge .left .charge-div .charge1:hover{
+    color: rgb(54,85,204);
+    background-color: rgb(212,218,240);
+}
+
+.charge .left .charge-div .charge1 .name {
+    font-family: '黑体';
+    font-size: 18px;
+    float: left;
+    padding: 16px 0 16px 16px;
+}
+
+.charge .left .charge-div .charge1 .status{
+    font-family: '黑体';
+    font-size: 18px;
+    float: right;
+    padding: 16px 30px 16px 0;
+}
+
+.charge .middle{
+    width: 69%;
+    height: 880px;
+    margin-right: 0.5%;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 10px;
+    background-color: white;
+    float: left;
+}
+
+.charge .middle .top{
+    width: 100%;
+    height: 50px;
+    background-color: rgb(240,241,246);
+    border-bottom: 1px rgb(225,228,232) solid;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.charge .middle .top p{
+    font-family: '黑体';
+    font-size: 20px;
+    font-weight: 400;
+    position: relative;
+    top: 15px;
+    left: 10px;
+}
+
+.charge .middle .info{
+    padding: 20px 20px 20px 20px;
+}
+
+.charge .middle .info .input{
+    padding-bottom: 20px;
+}
+
+.charge .right{
+    width: 15%;
+    height: 650px;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 10px;
+    background-color: white;
+    float: left;
+}
+
+.charge .right .top{
+    width: 100%;
+    height: 50px;
+    background-color: rgb(240,241,246);
+    border-bottom: 1px rgb(225,228,232) solid;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.charge .right .top p{
+    font-family: '黑体';
+    font-size: 20px;
+    font-weight: 400;
+    position: relative;
+    top: 15px;
+    left: 10px;
+}
+
+.charge .right .text1{
+    padding: 20px 20px 20px 20px;
+    height: 200px;
+    border-bottom: 1px rgb(225,228,232) solid;
+}
+
+.charge .right .text1 p{
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: rgb(70,70,70);
+}
+
+.charge .right .charge-status{
+    padding: 20px 20px 20px 20px;
+}
+
+.charge .right .charge-status .button1{
+    width: 60%;
+    height: 50px;
+    margin: 5px 20% 5px 20%;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/** 库存css **/
+.inventory{
+    width: 100%;
+    padding: 10px 15px 10px 15px;
+    position: relative;
+}
+
+.inventory .left{
+    width: 12%;
+    height: 880px;
+    margin-right: 0.5%;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 10px;
+    background-color: white;
+    float: left;
+}
+
+.inventory .left .tip{
+    width: 100%;
+    height: 60px;
+    padding: 16px 30px 16px 30px;
+    border: 1px rgb(207,213,215) solid;
+    float: left;
+    color: rgb(116,116,116);
+    cursor: pointer;
+}
+
+.inventory .left .tip:hover{
+    color: rgb(54,85,204);
+    background-color: rgb(212,218,240);
+}
+
+.inventory .left .tip p{
+    font-size: 16px;
+}
+
+.inventory .right{
+    width: 87.5%;
+    height: 880px;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 10px;
+    background-color: white;
+    float: left;
+    padding: 15px 15px 15px 15px;
+}
+
+.inventory .right .top{
+    height: 50px;
+    margin-bottom: 10px;
+}
+.inventory .right .info{
+    height: 730px;
+    margin-bottom: 10px;
+    border-bottom: 1px rgb(207,213,215) solid;
+}
+
+.inventory .right .bottom{
+    height: 60px;
+}
+
+.inventory .right .bottom p{
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.inventory-add{
+    display: none;
+}
+
+.inventory-detailed{
+    display: none;
+}
+
+.inventory-pop{
+    width: 85%;
+    height: 900px;
+    position: fixed;
+    top: 30px;
+    left: 150px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    z-index: 999;
+}
+
+.inventory-pop .top{
+    height: 50px;
+    width: 100%;
+    padding: 10px 30px 10px 30px;
+    background-color: #f0f1f6;
+    float: left;
+    border-radius: 10px;
+}
+
+.inventory-pop .top p{
+    font-size: 20px;
+    font-weight: 600;
+    float: left;
+}
+
+.inventory-pop .info{
+    width: 100%;
+    padding: 30px 30px 30px 30px;
+    float: left;
+}
+
+.inventory-pop .info .info1{
+    height: 60px;
+    padding-bottom: 30px;
+}
+
+.inventory-pop .info .info1 p{
+    font-size: 16px;
+    float: left;
+    margin-right: 20px;
+    margin-top: 7px;
+}
+
+.inventory-pop .info .info2{
+    margin-top: 20px;
+    border-radius: 10px;
+    border: #d3d8d9 solid 1px;
+}
+
+.inventory-pop .info .info2 .head{
+    padding: 10px 10px 10px 10px;
+    height: 60px;
+}
+
+.inventory-pop .info .info2 .head p{
+    font-size: 16px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.inventory-pop .info .info2 .table1{
+    height: 600px;
+}
+
+.inventory-pop .info .info2 .table2{
+    height: 700px;
+}
+
+.inventory-pop .info .save{
+    width: 100%;
+    padding: 10px 0 10px 0;
+    height: 50px;
+}
+
+.inventory-pop2{
+    width: 50%;
+    height: 900px;
+    position: fixed;
+    top: 30px;
+    left: 25%;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    z-index: 999;
+}
+
+.inventory-pop2 .top{
+    height: 50px;
+    width: 100%;
+    padding: 10px 30px 10px 30px;
+    background-color: #f0f1f6;
+    float: left;
+    border-radius: 10px;
+}
+
+.inventory-pop2 .top p{
+    font-size: 20px;
+    font-weight: 600;
+    float: left;
+}
+
+.inventory-pop2 .info{
+    width: 100%;
+    padding: 30px 30px 30px 30px;
+    float: left;
+    height: 750px;
+}
+
+.inventory-pop2 .bottom{
+    width: 100%;
+    padding: 20px 50px 20px 50px;
+    height: 60px;
+    float: left;
+}
+
+/** 管理css **/
+.manage{
+    width: 100%;
+    padding: 10px 15px 10px 15px;
+    position: relative;
+}
+
+.manage .left{
+    width: 12%;
+    height: 880px;
+    margin-right: 0.5%;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 10px;
+    background-color: white;
+    float: left;
+}
+
+.manage .left .tip{
+    width: 100%;
+    height: 60px;
+    padding: 16px 30px 16px 30px;
+    border: 1px rgb(207,213,215) solid;
+    float: left;
+    color: rgb(116,116,116);
+    cursor: pointer;
+}
+
+.manage .left .tip:hover{
+    color: rgb(54,85,204);
+    background-color: rgb(212,218,240);
+}
+
+.manage .left .tip p{
+    font-size: 16px;
+}
+
+.manage .right{
+    width: 87.5%;
+    height: 880px;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 10px;
+    background-color: white;
+    float: left;
+}
+
+.manage .right .top{
+    width: 100%;
+    height: 50px;
+    background-color: rgb(240,241,246);
+    border-bottom: 1px rgb(225,228,232) solid;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    float: left;
+}
+
+.manage .right .top p{
+    font-family: '黑体';
+    font-size: 20px;
+    font-weight: 400;
+    position: relative;
+    top: 15px;
+    left: 10px;
+}
+
+.manage .right .info{
+    width: 100%;
+    padding: 30px 30px 30px 30px;
+    float: left;
+}
+
+.manage .right .info .title{
+    width: 100%;
+    height: 50px;
+    float: left;
+}
+
+.manage .right .info .title p{
+    font-family: '黑体';
+    font-size: 20px;
+    font-weight: 400;
+    float: left;
+}
+
+.manage .right .info .input{
+    width: 100%;
+    padding: 5px 0 5px 0;
+    float: left;
+}
+
+.manage .right .info .input .text{
+    width: 180px;
+    color: #747474;
+    font-size: 15px;
+    float: left;
+    padding-top: 6px;
+}
+
+.manage .right .info .info-left{
+    width: 17%;
+    height: 760px;
+    background-color: #f0f1f6;
+    border-top-left-radius: 10px;
+    float: left;
+}
+
+.manage .right .info .info-left .title{
+    height: 70px;
+    padding: 15px 15px 15px 15px;
+    border-top-left-radius: 10px;
+    border-bottom: 1px #cfd5d7 solid;
+    float: left;
+}
+
+.manage .right .info .info-left .title .add{
+    float: right;
+    margin-top: 9px;
+    color: #005cbf;
+    cursor: pointer;
+}
+
+.manage .right .info .info-left .name{
+    width: 100%;
+    height: 50px;
+    padding: 17px 20px 17px 20px;
+    font-size: 16px;
+    border-bottom: 1px #cfd5d7 solid;
+    float: left;
+}
+
+.manage .right .info .info-left .name:hover{
+    color: rgb(54,85,204);
+    background-color: rgb(212,218,240);
+}
+
+.manage .right .info .info-right{
+    width: 83%;
+    height: 760px;
+    border-top-right-radius: 10px;
+    float: left;
+    border: 1px #dde1e2 solid;
+    padding: 20px 20px 20px 20px;
+}
+
+.manage .right .info .info-right .title{
+    width: 100%;
+    height: 50px;
+    float: left;
+}
+
+.manage .right .info .info-right .title p{
+    font-family: '黑体';
+    font-size: 20px;
+    font-weight: 400;
+    float: left;
+}
+
+.manage .right .info .info-right .input{
+    width: 100%;
+    padding: 5px 0 5px 0;
+    float: left;
+}
+
+.manage .right .info .info-right .input .text{
+    width: 150px;
+    color: #747474;
+    font-size: 15px;
+    float: left;
+    padding-top: 6px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

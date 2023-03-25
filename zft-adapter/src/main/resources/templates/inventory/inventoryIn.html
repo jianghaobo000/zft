@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="~{common/common::cjbar}"/>
+    <title>库存</title>
+</head>
+<body style="background-color: rgb(225,228,232);">
+    <div th:replace="~{common/common::headbar}"/>
+    <div class="inventory">
+        <div class="left">
+            <div th:replace="~{common/common::inventoryMeau}"/>
+        </div>
+        <div class="right">
+            <div class="top">
+                <div class="form-group" style="float: left;width: 150px;margin-right: 15px;">
+                    <select class="form-control" name="inventory_in_status">
+                        <option value="">全部状态</option>
+                        <option value="待入库">待入库</option>
+                        <option value="已入库">已入库</option>
+                    </select>
+                </div>
+                <div class="form-group" style="float: left;width: 120px;margin-right: 15px;">
+                    <select class="form-control" name="inventory_in_date_status">
+                        <option value="0" selected>创建日期</option>
+                        <option value="1">入库日期</option>
+                    </select>
+                </div>
+                <div style="float: left;margin-right: 15px;">
+                    <div class="layui-inline">
+                        <div class="layui-inline" id="test6">
+                            <div class="layui-input-inline float-left" style="width: 100px;">
+                                <input type="text" autocomplete="off" id="test-startDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="开始日期">
+                            </div>
+                            <div class="layui-form-mid float-left" style="margin: 0 auto;">-</div>
+                            <div class="layui-input-inline float-left" style="width: 100px;">
+                                <input type="text" autocomplete="off" id="test-endDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="结束日期">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="float: left;width: 140px;margin-right: 15px;">
+                    <select class="form-control" name="inventory_in_supplier">
+                        <option value="">全部供应商</option>
+                        <option value="">甲乙丙</option>
+                        <option value="">甲乙丙</option>
+                        <option value="">甲乙丙</option>
+                    </select>
+                </div>
+                <div class="form-group" style="float: left;width: 140px;margin-right: 15px;">
+                    <select class="form-control" name="inventory_in_supplier">
+                        <option value="">全部入库人</option>
+                        <option value="">姜昊波</option>
+                        <option value="">滴滴滴</option>
+                        <option value="">额恩恩</option>
+                    </select>
+                </div>
+                <div class="form-group" style="float: left;width: 300px;margin-right: 15px;">
+                    <input type="text" class="form-control" name="inventory_in_text" placeholder="药品名/批准文号/国家码">
+                </div>
+                <div style="float: left;">
+                    <button type="button" class="btn btn-outline-primary">查询</button>
+                </div>
+                <div style="float: right;margin-left: 15px;">
+                    <button type="button" class="btn btn-outline-primary">导出</button>
+                </div>
+                <div style="float: right;">
+                    <button type="button" class="btn btn-primary" id="add">新增入库</button>
+                </div>
+            </div>
+            <div class="info">
+                <table class="table table-striped" style="font-size: 18px;">
+                    <thead>
+                    <tr>
+                        <td scope="col" width="15%">入库单号</td>
+                        <td scope="col" width="10%">状态</td>
+                        <td scope="col" width="15%">供应商</td>
+                        <td scope="col" width="10%">品种</td>
+                        <td scope="col" width="10%">金额(元)</td>
+                        <td scope="col" width="10%">入库人</td>
+                        <td scope="col" width="10%">创建日期</td>
+                        <td scope="col" width="10%">入库日期</td>
+                        <td scope="col" width="10%">操作</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>RKD2023031500001</td>
+                        <td>待入库</td>
+                        <td>四川华东医药有限公司</td>
+                        <td>2</td>
+                        <td>20.99</td>
+                        <td>姜昊波</td>
+                        <td>2023-03-15</td>
+                        <td>2023-03-15</td>
+                        <td>
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select1">查看</button>
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>RKD2023031500001</td>
+                        <td>待入库</td>
+                        <td>四川华东医药有限公司</td>
+                        <td>2</td>
+                        <td>20.99</td>
+                        <td>姜昊波</td>
+                        <td>2023-03-15</td>
+                        <td>2023-03-15</td>
+                        <td>
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select2">查看</button>
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>RKD2023031500001</td>
+                        <td>待入库</td>
+                        <td>四川华东医药有限公司</td>
+                        <td>2</td>
+                        <td>20.99</td>
+                        <td>姜昊波</td>
+                        <td>2023-03-15</td>
+                        <td>2023-03-15</td>
+                        <td>
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select3">查看</button>
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>RKD2023031500001</td>
+                        <td>待入库</td>
+                        <td>四川华东医药有限公司</td>
+                        <td>2</td>
+                        <td>20.99</td>
+                        <td>姜昊波</td>
+                        <td>2023-03-15</td>
+                        <td>2023-03-15</td>
+                        <td>
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select4">查看</button>
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="bottom">
+                <div class="float-left">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">...</a></li>
+                            <li class="page-item"><a class="page-link" href="#">65</a></li>
+                            <li class="page-item"><a class="page-link" href="#">66</a></li>
+                            <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="float-right">
+                    <p>共4条入库单，金额100.00元</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="inventory-add" id="inventory-add">
+        <div class="inventory-pop">
+            <div class="top">
+                <p>入库单</p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" id="addClose" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
+            <div class="info">
+                <div class="info1">
+                    <p><span style="color: red">*</span> 入库人</p>
+                    <div class="form-group" style="float: left;width: 140px;margin-right: 30px;">
+                        <select class="form-control" name="">
+                            <option value="">姜昊波</option>
+                            <option value="">甲乙丙</option>
+                            <option value="">梁医生</option>
+                        </select>
+                    </div>
+                    <p><span style="color: red">*</span> 供应商</p>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 30px;">
+                        <select class="form-control" name="">
+                            <option value="">凉山州医药集团</option>
+                            <option value="">宜宾隆盛集团</option>
+                            <option value="">沧州供应链集团</option>
+                        </select>
+                    </div>
+                    <p><span style="color: red">*</span> 随货单号</p>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 30px;">
+                        <input type="text" class="form-control" name="">
+                    </div>
+                    <p>备注</p>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 30px;">
+                        <input type="text" class="form-control" name="">
+                    </div>
+                </div>
+                <hr>
+                <div class="info2">
+                    <div class="head">
+                        <div class="input-group mb-3 float-left" style="width: 500px;">
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn btn-info" disabled="disabled">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-capsule" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429l4.243 4.242Z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <input type="text" class="form-control" placeholder="请输入 药品名/国家码 搜索药品" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        </div>
+                        <div class="float-right">
+                            <p>品种：0 金额：0.00元</p>
+                        </div>
+                    </div>
+                    <div class="table1">
+                        <table class="table table-striped" style="font-size: 16px;">
+                            <thead>
+                            <tr>
+                                <td scope="col" width="15%">药品名</td>
+                                <td scope="col" width="10%">国家码</td>
+                                <td scope="col" width="10%">售价(元)</td>
+                                <td scope="col" width="10%">生产批号</td>
+                                <td scope="col" width="10%">生产日期</td>
+                                <td scope="col" width="10%">效期</td>
+                                <td scope="col" width="10%"><span style="color: red">*</span> 入库数量</td>
+                                <td scope="col" width="10%">进价(元)</td>
+                                <td scope="col" width="10%">金额(元)</td>
+                                <td scope="col" width="5%"></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>感冒灵颗粒</td>
+                                <td>H524234332</td>
+                                <td>30.00</td>
+                                <td>20230302001</td>
+                                <td>2023年1月5日</td>
+                                <td>2025年1月5日</td>
+                                <td>300盒</td>
+                                <td>25.00</td>
+                                <td>7500.00</td>
+                                <td>
+                                    <div class="td-hover">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
+                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                        </svg>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>感冒灵颗粒</td>
+                                <td>H524234332</td>
+                                <td>30.00</td>
+                                <td>20230302001</td>
+                                <td>2023年1月5日</td>
+                                <td>2025年1月5日</td>
+                                <td>300盒</td>
+                                <td>25.00</td>
+                                <td>7500.00</td>
+                                <td>
+                                    <div class="td-hover">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
+                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                        </svg>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="save">
+                    <div style="float: right;">
+                        <button type="button" class="btn btn-primary">保存入库</button>
+                    </div>
+                    <div style="float: right;margin-right: 15px;">
+                        <button type="button" class="btn btn-primary">等待入库</button>
+                    </div>
+                    <div style="float: right;margin-right: 15px;">
+                        <button type="button" class="btn btn-outline-primary" id="addClose2">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="inventory-detailed" id="inventory-detailed">
+        <div class="inventory-pop">
+            <div class="top">
+                <p>入库单***********详情</p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" id="selectClose" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
+            <div class="info">
+                <div class="info1">
+                    <p>入库人: 姜昊波</p>
+                    <p>供应商: 大家集团</p>
+                    <p>随货单号: 4235234324</p>
+                    <p>备注: 大萨达所多</p>
+                    <div class="float-right">
+                        <p>品种：0 金额：0.00元</p>
+                    </div>
+                </div>
+                <div class="info2">
+                    <div class="table2">
+                        <table class="table table-striped" style="font-size: 16px;">
+                            <thead>
+                            <tr>
+                                <td scope="col" width="15%">药品名</td>
+                                <td scope="col" width="15%">国家码</td>
+                                <td scope="col" width="10%">售价(元)</td>
+                                <td scope="col" width="10%">生产批号</td>
+                                <td scope="col" width="10%">生产日期</td>
+                                <td scope="col" width="10%">效期</td>
+                                <td scope="col" width="10%">入库数量</td>
+                                <td scope="col" width="10%">进价(元)</td>
+                                <td scope="col" width="10%">金额(元)</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>感冒灵颗粒</td>
+                                <td>H524234332</td>
+                                <td>30.00</td>
+                                <td>20230302001</td>
+                                <td>2023年1月5日</td>
+                                <td>2025年1月5日</td>
+                                <td>300盒</td>
+                                <td>25.00</td>
+                                <td>7500.00</td>
+                            </tr>
+                            <tr>
+                                <td>感冒灵颗粒</td>
+                                <td>H524234332</td>
+                                <td>30.00</td>
+                                <td>20230302001</td>
+                                <td>2023年1月5日</td>
+                                <td>2025年1月5日</td>
+                                <td>300盒</td>
+                                <td>25.00</td>
+                                <td>7500.00</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shadow" id="shadow">
+
+    </div>
+    <script>
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+
+            //日期范围
+            laydate.render({
+                elem: '#test6'
+                //设置开始日期、日期日期的 input 选择器
+                //数组格式为 2.6.6 开始新增，之前版本直接配置 true 或任意分割字符即可
+                ,range: ['#test-startDate-1', '#test-endDate-1']
+            });
+        });
+        const btn1 = document.getElementById("add");
+        const shadow = document.getElementById("shadow");
+        const add = document.getElementById("inventory-add");
+        const close1 = document.getElementById("addClose");
+        const close2 = document.getElementById("addClose2");
+        const detailed = document.getElementById("inventory-detailed");
+        const select = document.getElementById("select1");
+        const close3 = document.getElementById("selectClose");
+
+        // 打开新增弹窗
+        btn1.onclick = function () {
+            shadow.style.display = "block";
+            add.style.display = "block";
+        };
+
+        // 关闭新增弹窗
+        close1.onclick = function () {
+            shadow.style.display = "none";
+            add.style.display = "none";
+        };
+
+        // 关闭新增弹窗
+        close2.onclick = function () {
+            shadow.style.display = "none";
+            add.style.display = "none";
+        };
+
+        // 打开详情弹窗
+        select.onclick = function () {
+            shadow.style.display = "block";
+            detailed.style.display = "block";
+        };
+
+        // 关闭详情弹窗
+        close3.onclick = function () {
+            shadow.style.display = "none";
+            detailed.style.display = "none";
+        };
+    </script>
+</body>
+</html>

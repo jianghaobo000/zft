@@ -57,7 +57,7 @@ public class AccountController {
                         HttpServletRequest req,Model model) throws Exception {
         if(accountService.verification(account_name,account_password,code,country_code));
         System.out.println("成功");
-        return "";
+        return "clinic/clinic";
     }
 
 

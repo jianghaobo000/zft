@@ -30,6 +30,11 @@ public class Charge {
     private Integer charge_money;
 
     /**
+     * 收费单状态
+     */
+    private String charge_status;
+
+    /**
      * 收费单所属诊所
      */
     private Long charge_tenant_id;

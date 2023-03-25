@@ -30,12 +30,17 @@ public class ChargeDTO {
     private Integer charge_money;
 
     /**
-     * 收费单所属诊所
+     * 收费单状态
      */
-    private Long charge_tenant_id;
+    private String charge_status;
 
     /**
      * 收费时间
      */
     private String charge_time;
+
+    /**
+     * 收费单所属诊所
+     */
+    private Long charge_tenant_id;
 }
