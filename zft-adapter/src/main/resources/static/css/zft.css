@@ -795,21 +795,20 @@ tr:hover .td-hover{
     border-bottom: 1px rgb(225,228,232) solid;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    padding: 15px 10px 0 10px;
     float: left;
 }
 
 .manage .right .top p{
     font-family: '黑体';
     font-size: 20px;
-    font-weight: 400;
-    position: relative;
-    top: 15px;
-    left: 10px;
+    font-weight: 500;
+    float: left;
 }
 
 .manage .right .info{
     width: 100%;
-    padding: 30px 30px 30px 30px;
+    padding: 20px 30px 20px 30px;
     float: left;
 }
 
@@ -842,7 +841,7 @@ tr:hover .td-hover{
 
 .manage .right .info .info-left{
     width: 17%;
-    height: 760px;
+    height: 780px;
     background-color: #f0f1f6;
     border-top-left-radius: 10px;
     float: left;
@@ -866,7 +865,7 @@ tr:hover .td-hover{
 .manage .right .info .info-left .name{
     width: 100%;
     height: 50px;
-    padding: 17px 20px 17px 20px;
+    padding: 12px 20px 17px 20px;
     font-size: 16px;
     border-bottom: 1px #cfd5d7 solid;
     float: left;
@@ -879,7 +878,7 @@ tr:hover .td-hover{
 
 .manage .right .info .info-right{
     width: 83%;
-    height: 760px;
+    height: 780px;
     border-top-right-radius: 10px;
     float: left;
     border: 1px #dde1e2 solid;
@@ -888,7 +887,7 @@ tr:hover .td-hover{
 
 .manage .right .info .info-right .title{
     width: 100%;
-    height: 50px;
+    height: 40px;
     float: left;
 }
 
@@ -901,6 +900,7 @@ tr:hover .td-hover{
 
 .manage .right .info .info-right .input{
     width: 100%;
+    height: 60px;
     padding: 5px 0 5px 0;
     float: left;
 }
@@ -911,6 +911,31 @@ tr:hover .td-hover{
     font-size: 15px;
     float: left;
     padding-top: 6px;
+}
+
+.manage .right .info .info-top{
+    width: 100%;
+    height: 50px;
+    float: left;
+    font-size: 16px;
+}
+
+.manage .right .info .info-info{
+    width: 100%;
+    height: 700px;
+    float: left;
+    overflow: auto;
+    font-size: 16px;
+    border: 1px #dee2e6 solid;
+}
+
+.manage .right .info .info-bottom{
+    width: 100%;
+    height: 60px;
+    padding-top: 10px;
+    padding-right: 10px;
+    font-size: 17px;
+    float: left;
 }
 
 

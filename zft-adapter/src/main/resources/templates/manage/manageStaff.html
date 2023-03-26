@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <div th:replace="~{common/common::cjbar}"/>
-    <title>管理</title>
+    <title>管理-员工管理</title>
 </head>
 <body style="background-color: rgb(225,228,232);">
 <div th:replace="~{common/common::headbar}"/>
@@ -12,11 +12,334 @@
         <div th:replace="~{common/common::manageMeau}"/>
     </div>
     <div class="right">
-
+        <div class="top">
+            <p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people-fill svg-text" viewBox="0 0 16 16">
+                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+                    <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+                </svg>
+                员工管理
+            </p>
+        </div>
+        <div class="info">
+            <div class="info-left">
+                <div class="title">
+                    <div class="form-group float-left" style="width: 150px;">
+                        <input type="text" class="form-control" name="" placeholder="查询员工">
+                    </div>
+                    <div class="add" id="addEquipment">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill svg-text" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                        </svg>
+                        新增员工
+                    </div>
+                </div>
+                <div class="name">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill svg-text" style="color: #ff6587;" viewBox="0 0 16 16">
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    </svg>&nbsp;
+                    姜昊波
+                </div>
+                <div class="name">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill svg-text" style="color: #ff6587;" viewBox="0 0 16 16">
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    </svg>&nbsp;
+                    张医生
+                </div>
+                <div class="name">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill svg-text" style="color: #5db2f1;" viewBox="0 0 16 16">
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    </svg>&nbsp;
+                    刘医生
+                </div>
+            </div>
+            <div class="info-right">
+                <div class="title">
+                    <p>员工详情</p>
+                    <div style="float: right;margin-left: 10px;">
+                        <button type="button" class="btn btn-primary">保存</button>
+                    </div>
+                    <div style="float: right;">
+                        <button type="button" class="btn btn-outline-primary">删除</button>
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        <span style="color: red;">* </span>姓名
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入姓名">
+                    </div>
+                    <div class="text">
+                        <span style="color: red;">* </span>性别
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
+                        <select class="form-control" name="">
+                            <option value="0" style="display: none">请选择性别</option>
+                            <option value="1">男</option>
+                            <option value="2">女</option>
+                        </select>
+                    </div>
+                    <div class="text">
+                        <span style="color: red;">* </span>生日
+                    </div>
+                    <div style="float: left;width: 200px;">
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" name="" id="test1" placeholder="请输入生日" style="border: 1px rgb(206,212,218) solid" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        <span style="color: red;">* </span>民族
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
+                        <select class="form-control" name="">
+                            <option value="0" style="display: none">请选择民族</option>
+                            <option value="1">汉族</option>
+                            <option value="2">壮族</option>
+                            <option value="1">苗族</option>
+                            <option value="2">回族</option>
+                            <option value="1">藏族</option>
+                            <option value="2">白族</option>
+                            <option value="1">朝鲜族</option>
+                            <option value="2">高山族</option>
+                        </select>
+                    </div>
+                    <div class="text">
+                        <span style="color: red;">* </span>是否为医护技
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 50px;margin-top: 8px;">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                            <label class="form-check-label" for="inlineRadio1">是</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <label class="form-check-label" for="inlineRadio2">否</label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="title">
+                    <p>账号详情</p>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        <span style="color: red;">* </span>登录账号
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入账号">
+                    </div>
+                    <div class="text">
+                        <span style="color: red;">* </span>登录密码
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入密码">
+                    </div>
+                    <div class="text">
+                        <span style="color: red;">* </span>确认密码
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入确认密码">
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        <span style="color: red;">* </span>权限
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
+                        <select class="form-control" name="">
+                            <option value="0" style="display: none">请选择权限</option>
+                            <option value="0">老板</option>
+                            <option value="1">医生</option>
+                            <option value="2">药师</option>
+                            <option value="3">护士</option>
+                        </select>
+                    </div>
+                </div>
+                <hr>
+                <div class="title">
+                    <p>执业详情</p>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        医护技HIS码
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
+                        <select class="form-control" name="">
+                            <option value="0" style="display: none">请选择权限</option>
+                            <option value="0">老板</option>
+                            <option value="1">医生</option>
+                            <option value="2">药师</option>
+                            <option value="3">护士</option>
+                        </select>
+                    </div>
+                    <div class="text">
+                        有效证件类型
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
+                        <select class="form-control" name="">
+                            <option value="0" style="display: none">请选择有效证件类型</option>
+                            <option value="0">居民身份证(户口簿)</option>
+                            <option value="1">护照</option>
+                            <option value="2">港澳居民来往内地通行证</option>
+                            <option value="3">中华人民共和国来往港澳通行证</option>
+                            <option value="2">士兵证</option>
+                            <option value="3">外国人居留证</option>
+                        </select>
+                    </div>
+                    <div class="text">
+                        有效证件号码
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入有效证件号码">
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        执业证书编号
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入执业证书编号">
+                    </div>
+                    <div class="text">
+                        资格证书编号
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入资格证书编号">
+                    </div>
+                    <div class="text">
+                        执业注册地
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入执业注册地">
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        科室
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
+                        <select class="form-control" name="">
+                            <option value="0" style="display: none">请选择科室</option>
+                            <option value="0">消化内科</option>
+                            <option value="1">骨科</option>
+                            <option value="2">肿瘤科</option>
+                            <option value="3">神经内科</option>
+                        </select>
+                    </div>
+                    <div class="text">
+                        人员国家码
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入人员国家码">
+                    </div>
+                    <div class="text">
+                        职务
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;">
+                        <select class="form-control" name="">
+                            <option value="0" style="display: none">请选择职称</option>
+                            <option value="0">医士</option>
+                            <option value="1">医师</option>
+                            <option value="2">主治医师</option>
+                            <option value="3">副主任医师</option>
+                            <option value="4">主任医师</option>
+                            <option value="5">药士</option>
+                            <option value="6">药师</option>
+                            <option value="7">副主任药师</option>
+                            <option value="8">主任药师</option>
+                            <option value="9">护士</option>
+                            <option value="10">护师</option>
+                            <option value="11">主管护师</option>
+                            <option value="12">副主任护师</option>
+                            <option value="13">主任护师</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        个人开始执业时间
+                    </div>
+                    <div style="float: left;width: 200px;margin-right: 50px;">
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" name="patient_birthday" id="test2" placeholder="请输入开始执业时间" style="border: 1px rgb(206,212,218) solid" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text">
+                        个人结束执业时间
+                    </div>
+                    <div style="float: left;width: 200px;margin-right: 50px;">
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" name="patient_birthday" id="test3" placeholder="请输入结束执业时间" style="border: 1px rgb(206,212,218) solid" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text">
+                        在诊所开始执业时间
+                    </div>
+                    <div style="float: left;width: 200px;">
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" name="patient_birthday" id="test4" placeholder="请输入开始执业时间" style="border: 1px rgb(206,212,218) solid" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        在诊所结束执业时间
+                    </div>
+                    <div style="float: left;width: 200px;margin-right: 50px;">
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" name="patient_birthday" id="test5" placeholder="请输入结束执业时间" style="border: 1px rgb(206,212,218) solid" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
 <script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //初始赋值
+        laydate.render({
+            elem: '#test1'
+            ,value: ''
+            ,isInitValue: true
+        });
+        laydate.render({
+            elem: '#test2'
+            ,value: ''
+            ,isInitValue: true
+        });
+        laydate.render({
+            elem: '#test3'
+            ,value: ''
+            ,isInitValue: true
+        });
+        laydate.render({
+            elem: '#test4'
+            ,value: ''
+            ,isInitValue: true
+        });
+        laydate.render({
+            elem: '#test5'
+            ,value: ''
+            ,isInitValue: true
+        });
+    });
 </script>
 </body>
 </html>

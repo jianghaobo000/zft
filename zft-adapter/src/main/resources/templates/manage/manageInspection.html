@@ -12,7 +12,87 @@
         <div th:replace="~{common/common::manageMeau}"/>
     </div>
     <div class="right">
-
+        <div class="top">
+            <p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-text-fill svg-text" viewBox="0 0 16 16">
+                    <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm0 2h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1z"/>
+                </svg>
+                检查检验
+            </p>
+        </div>
+        <div class="info">
+            <div class="info-top">
+                <div class="form-group" style="float: left;width: 200px;margin-right: 10px;">
+                    <input type="text" class="form-control" name="" placeholder="搜索项目名称">
+                </div>
+                <div class="form-group" style="float: left;width: 150px;margin-right: 10px;">
+                    <select class="form-control" name="">
+                        <option value="0" style="display: none">全部类型</option>
+                        <option value="1">检查</option>
+                        <option value="2">检验</option>
+                    </select>
+                </div>
+                <div class="float-left">
+                    <button type="button" class="btn btn-outline-primary">查询</button>
+                </div>
+                <div class="float-right">
+                    <button type="button" class="btn btn-primary">新增</button>
+                </div>
+            </div>
+            <div class="info-info">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col" width="30%">项目名称</th>
+                        <th scope="col" width="10%">类型</th>
+                        <th scope="col" width="15%">成本价(元)</th>
+                        <th scope="col" width="15%">定价(元)</th>
+                        <th scope="col" width="10%">单位</th>
+                        <th scope="col" width="10%">状态</th>
+                        <th scope="col" width="10%">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>血液检验</td>
+                        <td>检验</td>
+                        <td>25.00</td>
+                        <td>30.00</td>
+                        <td>次</td>
+                        <td>启用</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-dark btn-sm">编辑</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>血液检验</td>
+                        <td>检验</td>
+                        <td>25.00</td>
+                        <td>30.00</td>
+                        <td>次</td>
+                        <td>启用</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-dark btn-sm">编辑</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>血液检验</td>
+                        <td>检验</td>
+                        <td>25.00</td>
+                        <td>30.00</td>
+                        <td>次</td>
+                        <td>启用</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-dark btn-sm">编辑</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="info-bottom">
+                <p class="float-right">共3条数据</p>
+            </div>
+        </div>
     </div>
 </div>
 

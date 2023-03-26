@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <div th:replace="~{common/common::cjbar}"/>
-    <title>管理</title>
+    <title>管理-挂号费</title>
 </head>
 <body style="background-color: rgb(225,228,232);">
 <div th:replace="~{common/common::headbar}"/>
@@ -12,7 +12,63 @@
         <div th:replace="~{common/common::manageMeau}"/>
     </div>
     <div class="right">
-
+        <div class="top">
+            <p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-capsule svg-text" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429l4.243 4.242Z"/>
+                </svg>
+                挂号费
+            </p>
+        </div>
+        <div class="info">
+            <div class="info-top">
+                <p class="float-left" style="margin-right: 30px;margin-top: 5px;">统一初诊费:10.00元 统一复诊费:5.00元</p>
+                <div class="float-left">
+                    <button type="button" class="btn btn-outline-dark btn-sm">设置</button>
+                </div>
+            </div>
+            <div class="info-info">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col" width="30%">医生姓名</th>
+                        <th scope="col" width="30%">初诊费(元)</th>
+                        <th scope="col" width="30%">复诊费(元)</th>
+                        <th scope="col" width="10%">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>姜昊波</td>
+                        <td>10.00</td>
+                        <td>5.00</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-dark btn-sm">设置</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>姜昊波</td>
+                        <td>10.00</td>
+                        <td>5.00</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-dark btn-sm">设置</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>姜昊波</td>
+                        <td>10.00</td>
+                        <td>5.00</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-dark btn-sm">设置</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="info-bottom">
+                <p class="float-right">共3条数据</p>
+            </div>
+        </div>
     </div>
 </div>
 
