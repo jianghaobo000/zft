@@ -94,22 +94,4 @@ public class ManageController {
     public String toPay(){
         return "manage/managePay";
     }
-
-    /**
-     * 跳转定价设置界面
-     * @return
-     */
-    @GetMapping("toBid")
-    public String toBid(){
-        return "manage/manageBid";
-    }
-
-    /**
-     * 跳转医保限价界面
-     * @return
-     */
-    @GetMapping("toLimit")
-    public String toLimit(){
-        return "manage/manageLimit";
-    }
 }

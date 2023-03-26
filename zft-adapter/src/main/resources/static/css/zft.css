@@ -504,7 +504,7 @@ tr:hover .td-hover{
 
 .charge .right{
     width: 15%;
-    height: 650px;
+    height: 880px;
     border: 1px rgb(207,213,215) solid;
     border-radius: 10px;
     background-color: white;
@@ -938,7 +938,39 @@ tr:hover .td-hover{
     float: left;
 }
 
+.manage .right .info .div1{
+    width: 30%;
+    height: 100px;
+    float: left;
+    border: 2px red dashed;
+    padding: 15px 15px 15px 15px;
+}
 
+.manage .right .info .div1 p{
+    color: #747474;
+    font-size: 16px;
+    float: left;
+    margin-right: 20px;
+    margin-top: 6px;
+}
+
+.manage .right .info .div2{
+    width: 100%;
+    float: left;
+    height: 60px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.manage .right .info .div2 .title1{
+    width: 15%;
+    float: left;
+}
+
+.manage .right .info .div2 .title2{
+    width: 85%;
+    float: left;
+}
 
 
 
