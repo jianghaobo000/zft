@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="~{common/common::cjbar}"/>
+    <title>患者-电子病历</title>
+    <script type="text/javascript" th:src="@{/js/html2canvas.js}"></script>
+    <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jspdf/1.5.2/jspdf.min.js"></script>
+</head>
+<body style="background-color: rgb(225,228,232);">
+<div th:replace="~{common/common::headbar}"/>
+<div class="patient">
+    <div class="left">
+        <div th:replace="~{common/common::patientMeau}"/>
+    </div>
+    <div class="right">
+        <div class="info">
+            <div class="top">
+                <div class="form-group" style="float: left;width: 200px;margin-right: 15px;">
+                    <input type="text" class="form-control" name="" placeholder="患者名或简拼或全拼">
+                </div>
+                <div class="form-group" style="float: left;width: 250px;margin-right: 15px;">
+                    <input type="text" class="form-control" name="" placeholder="身份证号">
+                </div>
+                <div style="float: left;margin-right: 15px;">
+                    <div class="layui-inline">
+                        <div class="layui-inline" id="test6">
+                            <div class="layui-input-inline float-left" style="width: 100px;">
+                                <input type="text" autocomplete="off" id="test-startDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="起始日期">
+                            </div>
+                            <div class="layui-form-mid float-left" style="margin: 0 auto;">-</div>
+                            <div class="layui-input-inline float-left" style="width: 100px;">
+                                <input type="text" autocomplete="off" id="test-endDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="结束日期">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="float: left;width: 150px;margin-right: 15px;">
+                    <select class="form-control" name="">
+                        <option value="0" style="display:none;">全部医生</option>
+                        <option value="1">张医生</option>
+                        <option value="2">刘医生</option>
+                    </select>
+                </div>
+                <div style="float: left;">
+                    <button type="button" class="btn btn-outline-primary">查询</button>
+                </div>
+                <div style="float: right;margin-left: 15px;">
+                    <button type="button" class="btn btn-outline-primary" onclick="downloadPDF('caseHistory','病历单')">导出</button>
+                </div>
+            </div>
+            <div class="middle-left">
+                <div class="people-top">
+                    请选择想要导出的电子病历
+                </div>
+                <div class="people">
+                    <div class="name">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill svg-text" style="color: #5db2f1;" viewBox="0 0 16 16">
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>&nbsp;
+                        甲乙丙
+                    </div>
+                    <div class="time">
+                        2023-03-27 12:12
+                    </div>
+                </div>
+                <div class="people">
+                    <div class="name">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill svg-text" style="color: #5db2f1;" viewBox="0 0 16 16">
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>&nbsp;
+                        甲乙丙
+                    </div>
+                    <div class="time">
+                        2023-03-27 12:12
+                    </div>
+                </div>
+                <div class="people">
+                    <div class="name">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill svg-text" style="color: #5db2f1;" viewBox="0 0 16 16">
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>&nbsp;
+                        甲乙丙
+                    </div>
+                    <div class="time">
+                        2023-03-27 12:12
+                    </div>
+                </div>
+            </div>
+            <div class="middle-middle">
+                <div class="form-group" style="float: left;width: 100px;margin-right: 10px;">
+                    <input type="text" class="form-control" id="input1" name="patient_name" placeholder="姓名">
+                </div>
+                <div class="form-group" style="float: left;width: 70px;margin-right: 10px;">
+                    <select class="form-control" id="input2" name="patient_sex">
+                        <option value="1" selected>男</option>
+                        <option value="0">女</option>
+                    </select>
+                </div>
+                <div style="float: left;width: 100px;margin-right: 10px;">
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <input type="text" id="input3" class="layui-input" name="" placeholder="生日" style="border: 1px rgb(206,212,218) solid" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="float: left;width: 130px;margin-right: 10px;">
+                    <input type="text" id="input4" class="form-control" name="patient_phone" placeholder="手机号">
+                </div>
+                <div class="form-group" style="float: left;width: 175px;margin-right: 10px;">
+                    <input type="text"  id="input5" class="form-control" name="patient_id_number" placeholder="身份证号">
+                </div>
+                <div class="order">
+                    <div class="order-div">
+                        <div class="order-text">
+                            <p>主&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;诉:</p>
+                        </div>
+                        <div class="order-input">
+                            <textarea id="textarea1" name="advice_description" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="order-div">
+                        <div class="order-text">
+                            <p>现&nbsp;&nbsp;病&nbsp;&nbsp;史:</p>
+                        </div>
+                        <div class="order-input">
+                            <textarea id="textarea2" name="advice_description" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="order-div">
+                        <div class="order-text">
+                            <p>既&nbsp;&nbsp;往&nbsp;&nbsp;史:</p>
+                        </div>
+                        <div class="order-input">
+                            <textarea id="textarea3" name="advice_description" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="order-div">
+                        <div class="order-text">
+                            <p>遗&nbsp;&nbsp;传&nbsp;&nbsp;史:</p>
+                        </div>
+                        <div class="order-input">
+                            <textarea id="textarea4" name="advice_description" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="order-div">
+                        <div class="order-text">
+                            <p>婚&nbsp;&nbsp;育&nbsp;&nbsp;史:</p>
+                        </div>
+                        <div class="order-input">
+                            <textarea id="textarea5" name="advice_description" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="order-div">
+                        <div class="order-text">
+                            <p>体格检查:</p>
+                        </div>
+                        <div class="order-input">
+                            <textarea id="textarea6" name="advice_description" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="order-div">
+                        <div class="order-text">
+                            <p>描述症状:</p>
+                        </div>
+                        <div class="order-input">
+                            <textarea id="textarea7" name="advice_description" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                            <!--                            <input type="text" name="advice_description" style="border: 0;font-size: 16px;">-->
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="order-div">
+                        <div class="order-text">
+                            <p>诊&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;断:</p>
+                        </div>
+                        <div class="order-input">
+                            <textarea id="textarea8" name="advice_description" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="order-div">
+                        <div class="order-text">
+                            <p>治&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;法:</p>
+                        </div>
+                        <div class="order-input">
+                            <textarea id="textarea9" name="advice_treatment_method" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <div class="middle-right">
+                <div class="pdf" id="caseHistory">
+                    <div class="title">
+                        成都大学诊所病历单
+                    </div>
+                    <div class="info1" style="width: 40%;height: 30px;">
+                        姓名: <span id="td1"></span>
+                    </div>
+                    <div class="info1" style="width: 30%;height: 30px;">
+                        性别: <span id="td2"></span>
+                    </div>
+                    <div class="info1" style="width: 30%;height: 30px;">
+                        年龄: <span id="td3"></span>岁
+                    </div>
+                    <div class="info1" style="width: 40%;height: 30px;">
+                        手机号: <span id="td4"></span>
+                    </div>
+                    <div class="info1" style="width: 60%;height: 30px;">
+                        身份证号: <span id="td5"></span>
+                    </div>
+                    <div class="info1" style="width: 40%;height: 30px;border-bottom: 1px solid black;">
+                        开具医生: 张医生
+                    </div>
+                    <div class="info1" style="width: 60%;height: 30px;border-bottom: 1px solid black;">
+                        就诊时间: 2023-03-27 12:22
+                    </div>
+                    <div class="info2">
+                        <div style="width: 13%;float: left;">
+                            主诉:
+                        </div>
+                        <div style="width: 87%;float: left;">
+                            <span id="td6" style="word-wrap: break-word;white-space: pre-wrap;"></span>
+                        </div>
+                    </div>
+                    <div class="info2">
+                        <div style="width: 13%;float: left;">
+                            现病史:
+                        </div>
+                        <div style="width: 87%;float: left;">
+                            <span id="td7" style="word-wrap: break-word;white-space: pre-wrap;"></span>
+                        </div>
+                    </div>
+                    <div class="info2">
+                        <div style="width: 13%;float: left;">
+                            既往史:
+                        </div>
+                        <div style="width: 87%;float: left;">
+                            <span id="td8" style="word-wrap: break-word;white-space: pre-wrap;"></span>
+                        </div>
+                    </div>
+                    <div class="info2">
+                        <div style="width: 13%;float: left;">
+                            遗传史:
+                        </div>
+                        <div style="width: 87%;float: left;">
+                            <span id="td9" style="word-wrap: break-word;white-space: pre-wrap;"></span>
+                        </div>
+                    </div>
+                    <div class="info2">
+                        <div style="width: 13%;float: left;">
+                            婚育史:
+                        </div>
+                        <div style="width: 87%;float: left;">
+                            <span id="td10" style="word-wrap: break-word;white-space: pre-wrap;"></span>
+                        </div>
+                    </div>
+                    <div class="info2">
+                        <div style="width: 13%;float: left;">
+                            体格检查:
+                        </div>
+                        <div style="width: 87%;float: left;">
+                            <span id="td11" style="word-wrap: break-word;white-space: pre-wrap;"></span>
+                        </div>
+                    </div>
+                    <div class="info2">
+                        <div style="width: 13%;float: left;">
+                            描述症状:
+                        </div>
+                        <div style="width: 87%;float: left;">
+                            <span id="td12" style="word-wrap: break-word;white-space: pre-wrap;"></span>
+                        </div>
+                    </div>
+                    <div class="info2">
+                        <div style="width: 13%;float: left;">
+                            诊断:
+                        </div>
+                        <div style="width: 87%;float: left;">
+                            <span id="td13" style="word-wrap: break-word;white-space: pre-wrap;"></span>
+                        </div>
+                    </div>
+                    <div class="info2">
+                        <div style="width: 13%;float: left;">
+                            治法:
+                        </div>
+                        <div style="width: 87%;float: left;">
+                            <span id="td14" style="word-wrap: break-word;white-space: pre-wrap;"></span>
+                        </div>
+                    </div>
+                    <div class="info2">
+                        <div style="width: 13%;float: left;">
+                            处方:
+                        </div>
+                        <div style="width: 87%;float: left;">
+                            <span id="td15" style="word-wrap: break-word;white-space: pre-wrap;"></span>
+                        </div>
+                    </div>
+                    <div class="info2" style="border-bottom: 1px solid black;">
+                        <div style="width: 13%;float: left;">
+                            医嘱意见:
+                        </div>
+                        <div style="width: 87%;float: left;">
+                            <span id="td16" style="word-wrap: break-word;white-space: pre-wrap;"></span>
+                        </div>
+                    </div>
+                    <div class="info1" style="width: 40%;height: 30px;"></div>
+                    <div class="info1" style="width: 30%;height: 30px;">
+                        医生签字: 姜昊波
+                    </div>
+                    <div class="info1" style="width: 30%;height: 30px;">
+                        打印时间: 2023-03-01
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function downloadPDF(selectors, title) {
+        const ele = document.getElementById(selectors);
+        ele.style.height = ele.scrollHeight + 'px';
+        html2canvas( ele, {
+            allowTaint: true,
+            height: ele.offsetHeight,
+            width: ele.offsetWidth,
+            windowHeight: ele.offsetHeight,
+            windowWidth: ele.offsetWidth,
+            background: "#FFFFFF",
+            useCORS: true,
+            scale: 2, // 处理模糊问题
+            dpi: 300, // 处理模糊问题
+        }).then(canvas => {
+            var contentWidth = canvas.width;
+            var contentHeight = canvas.height;
+            //  一页pdf显示html页面生成的canvas高度;
+            var pageHeight = contentWidth / 592.28 * 841.89;
+            //  未生成pdf的html页面高度
+            var leftHeight = contentHeight;
+            //  页面偏移
+            var position = 0;
+            //  a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+            var imgWidth = 595.28;
+            var imgHeight = 592.28/contentWidth * contentHeight;
+            var pageData = canvas.toDataURL('image/png', 1.0);
+            //  l表示横版，p：纵向 （默认纵向）
+            var pdf = new jsPDF('', 'pt', 'a4');
+            //  有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+            //  当内容未超过pdf一页显示的范围，无需分页
+            if (leftHeight < pageHeight) {
+                pdf.addImage(pageData, 'PNG', 0, 0, imgWidth, imgHeight);
+            } else {
+                while (leftHeight > 0) {
+                    pdf.addImage(pageData, 'PNG', 0, position, imgWidth, imgHeight);
+                    leftHeight -= pageHeight;
+                    position -= 841.89;
+                    //避免添加空白页
+                    if (leftHeight > 0) {
+                        pdf.addPage();
+                    }
+                }
+            }
+            pdf.save(title + '.pdf');
+        });
+        ele.style.height = 770 + 'px';
+    }
+    const input1 = document.getElementById('input1');
+    const input2 = document.getElementById('input2');
+    const input3 = document.getElementById('input3');
+    const input4 = document.getElementById('input4');
+    const input5 = document.getElementById('input5');
+    const textarea1 = document.getElementById('textarea1');
+    const textarea2 = document.getElementById('textarea2');
+    const textarea3 = document.getElementById('textarea3');
+    const textarea4 = document.getElementById('textarea4');
+    const textarea5 = document.getElementById('textarea5');
+    const textarea6 = document.getElementById('textarea6');
+    const textarea7 = document.getElementById('textarea7');
+    const textarea8 = document.getElementById('textarea8');
+    const textarea9 = document.getElementById('textarea9');
+    const td1 = document.getElementById('td1');
+    const td2 = document.getElementById('td2');
+    const td3 = document.getElementById('td3');
+    const td4 = document.getElementById('td4');
+    const td5 = document.getElementById('td5');
+    const td6 = document.getElementById('td6');
+    const td7 = document.getElementById('td7');
+    const td8 = document.getElementById('td8');
+    const td9 = document.getElementById('td9');
+    const td10 = document.getElementById('td10');
+    const td11 = document.getElementById('td11');
+    const td12 = document.getElementById('td12');
+    const td13 = document.getElementById('td13');
+    const td14 = document.getElementById('td14');
+    const td15 = document.getElementById('td15');
+
+    input1.addEventListener('input', () => {
+        td1.textContent = input1.value;
+    });
+
+    input2.addEventListener('input', () => {
+        if(input2.value === '0'){
+            td2.textContent = '女';
+        }else{
+            td2.textContent = '男';
+        }
+    });
+
+    input4.addEventListener('input', () => {
+        td4.textContent = input4.value;
+    });
+
+    input5.addEventListener('input', () => {
+        td5.textContent = input5.value;
+    });
+
+    textarea1.addEventListener('input', (e) => {
+        textarea1.style.height = '16px';
+        textarea1.style.height = e.target.scrollHeight + 'px';
+        td6.textContent = textarea1.value;
+    });
+
+    textarea2.addEventListener('input', (e) => {
+        textarea2.style.height = '16px';
+        textarea2.style.height = e.target.scrollHeight + 'px';
+        td7.textContent = textarea2.value;
+    });
+
+    textarea3.addEventListener('input', (e) => {
+        textarea3.style.height = '16px';
+        textarea3.style.height = e.target.scrollHeight + 'px';
+        td8.textContent = textarea3.value;
+    });
+
+    textarea4.addEventListener('input', (e) => {
+        textarea4.style.height = '16px';
+        textarea4.style.height = e.target.scrollHeight + 'px';
+        td9.textContent = textarea4.value;
+    });
+
+    textarea5.addEventListener('input', (e) => {
+        textarea5.style.height = '16px';
+        textarea5.style.height = e.target.scrollHeight + 'px';
+        td10.textContent = textarea5.value;
+    });
+
+    textarea6.addEventListener('input', (e) => {
+        textarea6.style.height = '16px';
+        textarea6.style.height = e.target.scrollHeight + 'px';
+        td11.textContent = textarea6.value;
+    });
+
+    textarea7.addEventListener('input', (e) => {
+        textarea7.style.height = '16px';
+        textarea7.style.height = e.target.scrollHeight + 'px';
+        td12.textContent = textarea7.value;
+    });
+
+    textarea8.addEventListener('input', (e) => {
+        textarea8.style.height = '16px';
+        textarea8.style.height = e.target.scrollHeight + 'px';
+        td13.textContent = textarea8.value;
+    });
+
+    textarea9.addEventListener('input', (e) => {
+        textarea9.style.height = '16px';
+        textarea9.style.height = e.target.scrollHeight + 'px';
+        td14.textContent = textarea9.value;
+    });
+
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#input3',
+            value: '',
+            isInitValue: true,
+            done: function (value,date) {
+                td3.textContent = getAge(value);
+            }
+        });
+    });
+
+    // 获取年龄
+    function getAge(birthDate) {
+        const today = new Date();
+        const birth = new Date(birthDate);
+        let age = today.getFullYear() - birth.getFullYear();
+        const monthDiff = today.getMonth() - birth.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+            age--;
+        }
+        return age;
+    }
+</script>
+</body>
+</html>

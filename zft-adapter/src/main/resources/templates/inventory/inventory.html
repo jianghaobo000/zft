@@ -156,22 +156,22 @@
             </svg>
         </div>
         <div class="info">
-            <form>
+            <form th:action="@{/commodity/add}" method="post">
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label><span style="color:red;">*</span> 品项名</label>
-                    <input type="text" class="form-control" placeholder="请输入品项名">
+                    <input type="text" class="form-control" name="commodity_name" placeholder="请输入品项名">
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label>国家编码</label>
-                    <input type="text" class="form-control" placeholder="请输入国家编码">
+                    <input type="text" class="form-control" name="commodity_country_code" placeholder="请输入国家编码">
                 </div>
                 <div class="form-group float-left" style="width: 31%;">
                     <label>准批文号</label>
-                    <input type="text" class="form-control" placeholder="请输入准批文号">
+                    <input type="text" class="form-control" name="commodity_approval_no" placeholder="请输入准批文号">
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label><span style="color:red;">*</span> 商品类型</label>
-                    <select class="form-control" name="inventory_category">
+                    <select class="form-control" name="commodity_category">
                         <option value="0">全部类型</option>
                         <option value="1">中西成药</option>
                         <option value="2">中药</option>
@@ -181,20 +181,20 @@
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label>生产厂家</label>
-                    <input type="text" class="form-control" placeholder="请输入生产厂家">
+                    <input type="text" class="form-control" name="commodity_manufacturer" placeholder="请输入生产厂家">
                 </div>
                 <div class="form-group float-left" style="width: 31%;">
                     <label>规格</label>
-                    <input type="text" class="form-control" placeholder="请输入规格">
+                    <input type="text" class="form-control" name="commodity_specification" placeholder="请输入规格">
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label>商品条码</label>
-                    <input type="text" class="form-control" placeholder="请输入商品条码">
+                    <input type="text" class="form-control" name="commodity_bar_code" placeholder="请输入商品条码">
                 </div>
                 <hr>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label><span style="color:red;">*</span> 包装单位(大)</label>
-                    <select class="form-control" name="">
+                    <select class="form-control" name="commodity_large_unit">
                         <option value="盒">盒</option>
                         <option value="瓶">瓶</option>
                         <option value="袋">袋</option>
@@ -207,7 +207,7 @@
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label><span style="color:red;">*</span> 拆零单位(小)</label>
-                    <select class="form-control" name="">
+                    <select class="form-control" name="commodity_small_unit">
                         <option value="颗">颗</option>
                         <option value="瓶">瓶</option>
                         <option value="袋">袋</option>
@@ -218,11 +218,11 @@
                 </div>
                 <div class="form-group float-left" style="width: 31%;">
                     <label>大小转换比</label>
-                    <input type="text" class="form-control" placeholder="请输入商品大小转换比">
+                    <input type="text" class="form-control" name="commodity_dosage_form" placeholder="请输入商品大小转换比">
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label>剂型</label>
-                    <select class="form-control" name="">
+                    <select class="form-control" name="commodity_form_drug">
                         <option value="液体剂型">液体剂型</option>
                         <option value="气体剂型">气体剂型</option>
                         <option value="固体剂型">固体剂型</option>
@@ -231,11 +231,11 @@
                 </div>
                 <div class="form-group float-left" style="width: 15%;margin-right: 1%;">
                     <label>剂量</label>
-                    <input type="text" class="form-control" placeholder="请输入剂量">
+                    <input type="text" class="form-control" name="commodity_dosage" placeholder="请输入剂量">
                 </div>
                 <div class="form-group float-left" style="width: 15%;margin-right: 2%;">
                     <label>剂量单位</label>
-                    <select class="form-control" name="">
+                    <select class="form-control" name="commodity_dosage_unit">
                         <option value="mg">mg</option>
                         <option value="g">g</option>
                         <option value="kg">kg</option>
@@ -245,7 +245,7 @@
                 </div>
                 <div class="form-group float-left" style="width: 31%;">
                     <label>服用方式</label>
-                    <select class="form-control" name="">
+                    <select class="form-control" name="commodity_take">
                         <option value="空腹服">空腹服</option>
                         <option value="饭前服">饭前服</option>
                         <option value="饭后服">饭后服</option>
@@ -255,7 +255,7 @@
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label>服用频次</label>
-                    <select class="form-control" name="">
+                    <select class="form-control" name="commodity_usage_frequency">
                         <option value="一天一次">一天一次</option>
                         <option value="一天两次">一天两次</option>
                         <option value="一天三次">一天三次</option>
@@ -266,16 +266,16 @@
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label>单次服用剂量</label>
-                    <input type="text" class="form-control" placeholder="请输入单次服用剂量">
+                    <input type="text" class="form-control" name="commodity_single_dose" placeholder="请输入单次服用剂量">
                 </div>
                 <hr>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label><span style="color:red;">*</span> 定价(元)</label>
-                    <input type="text" class="form-control" placeholder="请输入定价">
+                    <input type="text" class="form-control" name="commodity_large_price" placeholder="请输入定价">
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label>拆零单价(元)(可不填，填则可拆零销售)</label>
-                    <input type="text" class="form-control" placeholder="请输入拆零单价">
+                    <input type="text" class="form-control" name="commodity_small_price" placeholder="请输入拆零单价">
                 </div>
             </form>
         </div>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="~{common/common::cjbar}"/>
+    <title>患者-上门就诊</title>
+</head>
+<body style="background-color: rgb(225,228,232);">
+<div th:replace="~{common/common::headbar}"/>
+<div class="patient">
+    <div class="left">
+        <div th:replace="~{common/common::patientMeau}"/>
+    </div>
+    <div class="right">
+        <div class="top1">
+            <p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="color:#fe315d;" fill="currentColor" class="bi bi-house-fill svg-text" viewBox="0 0 16 16">
+                    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
+                    <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+                </svg>&nbsp;
+                上门就诊信息登记
+            </p>
+        </div>
+        <div class="info">
+            <div class="info-top">
+                <div class="input">
+                    <div style="float: right;margin-left: 10px;">
+                        <button type="button" class="btn btn-primary">保存</button>
+                    </div>
+                    <div style="float: right;">
+                        <button type="button" class="btn btn-outline-primary">删除</button>
+                    </div>
+                    <div class="text">
+                        姓名
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入姓名">
+                    </div>
+                    <div class="text">
+                        出生日期
+                    </div>
+                    <div style="float: left;width: 200px;margin-right: 50px">
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" name="" id="test1" placeholder="请输入出生日期" style="border: 1px rgb(206,212,218) solid" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text">
+                        性别
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;">
+                        <select class="form-control" name="">
+                            <option value="" style="display: none">请选择性别</option>
+                            <option value="0">男</option>
+                            <option value="1">女</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        主诉
+                    </div>
+                    <div class="form-group" style="float: left;width: 1020px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入主诉">
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        预约方式
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
+                        <select class="form-control" name="">
+                            <option value="" style="display: none">请选择预约方式</option>
+                            <option value="0">电话预约</option>
+                            <option value="1">短信预约</option>
+                            <option value="1">微信预约</option>
+                        </select>
+                    </div>
+                    <div class="text">
+                        预约上门就诊时间
+                    </div>
+                    <div style="float: left;width: 200px;margin-right: 50px;">
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" name="" id="test2" placeholder="请输入预约上门就诊时间" style="border: 1px rgb(206,212,218) solid" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text">
+                        联系方式
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入联系方式">
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="text">
+                        预约上门就诊地址
+                    </div>
+                    <div class="form-group" style="float: left;width: 1020px;">
+                        <input type="text" class="form-control" name="" placeholder="请输入预约上门就诊地址">
+                    </div>
+                </div>
+            </div>
+            <div class="info-bottom">
+                <div class="top">
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 15px;">
+                        <input type="text" class="form-control" name="" placeholder="患者名或简拼或全拼">
+                    </div>
+                    <div style="float: left;margin-right: 15px;">
+                        <div class="layui-inline">
+                            <div class="layui-inline" id="test6">
+                                <div class="layui-input-inline float-left" style="width: 100px;">
+                                    <input type="text" autocomplete="off" id="test-startDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="起始日期">
+                                </div>
+                                <div class="layui-form-mid float-left" style="margin: 0 auto;">-</div>
+                                <div class="layui-input-inline float-left" style="width: 100px;">
+                                    <input type="text" autocomplete="off" id="test-endDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="结束日期">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="float: left;width: 150px;margin-right: 15px;">
+                        <select class="form-control" name="">
+                            <option value="0" style="display:none;">全部预约方式</option>
+                            <option value="1">电话预约</option>
+                            <option value="2">短信预约</option>
+                            <option value="2">微信预约</option>
+                        </select>
+                    </div>
+                    <div style="float: left;">
+                        <button type="button" class="btn btn-outline-primary">查询</button>
+                    </div>
+                </div>
+                <div class="middle">
+                    <table class="table table-striped" style="font-size: 16px;">
+                        <thead>
+                        <tr>
+                            <td scope="col" width="5%">姓名</td>
+                            <td scope="col" width="4%">性别</td>
+                            <td scope="col" width="4%">年龄</td>
+                            <td scope="col" width="20%">主诉</td>
+                            <td scope="col" width="8%">联系方式</td>
+                            <td scope="col" width="12%">预约上门就诊时间</td>
+                            <td scope="col" width="20%">上门就诊地址</td>
+                            <td scope="col" width="7%">预约方式</td>
+                            <td scope="col" width="6%">就诊状态</td>
+                            <td scope="col" width="14%">就诊结果</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>甲乙丙</td>
+                            <td>男</td>
+                            <td>25</td>
+                            <td>恶心、干呕、胃部疼痛、食欲不振、面色土黄、身体发热</td>
+                            <td>15869985543</td>
+                            <td>2023-03-02 13:45</td>
+                            <td>四川省成都市龙泉驿区十陵镇成洛大道成都大学16栋260号</td>
+                            <td>电话预约</td>
+                            <td>已就诊</td>
+                            <td>慢性胃炎</td>
+                        </tr>
+                        <tr>
+                            <td>甲乙丙</td>
+                            <td>男</td>
+                            <td>25</td>
+                            <td>恶心、干呕、胃部疼痛、食欲不振、面色土黄、身体发热</td>
+                            <td>15869985543</td>
+                            <td>2023-03-02 13:45</td>
+                            <td>四川省成都市龙泉驿区十陵镇成洛大道成都大学16栋260号</td>
+                            <td>电话预约</td>
+                            <td>已就诊</td>
+                            <td>慢性胃炎</td>
+                        </tr>
+                        <tr>
+                            <td>甲乙丙</td>
+                            <td>男</td>
+                            <td>25</td>
+                            <td>恶心、干呕、胃部疼痛、食欲不振、面色土黄、身体发热</td>
+                            <td>15869985543</td>
+                            <td>2023-03-02 13:45</td>
+                            <td>四川省成都市龙泉驿区十陵镇成洛大道成都大学16栋260号</td>
+                            <td>电话预约</td>
+                            <td>已就诊</td>
+                            <td>慢性胃炎</td>
+                        </tr>
+                        <tr>
+                            <td>甲乙丙</td>
+                            <td>男</td>
+                            <td>25</td>
+                            <td>恶心、干呕、胃部疼痛、食欲不振、面色土黄、身体发热</td>
+                            <td>15869985543</td>
+                            <td>2023-03-02 13:45</td>
+                            <td>四川省成都市龙泉驿区十陵镇成洛大道成都大学16栋260号</td>
+                            <td>电话预约</td>
+                            <td>已就诊</td>
+                            <td>慢性胃炎</td>
+                        </tr>
+                        <tr>
+                            <td>甲乙丙</td>
+                            <td>男</td>
+                            <td>25</td>
+                            <td>恶心、干呕、胃部疼痛、食欲不振、面色土黄、身体发热</td>
+                            <td>15869985543</td>
+                            <td>2023-03-02 13:45</td>
+                            <td>四川省成都市龙泉驿区十陵镇成洛大道成都大学16栋260号</td>
+                            <td>电话预约</td>
+                            <td>已就诊</td>
+                            <td>慢性胃炎</td>
+                        </tr>
+                        <tr>
+                            <td>甲乙丙</td>
+                            <td>男</td>
+                            <td>25</td>
+                            <td>恶心、干呕、胃部疼痛、食欲不振、面色土黄、身体发热</td>
+                            <td>15869985543</td>
+                            <td>2023-03-02 13:45</td>
+                            <td>四川省成都市龙泉驿区十陵镇成洛大道成都大学16栋260号</td>
+                            <td>电话预约</td>
+                            <td>已就诊</td>
+                            <td>慢性胃炎</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bottom">
+                    <div class="float-left">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">...</a></li>
+                                <li class="page-item"><a class="page-link" href="#">65</a></li>
+                                <li class="page-item"><a class="page-link" href="#">66</a></li>
+                                <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="float-right">
+                        <p>共2条上门就诊数据</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+</script>
+</body>
+</html>

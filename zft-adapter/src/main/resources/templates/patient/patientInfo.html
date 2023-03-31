@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="~{common/common::cjbar}"/>
+    <title>患者-患者数据</title>
+    <script type="text/javascript" th:src="@{/js/html2canvas.js}"></script>
+    <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jspdf/1.5.2/jspdf.min.js"></script>
+</head>
+<body style="background-color: rgb(225,228,232);">
+<div th:replace="~{common/common::headbar}"/>
+<div class="patient">
+    <div class="left">
+        <div th:replace="~{common/common::patientMeau}"/>
+    </div>
+    <div class="right">
+        <div class="info">
+            <div class="top">
+                <div class="form-group" style="float: left;width: 200px;margin-right: 15px;">
+                    <input type="text" class="form-control" name="" placeholder="患者名或简拼或全拼">
+                </div>
+                <div class="form-group" style="float: left;width: 250px;margin-right: 15px;">
+                    <input type="text" class="form-control" name="" placeholder="身份证号">
+                </div>
+                <div style="float: left;margin-right: 15px;">
+                    <div class="layui-inline">
+                        <div class="layui-inline" id="test6">
+                            <div class="layui-input-inline float-left" style="width: 100px;">
+                                <input type="text" autocomplete="off" id="test-startDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="起始日期">
+                            </div>
+                            <div class="layui-form-mid float-left" style="margin: 0 auto;">-</div>
+                            <div class="layui-input-inline float-left" style="width: 100px;">
+                                <input type="text" autocomplete="off" id="test-endDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="结束日期">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="float: left;width: 150px;margin-right: 15px;">
+                    <select class="form-control" name="">
+                        <option value="0" style="display:none;">全部医生</option>
+                        <option value="1">张医生</option>
+                        <option value="2">刘医生</option>
+                    </select>
+                </div>
+                <div style="float: left;">
+                    <button type="button" class="btn btn-outline-primary">查询</button>
+                </div>
+                <div style="float: right;margin-left: 15px;">
+                    <button type="button" class="btn btn-outline-primary" onclick="downloadPDF('table','患者数据')">导出</button>
+                </div>
+            </div>
+            <div class="middle" id="table">
+                <table class="table table-striped" style="font-size: 16px;">
+                    <thead>
+                    <tr>
+                        <td scope="col" width="8%">姓名</td>
+                        <td scope="col" width="5%">性别</td>
+                        <td scope="col" width="5%">年龄</td>
+                        <td scope="col" width="10%">身份证号</td>
+                        <td scope="col" width="10%">联系方式</td>
+                        <td scope="col" width="7%">所属医生</td>
+                        <td scope="col" width="10%">就诊时间</td>
+                        <td scope="col" width="30%">描述症状</td>
+                        <td scope="col" width="15%">病情诊断</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>甲乙丙</td>
+                        <td>男</td>
+                        <td>25</td>
+                        <td>511522199809087711</td>
+                        <td>15869985543</td>
+                        <td>张医生</td>
+                        <td>2023-03-02 13:45</td>
+                        <td>恶心、干呕、胃部疼痛、食欲不振、面色土黄、身体发热</td>
+                        <td>慢性胃炎、流行性感冒</td>
+                    </tr>
+                    <tr>
+                        <td>甲乙丙</td>
+                        <td>男</td>
+                        <td>25</td>
+                        <td>511522199809087711</td>
+                        <td>15869985543</td>
+                        <td>张医生</td>
+                        <td>2023-03-02 13:45</td>
+                        <td>恶心、干呕、胃部疼痛、食欲不振、面色土黄</td>
+                        <td>慢性胃炎</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="bottom">
+                <div class="float-left">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">...</a></li>
+                            <li class="page-item"><a class="page-link" href="#">65</a></li>
+                            <li class="page-item"><a class="page-link" href="#">66</a></li>
+                            <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="float-right">
+                    <p>共2条患者数据</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function downloadPDF(selectors, title) {
+        const ele = document.getElementById(selectors);
+        html2canvas( ele, {
+            allowTaint: true,
+            height: ele.offsetHeight,
+            width: ele.offsetWidth,
+            windowHeight: ele.offsetHeight,
+            windowWidth: ele.offsetWidth,
+            background: "#FFF",
+        }).then(canvas => {
+            // DOM生成base64图片
+            const base64Image = canvas.toDataURL('image/jpeg', 1);
+            // 图片的大小
+            const contentWidth = canvas.width;
+            const contentHeight = canvas.height;
+            // 每一页的尺寸 - A1尺寸
+            const pageWidth = canvas.width;
+            const pageHeight = canvas.height;
+            // DOM缩放比例后的高度
+            const imageHeight = pageWidth / contentWidth * contentHeight;
+            // 创建PDF对象
+            const PDF = new jsPDF('p', 'pt', 'a4');
+            // 当前高度只需要打印一页
+            if (imageHeight < pageHeight) {
+                PDF.addImage(base64Image, 'JPEG', 0, 0, pageWidth, imageHeight)
+            }
+            // 高度过高打印多页
+            else {
+                let tempHeight = imageHeight;
+                for(let i = 0; tempHeight > 0; i++) {
+                    PDF.addImage(base64Image, 'JPEG', 0, -i * pageHeight, pageWidth, imageHeight);
+                    tempHeight -= pageHeight;
+                    if(tempHeight > 0) {
+                        PDF.addPage();
+                    }
+                }
+            }
+            PDF.addImage(base64Image, 'JPEG', 0, 0, pageWidth, imageHeight)
+            PDF.save(title + '.pdf')
+        });
+    }
+</script>
+</body>
+</html>

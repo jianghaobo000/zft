@@ -110,6 +110,46 @@ tr:hover .td-hover{
     display: block;
 }
 
+/* 饼状图 */
+.pie-chart {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.slice {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    clip: rect(0, 100px, 200px, 0);
+    border-radius: 50%;
+}
+
+.red {
+    transform: rotate(0deg);
+    background-color: #fe315d;
+}
+
+.blue {
+    transform: rotate(110deg);
+    background-color: #005cbf;
+}
+
+.yellow {
+    transform: rotate(240deg);
+    background-color: #fcbf00;
+}
+
+.active1{
+    color: rgb(54,85,204) !important;
+    background-color: rgb(212,218,240) !important;
+}
+
+.active2{
+    background-color: #167bff !important;
+}
+
 /* 门诊CSS */
 .clinic{
     width: 100%;
@@ -260,6 +300,8 @@ tr:hover .td-hover{
 
 .clinic .middle .info .order{
     width: 100%;
+    height: 670px;
+    overflow: auto;
     border: 1px rgb(207,213,215) solid;
     border-radius: 5px;
     margin: 10px 10px 10px 10px;
@@ -844,6 +886,7 @@ tr:hover .td-hover{
     height: 780px;
     background-color: #f0f1f6;
     border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
     float: left;
 }
 
@@ -851,6 +894,7 @@ tr:hover .td-hover{
     height: 70px;
     padding: 15px 15px 15px 15px;
     border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     border-bottom: 1px #cfd5d7 solid;
     float: left;
 }
@@ -971,6 +1015,283 @@ tr:hover .td-hover{
     width: 85%;
     float: left;
 }
+
+.patient{
+    width: 100%;
+    padding: 10px 15px 10px 15px;
+    position: relative;
+}
+
+.patient .left{
+    width: 12%;
+    height: 880px;
+    margin-right: 0.5%;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 10px;
+    background-color: white;
+    float: left;
+}
+
+.patient .left .tip{
+    width: 100%;
+    height: 60px;
+    padding: 16px 30px 16px 30px;
+    border: 1px rgb(207,213,215) solid;
+    float: left;
+    color: rgb(116,116,116);
+    cursor: pointer;
+}
+
+.patient .left .tip:hover{
+    color: rgb(54,85,204);
+    background-color: rgb(212,218,240);
+}
+
+.patient .left .tip p{
+    font-size: 16px;
+}
+
+.patient .right{
+    width: 87.5%;
+    height: 880px;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 10px;
+    background-color: white;
+    float: left;
+}
+
+.patient .right .top1{
+    width: 100%;
+    height: 50px;
+    background-color: rgb(240,241,246);
+    border-bottom: 1px rgb(225,228,232) solid;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.patient .right .top1 p{
+    font-family: '黑体';
+    font-size: 20px;
+    font-weight: 400;
+    position: relative;
+    top: 15px;
+    left: 10px;
+}
+
+.patient .right .info{
+    width: 100%;
+    padding: 15px 15px 15px 15px;
+    float: left;
+}
+
+.patient .right .info .top{
+    width: 100%;
+    height: 50px;
+    margin-bottom: 10px;
+    float: left;
+}
+.patient .right .info .middle{
+    width: 100%;
+    height: 730px;
+    margin-bottom: 10px;
+    float: left;
+    overflow: auto;
+    border-bottom: 1px rgb(207,213,215) solid;
+}
+
+.patient .right .info .bottom{
+    width: 100%;
+    height: 60px;
+    float: left;
+}
+
+.patient .right .info .bottom p{
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.patient .right .info .middle-left{
+    width: 20%;
+    height: 780px;
+    background-color: #f0f1f6;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    float: left;
+}
+
+.patient .right .info .middle-left .people-top{
+    width: 100%;
+    height: 50px;
+    padding: 12px 20px 17px 20px;
+    font-size: 16px;
+    border-bottom: 1px #cfd5d7 solid;
+    float: left;
+}
+
+.patient .right .info .middle-left .people{
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px #cfd5d7 solid;
+    float: left;
+}
+
+.patient .right .info .middle-left .people:hover{
+    color: rgb(54,85,204);
+    background-color: rgb(212,218,240);
+}
+
+.patient .right .info .middle-left .people .name{
+    width: 50%;
+    height: 50px;
+    padding: 12px 20px 17px 20px;
+    font-size: 16px;
+    float: left;
+}
+
+.patient .right .info .middle-left .people .time{
+    width: 50%;
+    height: 50px;
+    padding: 20px 20px 17px 20px;
+    font-size: 14px;
+    float: left;
+}
+
+.patient .right .info .middle-middle{
+    width: 40%;
+    height: 780px;
+    float: left;
+    border: 1px solid #cfd5d7;
+    padding: 10px 10px 10px 10px;
+}
+
+.patient .right .info .middle-middle .order{
+    width: 100%;
+    height: 700px;
+    overflow: auto;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 5px;
+    padding: 10px 10px 10px 10px;
+    float: left;
+}
+
+.patient .right .info .middle-middle .order-div{
+    width: 90%;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    float: left;
+}
+
+.patient .right .info .middle-middle .order .order-div .order-text{
+    width: 15%;
+    float: left;
+}
+
+.patient .right .info .middle-middle .order .order-div .order-text p{
+    font-size: 16px;
+    color: rgb(116,116,116);
+}
+
+.patient .right .info .middle-middle .order .order-div .order-input{
+    width: 85%;
+    margin-top: 3px;
+    float: left;
+}
+
+.patient .right .info .middle-right{
+    width: 40%;
+    height: 780px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    float: left;
+    border: 1px solid #cfd5d7;
+    padding: 5px 5px 5px 5px;
+    background-color: #FFFFFF;
+}
+
+.patient .right .info .middle-right .pdf{
+    width: 100%;
+    height: 770px;
+    padding: 5px 45px 5px 45px;
+    float: left;
+    overflow: auto;
+}
+
+.patient .right .info .middle-right .pdf .title{
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    height: 40px;
+    border-bottom: 1px solid black;
+    float: left;
+}
+
+.patient .right .info .middle-right .pdf .info1{
+    margin-top: 5px;
+    font-size: 15px;
+    float: left;
+}
+
+.patient .right .info .middle-right .pdf .info2{
+    width: 100%;
+    font-size: 14px;
+    height: auto;
+    min-height: 20px;
+    margin-bottom: 8px;
+    float: left;
+}
+
+.patient .right .info .info-top{
+    width: 100%;
+    height: 240px;
+    float: left;
+    border-bottom: 3px solid #cfd5d7;
+}
+
+.patient .right .info .info-top .input{
+    width: 100%;
+    padding: 0 0 5px 0;
+    float: left;
+}
+
+.patient .right .info .info-top .input .text{
+    width: 160px;
+    color: #747474;
+    font-size: 16px;
+    float: left;
+    padding-top: 9px;
+}
+
+.patient .right .info .info-bottom{
+    width: 100%;
+    height: 560px;
+    float: left;
+}
+
+.patient .right .info .info-bottom .top{
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    float: left;
+}
+.patient .right .info .info-bottom .middle{
+    width: 100%;
+    height: 460px;
+    margin-bottom: 5px;
+    float: left;
+    overflow: auto;
+    border-bottom: 1px rgb(207,213,215) solid;
+}
+
+.patient .right .info .info-bottom .bottom{
+    width: 100%;
+    height: 40px;
+    float: left;
+}
+
+
 
 
 

@@ -37,17 +37,19 @@ public class Account {
      * 业务判断
      */
     public boolean isOk(String password, String code) throws Exception {
+        Jedis jedis = new Jedis();
         if(this.account_id==null){
             throw new Exception("账号不存在！");
         }
         if(this.getAccount_password().equals(password)){
-            Jedis jedis = new Jedis();
             if(!jedis.get("code").equals(code)){
                 throw new Exception("验证码错误！");
             }
         }else{
             throw new Exception("密码错误！");
         }
+        jedis.set("accountName",this.account_name);
+        jedis.set("countryCode",this.account_tenant_id.toString());
         return true;
     }
 

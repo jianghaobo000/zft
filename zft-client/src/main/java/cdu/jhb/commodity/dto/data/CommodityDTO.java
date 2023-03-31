@@ -47,6 +47,16 @@ public class CommodityDTO {
     private String commodity_manufacturer;
 
     /**
+     * 商品批准文号
+     */
+    private String commodity_approval_no;
+
+    /**
+     * 商品规格
+     */
+    private String commodity_specification;
+
+    /**
      * 商品单位（大）
      */
     private String commodity_large_unit;
@@ -67,14 +77,44 @@ public class CommodityDTO {
     private BigDecimal commodity_small_price;
 
     /**
-     * 商品剂型（转换率）
+     * 商品大小转换比
      */
     private Integer commodity_dosage_form;
+
+    /**
+     * 商品剂型
+     */
+    private String commodity_form_drug;
+
+    /**
+     * 商品剂量
+     */
+    private String commodity_dosage;
+
+    /**
+     * 商品剂量单位
+     */
+    private String commodity_dosage_unit;
+
+    /**
+     * 商品服用方式
+     */
+    private String commodity_take;
+
+    /**
+     * 商品服用频率
+     */
+    private String commodity_usage_frequency;
 
     /**
      * 商品是否拆零销售
      */
     private Integer commodity_split_sale_status;
+
+    /**
+     * 商品使用状态
+     */
+    private Integer commodity_enable_status;
 
     /**
      * 商品所属诊所

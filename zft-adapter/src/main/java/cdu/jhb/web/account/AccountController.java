@@ -55,9 +55,12 @@ public class AccountController {
     public String login(@Param("account_name") String account_name,@Param("account_password") String account_password,
                         @Param("code")String code,@Param("country_code")String country_code,
                         HttpServletRequest req,Model model) throws Exception {
-        if(accountService.verification(account_name,account_password,code,country_code));
-        System.out.println("成功");
-        return "clinic/clinic";
+        if(accountService.verification(account_name,account_password,code,country_code)){
+            System.out.println("成功");
+            return "clinic/clinic";
+        }
+        System.out.println("失败");
+        return "login";
     }
 
 

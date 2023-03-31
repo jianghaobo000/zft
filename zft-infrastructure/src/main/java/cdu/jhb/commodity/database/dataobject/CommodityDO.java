@@ -1,5 +1,6 @@
-package cdu.jhb.domain.commodity;
+package cdu.jhb.commodity.database.dataobject;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,15 +8,16 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
 /**
-* @description: 商品实体
+* @description: 商品DO
 * @author jhb
-* @date 2023/2/21 11:17
+* @date 2023/03/31 18:05
 * @version 1.0
 */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Commodity {
+@TableName("commodity_table")
+public class CommodityDO {
     /**
      * 商品ID
      */
