@@ -27,10 +27,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountServiceI {
 
-    @Resource
-    private AccountModExe accountModExe;
-    @Resource
-    private AccountQryExe accountQryExe;
+    private final AccountModExe accountModExe;
+    private final AccountQryExe accountQryExe;
 
     /**
      * 获取验证码图片
@@ -39,7 +37,7 @@ public class AccountServiceImpl implements AccountServiceI {
      * @return
      */
     @Override
-    public BufferedImage getMsg(HttpServletResponse response, HttpServletRequest request) {
+    public void getMsg(HttpServletResponse response, HttpServletRequest request) {
         response.setHeader("Pragma","No-cache");
         response.setHeader("Cache-Control","No-cache");
         response.setDateHeader("Expires",0);
@@ -52,7 +50,6 @@ public class AccountServiceImpl implements AccountServiceI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return image;
     }
 
     /**

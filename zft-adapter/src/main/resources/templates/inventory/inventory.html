@@ -13,24 +13,26 @@
     </div>
     <div class="right">
         <div class="top">
-            <div class="form-group" style="float: left;width: 300px;margin-right: 15px;">
-                <input type="text" class="form-control" name="inventory_commodity_name" placeholder="品项名">
-            </div>
-            <div class="form-group" style="float: left;width: 300px;margin-right: 15px;">
-                <input type="text" class="form-control" name="inventory_manufacturer" placeholder="生产厂家">
-            </div>
-            <div class="form-group" style="float: left;width: 150px;margin-right: 15px;">
-                <select class="form-control" name="inventory_category">
-                    <option value="0">全部类型</option>
-                    <option value="1">中西成药</option>
-                    <option value="2">中药</option>
-                    <option value="3">保健药品</option>
-                    <option value="4">消耗品</option>
-                </select>
-            </div>
-            <div style="float: left;">
-                <button type="button" class="btn btn-outline-primary">查询</button>
-            </div>
+            <form id="form1">
+                <div class="form-group" style="float: left;width: 300px;margin-right: 15px;">
+                    <input type="text" class="form-control" name="inventory_commodity_name" placeholder="品项名">
+                </div>
+                <div class="form-group" style="float: left;width: 300px;margin-right: 15px;">
+                    <input type="text" class="form-control" name="inventory_manufacturer" placeholder="生产厂家">
+                </div>
+                <div class="form-group" style="float: left;width: 150px;margin-right: 15px;">
+                    <select class="form-control" name="inventory_category">
+                        <option value="0">全部类型</option>
+                        <option value="1">中西成药</option>
+                        <option value="2">中药</option>
+                        <option value="3">保健药品</option>
+                        <option value="4">消耗品</option>
+                    </select>
+                </div>
+                <div style="float: left;">
+                    <button type="submit" class="btn btn-outline-primary">查询</button>
+                </div>
+            </form>
             <div style="float: right;margin-left: 15px;">
                 <button type="button" class="btn btn-outline-primary">导出</button>
             </div>
@@ -155,8 +157,8 @@
                 <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
             </svg>
         </div>
-        <div class="info">
-            <form th:action="@{/commodity/add}" method="post">
+        <form id="form2" method="post">
+            <div class="info">
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label><span style="color:red;">*</span> 品项名</label>
                     <input type="text" class="form-control" name="commodity_name" placeholder="请输入品项名">
@@ -277,17 +279,17 @@
                     <label>拆零单价(元)(可不填，填则可拆零销售)</label>
                     <input type="text" class="form-control" name="commodity_small_price" placeholder="请输入拆零单价">
                 </div>
-            </form>
-        </div>
-        <hr>
-        <div class="bottom">
-            <div style="float: right;">
-                <button type="button" class="btn btn-primary">保存</button>
             </div>
-            <div style="float: right;margin-right: 15px;">
-                <button type="button" class="btn btn-outline-primary" id="addClose2">取消</button>
+            <hr>
+            <div class="bottom">
+                <div style="float: right;">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+                <div style="float: right;margin-right: 15px;">
+                    <button type="button" class="btn btn-outline-primary" id="addClose2">取消</button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 <div class="shadow" id="shadow"/>
@@ -335,6 +337,29 @@
         no.style.display = "none";
         yes.style.display = "block";
     }
+
+    /**
+     * 提交新增品相请求
+     * @type {HTMLElement}
+     */
+    const form = document.getElementById("form2");
+    form.addEventListener('submit', function(event) {
+        // 阻止表单默认提交行为
+        event.preventDefault();
+
+        // 创建FormData对象
+        const formData = new FormData(form);
+
+        // 发送POST请求
+        axios.post('/commodity/add', formData)
+            .then(function(response) {
+                // 更新新增品项页面
+            })
+            .catch(function(error) {
+                console.error(error);
+            });
+    });
+
 
 
 </script>

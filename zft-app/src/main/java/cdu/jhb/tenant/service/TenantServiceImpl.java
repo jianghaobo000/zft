@@ -6,6 +6,7 @@ import cdu.jhb.tenant.api.TenantServiceI;
 import cdu.jhb.tenant.command.query.TenantQryExe;
 import cdu.jhb.tenant.dto.data.TenantDTO;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,12 +18,11 @@ import javax.annotation.Resource;
 * @version 1.0
 */
 @Service
+@RequiredArgsConstructor
 public class TenantServiceImpl implements TenantServiceI {
 
-    @Resource
-    private TenantGateway tenantGateway;
-    @Resource
-    private TenantQryExe tenantQryExe;
+    private final TenantGateway tenantGateway;
+    private final TenantQryExe tenantQryExe;
 
     /**
      * 获取租户ID

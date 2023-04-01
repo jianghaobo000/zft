@@ -16,5 +16,6 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface AccountMapper extends BaseMapper<AccountDO> {
 
+    AccountDO selectAccount(@Param("name") String name,@Param("countryCode") String countryCode);
 
 }

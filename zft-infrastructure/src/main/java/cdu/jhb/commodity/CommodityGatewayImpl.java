@@ -22,10 +22,8 @@ import javax.annotation.Resource;
 @RequiredArgsConstructor
 public class CommodityGatewayImpl implements CommodityGateway {
 
-    @Resource
-    private CommodityMapper commodityMapper;
-    @Resource
-    private TenantGateway tenantGateway;
+    private final CommodityMapper commodityMapper;
+    private final TenantGateway tenantGateway;
 
     /**
      * 新增品项

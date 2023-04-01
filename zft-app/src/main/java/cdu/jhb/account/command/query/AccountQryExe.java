@@ -18,8 +18,7 @@ import javax.annotation.Resource;
 @RequiredArgsConstructor
 public class AccountQryExe {
 
-    @Resource
-    private AccountGateway accountGateway;
+    private final AccountGateway accountGateway;
 
     public AccountDTO findAccountByName(String name,String countryCode) {
         return accountGateway.findAccountByName(name,countryCode);

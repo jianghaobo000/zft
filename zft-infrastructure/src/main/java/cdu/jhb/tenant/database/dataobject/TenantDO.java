@@ -1,5 +1,7 @@
 package cdu.jhb.tenant.database.dataobject;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,12 +21,18 @@ public class TenantDO {
     /**
      * 诊所ID
      */
+    @TableId(type = IdType.ID_WORKER)
     private Long tenant_id;
 
     /**
      * 诊所名称
      */
     private String tenant_name;
+
+    /**
+     * 诊所国家码
+     */
+    private String tenant_country_code;
 
     /**
      * 诊所所在地区（省级）

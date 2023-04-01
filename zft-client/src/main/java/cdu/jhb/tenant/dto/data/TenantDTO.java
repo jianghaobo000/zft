@@ -25,6 +25,11 @@ public class TenantDTO {
     private String tenant_name;
 
     /**
+     * 诊所国家码
+     */
+    private String tenant_country_code;
+
+    /**
      * 诊所所在地区（省级）
      */
     private String tenant_area_province;

@@ -1,5 +1,7 @@
 package cdu.jhb.commodity.database.dataobject;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,9 +20,11 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @TableName("commodity_table")
 public class CommodityDO {
+
     /**
      * 商品ID
      */
+    @TableId(type = IdType.ID_WORKER)
     private Long commodity_id;
 
     /**

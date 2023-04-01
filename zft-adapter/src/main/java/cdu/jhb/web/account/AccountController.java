@@ -2,6 +2,7 @@ package cdu.jhb.web.account;
 
 import cdu.jhb.account.api.AccountServiceI;
 import cdu.jhb.account.dto.data.AccountDTO;
+import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +20,11 @@ import java.awt.image.BufferedImage;
 * @version 1.0
 */
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("account")
 public class AccountController {
 
-    @Resource
-    private AccountServiceI accountService;
+    private final AccountServiceI accountService;
 
 
     /**
@@ -31,8 +32,8 @@ public class AccountController {
      * @return
      */
     @GetMapping(path = "getImg")
-    public BufferedImage getImg(HttpServletResponse response, HttpServletRequest request){
-        return accountService.getMsg(response,request);
+    public void getImg(HttpServletResponse response, HttpServletRequest request){
+        accountService.getMsg(response,request);
     }
 
     /**

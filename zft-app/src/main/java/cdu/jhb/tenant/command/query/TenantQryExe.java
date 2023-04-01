@@ -20,8 +20,7 @@ import javax.annotation.Resource;
 @RequiredArgsConstructor
 public class TenantQryExe {
 
-    @Resource
-    private TenantMapper tenantMapper;
+    private final TenantMapper tenantMapper;
 
     public Tenant getTenant(Long tenantId){
         QueryWrapper<TenantDO> queryWrapper = new QueryWrapper<TenantDO>()

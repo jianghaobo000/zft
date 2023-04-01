@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 */
 public interface AccountServiceI {
 
-    BufferedImage getMsg(HttpServletResponse response,HttpServletRequest request);
+    void getMsg(HttpServletResponse response,HttpServletRequest request);
 
 //    AccountDTO findAccountByName(String name,String countryCode);
 

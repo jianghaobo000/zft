@@ -5,6 +5,7 @@ import cdu.jhb.commodity.dto.data.CommodityDTO;
 import cdu.jhb.domain.commodity.Commodity;
 import cdu.jhb.domain.commodity.gateway.CommodityGateway;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,10 +17,10 @@ import javax.annotation.Resource;
 * @version 1.0
 */
 @Service
+@RequiredArgsConstructor
 public class CommodityServiceImpl implements CommodityServiceI {
 
-    @Resource
-    private CommodityGateway commodityGateway;
+    private final CommodityGateway commodityGateway;
 
     /**
      * 新增品项
