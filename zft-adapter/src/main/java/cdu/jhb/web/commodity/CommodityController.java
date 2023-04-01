@@ -1,15 +1,18 @@
 package cdu.jhb.web.commodity;
 
-import cdu.jhb.account.api.AccountServiceI;
 import cdu.jhb.commodity.api.CommodityServiceI;
 import cdu.jhb.commodity.dto.data.CommodityDTO;
+import cdu.jhb.inventory.dto.data.InventoryDTO;
+import cdu.jhb.inventory.dto.data.InventoryListQuery;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.Resource;
+import java.util.List;
 
 /**
 * @description: 商品Controller
@@ -22,14 +25,18 @@ import javax.annotation.Resource;
 @RequestMapping("commodity")
 public class CommodityController {
 
-    private final CommodityServiceI commodityServiceI;
+    private final CommodityServiceI commodityService;
 
     /**
      * 新增品项
      * @return
      */
     @PostMapping("add")
-    public Boolean addCommodity(CommodityDTO commodityDTO){
-        return commodityServiceI.addCommodity(commodityDTO);
+    public ResponseEntity<?> addCommodity(CommodityDTO commodityDTO){
+        int rows = commodityService.addCommodity(commodityDTO);
+        if(rows == 1){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cdu.jhb.inventory.database.InventoryMapper">
+
+    <select id="getInventoryList" resultType="cdu.jhb.inventory.dto.data.InventoryInfoDTO">
+        SELECT
+            c.commodity_id,
+            c.commodity_name,
+            c.commodity_country_code,
+            c.commodity_category,
+            c.commodity_bar_code,
+            c.commodity_manufacturer,
+            c.commodity_approval_no,
+            c.commodity_large_unit,
+            c.commodity_small_unit,
+            c.commodity_large_price,
+            c.commodity_small_price,
+            c.commodity_dosage_form,
+            c.commodity_enable_status,
+            i.inventory_large_num,
+            i.inventory_small_num
+        FROM inventory_table i
+        LEFT JOIN commodity_table c ON i.inventory_commodity_id = c.commodity_id
+        WHERE 1 = 1
+        <if test="param.inventory_commodity_name != null and param.inventory_commodity_name !=''">
+            AND c.commodity_name LIKE CONCAT('%',#{param.inventory_commodity_name},'%')
+        </if>
+        <if test="param.inventory_manufacturer != null and param.inventory_manufacturer !=''">
+            AND c.commodity_manufacturer LIKE CONCAT('%',#{param.inventory_manufacturer},'%')
+        </if>
+        <if test="param.inventory_category != null and param.inventory_category !=''">
+            AND c.commodity_category LIKE CONCAT('%',#{param.inventory_category},'%')
+        </if>
+    </select>
+
+</mapper>

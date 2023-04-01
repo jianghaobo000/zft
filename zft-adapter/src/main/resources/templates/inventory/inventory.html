@@ -22,11 +22,11 @@
                 </div>
                 <div class="form-group" style="float: left;width: 150px;margin-right: 15px;">
                     <select class="form-control" name="inventory_category">
-                        <option value="0">全部类型</option>
-                        <option value="1">中西成药</option>
-                        <option value="2">中药</option>
-                        <option value="3">保健药品</option>
-                        <option value="4">消耗品</option>
+                        <option value="">全部类型</option>
+                        <option value="中西成药">中西成药</option>
+                        <option value="中药">中药</option>
+                        <option value="保健药品">保健药品</option>
+                        <option value="消耗品">消耗品</option>
                     </select>
                 </div>
                 <div style="float: left;">
@@ -45,85 +45,36 @@
                 <thead>
                 <tr>
                     <td scope="col" width="10%">品项名称</td>
-                    <td scope="col" width="8%">类型</td>
-                    <td scope="col" width="14%">生产厂家</td>
-                    <td scope="col" width="8%">国家编码</td>
-                    <td scope="col" width="8%">批准文号</td>
-                    <td scope="col" width="8%">条码</td>
-                    <td scope="col" width="5%">批次数</td>
+                    <td scope="col" width="10%">类型</td>
+                    <td scope="col" width="10%">生产厂家</td>
+                    <td scope="col" width="10%">国家编码</td>
+                    <td scope="col" width="10%">批准文号</td>
+                    <td scope="col" width="10%">条码</td>
                     <td scope="col" width="15%">最新定价</td>
-                    <td scope="col" width="7%">最远效期</td>
-                    <td scope="col" width="7%">库存数量</td>
+                    <td scope="col" width="15%">库存数量</td>
                     <td scope="col" width="10%">操作</td>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>感冒灵颗粒</td>
-                    <td>中西成药</td>
-                    <td>四川华东医药有限公司</td>
-                    <td>H42345234</td>
-                    <td>783829472232</td>
-                    <td>31267371236</td>
-                    <td>5</td>
-                    <td>30.00元/盒</td>
-                    <td>2023-05-05</td>
-                    <td>102盒</td>
+                <tr th:each="commodity:${infoDTOList}">
+                    <td th:text="${commodity.getCommodity_name()}"></td>
+                    <td th:text="${commodity.getCommodity_category()}"></td>
+                    <td th:text="${commodity.getCommodity_manufacturer()}"></td>
+                    <td th:text="${commodity.getCommodity_country_code()}"></td>
+                    <td th:text="${commodity.getCommodity_approval_no()}"></td>
+                    <td th:text="${commodity.getCommodity_bar_code()}"></td>
+                    <nav th:if="${commodity.getCommodity_split_sale_status() == 0}">
+                        <td th:text="${commodity.getCommodity_large_price()}+'元/'+${commodity.getCommodity_large_unit()}"></td>
+                        <td th:text="${commodity.inventory_large_num}+${commodity.commodity_large_unit}"></td>
+                    </nav>
+                    <nav th:if="${commodity.getCommodity_split_sale_status() == 1}">
+                        <td th:text="${commodity.getCommodity_large_price()}+'元/'+${commodity.getCommodity_large_unit()}+' '+${commodity.getCommodity_small_price()}+'元/'+${commodity.getCommodity_small_unit()}"></td>
+                        <td th:text="${commodity.inventory_large_num}+${commodity.commodity_large_unit}+${commodity.inventory_small_num}+${commodity.commodity_small_unit}"></td>
+                    </nav>
                     <td>
                         <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" style="margin-right: 10px;">编辑</button>
                         <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" id="yes1" style="display: block;">启用</button>
                         <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" id="no1" style="display: none;">停用</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>感冒灵颗粒</td>
-                    <td>中西成药</td>
-                    <td>四川华东医药有限公司</td>
-                    <td>H42345234</td>
-                    <td>783829472232</td>
-                    <td>31267371236</td>
-                    <td>5</td>
-                    <td>30.00元/盒</td>
-                    <td>2023-05-05</td>
-                    <td>102盒</td>
-                    <td>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" style="margin-right: 10px;">编辑</button>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" id="yes2" style="display: block;">启用</button>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" id="no2" style="display: none;">停用</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>感冒灵颗粒</td>
-                    <td>中西成药</td>
-                    <td>四川华东医药有限公司</td>
-                    <td>H42345234</td>
-                    <td>783829472232</td>
-                    <td>31267371236</td>
-                    <td>5</td>
-                    <td>30.00元/盒</td>
-                    <td>2023-05-05</td>
-                    <td>102盒</td>
-                    <td>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" style="margin-right: 10px;">编辑</button>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" id="yes3" style="display: block;">启用</button>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" id="no3" style="display: none;">停用</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>感冒灵颗粒</td>
-                    <td>中西成药</td>
-                    <td>四川华东医药有限公司</td>
-                    <td>H42345234</td>
-                    <td>783829472232</td>
-                    <td>31267371236</td>
-                    <td>5</td>
-                    <td>30.00元/盒</td>
-                    <td>2023-05-05</td>
-                    <td>102盒</td>
-                    <td>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" style="margin-right: 10px;">编辑</button>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" id="yes4" style="display: block;">启用</button>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" id="no4" style="display: none;">停用</button>
                     </td>
                 </tr>
                 </tbody>
@@ -174,11 +125,10 @@
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label><span style="color:red;">*</span> 商品类型</label>
                     <select class="form-control" name="commodity_category">
-                        <option value="0">全部类型</option>
-                        <option value="1">中西成药</option>
-                        <option value="2">中药</option>
-                        <option value="3">保健药品</option>
-                        <option value="4">消耗品</option>
+                        <option value="中西成药">中西成药</option>
+                        <option value="中药">中药</option>
+                        <option value="保健药品">保健药品</option>
+                        <option value="消耗品">消耗品</option>
                     </select>
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
@@ -277,8 +227,10 @@
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label>拆零单价(元)(可不填，填则可拆零销售)</label>
-                    <input type="text" class="form-control" name="commodity_small_price" placeholder="请输入拆零单价">
+                    <input type="text" class="form-control" name="commodity_small_price" id="splitSale" placeholder="请输入拆零单价">
                 </div>
+                <input type="text" class="form-control" name="commodity_split_sale_status" style="display: none;">
+                <input type="text" class="form-control" name="commodity_enable_status" style="display: none;">
             </div>
             <hr>
             <div class="bottom">
@@ -338,24 +290,57 @@
         yes.style.display = "block";
     }
 
+
+    /**
+     * 刷新商品页面信息
+     */
+    const form1 = document.getElementById("form1");
+    function updateInfo() {
+        axios({
+            method: 'GET',
+            url: 'http://localhost:8080/inventory/toInventory',
+            param: new FormData(form1),
+        }).then(response => {
+
+        }).catch(function(error) {
+            console.error(error);
+        });
+    }
+
     /**
      * 提交新增品相请求
      * @type {HTMLElement}
      */
-    const form = document.getElementById("form2");
-    form.addEventListener('submit', function(event) {
+    const form2 = document.getElementById("form2");
+    const splitSale = document.getElementById("splitSale");
+    form2.addEventListener('submit', function(event) {
         // 阻止表单默认提交行为
         event.preventDefault();
 
         // 创建FormData对象
-        const formData = new FormData(form);
+        const formData = new FormData(form2);
+        // 判断是否拆零销售
+        if(splitSale.value !== ''){
+            formData.set("commodity_split_sale_status","1");
+        }else{
+            formData.set("commodity_split_sale_status","2");
+        }
+        // 设置启用状态为启用
+        formData.set("commodity_enable_status","1");
 
         // 发送POST请求
         axios.post('/commodity/add', formData)
             .then(function(response) {
                 // 更新新增品项页面
-            })
-            .catch(function(error) {
+                if(response.status === 200){
+                    // 关闭弹窗
+                    shadow.style.display = "none";
+                    add.style.display = "none";
+                    cocoMessage.success("新增成功",5000);
+                }else{
+                    console.log("插入失败");
+                }
+            }).catch(function(error) {
                 console.error(error);
             });
     });

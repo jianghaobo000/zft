@@ -31,11 +31,11 @@ public class CommodityGatewayImpl implements CommodityGateway {
      * @return
      */
     @Override
-    public Boolean addCommodity(Commodity commodity) {
+    public int addCommodity(Commodity commodity) {
         CommodityDO commodityDO = DozerBeanMapperBuilder.buildDefault().map(commodity,CommodityDO.class);
         // 从redis缓存中获取当前登录租户国家码
         Jedis jedis = new Jedis();
-        commodityDO.setCommodity_tenant_id(Long.valueOf(jedis.get("countryCode")));
-        return commodityMapper.insert(commodityDO) == 1;
+        commodityDO.setCommodity_tenant_id(Long.valueOf(jedis.get("tenantId")));
+        return commodityMapper.insert(commodityDO);
     }
 }

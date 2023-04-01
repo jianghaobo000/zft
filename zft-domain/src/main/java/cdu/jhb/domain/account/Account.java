@@ -49,7 +49,7 @@ public class Account {
             throw new Exception("密码错误！");
         }
         jedis.set("accountName",this.account_name);
-        jedis.set("countryCode",this.account_tenant_id.toString());
+        jedis.set("tenantId",this.account_tenant_id.toString());
         return true;
     }
 

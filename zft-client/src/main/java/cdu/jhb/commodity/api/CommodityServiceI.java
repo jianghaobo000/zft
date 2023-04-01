@@ -1,6 +1,9 @@
 package cdu.jhb.commodity.api;
 
 import cdu.jhb.commodity.dto.data.CommodityDTO;
+import cdu.jhb.inventory.dto.data.InventoryListQuery;
+
+import java.util.List;
 
 /**
 * @description: 商品服务层接口
@@ -15,5 +18,6 @@ public interface CommodityServiceI {
      * @param commodityDTO
      * @return
      */
-    Boolean addCommodity(CommodityDTO commodityDTO);
+    int addCommodity(CommodityDTO commodityDTO);
+
 }

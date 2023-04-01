@@ -14,5 +14,5 @@ public interface CommodityGateway {
      * @param commodity
      * @return
      */
-    Boolean addCommodity(Commodity commodity);
+    int addCommodity(Commodity commodity);
 }

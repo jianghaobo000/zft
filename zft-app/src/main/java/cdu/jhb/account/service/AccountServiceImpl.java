@@ -10,7 +10,6 @@ import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +27,7 @@ import java.io.IOException;
 public class AccountServiceImpl implements AccountServiceI {
 
     private final AccountModExe accountModExe;
+
     private final AccountQryExe accountQryExe;
 
     /**

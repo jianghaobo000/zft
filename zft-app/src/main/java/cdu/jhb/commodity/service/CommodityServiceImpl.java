@@ -1,14 +1,13 @@
 package cdu.jhb.commodity.service;
 
 import cdu.jhb.commodity.api.CommodityServiceI;
+import cdu.jhb.commodity.command.CommodityModExe;
 import cdu.jhb.commodity.dto.data.CommodityDTO;
 import cdu.jhb.domain.commodity.Commodity;
 import cdu.jhb.domain.commodity.gateway.CommodityGateway;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
 * @description: 商品
@@ -20,7 +19,8 @@ import javax.annotation.Resource;
 @RequiredArgsConstructor
 public class CommodityServiceImpl implements CommodityServiceI {
 
-    private final CommodityGateway commodityGateway;
+    private final CommodityModExe commodityModExe;
+
 
     /**
      * 新增品项
@@ -28,8 +28,8 @@ public class CommodityServiceImpl implements CommodityServiceI {
      * @return
      */
     @Override
-    public Boolean addCommodity(CommodityDTO commodityDTO) {
+    public int addCommodity(CommodityDTO commodityDTO) {
         Commodity commodity = DozerBeanMapperBuilder.buildDefault().map(commodityDTO,Commodity.class);
-        return commodityGateway.addCommodity(commodity);
+        return commodityModExe.addCommodity(commodity);
     }
 }

@@ -1,4 +1,4 @@
-package cdu.jhb.commodity.dto.data;
+package cdu.jhb.domain.inventory;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,15 +7,15 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
 /**
-* @description: 商品DTO
+* @description: TODO
 * @author jhb
-* @date 2023/2/20 22:07
+* @date 2023/04/01 21:35
 * @version 1.0
 */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommodityDTO {
+public class InventoryInfo {
     /**
      * 商品ID
      */
@@ -52,11 +52,6 @@ public class CommodityDTO {
     private String commodity_approval_no;
 
     /**
-     * 商品规格
-     */
-    private String commodity_specification;
-
-    /**
      * 商品单位（大）
      */
     private String commodity_large_unit;
@@ -82,47 +77,22 @@ public class CommodityDTO {
     private Integer commodity_dosage_form;
 
     /**
-     * 商品剂型
-     */
-    private String commodity_form_drug;
-
-    /**
-     * 商品剂量
-     */
-    private String commodity_dosage;
-
-    /**
-     * 商品剂量单位
-     */
-    private String commodity_dosage_unit;
-
-    /**
-     * 商品服用方式
-     */
-    private String commodity_take;
-
-    /**
-     * 商品服用频率
-     */
-    private String commodity_usage_frequency;
-
-    /**
-     * 商品单词服用剂量
-     */
-    private String commodity_single_dose;
-
-    /**
-     * 商品是否拆零销售
-     */
-    private Integer commodity_split_sale_status;
-
-    /**
      * 商品使用状态
      */
     private Integer commodity_enable_status;
 
     /**
-     * 商品所属诊所
+     * 商品库存数量（大）
      */
-    private Long commodity_tenant_id;
+    private Integer inventory_large_num;
+
+    /**
+     * 商品库存数量（小）
+     */
+    private Integer inventory_small_num;
+
+    /**
+     * 商品是否拆零销售
+     */
+    private Integer commodity_split_sale_status;
 }

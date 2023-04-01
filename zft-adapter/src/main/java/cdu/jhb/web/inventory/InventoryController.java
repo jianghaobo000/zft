@@ -1,9 +1,15 @@
 package cdu.jhb.web.inventory;
 
+import cdu.jhb.inventory.api.InventoryServiceI;
+import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
+import cdu.jhb.inventory.dto.data.InventoryListQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
 * @description: 库存Controller
@@ -16,12 +22,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("inventory")
 public class InventoryController {
 
+    private final InventoryServiceI inventoryService;
+
     /**
      * 跳转库存药品物资界面
      * @return
      */
     @GetMapping("toInventory")
-    public String toInventory(){
+    public String toInventory(InventoryListQuery query, Model model){
+        List<InventoryInfoDTO> infoDTOList = inventoryService.getInventoryList(query);
+        model.addAttribute("infoDTOList",infoDTOList);
         return "inventory/inventory";
     }
 

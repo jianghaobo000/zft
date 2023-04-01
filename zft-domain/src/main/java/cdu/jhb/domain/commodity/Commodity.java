@@ -107,6 +107,11 @@ public class Commodity {
     private String commodity_usage_frequency;
 
     /**
+     * 商品单词服用剂量
+     */
+    private String commodity_single_dose;
+
+    /**
      * 商品是否拆零销售
      */
     private Integer commodity_split_sale_status;
