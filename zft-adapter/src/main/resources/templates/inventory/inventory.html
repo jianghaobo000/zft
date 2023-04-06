@@ -13,7 +13,7 @@
     </div>
     <div class="right">
         <div class="top">
-            <form id="form1">
+            <form id="form1" th:action="@{/inventory/toInventoryByQuery}" method="post">
                 <div class="form-group" style="float: left;width: 300px;margin-right: 15px;">
                     <input type="text" class="form-control" name="inventory_commodity_name" placeholder="品项名">
                 </div>
@@ -40,7 +40,7 @@
                 <button type="button" class="btn btn-primary" id="add">新增品项</button>
             </div>
         </div>
-        <div class="info">
+        <div class="info" id="infoList" th:fragment="infoList">
             <table class="table table-striped" style="font-size: 15px;">
                 <thead>
                 <tr>
@@ -57,22 +57,18 @@
                 </thead>
                 <tbody>
                 <tr th:each="commodity:${infoDTOList}">
-                    <td th:text="${commodity.getCommodity_name()}"></td>
-                    <td th:text="${commodity.getCommodity_category()}"></td>
-                    <td th:text="${commodity.getCommodity_manufacturer()}"></td>
-                    <td th:text="${commodity.getCommodity_country_code()}"></td>
-                    <td th:text="${commodity.getCommodity_approval_no()}"></td>
-                    <td th:text="${commodity.getCommodity_bar_code()}"></td>
-                    <nav th:if="${commodity.getCommodity_split_sale_status() == 0}">
-                        <td th:text="${commodity.getCommodity_large_price()}+'元/'+${commodity.getCommodity_large_unit()}"></td>
-                        <td th:text="${commodity.inventory_large_num}+${commodity.commodity_large_unit}"></td>
-                    </nav>
-                    <nav th:if="${commodity.getCommodity_split_sale_status() == 1}">
-                        <td th:text="${commodity.getCommodity_large_price()}+'元/'+${commodity.getCommodity_large_unit()}+' '+${commodity.getCommodity_small_price()}+'元/'+${commodity.getCommodity_small_unit()}"></td>
-                        <td th:text="${commodity.inventory_large_num}+${commodity.commodity_large_unit}+${commodity.inventory_small_num}+${commodity.commodity_small_unit}"></td>
-                    </nav>
+                    <td th:text="${commodity.getCommodity_name()==''?'--':commodity.getCommodity_name()}"></td>
+                    <td th:text="${commodity.getCommodity_category()==''?'--':commodity.getCommodity_category()}"></td>
+                    <td th:text="${commodity.getCommodity_manufacturer()==''?'--':commodity.getCommodity_manufacturer()}"></td>
+                    <td th:text="${commodity.getCommodity_country_code()==''?'--':commodity.getCommodity_country_code()}"></td>
+                    <td th:text="${commodity.getCommodity_approval_no()==''?'--':commodity.getCommodity_approval_no()}"></td>
+                    <td th:text="${commodity.getCommodity_bar_code()==''?'--':commodity.getCommodity_bar_code()}"></td>
+                    <td th:if="${commodity.getCommodity_split_sale_status() == 0}" th:text="${commodity.getCommodity_large_price()}+'元/'+${commodity.getCommodity_large_unit()}"></td>
+                    <td th:if="${commodity.getCommodity_split_sale_status() == 0}" th:text="${commodity.getInventory_large_num()}+${commodity.getCommodity_large_unit()}"></td>
+                    <td th:if="${commodity.getCommodity_split_sale_status() == 1}" th:text="${commodity.getCommodity_large_price()}+'元/'+${commodity.getCommodity_large_unit()}+' '+${commodity.getCommodity_small_price()}+'元/'+${commodity.getCommodity_small_unit()}"></td>
+                    <td th:if="${commodity.getCommodity_split_sale_status() == 1}" th:text="${commodity.getInventory_large_num()}+${commodity.getCommodity_large_unit()}+${commodity.getInventory_small_num()}+${commodity.getCommodity_small_unit()}"></td>
                     <td>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" style="margin-right: 10px;">编辑</button>
+                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" style="margin-right: 10px;" th:onclick="|edit('${commodity.getCommodity_id()}')|">编辑</button>
                         <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" id="yes1" style="display: block;">启用</button>
                         <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" id="no1" style="display: none;">停用</button>
                     </td>
@@ -103,28 +99,29 @@
 <div class="inventory-add" id="inventory-add">
     <div class="inventory-pop2">
         <div class="top">
-            <p>新增商品</p>
+            <p>新增/编辑商品</p>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" id="addClose" viewBox="0 0 16 16">
                 <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
             </svg>
         </div>
-        <form id="form2" method="post">
+        <form id="form2" th:action="@{/commodity/add}" method="post">
             <div class="info">
+                <input type="text" class="form-control" id="commodity_id" name="commodity_id" style="display: none;">
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label><span style="color:red;">*</span> 品项名</label>
-                    <input type="text" class="form-control" name="commodity_name" placeholder="请输入品项名">
+                    <input type="text" class="form-control" id="commodity_name" name="commodity_name" placeholder="请输入品项名">
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label>国家编码</label>
-                    <input type="text" class="form-control" name="commodity_country_code" placeholder="请输入国家编码">
+                    <input type="text" class="form-control" id="commodity_country_code" name="commodity_country_code" placeholder="请输入国家编码">
                 </div>
                 <div class="form-group float-left" style="width: 31%;">
                     <label>准批文号</label>
-                    <input type="text" class="form-control" name="commodity_approval_no" placeholder="请输入准批文号">
+                    <input type="text" class="form-control" id="commodity_approval_no" name="commodity_approval_no" placeholder="请输入准批文号">
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label><span style="color:red;">*</span> 商品类型</label>
-                    <select class="form-control" name="commodity_category">
+                    <select class="form-control" id="commodity_category" name="commodity_category">
                         <option value="中西成药">中西成药</option>
                         <option value="中药">中药</option>
                         <option value="保健药品">保健药品</option>
@@ -133,20 +130,20 @@
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label>生产厂家</label>
-                    <input type="text" class="form-control" name="commodity_manufacturer" placeholder="请输入生产厂家">
+                    <input type="text" class="form-control" id="commodity_manufacturer" name="commodity_manufacturer" placeholder="请输入生产厂家">
                 </div>
                 <div class="form-group float-left" style="width: 31%;">
                     <label>规格</label>
-                    <input type="text" class="form-control" name="commodity_specification" placeholder="请输入规格">
+                    <input type="text" class="form-control" id="commodity_specification" name="commodity_specification" placeholder="请输入规格">
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label>商品条码</label>
-                    <input type="text" class="form-control" name="commodity_bar_code" placeholder="请输入商品条码">
+                    <input type="text" class="form-control" id="commodity_bar_code" name="commodity_bar_code" placeholder="请输入商品条码">
                 </div>
                 <hr>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label><span style="color:red;">*</span> 包装单位(大)</label>
-                    <select class="form-control" name="commodity_large_unit">
+                    <select class="form-control" id="commodity_large_unit" name="commodity_large_unit">
                         <option value="盒">盒</option>
                         <option value="瓶">瓶</option>
                         <option value="袋">袋</option>
@@ -159,7 +156,7 @@
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label><span style="color:red;">*</span> 拆零单位(小)</label>
-                    <select class="form-control" name="commodity_small_unit">
+                    <select class="form-control" id="commodity_small_unit" name="commodity_small_unit">
                         <option value="颗">颗</option>
                         <option value="瓶">瓶</option>
                         <option value="袋">袋</option>
@@ -170,11 +167,11 @@
                 </div>
                 <div class="form-group float-left" style="width: 31%;">
                     <label>大小转换比</label>
-                    <input type="text" class="form-control" name="commodity_dosage_form" placeholder="请输入商品大小转换比">
+                    <input type="text" class="form-control" id="commodity_dosage_form" name="commodity_dosage_form" placeholder="请输入商品大小转换比">
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label>剂型</label>
-                    <select class="form-control" name="commodity_form_drug">
+                    <select class="form-control" id="commodity_form_drug" name="commodity_form_drug">
                         <option value="液体剂型">液体剂型</option>
                         <option value="气体剂型">气体剂型</option>
                         <option value="固体剂型">固体剂型</option>
@@ -183,11 +180,11 @@
                 </div>
                 <div class="form-group float-left" style="width: 15%;margin-right: 1%;">
                     <label>剂量</label>
-                    <input type="text" class="form-control" name="commodity_dosage" placeholder="请输入剂量">
+                    <input type="text" class="form-control" id="commodity_dosage" name="commodity_dosage" placeholder="请输入剂量">
                 </div>
                 <div class="form-group float-left" style="width: 15%;margin-right: 2%;">
                     <label>剂量单位</label>
-                    <select class="form-control" name="commodity_dosage_unit">
+                    <select class="form-control" id="commodity_dosage_unit" name="commodity_dosage_unit">
                         <option value="mg">mg</option>
                         <option value="g">g</option>
                         <option value="kg">kg</option>
@@ -197,7 +194,7 @@
                 </div>
                 <div class="form-group float-left" style="width: 31%;">
                     <label>服用方式</label>
-                    <select class="form-control" name="commodity_take">
+                    <select class="form-control" id="commodity_take" name="commodity_take">
                         <option value="空腹服">空腹服</option>
                         <option value="饭前服">饭前服</option>
                         <option value="饭后服">饭后服</option>
@@ -207,7 +204,7 @@
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label>服用频次</label>
-                    <select class="form-control" name="commodity_usage_frequency">
+                    <select class="form-control" id="commodity_usage_frequency" name="commodity_usage_frequency">
                         <option value="一天一次">一天一次</option>
                         <option value="一天两次">一天两次</option>
                         <option value="一天三次">一天三次</option>
@@ -218,19 +215,19 @@
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label>单次服用剂量</label>
-                    <input type="text" class="form-control" name="commodity_single_dose" placeholder="请输入单次服用剂量">
+                    <input type="text" class="form-control" id="commodity_single_dose" name="commodity_single_dose" placeholder="请输入单次服用剂量">
                 </div>
                 <hr>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label><span style="color:red;">*</span> 定价(元)</label>
-                    <input type="text" class="form-control" name="commodity_large_price" placeholder="请输入定价">
+                    <input type="text" class="form-control" id="commodity_large_price" name="commodity_large_price" placeholder="请输入定价">
                 </div>
                 <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
                     <label>拆零单价(元)(可不填，填则可拆零销售)</label>
-                    <input type="text" class="form-control" name="commodity_small_price" id="splitSale" placeholder="请输入拆零单价">
+                    <input type="text" class="form-control" id="commodity_small_price" name="commodity_small_price" placeholder="请输入拆零单价">
                 </div>
-                <input type="text" class="form-control" name="commodity_split_sale_status" style="display: none;">
-                <input type="text" class="form-control" name="commodity_enable_status" style="display: none;">
+                <input type="text" class="form-control" id="commodity_split_sale_status" name="commodity_split_sale_status" style="display: none;">
+                <input type="text" class="form-control" id="commodity_enable_status" name="commodity_enable_status" style="display: none;">
             </div>
             <hr>
             <div class="bottom">
@@ -295,48 +292,69 @@
      * 刷新商品页面信息
      */
     const form1 = document.getElementById("form1");
-    function updateInfo() {
-        axios({
-            method: 'GET',
-            url: 'http://localhost:8080/inventory/toInventory',
-            param: new FormData(form1),
-        }).then(response => {
+    form1.addEventListener('submit',function (event) {
+        // 阻止表单默认提交行为
+        event.preventDefault();
+        // 创建FormData对象
+        const formData1 = new FormData(form1);
 
-        }).catch(function(error) {
-            console.error(error);
-        });
-    }
+        // 发送POST请求
+        // axios.post('/inventory/toInventoryByQuery', formData1)
+        //     .then(function(response) {
+        //         $("#infoDTOList").html(data);
+        //     }).catch(function(error) {
+        //     console.error(error);
+        // });
+        $.ajax({
+            url: '/inventory/toInventoryByQuery',
+            type: 'POST',
+            data: formData1,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $("#infoList").html(data);
+            },
+            error:function (data) {
+                layer.msg('请求失败，请刷新重试');
+            }
+        })
+    });
 
     /**
      * 提交新增品相请求
      * @type {HTMLElement}
      */
     const form2 = document.getElementById("form2");
-    const splitSale = document.getElementById("splitSale");
+    const commodity_small_price = document.getElementById("commodity_small_price");
     form2.addEventListener('submit', function(event) {
         // 阻止表单默认提交行为
         event.preventDefault();
 
         // 创建FormData对象
-        const formData = new FormData(form2);
+        const formData2 = new FormData(form2);
         // 判断是否拆零销售
-        if(splitSale.value !== ''){
-            formData.set("commodity_split_sale_status","1");
+        if(commodity_small_price.value !== ''){
+            formData2.set("commodity_split_sale_status","1");
         }else{
-            formData.set("commodity_split_sale_status","2");
+            formData2.set("commodity_split_sale_status","0");
         }
         // 设置启用状态为启用
-        formData.set("commodity_enable_status","1");
+        formData2.set("commodity_enable_status","1");
 
         // 发送POST请求
-        axios.post('/commodity/add', formData)
+        axios.post('/commodity/add', formData2)
             .then(function(response) {
                 // 更新新增品项页面
                 if(response.status === 200){
                     // 关闭弹窗
                     shadow.style.display = "none";
                     add.style.display = "none";
-                    cocoMessage.success("新增成功",5000);
+                    // 创建FormData对象
+                    const formData1 = new FormData(form1);
+                    window.location.href = '/inventory/toInventory?' +
+                        'inventory_commodity_name='+formData1.get("inventory_commodity_name")+
+                        '&inventory_manufacturer='+formData1.get("inventory_manufacturer")+
+                        '&inventory_category='+formData1.get("inventory_category")
                 }else{
                     console.log("插入失败");
                 }
@@ -344,6 +362,56 @@
                 console.error(error);
             });
     });
+
+    /**
+     * 点击编辑后回显值
+     * @param params
+     * @constructor
+     */
+    function FillValue(params) {
+        document.getElementById("commodity_name").value = params.get("commodity_name");
+        // 打开弹窗
+        shadow.style.display = "block";
+        add.style.display = "block";
+    }
+
+    /**
+     * 修改值查询回显
+     * @param id
+     */
+    function edit(id) {
+        axios.get('/inventory/selectById',{
+            params: {
+                id: id,
+            }
+        }).then(function (response) {
+            // 回显值
+            document.getElementById("commodity_id").value = response.data.commodity_id;
+            document.getElementById("commodity_name").value = response.data.commodity_name;
+            document.getElementById("commodity_country_code").value = response.data.commodity_country_code;
+            document.getElementById("commodity_approval_no").value = response.data.commodity_approval_no;
+            document.getElementById("commodity_category").value = response.data.commodity_category;
+            document.getElementById("commodity_manufacturer").value = response.data.commodity_manufacturer;
+            document.getElementById("commodity_specification").value = response.data.commodity_specification;
+            document.getElementById("commodity_bar_code").value = response.data.commodity_bar_code;
+            document.getElementById("commodity_large_unit").value = response.data.commodity_large_unit;
+            document.getElementById("commodity_small_unit").value = response.data.commodity_small_unit;
+            document.getElementById("commodity_dosage_form").value = response.data.commodity_dosage_form;
+            document.getElementById("commodity_form_drug").value = response.data.commodity_form_drug;
+            document.getElementById("commodity_dosage").value = response.data.commodity_dosage;
+            document.getElementById("commodity_dosage_unit").value = response.data.commodity_dosage_unit;
+            document.getElementById("commodity_take").value = response.data.commodity_take;
+            document.getElementById("commodity_usage_frequency").value = response.data.commodity_usage_frequency;
+            document.getElementById("commodity_single_dose").value = response.data.commodity_single_dose;
+            document.getElementById("commodity_large_price").value = response.data.commodity_large_price;
+            document.getElementById("commodity_small_price").value = response.data.commodity_small_price;
+            document.getElementById("commodity_split_sale_status").value = response.data.commodity_split_sale_status;
+            document.getElementById("commodity_enable_status").value = response.data.commodity_enable_status;
+            // 打开弹窗
+            shadow.style.display = "block";
+            add.style.display = "block";
+        })
+    }
 
 
 

@@ -1,5 +1,7 @@
 package cdu.jhb.inventory.dto.data;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,7 @@ public class InventoryOutDTO {
     /**
      * 出库单ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long inventory_out_id;
 
     /**
@@ -27,6 +30,7 @@ public class InventoryOutDTO {
     /**
      * 出库人
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long inventory_out_operator_id;
 
     /**

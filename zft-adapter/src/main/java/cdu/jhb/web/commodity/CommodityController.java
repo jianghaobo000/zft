@@ -33,8 +33,7 @@ public class CommodityController {
      */
     @PostMapping("add")
     public ResponseEntity<?> addCommodity(CommodityDTO commodityDTO){
-        int rows = commodityService.addCommodity(commodityDTO);
-        if(rows == 1){
+        if(commodityService.addCommodity(commodityDTO)){
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

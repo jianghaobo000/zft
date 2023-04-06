@@ -1,4 +1,4 @@
-package cdu.jhb.account.command.query;
+package cdu.jhb.account.command;
 
 import cdu.jhb.account.database.AccountMapper;
 import cdu.jhb.account.dto.data.AccountDTO;

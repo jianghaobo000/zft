@@ -1,5 +1,7 @@
 package cdu.jhb.account.dto.data;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +20,7 @@ public class AccountDTO {
     /**
      * 账户ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long account_id;
     /**
      * 账户名

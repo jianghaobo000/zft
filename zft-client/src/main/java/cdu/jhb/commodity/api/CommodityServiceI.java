@@ -18,6 +18,6 @@ public interface CommodityServiceI {
      * @param commodityDTO
      * @return
      */
-    int addCommodity(CommodityDTO commodityDTO);
+    Boolean addCommodity(CommodityDTO commodityDTO);
 
 }

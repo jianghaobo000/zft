@@ -1,9 +1,13 @@
 package cdu.jhb.inventory.database.dataobject;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 /**
 * @description: TODO
@@ -19,6 +23,7 @@ public class InventoryDO {
     /**
      * 库存ID
      */
+    @TableId(type = IdType.ID_WORKER)
     private Long inventory_id;
 
     /**

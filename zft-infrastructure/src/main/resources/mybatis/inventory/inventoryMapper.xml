@@ -19,6 +19,7 @@
             c.commodity_small_price,
             c.commodity_dosage_form,
             c.commodity_enable_status,
+            c.commodity_split_sale_status,
             i.inventory_large_num,
             i.inventory_small_num
         FROM inventory_table i

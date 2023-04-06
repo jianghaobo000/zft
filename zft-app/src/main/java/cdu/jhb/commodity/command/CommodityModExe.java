@@ -21,7 +21,7 @@ public class CommodityModExe {
      * @param commodity
      * @return
      */
-    public int addCommodity(Commodity commodity){
+    public Boolean addCommodity(Commodity commodity){
         return commodityGateway.addCommodity(commodity);
     }
 }

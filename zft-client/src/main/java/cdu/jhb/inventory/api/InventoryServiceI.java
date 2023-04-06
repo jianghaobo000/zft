@@ -1,5 +1,6 @@
 package cdu.jhb.inventory.api;
 
+import cdu.jhb.commodity.dto.data.CommodityDTO;
 import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
 import cdu.jhb.inventory.dto.data.InventoryListQuery;
 
@@ -18,4 +19,11 @@ public interface InventoryServiceI {
      * @return
      */
     List<InventoryInfoDTO> getInventoryList(InventoryListQuery query);
+
+    /**
+     * 通过ID获取商品信息
+     * @param id
+     * @return
+     */
+    CommodityDTO selectById(Long id);
 }

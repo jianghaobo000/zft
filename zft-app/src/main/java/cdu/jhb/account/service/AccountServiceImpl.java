@@ -2,7 +2,7 @@ package cdu.jhb.account.service;
 
 import cdu.jhb.account.api.AccountServiceI;
 import cdu.jhb.account.command.AccountModExe;
-import cdu.jhb.account.command.query.AccountQryExe;
+import cdu.jhb.account.command.AccountQryExe;
 import cdu.jhb.account.dto.data.AccountDTO;
 import cdu.jhb.domain.account.Account;
 import cdu.jhb.util.GetMsg;

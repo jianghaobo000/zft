@@ -1,5 +1,7 @@
 package cdu.jhb.tenant.dto.data;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,7 @@ public class TenantDTO {
     /**
      * 诊所ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long tenant_id;
 
     /**

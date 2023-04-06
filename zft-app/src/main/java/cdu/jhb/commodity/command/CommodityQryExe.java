@@ -1,4 +1,4 @@
-package cdu.jhb.commodity.command.query;
+package cdu.jhb.commodity.command;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
