@@ -28,4 +28,9 @@ public class InventoryListQuery {
      * 商品类型
      */
     private String inventory_category;
+
+    /**
+     * 商品属诊所
+     */
+    private Long inventory_tenant_id;
 }

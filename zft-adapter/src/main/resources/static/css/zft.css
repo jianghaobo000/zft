@@ -81,6 +81,13 @@ body{
     display: none;
 }
 
+.no-data{
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    color: #3c3f41;
+}
+
 .svg-text{
     position:relative;
     top:3px;

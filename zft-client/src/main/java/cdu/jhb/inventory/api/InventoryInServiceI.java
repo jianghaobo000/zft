@@ -1,5 +1,11 @@
 package cdu.jhb.inventory.api;
 
+import cdu.jhb.inventory.dto.data.InventoryInDTO;
+import cdu.jhb.inventory.dto.data.InventoryInInfoDTO;
+import cdu.jhb.inventory.dto.data.InventoryInListQuery;
+
+import java.util.List;
+
 /**
 * @description: TODO
 * @author jhb
@@ -7,4 +13,6 @@ package cdu.jhb.inventory.api;
 * @version 1.0
 */
 public interface InventoryInServiceI {
+
+    List<InventoryInInfoDTO> getInventoryInList(InventoryInListQuery query);
 }

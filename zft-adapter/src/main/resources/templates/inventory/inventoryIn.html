@@ -69,79 +69,38 @@
                 </div>
             </div>
             <div class="info">
-                <table class="table table-striped" style="font-size: 18px;">
+                <table class="table table-striped" style="font-size: 15px;">
                     <thead>
                     <tr>
                         <td scope="col" width="15%">入库单号</td>
-                        <td scope="col" width="10%">状态</td>
+                        <td scope="col" width="5%">状态</td>
                         <td scope="col" width="15%">供应商</td>
-                        <td scope="col" width="10%">品种</td>
+                        <td scope="col" width="5%">品种</td>
                         <td scope="col" width="10%">金额(元)</td>
                         <td scope="col" width="10%">入库人</td>
-                        <td scope="col" width="10%">创建日期</td>
-                        <td scope="col" width="10%">入库日期</td>
+                        <td scope="col" width="15%">创建日期</td>
+                        <td scope="col" width="15%">入库日期</td>
                         <td scope="col" width="10%">操作</td>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>RKD2023031500001</td>
-                        <td>待入库</td>
-                        <td>四川华东医药有限公司</td>
-                        <td>2</td>
-                        <td>20.99</td>
-                        <td>姜昊波</td>
-                        <td>2023-03-15</td>
-                        <td>2023-03-15</td>
+                    <tr th:each="inventoryIn:${infoInDTOList}">
+                        <td th:text="${inventoryIn.getInventory_in_id()}"></td>
+                        <td th:text="${inventoryIn.getInventory_in_status()}"></td>
+                        <td th:text="${inventoryIn.getInventory_in_supplier_name()}"></td>
+                        <td th:text="${inventoryIn.getInventory_in_variety()}"></td>
+                        <td th:text="${inventoryIn.getInventory_in_money()}"></td>
+                        <td th:text="${inventoryIn.getInventory_in_operator()}"></td>
+                        <td th:text="${inventoryIn.getInventory_in_create_time()}"></td>
+                        <td th:text="${inventoryIn.getInventory_in_time()}"></td>
                         <td>
                             <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select1">查看</button>
                             <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>RKD2023031500001</td>
-                        <td>待入库</td>
-                        <td>四川华东医药有限公司</td>
-                        <td>2</td>
-                        <td>20.99</td>
-                        <td>姜昊波</td>
-                        <td>2023-03-15</td>
-                        <td>2023-03-15</td>
-                        <td>
-                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select2">查看</button>
-                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>RKD2023031500001</td>
-                        <td>待入库</td>
-                        <td>四川华东医药有限公司</td>
-                        <td>2</td>
-                        <td>20.99</td>
-                        <td>姜昊波</td>
-                        <td>2023-03-15</td>
-                        <td>2023-03-15</td>
-                        <td>
-                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select3">查看</button>
-                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>RKD2023031500001</td>
-                        <td>待入库</td>
-                        <td>四川华东医药有限公司</td>
-                        <td>2</td>
-                        <td>20.99</td>
-                        <td>姜昊波</td>
-                        <td>2023-03-15</td>
-                        <td>2023-03-15</td>
-                        <td>
-                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select4">查看</button>
-                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
+                <p th:if="${infoInDTOList.size() == 0}" class="no-data">暂无数据</p>
             </div>
             <div class="bottom">
                 <div class="float-left">

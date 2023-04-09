@@ -1,9 +1,9 @@
 package cdu.jhb.web.inventory;
 
 import cdu.jhb.commodity.dto.data.CommodityDTO;
+import cdu.jhb.inventory.api.InventoryInServiceI;
 import cdu.jhb.inventory.api.InventoryServiceI;
-import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
-import cdu.jhb.inventory.dto.data.InventoryListQuery;
+import cdu.jhb.inventory.dto.data.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +28,8 @@ public class InventoryController {
 
     private final InventoryServiceI inventoryService;
 
+    private final InventoryInServiceI inventoryInService;
+
     /**
      * 跳转库存药品物资界面
      * @return
@@ -49,11 +51,6 @@ public class InventoryController {
         model.addAttribute("infoDTOList",infoDTOList);
         return "inventory/inventory :: infoList";
     }
-//    @PostMapping("toInventoryByQuery")
-//    public ResponseEntity<?> toInventory(InventoryListQuery query){
-//        List<InventoryInfoDTO> infoDTOList = inventoryService.getInventoryList(query);
-//        return ResponseEntity.ok(infoDTOList);
-//    }
 
     /**
      * 按ID查询商品信息
@@ -70,7 +67,9 @@ public class InventoryController {
      * @return
      */
     @GetMapping("toInventoryIn")
-    public String toInventoryIn(){
+    public String toInventoryIn(Model model){
+        List<InventoryInInfoDTO> inventoryInDTOList = inventoryInService.getInventoryInList(new InventoryInListQuery());
+        model.addAttribute("infoInDTOList",inventoryInDTOList);
         return "inventory/inventoryIn";
     }
 

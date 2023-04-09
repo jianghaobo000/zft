@@ -6,12 +6,15 @@ import cdu.jhb.commodity.dto.data.CommodityDTO;
 import cdu.jhb.domain.commodity.Commodity;
 import cdu.jhb.domain.inventory.gateway.InventoryGateway;
 import cdu.jhb.inventory.InventoryGatewayImpl;
+import cdu.jhb.inventory.database.InventoryInMapper;
 import cdu.jhb.inventory.database.InventoryMapper;
-import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
-import cdu.jhb.inventory.dto.data.InventoryListQuery;
+import cdu.jhb.inventory.database.dataobject.InventoryInDO;
+import cdu.jhb.inventory.dto.data.*;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Jedis;
 
 import java.util.List;
 
@@ -27,6 +30,8 @@ public class InventoryQryExe {
 
     private final InventoryGateway inventoryGateway;
 
+    private final InventoryInMapper inventoryInMapper;
+
     private final CommodityMapper commodityMapper;
 
     /**
@@ -35,6 +40,8 @@ public class InventoryQryExe {
      * @return
      */
     public List<InventoryInfoDTO> getInventoryList(InventoryListQuery query){
+        Jedis jedis = new Jedis();
+        query.setInventory_tenant_id(Long.valueOf(jedis.get("tenantId")));
         return inventoryGateway.getInventoryList(query);
     }
 
@@ -46,5 +53,15 @@ public class InventoryQryExe {
     public Commodity selectById(Long id){
         CommodityDO commodityDO = commodityMapper.selectById(id);
         return DozerBeanMapperBuilder.buildDefault().map(commodityDO,Commodity.class);
+    }
+
+    /**
+     * 查询入库单列表
+     * @return
+     */
+    public List<InventoryInInfoDTO> getInventoryInList(InventoryInListQuery query){
+        Jedis jedis = new Jedis();
+        query.setInventory_in_tenant_id(Long.valueOf(jedis.get("tenantId")));
+        return inventoryInMapper.getInventoryInList(query);
     }
 }

@@ -1,7 +1,5 @@
-package cdu.jhb.domain.inventory;
+package cdu.jhb.inventory.dto.data;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,15 +7,15 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
 /**
-* @description: 入库单实体
+* @description: 入库单信息DTO
 * @author jhb
-* @date 2023/2/21 11:19
+* @date 2023/04/07 22:17
 * @version 1.0
 */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InventoryIn {
+public class InventoryInInfoDTO {
     /**
      * 入库单ID
      */
@@ -29,9 +27,9 @@ public class InventoryIn {
     private String inventory_in_status;
 
     /**
-     * 入库单供应商ID
+     * 入库单供应商
      */
-    private Long inventory_in_supplier_id;
+    private String inventory_in_supplier_name;
 
     /**
      * 入库时间
@@ -46,7 +44,7 @@ public class InventoryIn {
     /**
      * 入库人
      */
-    private Long inventory_in_operator_id;
+    private String inventory_in_operator;
 
     /**
      * 入库品种数
@@ -62,9 +60,4 @@ public class InventoryIn {
      * 入库单金额
      */
     private BigDecimal inventory_in_money;
-
-    /**
-     * 入库单所属诊所
-     */
-    private Long inventory_in_tenant_id;
 }

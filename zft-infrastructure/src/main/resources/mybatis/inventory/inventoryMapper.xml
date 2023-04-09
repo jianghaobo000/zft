@@ -34,6 +34,7 @@
         <if test="param.inventory_category != null and param.inventory_category !=''">
             AND c.commodity_category LIKE CONCAT('%',#{param.inventory_category},'%')
         </if>
+        AND i.inventory_tenant_id = #{param.inventory_tenant_id}
     </select>
 
 </mapper>
