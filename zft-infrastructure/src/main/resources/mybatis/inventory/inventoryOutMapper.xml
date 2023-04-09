@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cdu.jhb.inventory.database.InventoryOutMapper">
+
+    <select id="getInventoryOutList" resultType="cdu.jhb.inventory.dto.data.InventoryOutInfoDTO">
+        SELECT
+            i.inventory_out_id,
+            i.inventory_out_status,
+            i.inventory_out_category,
+            i.inventory_out_time,
+            i.inventory_out_create_time,
+            a.account_name AS inventory_out_operator,
+            i.inventory_out_variety,
+            i.inventory_out_money
+        FROM inventory_out_table i
+        LEFT JOIN account_table a ON i.inventory_out_operator_id = a.account_id
+        WHERE
+            i.inventory_out_tenant_id = #{param.inventory_out_tenant_id}
+        <if test="param.inventory_out_status != null and param.inventory_out_status !=''">
+            AND i.inventory_out_status = #{param.inventory_out_status}
+        </if>
+        <if test="param.inventory_out_category != null and param.inventory_out_category !=''">
+            AND i.inventory_out_category = #{param.inventory_out_category}
+        </if>
+        <if test="param.inventory_out_operator_id != null">
+            AND i.inventory_out_operator_id = #{param.inventory_out_operator_id}
+        </if>
+        <if test="param.inventory_out_date_status == 1">
+            <if test="param.inventory_out_begin_time != '' and param.inventory_out_end_time != ''">
+                AND i.inventory_out_create_time BETWEEN #{param.inventory_out_begin_time} AND #{param.inventory_out_end_time}
+            </if>
+            ORDER BY i.inventory_out_create_time DESC
+        </if>
+        <if test="param.inventory_out_date_status == 2">
+            <if test="param.inventory_out_begin_time != '' and param.inventory_out_end_time != ''">
+                AND i.inventory_out_time BETWEEN #{param.inventory_out_begin_time} AND #{param.inventory_out_end_time}
+            </if>
+            ORDER BY i.inventory_out_time DESC
+        </if>
+    </select>
+
+</mapper>

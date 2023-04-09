@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 
 /**
 * @description: TODO
@@ -64,5 +65,14 @@ public class AccountServiceImpl implements AccountServiceI {
             return account.isOk(password, code);
         }
         return false;
+    }
+
+    /**
+     * 获取账户列表
+     * @return
+     */
+    @Override
+    public List<AccountDTO> getAccountList() {
+        return accountQryExe.getAccountList();
     }
 }

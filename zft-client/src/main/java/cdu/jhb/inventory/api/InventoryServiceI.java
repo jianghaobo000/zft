@@ -3,6 +3,7 @@ package cdu.jhb.inventory.api;
 import cdu.jhb.commodity.dto.data.CommodityDTO;
 import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
 import cdu.jhb.inventory.dto.data.InventoryListQuery;
+import cdu.jhb.inventory.dto.data.SupplierDTO;
 
 import java.util.List;
 
@@ -26,4 +27,10 @@ public interface InventoryServiceI {
      * @return
      */
     CommodityDTO selectById(Long id);
+
+    /**
+     * 获取供应商列表
+     * @return
+     */
+    List<SupplierDTO> getSupplierList();
 }

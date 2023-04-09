@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
 * @description: 入库单主表DTO
@@ -34,6 +35,11 @@ public class InventoryInDTO {
      */
     @JsonSerialize(using = ToStringSerializer.class)
     private Long inventory_in_supplier_id;
+
+    /**
+     * 随货单号
+     */
+    private String inventory_in_delivery;
 
     /**
      * 入库时间
@@ -70,4 +76,9 @@ public class InventoryInDTO {
      * 入库单所属诊所
      */
     private Long inventory_in_tenant_id;
+
+    /**
+     * 入库单明细
+     */
+    private List<InventoryInDetailDTO> inDetailList;
 }

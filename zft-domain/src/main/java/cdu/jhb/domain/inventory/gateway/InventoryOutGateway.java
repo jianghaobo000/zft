@@ -1,5 +1,10 @@
 package cdu.jhb.domain.inventory.gateway;
 
+import cdu.jhb.inventory.dto.data.InventoryOutInfoDTO;
+import cdu.jhb.inventory.dto.data.InventoryOutListQuery;
+
+import java.util.List;
+
 /**
 * @description: TODO
 * @author jhb
@@ -7,4 +12,11 @@ package cdu.jhb.domain.inventory.gateway;
 * @version 1.0
 */
 public interface InventoryOutGateway {
+
+    /**
+     * 获取出库单列表
+     * @param query
+     * @return
+     */
+    List<InventoryOutInfoDTO> getInventoryOutList(InventoryOutListQuery query);
 }

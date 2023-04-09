@@ -18,7 +18,8 @@
         FROM inventory_in_table i
         LEFT JOIN supplier_table s ON i.inventory_in_supplier_id = s.supplier_id
         LEFT JOIN account_table a ON i.inventory_in_operator_id = a.account_id
-        WHERE 1 = 1
+        WHERE
+            i.inventory_in_tenant_id = #{param.inventory_in_tenant_id}
         <if test="param.inventory_in_status != null and param.inventory_in_status !=''">
             AND i.inventory_in_status = #{param.inventory_in_status}
         </if>
@@ -40,7 +41,6 @@
             </if>
             ORDER BY i.inventory_in_time DESC
         </if>
-        AND i.inventory_in_tenant_id = #{param.inventory_in_tenant_id}
     </select>
 
 </mapper>

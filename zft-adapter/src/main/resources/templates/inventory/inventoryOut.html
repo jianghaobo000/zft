@@ -13,53 +13,49 @@
     </div>
     <div class="right">
         <div class="top">
-            <div class="form-group" style="float: left;width: 150px;margin-right: 15px;">
-                <select class="form-control" name="inventory_out_status">
-                    <option value="">全部状态</option>
-                    <option value="待出库">待出库</option>
-                    <option value="已出库">待出库</option>
-                </select>
-            </div>
-            <div class="form-group" style="float: left;width: 120px;margin-right: 15px;">
-                <select class="form-control" name="inventory_out_date_status">
-                    <option value="0" selected>创建日期</option>
-                    <option value="1">出库日期</option>
-                </select>
-            </div>
-            <div style="float: left;margin-right: 15px;">
-                <div class="layui-inline">
-                    <div class="layui-inline" id="test6">
-                        <div class="layui-input-inline float-left" style="width: 100px;">
-                            <input type="text" autocomplete="off" id="test-startDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="开始日期">
-                        </div>
-                        <div class="layui-form-mid float-left" style="margin: 0 auto;">-</div>
-                        <div class="layui-input-inline float-left" style="width: 100px;">
-                            <input type="text" autocomplete="off" id="test-endDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="结束日期">
+            <form id="form1" th:action="@{/inventory/toInventoryOutByQuery}" method="post">
+                <div class="form-group" style="float: left;width: 150px;margin-right: 15px;">
+                    <select class="form-control" name="inventory_out_status">
+                        <option value="">全部状态</option>
+                        <option value="待出库">待出库</option>
+                        <option value="已出库">已出库</option>
+                    </select>
+                </div>
+                <div class="form-group" style="float: left;width: 120px;margin-right: 15px;">
+                    <select class="form-control" name="inventory_out_date_status">
+                        <option value="1" selected>创建日期</option>
+                        <option value="2">出库日期</option>
+                    </select>
+                </div>
+                <div style="float: left;margin-right: 15px;">
+                    <div class="layui-inline">
+                        <div class="layui-inline" id="test6">
+                            <div class="layui-input-inline float-left" style="width: 100px;">
+                                <input type="text" name="inventory_out_begin_time" autocomplete="off" id="test-startDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="开始日期">
+                            </div>
+                            <div class="layui-form-mid float-left" style="margin: 0 auto;">-</div>
+                            <div class="layui-input-inline float-left" style="width: 100px;">
+                                <input type="text" name="inventory_out_end_time" autocomplete="off" id="test-endDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="结束日期">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group" style="float: left;width: 140px;margin-right: 15px;">
-                <select class="form-control" name="inventory_out_category">
-                    <option value="">全部类型</option>
-                    <option value="">领料出库</option>
-                    <option value="">报损出库</option>
-                </select>
-            </div>
-            <div class="form-group" style="float: left;width: 140px;margin-right: 15px;">
-                <select class="form-control" name="inventory_in_supplier">
-                    <option value="">全部出库人</option>
-                    <option value="">姜昊波</option>
-                    <option value="">滴滴滴</option>
-                    <option value="">额恩恩</option>
-                </select>
-            </div>
-            <div class="form-group" style="float: left;width: 300px;margin-right: 15px;">
-                <input type="text" class="form-control" name="inventory_out_text" placeholder="药品名/批准文号/国家码">
-            </div>
-            <div style="float: left;">
-                <button type="button" class="btn btn-outline-primary">查询</button>
-            </div>
+                <div class="form-group" style="float: left;width: 140px;margin-right: 15px;">
+                    <select class="form-control" name="inventory_out_category">
+                        <option value="">全部类型</option>
+                        <option value="领料出库">领料出库</option>
+                        <option value="报损出库">报损出库</option>
+                    </select>
+                </div>
+                <div class="form-group" style="float: left;width: 140px;margin-right: 15px;">
+                    <select class="form-control" id="operator" name="inventory_out_operator_id">
+                        <option value="">全部出库人</option>
+                    </select>
+                </div>
+                <div style="float: left;">
+                    <button type="submit" class="btn btn-outline-primary">查询</button>
+                </div>
+            </form>
             <div style="float: right;margin-left: 15px;">
                 <button type="button" class="btn btn-outline-primary">导出</button>
             </div>
@@ -67,80 +63,39 @@
                 <button type="button" class="btn btn-primary" id="add">新增出库</button>
             </div>
         </div>
-        <div class="info">
+        <div class="info" id="outInfoList" th:fragment="outInfoList">
             <table class="table table-striped" style="font-size: 15px;">
                 <thead>
                 <tr>
-                    <td scope="col" width="20%">出库单号</td>
-                    <td scope="col" width="10%">状态</td>
+                    <td scope="col" width="15%">出库单号</td>
+                    <td scope="col" width="5%">状态</td>
                     <td scope="col" width="15%">出库类型</td>
                     <td scope="col" width="5%">品种</td>
                     <td scope="col" width="10%">金额(元)</td>
                     <td scope="col" width="10%">出库人</td>
-                    <td scope="col" width="10%">创建日期</td>
-                    <td scope="col" width="10%">出库日期</td>
+                    <td scope="col" width="15%">创建日期</td>
+                    <td scope="col" width="15%">出库日期</td>
                     <td scope="col" width="10%">操作</td>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>RKD2023031500001</td>
-                    <td>待出库</td>
-                    <td>领料出库</td>
-                    <td>2</td>
-                    <td>20.99</td>
-                    <td>姜昊波</td>
-                    <td>2023-03-15</td>
-                    <td>2023-03-15</td>
+                <tr th:each="inventoryOut:${infoOutDTOList}">
+                    <td th:text="${inventoryOut.getInventory_out_id()}"></td>
+                    <td th:text="${inventoryOut.getInventory_out_status()}"></td>
+                    <td th:text="${inventoryOut.getInventory_out_category()}"></td>
+                    <td th:text="${inventoryOut.getInventory_out_variety()}"></td>
+                    <td th:text="${inventoryOut.getInventory_out_money()}"></td>
+                    <td th:text="${inventoryOut.getInventory_out_operator()}"></td>
+                    <td th:text="${inventoryOut.getInventory_out_create_time()}"></td>
+                    <td th:text="${inventoryOut.getInventory_out_time()}"></td>
                     <td>
                         <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select1">查看</button>
                         <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
                     </td>
                 </tr>
-                <tr>
-                    <td>RKD2023031500001</td>
-                    <td>待出库</td>
-                    <td>领料出库</td>
-                    <td>2</td>
-                    <td>20.99</td>
-                    <td>姜昊波</td>
-                    <td>2023-03-15</td>
-                    <td>2023-03-15</td>
-                    <td>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select2">查看</button>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>RKD2023031500001</td>
-                    <td>待出库</td>
-                    <td>领料出库</td>
-                    <td>2</td>
-                    <td>20.99</td>
-                    <td>姜昊波</td>
-                    <td>2023-03-15</td>
-                    <td>2023-03-15</td>
-                    <td>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select3">查看</button>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>RKD2023031500001</td>
-                    <td>待出库</td>
-                    <td>领料出库</td>
-                    <td>2</td>
-                    <td>20.99</td>
-                    <td>姜昊波</td>
-                    <td>2023-03-15</td>
-                    <td>2023-03-15</td>
-                    <td>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select4">查看</button>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
-                    </td>
-                </tr>
                 </tbody>
             </table>
+            <p th:if="${infoOutDTOList.size() == 0}" class="no-data">暂无数据</p>
         </div>
         <div class="bottom">
             <div class="float-left">
@@ -394,6 +349,59 @@
         shadow.style.display = "none";
         detailed.style.display = "none";
     };
+
+    /**
+     * 页面初始加载
+     * @type {HTMLElement}
+     */
+    $(document).ready(function() {
+        // 获取入库人列表
+        $.ajax({
+            url: '/account/getAccountList',
+            type: 'GET',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                response.forEach((item)=>{
+                    //先创建好select里面的option元素
+                    const option = document.createElement("option");
+                    //转换DOM对象为JQ对象,好用JQ里面提供的方法 给option的value赋值
+                    $(option).val(item.account_id);
+                    //给option的text赋值,这就是你点开下拉框能够看到的东西
+                    $(option).text(item.account_name);
+                    //获取select 下拉框对象,并将option添加进select
+                    $('#operator').append(option);
+                });
+            },
+            error:function (response) {
+                layer.msg('请求失败，请刷新重试');
+            }
+        })
+    });
+
+    /**
+     * 刷新出库单一览页面信息
+     */
+    const form1 = document.getElementById("form1");
+    form1.addEventListener('submit',function (event) {
+        // 阻止表单默认提交行为
+        event.preventDefault();
+        // 创建FormData对象
+        const formData1 = new FormData(form1);
+        $.ajax({
+            url: '/inventory/toInventoryOutByQuery',
+            type: 'POST',
+            data: formData1,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $("#outInfoList").html(data);
+            },
+            error:function (data) {
+                layer.msg('请求失败，请刷新重试');
+            }
+        })
+    });
 </script>
 </body>
 </html>

@@ -37,4 +37,14 @@
         AND i.inventory_tenant_id = #{param.inventory_tenant_id}
     </select>
 
+    <select id="getSupplierList" resultType="cdu.jhb.inventory.dto.data.SupplierDTO">
+        SELECT
+            s.supplier_id,
+            s.supplier_name,
+            s.supplier_status,
+            s.supplier_tenant_id
+        FROM supplier_table s
+        WHERE s.supplier_tenant_id = #{tenant_id} AND s.supplier_status = 1
+    </select>
+
 </mapper>

@@ -4,6 +4,7 @@ import cdu.jhb.account.api.AccountServiceI;
 import cdu.jhb.account.dto.data.AccountDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 /**
 * @description: TODO
@@ -57,10 +59,8 @@ public class AccountController {
                         @Param("code")String code,@Param("country_code")String country_code,
                         HttpServletRequest req,Model model) throws Exception {
         if(accountService.verification(account_name,account_password,code,country_code)){
-            System.out.println("成功");
             return "clinic/clinic";
         }
-        System.out.println("失败");
         return "login";
     }
 
@@ -72,6 +72,16 @@ public class AccountController {
     @GetMapping(path = "register")
     public String registerBef(){
         return "";
+    }
+
+    /**
+     * 获取账号列表
+     * @return
+     */
+    @GetMapping(path = "getAccountList")
+    public ResponseEntity<?> getAccountList(){
+        List<AccountDTO> accountDTOList = accountService.getAccountList();
+        return ResponseEntity.ok(accountDTOList);
     }
 
 }

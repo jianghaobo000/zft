@@ -14,4 +14,9 @@
         AND a.account_name = #{name}
     </select>
 
+    <select id="getAccountList" resultType="cdu.jhb.account.dto.data.AccountDTO">
+        SELECT * FROM account_table a
+        WHERE a.account_tenant_id = #{tenant_id}
+    </select>
+
 </mapper>

@@ -298,14 +298,6 @@
         event.preventDefault();
         // 创建FormData对象
         const formData1 = new FormData(form1);
-
-        // 发送POST请求
-        // axios.post('/inventory/toInventoryByQuery', formData1)
-        //     .then(function(response) {
-        //         $("#infoDTOList").html(data);
-        //     }).catch(function(error) {
-        //     console.error(error);
-        // });
         $.ajax({
             url: '/inventory/toInventoryByQuery',
             type: 'POST',
@@ -363,18 +355,6 @@
                 console.error(error);
             });
     });
-
-    /**
-     * 点击编辑后回显值
-     * @param params
-     * @constructor
-     */
-    function FillValue(params) {
-        document.getElementById("commodity_name").value = params.get("commodity_name");
-        // 打开弹窗
-        shadow.style.display = "block";
-        add.style.display = "block";
-    }
 
     /**
      * 修改值查询回显

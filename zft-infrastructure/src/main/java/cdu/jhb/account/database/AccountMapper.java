@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
 * @description: 账户Mapper
 * @author jhb
@@ -17,5 +19,7 @@ import org.apache.ibatis.annotations.Param;
 public interface AccountMapper extends BaseMapper<AccountDO> {
 
     AccountDO selectAccount(@Param("name") String name,@Param("countryCode") String countryCode);
+
+    List<AccountDTO> getAccountList(@Param("tenant_id")Long tenantId);
 
 }

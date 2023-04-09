@@ -1,7 +1,10 @@
 package cdu.jhb.web.inventory;
 
 import cdu.jhb.commodity.dto.data.CommodityDTO;
+import cdu.jhb.domain.inventory.Supplier;
+import cdu.jhb.inventory.api.InventoryCheckServiceI;
 import cdu.jhb.inventory.api.InventoryInServiceI;
+import cdu.jhb.inventory.api.InventoryOutServiceI;
 import cdu.jhb.inventory.api.InventoryServiceI;
 import cdu.jhb.inventory.dto.data.*;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +32,10 @@ public class InventoryController {
     private final InventoryServiceI inventoryService;
 
     private final InventoryInServiceI inventoryInService;
+
+    private final InventoryOutServiceI inventoryOutService;
+
+    private final InventoryCheckServiceI inventoryCheckService;
 
     /**
      * 跳转库存药品物资界面
@@ -74,12 +81,32 @@ public class InventoryController {
     }
 
     /**
+     * 跳转库存入库界面
+     * @return
+     */
+    @PostMapping("toInventoryInByQuery")
+    public String toInventoryInByQuery(Model model,InventoryInListQuery query){
+        List<InventoryInInfoDTO> inventoryInDTOList = inventoryInService.getInventoryInList(query);
+        model.addAttribute("infoInDTOList",inventoryInDTOList);
+        return "inventory/inventoryIn :: inInfoList";
+    }
+
+    /**
      * 跳转库存出库界面
      * @return
      */
     @GetMapping("toInventoryOut")
-    public String toInventoryOut(){
+    public String toInventoryOut(Model model){
+        List<InventoryOutInfoDTO> inventoryOutDTOList = inventoryOutService.getInventoryOutList(new InventoryOutListQuery());
+        model.addAttribute("infoOutDTOList",inventoryOutDTOList);
         return "inventory/inventoryOut";
+    }
+
+    @PostMapping("toInventoryOutByQuery")
+    public String toInventoryOutByQuery(Model model,InventoryOutListQuery query){
+        List<InventoryOutInfoDTO> inventoryOutDTOList = inventoryOutService.getInventoryOutList(query);
+        model.addAttribute("infoOutDTOList",inventoryOutDTOList);
+        return "inventory/inventoryOut :: outInfoList";
     }
 
     /**
@@ -88,6 +115,18 @@ public class InventoryController {
      */
     @GetMapping("toInventoryCheck")
     public String toInventoryCheck(){
+
         return "inventory/inventoryCheck";
     }
+
+    /**
+     * 获取供应商列表
+     */
+    @GetMapping("supplierList")
+    public ResponseEntity<?> getSupplierList(){
+        List<SupplierDTO> supplierList = inventoryService.getSupplierList();
+        return ResponseEntity.ok(supplierList);
+    }
 }
+
+

@@ -2,6 +2,8 @@ package cdu.jhb.inventory.service;
 
 import cdu.jhb.inventory.api.InventoryCheckServiceI;
 import cdu.jhb.inventory.api.InventoryServiceI;
+import cdu.jhb.inventory.command.InventoryModExe;
+import cdu.jhb.inventory.command.InventoryQryExe;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,4 +16,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class InventoryCheckServiceImpl implements InventoryCheckServiceI {
+
+    private final InventoryModExe inventoryModExe;
+
+    private final InventoryQryExe inventoryQryExe;
 }

@@ -5,6 +5,7 @@ import cdu.jhb.account.dto.data.AccountDTO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 /**
 * @description: 账户服务层
@@ -19,5 +20,7 @@ public interface AccountServiceI {
 //    AccountDTO findAccountByName(String name,String countryCode);
 
     Boolean verification(String name,String password,String code,String countryCode) throws Exception;
+
+    List<AccountDTO> getAccountList();
 
 }

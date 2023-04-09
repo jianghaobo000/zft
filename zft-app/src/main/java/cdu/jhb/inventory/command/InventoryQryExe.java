@@ -4,10 +4,15 @@ import cdu.jhb.commodity.database.CommodityMapper;
 import cdu.jhb.commodity.database.dataobject.CommodityDO;
 import cdu.jhb.commodity.dto.data.CommodityDTO;
 import cdu.jhb.domain.commodity.Commodity;
+import cdu.jhb.domain.inventory.gateway.InventoryCheckGateway;
 import cdu.jhb.domain.inventory.gateway.InventoryGateway;
+import cdu.jhb.domain.inventory.gateway.InventoryInGateway;
+import cdu.jhb.domain.inventory.gateway.InventoryOutGateway;
 import cdu.jhb.inventory.InventoryGatewayImpl;
+import cdu.jhb.inventory.database.InventoryCheckMapper;
 import cdu.jhb.inventory.database.InventoryInMapper;
 import cdu.jhb.inventory.database.InventoryMapper;
+import cdu.jhb.inventory.database.InventoryOutMapper;
 import cdu.jhb.inventory.database.dataobject.InventoryInDO;
 import cdu.jhb.inventory.dto.data.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -30,7 +35,19 @@ public class InventoryQryExe {
 
     private final InventoryGateway inventoryGateway;
 
+    private final InventoryInGateway inventoryInGateway;
+
+    private final InventoryOutGateway inventoryOutGateway;
+
+    private final InventoryCheckGateway inventoryCheckGateway;
+
     private final InventoryInMapper inventoryInMapper;
+
+    private final InventoryOutMapper inventoryOutMapper;
+
+    private final InventoryCheckMapper inventoryCheckMapper;
+
+    private final InventoryMapper inventoryMapper;
 
     private final CommodityMapper commodityMapper;
 
@@ -60,8 +77,24 @@ public class InventoryQryExe {
      * @return
      */
     public List<InventoryInInfoDTO> getInventoryInList(InventoryInListQuery query){
+        return inventoryInGateway.getInventoryInList(query);
+    }
+
+    /**
+     * 查询入库单列表
+     * @return
+     */
+    public List<InventoryOutInfoDTO> getInventoryOutList(InventoryOutListQuery query){
+        return inventoryOutGateway.getInventoryOutList(query);
+    }
+
+    /**
+     * 查询供应商列表
+     * @return
+     */
+    public List<SupplierDTO> getSupplierList(){
         Jedis jedis = new Jedis();
-        query.setInventory_in_tenant_id(Long.valueOf(jedis.get("tenantId")));
-        return inventoryInMapper.getInventoryInList(query);
+        Long tenantId = Long.valueOf(jedis.get("tenantId"));
+        return inventoryMapper.getSupplierList(tenantId);
     }
 }
