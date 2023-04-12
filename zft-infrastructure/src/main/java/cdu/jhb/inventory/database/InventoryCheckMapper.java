@@ -2,9 +2,7 @@ package cdu.jhb.inventory.database;
 
 import cdu.jhb.inventory.database.dataobject.InventoryCheckDO;
 import cdu.jhb.inventory.database.dataobject.InventoryDO;
-import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
-import cdu.jhb.inventory.dto.data.InventoryListQuery;
-import cdu.jhb.inventory.dto.data.SupplierDTO;
+import cdu.jhb.inventory.dto.data.*;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -20,5 +18,5 @@ import java.util.List;
 @Mapper
 public interface InventoryCheckMapper extends BaseMapper<InventoryCheckDO> {
 
-
+    List<InventoryCheckInfoDTO> getInventoryCheckList(@Param("param") InventoryCheckListQuery query);
 }

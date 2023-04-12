@@ -81,11 +81,28 @@ public class InventoryQryExe {
     }
 
     /**
-     * 查询入库单列表
+     * 查询入库单明细
+     * @param id
+     * @return
+     */
+    public InventoryInInfoDTO selectInDetailById(Long id) {
+        return inventoryInGateway.selectInDetail(id);
+    }
+
+    /**
+     * 查询出库单列表
      * @return
      */
     public List<InventoryOutInfoDTO> getInventoryOutList(InventoryOutListQuery query){
         return inventoryOutGateway.getInventoryOutList(query);
+    }
+
+    /**
+     * 查询盘点单列表
+     * @return
+     */
+    public List<InventoryCheckInfoDTO> getInventoryCheckList(InventoryCheckListQuery query){
+        return inventoryCheckGateway.getInventoryCheckList(query);
     }
 
     /**

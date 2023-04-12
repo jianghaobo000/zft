@@ -42,13 +42,11 @@
                     </div>
                     <div class="form-group" style="float: left;width: 160px;margin-right: 15px;">
                         <select class="form-control" id="supplier" name="inventory_in_supplier_id">
-                            <option value="" disabled selected style="display: none;">请选择供应商</option>
                             <option value="">全部供应商</option>
                         </select>
                     </div>
                     <div class="form-group" style="float: left;width: 140px;margin-right: 15px;">
                         <select class="form-control" id="operator" name="inventory_in_operator_id">
-                            <option value="" disabled selected style="display: none;">请选择入库人</option>
                             <option value="">全部入库人</option>
                         </select>
                     </div>
@@ -89,7 +87,7 @@
                         <td th:text="${inventoryIn.getInventory_in_create_time()}"></td>
                         <td th:text="${inventoryIn.getInventory_in_time()}"></td>
                         <td>
-                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select1">查看</button>
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" th:onclick="|detail('${inventoryIn.getInventory_in_id()}')|">查看</button>
                             <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
                         </td>
                     </tr>
@@ -130,14 +128,12 @@
                     <p><span style="color: red">*</span> 入库人</p>
                     <div class="form-group" style="float: left;width: 140px;margin-right: 30px;">
                         <select class="form-control" id="operator2" name="inventory_in_operator_id">
-                            <option value="" disabled selected style="display: none;">请选择入库人</option>
                             <option value="">全部入库人</option>
                         </select>
                     </div>
                     <p><span style="color: red">*</span> 供应商</p>
                     <div class="form-group" style="float: left;width: 200px;margin-right: 30px;">
                         <select class="form-control" id="supplier2" name="inventory_in_supplier_id">
-                            <option value="" disabled selected style="display: none;">请选择供应商</option>
                             <option value="">全部供应商</option>
                         </select>
                     </div>
@@ -221,21 +217,20 @@
         </div>
     </div>
     <div class="inventory-detailed" id="inventory-detailed">
-        <div class="inventory-pop">
+        <div class="inventory-pop" th:fragment="inventoryInInfo" id="inventoryInInfo">
             <div class="top">
-                <p>入库单***********详情</p>
+                <p th:text="'入库单'+${inventoryInInfo.getInventory_in_id()}+'详情'"></p>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" id="selectClose" viewBox="0 0 16 16">
                     <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                 </svg>
             </div>
             <div class="info">
                 <div class="info1">
-                    <p>入库人: 姜昊波</p>
-                    <p>供应商: 大家集团</p>
-                    <p>随货单号: 4235234324</p>
-                    <p>备注: 大萨达所多</p>
+                    <p th:text="'入库人: '+${inventoryInInfo.getInventory_in_operator()}"></p>
+                    <p th:text="'供应商: '+${inventoryInInfo.getInventory_in_supplier_name()}"></p>
+                    <p th:text="'备注: '+${inventoryInInfo.getInventory_in_remarks()}"></p>
                     <div class="float-right">
-                        <p>品种：0 金额：0.00元</p>
+                        <p th:text="'品种: '+${inventoryInInfo.getInventory_in_variety()}+' 金额: '+${inventoryInInfo.getInventory_in_money()}+' 元'"></p>
                     </div>
                 </div>
                 <div class="info2">
@@ -255,27 +250,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>感冒灵颗粒</td>
-                                <td>H524234332</td>
-                                <td>30.00</td>
-                                <td>20230302001</td>
-                                <td>2023年1月5日</td>
-                                <td>2025年1月5日</td>
-                                <td>300盒</td>
-                                <td>25.00</td>
-                                <td>7500.00</td>
-                            </tr>
-                            <tr>
-                                <td>感冒灵颗粒</td>
-                                <td>H524234332</td>
-                                <td>30.00</td>
-                                <td>20230302001</td>
-                                <td>2023年1月5日</td>
-                                <td>2025年1月5日</td>
-                                <td>300盒</td>
-                                <td>25.00</td>
-                                <td>7500.00</td>
+                            <tr th:each="inDetail:${inventoryInInfo.getInDetailDTOList()}">
+                                <td th:text="${inDetail.getInventory_in_commodity_name()}"></td>
+                                <td th:text="${inDetail.getInventory_in_country_code()}"></td>
+                                <td th:text="${inDetail.getInventory_in_commodity_name()}"></td>
+                                <td th:text="${inDetail.getInventory_in_commodity_name()}"></td>
+                                <td th:text="${inDetail.getInventory_in_commodity_name()}"></td>
+                                <td th:text="${inDetail.getInventory_in_commodity_name()}"></td>
+                                <td th:text="${inDetail.getInventory_in_commodity_name()}"></td>
+                                <td th:text="${inDetail.getInventory_in_commodity_name()}"></td>
+                                <td th:text="${inDetail.getInventory_in_commodity_name()}"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -389,7 +373,7 @@
                 error:function (response) {
                     layer.msg('请求失败，请刷新重试');
                 }
-            })
+            });
 
             // 获取入库人列表
             $.ajax({
@@ -415,6 +399,26 @@
                 }
             })
         });
+
+        /**
+         * 查看入库单
+         * @param id
+         */
+        function detail(id) {
+            $.ajax({
+                url: '/inventory/selectInDetailById',
+                type: 'GET',
+                data: id,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    $("#inventoryInInfo").html(data);
+                },
+                error:function (data) {
+                    layer.msg('请求失败，请刷新重试');
+                }
+            })
+        }
     </script>
 </body>
 </html>

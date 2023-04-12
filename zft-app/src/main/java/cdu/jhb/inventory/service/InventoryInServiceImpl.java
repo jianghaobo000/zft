@@ -1,5 +1,6 @@
 package cdu.jhb.inventory.service;
 
+import cdu.jhb.common.Constant;
 import cdu.jhb.inventory.api.InventoryInServiceI;
 import cdu.jhb.inventory.api.InventoryServiceI;
 import cdu.jhb.inventory.command.InventoryModExe;
@@ -7,6 +8,7 @@ import cdu.jhb.inventory.command.InventoryQryExe;
 import cdu.jhb.inventory.dto.data.InventoryInDTO;
 import cdu.jhb.inventory.dto.data.InventoryInInfoDTO;
 import cdu.jhb.inventory.dto.data.InventoryInListQuery;
+import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +36,20 @@ public class InventoryInServiceImpl implements InventoryInServiceI {
     @Override
     public List<InventoryInInfoDTO> getInventoryInList(InventoryInListQuery query) {
         //设置日期格式 开始时间为一天的开始，结束时间为一天的最后
-        query.setInventory_in_begin_time(query.getInventory_in_begin_time()+" 00:00:00");
-        query.setInventory_in_end_time(query.getInventory_in_end_time()+" 23:59:59");
+        if(!Constant.NULL_STRING.equals(query.getInventory_in_begin_time()) && !Constant.NULL_STRING.equals(query.getInventory_in_end_time())){
+            query.setInventory_in_begin_time(query.getInventory_in_begin_time()+Constant.BEGIN_TIME);
+            query.setInventory_in_end_time(query.getInventory_in_end_time()+Constant.END_TIME);
+        }
         return inventoryQryExe.getInventoryInList(query);
+    }
+
+    /**
+     * 获取入库单明细
+     * @param id
+     * @return
+     */
+    @Override
+    public InventoryInInfoDTO selectInDetailById(Long id) {
+        return inventoryQryExe.selectInDetailById(id);
     }
 }

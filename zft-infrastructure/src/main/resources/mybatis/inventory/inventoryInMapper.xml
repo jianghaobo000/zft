@@ -13,7 +13,7 @@
             i.inventory_in_create_time,
             a.account_name AS inventory_in_operator,
             i.inventory_in_variety,
-            i.inventory_remarks,
+            i.inventory_in_remarks,
             i.inventory_in_money
         FROM inventory_in_table i
         LEFT JOIN supplier_table s ON i.inventory_in_supplier_id = s.supplier_id
@@ -42,5 +42,42 @@
             ORDER BY i.inventory_in_time DESC
         </if>
     </select>
+
+    <select id="getInventoryInInfo" resultType="cdu.jhb.inventory.dto.data.InventoryInInfoDTO">
+        SELECT
+            i.inventory_in_id,
+            i.inventory_in_status,
+            s.supplier_name AS inventory_in_supplier_name,
+            i.inventory_in_time,
+            i.inventory_in_create_time,
+            a.account_name AS inventory_in_operator,
+            i.inventory_in_variety,
+            i.inventory_in_remarks,
+            i.inventory_in_money
+        FROM inventory_in_table i
+        LEFT JOIN supplier_table s ON i.inventory_in_supplier_id = s.supplier_id
+        LEFT JOIN account_table a ON i.inventory_in_operator_id = a.account_id
+        WHERE
+            i.inventory_in_tenant_id = #{tenantId} AND i.inventory_in_id = #{id}
+    </select>
+
+<!--    <select id="getInDetailList" resultType="cdu.jhb.inventory.database.dataobject.InventoryInDetailDO">-->
+<!--        SELECT-->
+<!--            i.inventory_in_detail_id,-->
+<!--            i.inventory_in_id,-->
+<!--            i.inventory_in_commodity_id,-->
+<!--            i.inventory_in_commodity_name,-->
+<!--            i.inventory_in_large_unit,-->
+<!--            i.inventory_in_small_unit,-->
+<!--            i.inventory_in_before_large_num,-->
+<!--            i.inventory_in_before_small_num,-->
+<!--            i.inventory_in_after_large_num,-->
+<!--            i.inventory_in_after_small_num,-->
+<!--            i.inventory_in_large_num,-->
+<!--            i.inventory_in_small_num-->
+<!--        FROM inventory_in_detail_table i-->
+<!--        WHERE i.inventory_in_id = #{id}-->
+
+<!--    </select>-->
 
 </mapper>

@@ -1,7 +1,5 @@
-package cdu.jhb.inventory.dto.data;
+package cdu.jhb.domain.inventory;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,19 +7,18 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
 /**
-* @description: 入库单信息DTO
+* @description: TODO
 * @author jhb
-* @date 2023/04/07 22:17
+* @date 2023/04/12 20:12
 * @version 1.0
 */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InventoryCheckInfoDTO {
+public class InventoryCheckInfo {
     /**
      * 盘点单ID
      */
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long inventory_check_id;
 
     /**
@@ -68,4 +65,5 @@ public class InventoryCheckInfoDTO {
      * 盘点单备注
      */
     private String inventory_check_remarks;
+
 }

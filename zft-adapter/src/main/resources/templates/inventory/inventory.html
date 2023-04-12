@@ -339,6 +339,7 @@
             .then(function(response) {
                 // 更新新增品项页面
                 if(response.status === 200){
+                    layer.msg('新增成功');
                     // 关闭弹窗
                     shadow.style.display = "none";
                     add.style.display = "none";
@@ -367,27 +368,13 @@
             }
         }).then(function (response) {
             // 回显值
-            document.getElementById("commodity_id").value = response.data.commodity_id;
-            document.getElementById("commodity_name").value = response.data.commodity_name;
-            document.getElementById("commodity_country_code").value = response.data.commodity_country_code;
-            document.getElementById("commodity_approval_no").value = response.data.commodity_approval_no;
-            document.getElementById("commodity_category").value = response.data.commodity_category;
-            document.getElementById("commodity_manufacturer").value = response.data.commodity_manufacturer;
-            document.getElementById("commodity_specification").value = response.data.commodity_specification;
-            document.getElementById("commodity_bar_code").value = response.data.commodity_bar_code;
-            document.getElementById("commodity_large_unit").value = response.data.commodity_large_unit;
-            document.getElementById("commodity_small_unit").value = response.data.commodity_small_unit;
-            document.getElementById("commodity_dosage_form").value = response.data.commodity_dosage_form;
-            document.getElementById("commodity_form_drug").value = response.data.commodity_form_drug;
-            document.getElementById("commodity_dosage").value = response.data.commodity_dosage;
-            document.getElementById("commodity_dosage_unit").value = response.data.commodity_dosage_unit;
-            document.getElementById("commodity_take").value = response.data.commodity_take;
-            document.getElementById("commodity_usage_frequency").value = response.data.commodity_usage_frequency;
-            document.getElementById("commodity_single_dose").value = response.data.commodity_single_dose;
-            document.getElementById("commodity_large_price").value = response.data.commodity_large_price;
-            document.getElementById("commodity_small_price").value = response.data.commodity_small_price;
-            document.getElementById("commodity_split_sale_status").value = response.data.commodity_split_sale_status;
-            document.getElementById("commodity_enable_status").value = response.data.commodity_enable_status;
+            const formElements = document.getElementById("form2").elements;
+            for (let i = 0; i < formElements.length; i++) {
+                const element = formElements[i];
+                if (element.id in response.data) {
+                    element.value = response.data[element.id];
+                }
+            }
             // 打开弹窗
             shadow.style.display = "block";
             add.style.display = "block";

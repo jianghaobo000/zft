@@ -1,5 +1,11 @@
 package cdu.jhb.domain.inventory.gateway;
 
+import cdu.jhb.inventory.dto.data.InventoryCheckInfoDTO;
+import cdu.jhb.inventory.dto.data.InventoryCheckListQuery;
+import cdu.jhb.inventory.dto.data.InventoryOutListQuery;
+
+import java.util.List;
+
 /**
 * @description: TODO
 * @author jhb
@@ -7,4 +13,6 @@ package cdu.jhb.domain.inventory.gateway;
 * @version 1.0
 */
 public interface InventoryCheckGateway {
+
+    List<InventoryCheckInfoDTO> getInventoryCheckList(InventoryCheckListQuery query);
 }

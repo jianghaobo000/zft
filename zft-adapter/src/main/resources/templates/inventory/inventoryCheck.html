@@ -13,46 +13,42 @@
     </div>
     <div class="right">
         <div class="top">
-            <div class="form-group" style="float: left;width: 150px;margin-right: 15px;">
-                <select class="form-control" name="inventory_in_status">
-                    <option value="">全部状态</option>
-                    <option value="待入库">待盘点</option>
-                    <option value="已入库">已盘点</option>
-                </select>
-            </div>
-            <div class="form-group" style="float: left;width: 120px;margin-right: 15px;">
-                <select class="form-control" name="inventory_in_date_status">
-                    <option value="0" selected>创建日期</option>
-                    <option value="1">盘点日期</option>
-                </select>
-            </div>
-            <div style="float: left;margin-right: 15px;">
-                <div class="layui-inline">
-                    <div class="layui-inline" id="test6">
-                        <div class="layui-input-inline float-left" style="width: 100px;">
-                            <input type="text" autocomplete="off" id="test-startDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="开始日期">
-                        </div>
-                        <div class="layui-form-mid float-left" style="margin: 0 auto;">-</div>
-                        <div class="layui-input-inline float-left" style="width: 100px;">
-                            <input type="text" autocomplete="off" id="test-endDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="结束日期">
+            <form id="form1" th:action="@{/inventory/toInventoryCheckByQuery}" method="post">
+                <div class="form-group" style="float: left;width: 150px;margin-right: 15px;">
+                    <select class="form-control" name="inventory_check_status">
+                        <option value="">全部状态</option>
+                        <option value="待入库">待盘点</option>
+                        <option value="已入库">已盘点</option>
+                    </select>
+                </div>
+                <div class="form-group" style="float: left;width: 120px;margin-right: 15px;">
+                    <select class="form-control" name="inventory_check_date_category">
+                        <option value="1" selected>创建日期</option>
+                        <option value="2">盘点日期</option>
+                    </select>
+                </div>
+                <div style="float: left;margin-right: 15px;">
+                    <div class="layui-inline">
+                        <div class="layui-inline" id="test6">
+                            <div class="layui-input-inline float-left" style="width: 100px;">
+                                <input type="text" name="inventory_check_begin_time" autocomplete="off" id="test-startDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="开始日期">
+                            </div>
+                            <div class="layui-form-mid float-left" style="margin: 0 auto;">-</div>
+                            <div class="layui-input-inline float-left" style="width: 100px;">
+                                <input type="text" name="inventory_check_end_time" autocomplete="off" id="test-endDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="结束日期">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group" style="float: left;width: 140px;margin-right: 15px;">
-                <select class="form-control" name="inventory_in_supplier">
-                    <option value="">全部盘点人</option>
-                    <option value="">姜昊波</option>
-                    <option value="">滴滴滴</option>
-                    <option value="">额恩恩</option>
-                </select>
-            </div>
-            <div class="form-group" style="float: left;width: 300px;margin-right: 15px;">
-                <input type="text" class="form-control" name="inventory_in_text" placeholder="药品名/批准文号/国家码">
-            </div>
-            <div style="float: left;">
-                <button type="button" class="btn btn-outline-primary">查询</button>
-            </div>
+                <div class="form-group" style="float: left;width: 140px;margin-right: 15px;">
+                    <select class="form-control" name="inventory_check_operator_id" id="operator">
+                        <option value="">全部盘点人</option>
+                    </select>
+                </div>
+                <div style="float: left;">
+                    <button type="sumit" class="btn btn-outline-primary">查询</button>
+                </div>
+            </form>
             <div style="float: right;margin-left: 15px;">
                 <button type="button" class="btn btn-outline-primary">导出</button>
             </div>
@@ -60,65 +56,35 @@
                 <button type="button" class="btn btn-primary" id="add">新增盘点</button>
             </div>
         </div>
-        <div class="info">
+        <div class="info" th:fragment="checkInfoList" id="checkInfoList">
             <table class="table table-striped" style="font-size: 15px;">
                 <thead>
                 <tr>
-                    <td scope="col" width="15%">盘点单号</td>
-                    <td scope="col" width="7%">状态</td>
-                    <td scope="col" width="7%">品种</td>
-                    <td scope="col" width="10%">盈亏数量</td>
-                    <td scope="col" width="13%">盈亏金额-进价(元)</td>
-                    <td scope="col" width="13%">盈亏金额-售价(元)</td>
-                    <td scope="col" width="5%">盘点人</td>
-                    <td scope="col" width="10%">创建日期</td>
-                    <td scope="col" width="10%">盘点日期</td>
+                    <td scope="col" width="12%">盘点单号</td>
+                    <td scope="col" width="5%">状态</td>
+                    <td scope="col" width="5%">品种</td>
+                    <td scope="col" width="12%">盈亏数量</td>
+                    <td scope="col" width="12%">盈亏金额-进价(元)</td>
+                    <td scope="col" width="12%">盈亏金额-售价(元)</td>
+                    <td scope="col" width="8%">盘点人</td>
+                    <td scope="col" width="12%">创建日期</td>
+                    <td scope="col" width="12%">盘点日期</td>
                     <td scope="col" width="10%">操作</td>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>PDD2023032100003</td>
-                    <td>待盘点</td>
-                    <td>2</td>
-                    <td>3.00</td>
-                    <td><span style="color: green">+20.33</span></td>
-                    <td><span style="color: green">+23.44</span></td>
-                    <td>姜昊波</td>
-                    <td>2023-03-23</td>
-                    <td>2023-03-23</td>
+                <tr th:each="inventoryCheck:${infoCheckDTOList}">
+                    <td th:text="${inventoryCheck.getInventory_check_id()}"></td>
+                    <td th:text="${inventoryCheck.getInventory_check_status()}"></td>
+                    <td th:text="${inventoryCheck.getInventory_check_variety()}"></td>
+                    <td th:text="${inventoryCheck.getInventory_check_num()}"></td>
+                    <td th:style="${inventoryCheck.getInventory_check_bid_money()} >= 0 ? 'color: green' : 'color: red'" th:text="${inventoryCheck.getInventory_check_bid_money()}"></td>
+                    <td th:style="${inventoryCheck.getInventory_check_sale_money()} >= 0 ? 'color: green' : 'color: red'" th:text="${inventoryCheck.getInventory_check_sale_money()}"></td>
+                    <td th:text="${inventoryCheck.getInventory_check_operator()}"></td>
+                    <td th:text="${inventoryCheck.getInventory_check_create_time()}"></td>
+                    <td th:text="${inventoryCheck.getInventory_check_time()}"></td>
                     <td>
                         <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select1">查看</button>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>PDD2023032100003</td>
-                    <td>待盘点</td>
-                    <td>2</td>
-                    <td>3.00</td>
-                    <td><span style="color: green">+20.33</span></td>
-                    <td><span style="color: green">+23.44</span></td>
-                    <td>姜昊波</td>
-                    <td>2023-03-23</td>
-                    <td>2023-03-23</td>
-                    <td>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select2">查看</button>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>PDD2023032100003</td>
-                    <td>待盘点</td>
-                    <td>2</td>
-                    <td>3.00</td>
-                    <td><span style="color: green">+20.33</span></td>
-                    <td><span style="color: green">+23.44</span></td>
-                    <td>姜昊波</td>
-                    <td>2023-03-23</td>
-                    <td>2023-03-23</td>
-                    <td>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select3">查看</button>
                         <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
                     </td>
                 </tr>
@@ -373,6 +339,60 @@
         shadow.style.display = "none";
         detailed.style.display = "none";
     };
+
+    /**
+     * 页面初始加载
+     * @type {HTMLElement}
+     */
+    $(document).ready(function() {
+        // 获取盘点人列表
+        $.ajax({
+            url: '/account/getAccountList',
+            type: 'GET',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                response.forEach((item)=>{
+                    //先创建好select里面的option元素
+                    const option = document.createElement("option");
+                    //转换DOM对象为JQ对象,好用JQ里面提供的方法 给option的value赋值
+                    $(option).val(item.account_id);
+                    //给option的text赋值,这就是你点开下拉框能够看到的东西
+                    $(option).text(item.account_name);
+                    //获取select 下拉框对象,并将option添加进select
+                    $('#operator').append(option);
+                    $('#operator2').append(option);
+                });
+            },
+            error:function (response) {
+                layer.msg('请求失败，请刷新重试');
+            }
+        })
+    });
+
+    /**
+     * 刷新入库单一览页面信息
+     */
+    const form1 = document.getElementById("form1");
+    form1.addEventListener('submit',function (event) {
+        // 阻止表单默认提交行为
+        event.preventDefault();
+        // 创建FormData对象
+        const formData1 = new FormData(form1);
+        $.ajax({
+            url: '/inventory/toInventoryCheckByQuery',
+            type: 'POST',
+            data: formData1,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $("#checkInfoList").html(data);
+            },
+            error:function (data) {
+                layer.msg('请求失败，请刷新重试');
+            }
+        })
+    });
 </script>
 </body>
 </html>

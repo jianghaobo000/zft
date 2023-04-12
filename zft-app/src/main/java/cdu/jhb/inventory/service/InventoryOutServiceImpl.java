@@ -1,5 +1,6 @@
 package cdu.jhb.inventory.service;
 
+import cdu.jhb.common.Constant;
 import cdu.jhb.inventory.api.InventoryOutServiceI;
 import cdu.jhb.inventory.api.InventoryServiceI;
 import cdu.jhb.inventory.command.InventoryModExe;
@@ -33,6 +34,11 @@ public class InventoryOutServiceImpl implements InventoryOutServiceI {
      */
     @Override
     public List<InventoryOutInfoDTO> getInventoryOutList(InventoryOutListQuery query) {
+        //设置日期格式 开始时间为一天的开始，结束时间为一天的最后
+        if(!Constant.NULL_STRING.equals(query.getInventory_out_begin_time()) && !Constant.NULL_STRING.equals(query.getInventory_out_end_time())){
+            query.setInventory_out_begin_time(query.getInventory_out_begin_time()+Constant.BEGIN_TIME);
+            query.setInventory_out_end_time(query.getInventory_out_end_time()+Constant.END_TIME);
+        }
         return inventoryQryExe.getInventoryOutList(query);
     }
 }

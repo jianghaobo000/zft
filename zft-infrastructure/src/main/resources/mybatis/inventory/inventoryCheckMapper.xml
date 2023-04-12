@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cdu.jhb.inventory.database.InventoryCheckMapper">
+
+    <select id="getInventoryCheckList" resultType="cdu.jhb.inventory.dto.data.InventoryCheckInfoDTO">
+        SELECT
+            i.inventory_check_id,
+            i.inventory_check_status,
+            i.inventory_check_time,
+            i.inventory_check_create_time,
+            a.account_name AS inventory_check_operator,
+            i.inventory_check_num,
+            i.inventory_check_bid_money,
+            i.inventory_check_sale_money,
+            i.inventory_check_variety,
+            i.inventory_check_remarks
+        FROM inventory_check_table i
+        LEFT JOIN account_table a ON i.inventory_check_operator_id = a.account_id
+        WHERE
+            i.inventory_check_tenant_id = #{param.inventory_check_tenant_id}
+        <if test="param.inventory_check_status != null and param.inventory_check_status !=''">
+            AND i.inventory_check_status = #{param.inventory_check_status}
+        </if>
+        <if test="param.inventory_check_operator_id != null">
+            AND i.inventory_check_operator_id = #{param.inventory_check_operator_id}
+        </if>
+        <if test="param.inventory_check_date_category == 1">
+            <if test="param.inventory_check_begin_time != '' and param.inventory_check_end_time != ''">
+                AND i.inventory_check_create_time BETWEEN #{param.inventory_check_begin_time} AND #{param.inventory_check_end_time}
+            </if>
+            ORDER BY i.inventory_check_create_time DESC
+        </if>
+        <if test="param.inventory_check_date_category == 2">
+            <if test="param.inventory_check_begin_time != '' and param.inventory_check_end_time != ''">
+                AND i.inventory_check_time BETWEEN #{param.inventory_check_begin_time} AND #{param.inventory_check_end_time}
+            </if>
+            ORDER BY i.inventory_check_time DESC
+        </if>
+    </select>
+
+</mapper>

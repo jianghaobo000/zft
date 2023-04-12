@@ -35,6 +35,11 @@ public class InventoryInDetail {
     private String inventory_in_commodity_name;
 
     /**
+     * 商品国家码
+     */
+    private String inventory_in_country_code;
+
+    /**
      * 商品库存单位（大）
      */
     private String inventory_in_large_unit;

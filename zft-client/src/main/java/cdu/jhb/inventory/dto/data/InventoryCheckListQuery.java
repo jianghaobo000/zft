@@ -15,22 +15,32 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class InventoryCheckListQuery {
     /**
-     * 商品名字
+     * 盘点单状态
      */
-    private String inventory_commodity_name;
+    private String inventory_check_status;
 
     /**
-     * 商品生产厂家
+     * 盘点单类型 1:创建时间 2:出库时间
      */
-    private String inventory_manufacturer;
+    private Integer inventory_check_date_category;
 
     /**
-     * 商品类型
+     * 盘点单开始时间
      */
-    private String inventory_category;
+    private String inventory_check_begin_time;
 
     /**
-     * 商品属诊所
+     * 盘点单结束时间
      */
-    private Long inventory_tenant_id;
+    private String inventory_check_end_time;
+
+    /**
+     * 盘点人ID
+     */
+    private Long inventory_check_operator_id;
+
+    /**
+     * 盘点单所属诊所
+     */
+    private Long inventory_check_tenant_id;
 }

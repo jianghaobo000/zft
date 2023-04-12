@@ -3,6 +3,7 @@ package cdu.jhb.inventory.api;
 import cdu.jhb.inventory.dto.data.InventoryInDTO;
 import cdu.jhb.inventory.dto.data.InventoryInInfoDTO;
 import cdu.jhb.inventory.dto.data.InventoryInListQuery;
+import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ import java.util.List;
 public interface InventoryInServiceI {
 
     List<InventoryInInfoDTO> getInventoryInList(InventoryInListQuery query);
+
+    InventoryInInfoDTO selectInDetailById(Long id);
 }

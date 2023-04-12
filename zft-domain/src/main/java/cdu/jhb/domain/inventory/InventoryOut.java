@@ -1,8 +1,12 @@
 package cdu.jhb.domain.inventory;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 /**
 * @description: 出库单实体
@@ -20,9 +24,24 @@ public class InventoryOut {
     private Long inventory_out_id;
 
     /**
+     * 出库单状态
+     */
+    private String inventory_out_status;
+
+    /**
      * 出库时间
      */
     private String inventory_out_time;
+
+    /**
+     * 出库单状态
+     */
+    private String inventory_out_create_time;
+
+    /**
+     * 出库单类型
+     */
+    private String inventory_out_category;
 
     /**
      * 出库人
@@ -33,6 +52,16 @@ public class InventoryOut {
      * 出库品种数
      */
     private Integer inventory_out_variety;
+
+    /**
+     * 出库单备注
+     */
+    private String inventory_out_remarks;
+
+    /**
+     * 出库单金额
+     */
+    private BigDecimal inventory_out_money;
 
     /**
      * 出库单所属诊所

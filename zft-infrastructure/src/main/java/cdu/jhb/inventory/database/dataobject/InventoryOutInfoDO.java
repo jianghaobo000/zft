@@ -55,4 +55,9 @@ public class InventoryOutInfoDO {
      * 出库单金额
      */
     private BigDecimal inventory_out_money;
+
+    /**
+     * 出库单备注
+     */
+    private String inventory_out_remarks;
 }

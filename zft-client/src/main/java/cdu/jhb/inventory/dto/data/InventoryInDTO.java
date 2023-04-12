@@ -65,7 +65,7 @@ public class InventoryInDTO {
     /**
      * 入库单备注
      */
-    private String inventory_remarks;
+    private String inventory_in_remarks;
 
     /**
      * 入库单金额

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
 * @description: 入库单信息DTO
@@ -54,10 +55,15 @@ public class InventoryInInfoDTO {
     /**
      * 入库单备注
      */
-    private String inventory_remarks;
+    private String inventory_in_remarks;
 
     /**
      * 入库单金额
      */
     private BigDecimal inventory_in_money;
+
+    /**
+     * 入库单明细
+     */
+    private List<InventoryInDetailDTO> inDetailDTOList;
 }
