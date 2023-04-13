@@ -1,5 +1,6 @@
 package cdu.jhb.inventory.dto.data;
 
+import cdu.jhb.commodity.dto.data.CommodityDTO;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
 * @description: 入库单信息DTO
@@ -17,7 +19,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InventoryCheckInfoDTO {
+public class InventoryCheckInfoDTO extends CommodityDTO {
     /**
      * 盘点单ID
      */
@@ -68,4 +70,9 @@ public class InventoryCheckInfoDTO {
      * 盘点单备注
      */
     private String inventory_check_remarks;
+
+    /**
+     * 盘点单明细列表
+     */
+    private List<InventoryCheckDetailDTO> inventory_check_detail_list;
 }

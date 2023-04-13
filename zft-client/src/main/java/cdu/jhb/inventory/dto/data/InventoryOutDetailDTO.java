@@ -1,5 +1,6 @@
 package cdu.jhb.inventory.dto.data;
 
+import cdu.jhb.commodity.dto.data.CommodityDTO;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InventoryOutDetailDTO {
+public class InventoryOutDetailDTO extends CommodityDTO {
     /**
      * 出库单明细ID
      */

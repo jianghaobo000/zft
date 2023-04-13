@@ -78,7 +78,7 @@ public class InventoryInDTO {
     private Long inventory_in_tenant_id;
 
     /**
-     * 入库单明细
+     * 入库单明细列表
      */
-    private List<InventoryInDetailDTO> inDetailList;
+    private List<InventoryInDetailDTO> inventory_in_detail_list;
 }

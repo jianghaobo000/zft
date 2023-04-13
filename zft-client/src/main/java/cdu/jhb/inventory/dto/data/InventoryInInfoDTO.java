@@ -1,5 +1,6 @@
 package cdu.jhb.inventory.dto.data;
 
+import cdu.jhb.commodity.dto.data.CommodityDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InventoryInInfoDTO {
+public class InventoryInInfoDTO extends CommodityDTO {
     /**
      * 入库单ID
      */
@@ -63,7 +64,7 @@ public class InventoryInInfoDTO {
     private BigDecimal inventory_in_money;
 
     /**
-     * 入库单明细
+     * 入库单明细列表
      */
-    private List<InventoryInDetailDTO> inDetailDTOList;
+    private List<InventoryInDetailDTO> inventory_in_detail_list;
 }

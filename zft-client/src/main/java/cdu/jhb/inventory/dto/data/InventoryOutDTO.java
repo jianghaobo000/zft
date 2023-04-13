@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
+import java.util.List;
 
 /**
 * @description: 出库单主表DTO
@@ -70,4 +71,9 @@ public class InventoryOutDTO {
      * 出库单所属诊所
      */
     private Long inventory_out_tenant_id;
+
+    /**
+     * 出库单明细列表
+     */
+    private List<InventoryOutDetailDTO> inventory_out_detail_list;
 }

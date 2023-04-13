@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
 * @description: 盘点单主表DTO
@@ -69,4 +70,9 @@ public class InventoryCheckDTO {
      * 盘点单所属诊所
      */
     private Long inventory_check_tenant_id;
+
+    /**
+     * 盘点单明细列表
+     */
+    private List<InventoryCheckDetailDTO> inventory_check_detail_list;
 }

@@ -1,10 +1,12 @@
 package cdu.jhb.inventory.dto.data;
 
+import cdu.jhb.commodity.dto.data.CommodityDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
 * @description: 出库单信息DTO
@@ -15,7 +17,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InventoryOutInfoDTO {
+public class InventoryOutInfoDTO extends CommodityDTO {
     /**
      * 出库单ID
      */
@@ -60,4 +62,9 @@ public class InventoryOutInfoDTO {
      * 出库单备注
      */
     private String inventory_out_remarks;
+
+    /**
+     * 出库单明细列表
+     */
+    private List<InventoryOutDetailDTO> inventory_out_detail_list;
 }
