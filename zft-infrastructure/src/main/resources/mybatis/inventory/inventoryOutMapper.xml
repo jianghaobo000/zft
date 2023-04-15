@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cdu.jhb.inventory.database.InventoryOutMapper">
 
-    <select id="getInventoryOutList" resultType="cdu.jhb.inventory.dto.data.InventoryOutInfoDTO">
+    <select id="getInventoryOutList" resultType="cdu.jhb.domain.inventory.InventoryOutInfo">
         SELECT
             i.inventory_out_id,
             i.inventory_out_status,

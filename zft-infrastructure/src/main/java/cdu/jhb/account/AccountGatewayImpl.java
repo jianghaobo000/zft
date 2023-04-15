@@ -3,10 +3,13 @@ package cdu.jhb.account;
 import cdu.jhb.account.database.AccountMapper;
 import cdu.jhb.account.database.dataobject.AccountDO;
 import cdu.jhb.account.dto.data.AccountDTO;
+import cdu.jhb.common.DictException;
+import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.gateway.AccountGateway;
 import cdu.jhb.tenant.database.TenantMapper;
 import cdu.jhb.tenant.database.dataobject.TenantDO;
 import cdu.jhb.tenant.dto.data.TenantDTO;
+import cdu.jhb.util.Convert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import lombok.RequiredArgsConstructor;
@@ -34,9 +37,9 @@ public class AccountGatewayImpl implements AccountGateway {
      * @return
      */
     @Override
-    public AccountDTO findAccountByName(String name,String countryCode) {
+    public Account findAccountByName(String name, String countryCode) {
         AccountDO accountDO = accountMapper.selectAccount(name,countryCode);
-        return DozerBeanMapperBuilder.buildDefault().map(accountDO,AccountDTO.class);
+        return Convert.entityConvert(accountDO,Account.class);
     }
 
     /**
@@ -47,11 +50,11 @@ public class AccountGatewayImpl implements AccountGateway {
      */
     @Override
     public Boolean findCountryCode(String countryCode) throws Exception {
-        QueryWrapper<TenantDO> queryWrapper = new QueryWrapper<TenantDO>()
-                .eq("tenant_country_code",countryCode);
+        QueryWrapper<TenantDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(TenantDO::getTenant_country_code,countryCode);
         TenantDO tenantDO = tenantMapper.selectOne(queryWrapper);
         if(tenantDO==null){
-            throw new Exception("当前国家码不存在！");
+            throw new Exception(DictException.COUNTRY_CODE_NOT_EXIST);
         }
         return true;
     }

@@ -2,21 +2,19 @@ package cdu.jhb.inventory.command;
 
 import cdu.jhb.commodity.database.CommodityMapper;
 import cdu.jhb.commodity.database.dataobject.CommodityDO;
-import cdu.jhb.commodity.dto.data.CommodityDTO;
 import cdu.jhb.domain.commodity.Commodity;
+import cdu.jhb.domain.inventory.*;
 import cdu.jhb.domain.inventory.gateway.InventoryCheckGateway;
 import cdu.jhb.domain.inventory.gateway.InventoryGateway;
 import cdu.jhb.domain.inventory.gateway.InventoryInGateway;
 import cdu.jhb.domain.inventory.gateway.InventoryOutGateway;
-import cdu.jhb.inventory.InventoryGatewayImpl;
 import cdu.jhb.inventory.database.InventoryCheckMapper;
 import cdu.jhb.inventory.database.InventoryInMapper;
 import cdu.jhb.inventory.database.InventoryMapper;
 import cdu.jhb.inventory.database.InventoryOutMapper;
-import cdu.jhb.inventory.database.dataobject.InventoryInDO;
+import cdu.jhb.inventory.database.dataobject.SupplierDO;
 import cdu.jhb.inventory.dto.data.*;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.github.dozermapper.core.DozerBeanMapperBuilder;
+import cdu.jhb.util.Convert;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
@@ -57,9 +55,8 @@ public class InventoryQryExe {
      * @return
      */
     public List<InventoryInfoDTO> getInventoryList(InventoryListQuery query){
-        Jedis jedis = new Jedis();
-        query.setInventory_tenant_id(Long.valueOf(jedis.get("tenantId")));
-        return inventoryGateway.getInventoryList(query);
+        List<InventoryInfo> inventoryInfoList = inventoryGateway.getInventoryList(query);
+        return Convert.listConvert(inventoryInfoList,InventoryInfoDTO.class);
     }
 
     /**
@@ -69,7 +66,7 @@ public class InventoryQryExe {
      */
     public Commodity selectById(Long id){
         CommodityDO commodityDO = commodityMapper.selectById(id);
-        return DozerBeanMapperBuilder.buildDefault().map(commodityDO,Commodity.class);
+        return Convert.entityConvert(commodityDO,Commodity.class);
     }
 
     /**
@@ -77,7 +74,8 @@ public class InventoryQryExe {
      * @return
      */
     public List<InventoryInInfoDTO> getInventoryInList(InventoryInListQuery query){
-        return inventoryInGateway.getInventoryInList(query);
+        List<InventoryInInfo> inventoryInInfoList = inventoryInGateway.getInventoryInList(query);
+        return Convert.listConvert(inventoryInInfoList,InventoryInInfoDTO.class);
     }
 
     /**
@@ -86,7 +84,17 @@ public class InventoryQryExe {
      * @return
      */
     public InventoryInInfoDTO selectInDetailById(Long id) {
-        return inventoryInGateway.selectInDetail(id);
+        // 查询入库单主表实体
+        InventoryInInfo inventoryInInfo = inventoryInGateway.selectInInfo(id);
+        // 转化DTO数据传输对象
+        InventoryInInfoDTO inventoryInInfoDTO = Convert.entityConvert(inventoryInInfo,InventoryInInfoDTO.class);
+        // 查询入库单明细表实体
+        List<InventoryInDetail> inDetailList = inventoryInGateway.selectInDetail(id);
+        // 转化DTO数据传输对象
+        List<InventoryInDetailDTO> inDetailDTOList = Convert.listConvert(inDetailList,InventoryInDetailDTO.class);
+        // 组装返回数据
+        inventoryInInfoDTO.setInventory_in_detail_list(inDetailDTOList);
+        return inventoryInInfoDTO;
     }
 
     /**
@@ -94,7 +102,8 @@ public class InventoryQryExe {
      * @return
      */
     public List<InventoryOutInfoDTO> getInventoryOutList(InventoryOutListQuery query){
-        return inventoryOutGateway.getInventoryOutList(query);
+        List<InventoryOutInfo> inventoryOutInfoList = inventoryOutGateway.getInventoryOutList(query);
+        return Convert.listConvert(inventoryOutInfoList,InventoryOutInfoDTO.class);
     }
 
     /**
@@ -102,7 +111,8 @@ public class InventoryQryExe {
      * @return
      */
     public List<InventoryCheckInfoDTO> getInventoryCheckList(InventoryCheckListQuery query){
-        return inventoryCheckGateway.getInventoryCheckList(query);
+        List<InventoryCheckInfo> inventoryCheckInfoList = inventoryCheckGateway.getInventoryCheckList(query);
+        return Convert.listConvert(inventoryCheckInfoList,InventoryCheckInfoDTO.class);
     }
 
     /**
@@ -112,6 +122,7 @@ public class InventoryQryExe {
     public List<SupplierDTO> getSupplierList(){
         Jedis jedis = new Jedis();
         Long tenantId = Long.valueOf(jedis.get("tenantId"));
-        return inventoryMapper.getSupplierList(tenantId);
+        List<SupplierDO> supplierList = inventoryMapper.getSupplierList(tenantId);
+        return Convert.listConvert(supplierList,SupplierDTO.class);
     }
 }

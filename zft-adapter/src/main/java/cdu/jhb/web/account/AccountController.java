@@ -34,8 +34,8 @@ public class AccountController {
      * @return
      */
     @GetMapping(path = "getImg")
-    public void getImg(HttpServletResponse response, HttpServletRequest request){
-        accountService.getMsg(response,request);
+    public void getImg(HttpServletResponse response){
+        accountService.getMsg(response);
     }
 
     /**
@@ -50,14 +50,11 @@ public class AccountController {
      * 登录验证
      * @param account_name
      * @param account_password
-     * @param req
-     * @param model
      * @return
      */
     @PostMapping(path = "login")
     public String login(@Param("account_name") String account_name,@Param("account_password") String account_password,
-                        @Param("code")String code,@Param("country_code")String country_code,
-                        HttpServletRequest req,Model model) throws Exception {
+                        @Param("code")String code,@Param("country_code")String country_code) throws Exception {
         if(accountService.verification(account_name,account_password,code,country_code)){
             return "clinic/clinic";
         }

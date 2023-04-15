@@ -18,5 +18,5 @@ public interface InventoryGateway {
      * @param query
      * @return
      */
-    List<InventoryInfoDTO> getInventoryList(InventoryListQuery query);
+    List<InventoryInfo> getInventoryList(InventoryListQuery query);
 }

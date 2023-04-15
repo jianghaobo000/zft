@@ -30,7 +30,14 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>4.3.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jedis</artifactId>
+                    <groupId>redis.clients</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
         <!-- fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>

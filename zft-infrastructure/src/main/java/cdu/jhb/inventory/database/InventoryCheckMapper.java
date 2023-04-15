@@ -1,5 +1,6 @@
 package cdu.jhb.inventory.database;
 
+import cdu.jhb.domain.inventory.InventoryCheckInfo;
 import cdu.jhb.inventory.database.dataobject.InventoryCheckDO;
 import cdu.jhb.inventory.database.dataobject.InventoryDO;
 import cdu.jhb.inventory.dto.data.*;
@@ -18,5 +19,5 @@ import java.util.List;
 @Mapper
 public interface InventoryCheckMapper extends BaseMapper<InventoryCheckDO> {
 
-    List<InventoryCheckInfoDTO> getInventoryCheckList(@Param("param") InventoryCheckListQuery query);
+    List<InventoryCheckInfo> getInventoryCheckList(@Param("param") InventoryCheckListQuery query);
 }

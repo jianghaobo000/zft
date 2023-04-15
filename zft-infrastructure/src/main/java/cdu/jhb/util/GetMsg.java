@@ -1,5 +1,6 @@
 package cdu.jhb.util;
 
+import cdu.jhb.common.Constant;
 import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +18,9 @@ public class GetMsg {
 
     /**
      * 生成验证码，并将验证码存入session中，以ip为key
-     * @param request
      * @return
      */
-    public static BufferedImage getMsg(HttpServletRequest request){
+    public static BufferedImage getMsg(){
         int width = 60 , height = 30;
         //创建一个图像，宽60 高30
         BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
@@ -28,7 +28,7 @@ public class GetMsg {
         Random random = new Random();
         g.setColor(getRandomColor(200,250));
         g.fillRect(0,0,width,height);
-        g.setFont(new Font("Times New Roman",Font.PLAIN,18));
+        g.setFont(new Font(Constant.FONT_TIMES_NEW_ROMAN,Font.PLAIN,18));
         g.setColor(getRandomColor(160,200));
         //干扰线生成
         for (int i = 0; i < 10; i++) {
@@ -45,12 +45,10 @@ public class GetMsg {
             //设置字体颜色
             g.drawString(strNumber,13*i+6,20);
         }
-        System.out.println("当前验证码"+strCode);
-        request.getSession().setAttribute("strCode",strCode);
         // 开启redis缓存
-        Jedis jedis = new Jedis("127.0.0.1",6379);
+        Jedis jedis = new Jedis();
         // 存入redis中
-        jedis.set("code",strCode);
+        jedis.set(Constant.VALID_CODE,strCode);
         g.dispose();
         return image;
     }

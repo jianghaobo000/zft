@@ -1,5 +1,6 @@
 package cdu.jhb.domain.inventory.gateway;
 
+import cdu.jhb.domain.inventory.InventoryOutInfo;
 import cdu.jhb.inventory.dto.data.InventoryOutInfoDTO;
 import cdu.jhb.inventory.dto.data.InventoryOutListQuery;
 
@@ -18,5 +19,5 @@ public interface InventoryOutGateway {
      * @param query
      * @return
      */
-    List<InventoryOutInfoDTO> getInventoryOutList(InventoryOutListQuery query);
+    List<InventoryOutInfo> getInventoryOutList(InventoryOutListQuery query);
 }

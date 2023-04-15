@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -77,8 +78,9 @@ public class InventoryController {
     @GetMapping("toInventoryIn")
     public String toInventoryIn(Model model){
         List<InventoryInInfoDTO> inventoryInDTOList = inventoryInService.getInventoryInList(new InventoryInListQuery());
-        model.addAttribute("inventoryInInfo",new InventoryInInfoDTO());
         model.addAttribute("infoInDTOList",inventoryInDTOList);
+        // 第一次跳转页面需要对不赋值对象传一个空对象
+        model.addAttribute("inventoryInInfo",new InventoryInInfoDTO());
         return "inventory/inventoryIn";
     }
 
@@ -89,9 +91,21 @@ public class InventoryController {
     @PostMapping("toInventoryInByQuery")
     public String toInventoryInByQuery(Model model,InventoryInListQuery query){
         List<InventoryInInfoDTO> inventoryInDTOList = inventoryInService.getInventoryInList(query);
-        model.addAttribute("inventoryInInfo",new InventoryInInfoDTO());
         model.addAttribute("infoInDTOList",inventoryInDTOList);
         return "inventory/inventoryIn :: inInfoList";
+    }
+
+    /**
+     * 打开入库单详情页面
+     * @param model
+     * @param id
+     * @return
+     */
+    @GetMapping("selectInDetailById")
+    public String selectInDetailById(Model model,@RequestParam("id") Long id){
+        InventoryInInfoDTO inventoryInInfoDTO = inventoryInService.selectInDetailById(id);
+        model.addAttribute("inventoryInInfo",inventoryInInfoDTO);
+        return "inventory/inventoryIn :: inventoryInInfo";
     }
 
     /**
@@ -105,6 +119,12 @@ public class InventoryController {
         return "inventory/inventoryOut";
     }
 
+    /**
+     * 条件查询跳转库存出库列表界面
+     * @param model
+     * @param query
+     * @return
+     */
     @PostMapping("toInventoryOutByQuery")
     public String toInventoryOutByQuery(Model model,InventoryOutListQuery query){
         List<InventoryOutInfoDTO> inventoryOutDTOList = inventoryOutService.getInventoryOutList(query);
@@ -132,19 +152,6 @@ public class InventoryController {
         List<InventoryCheckInfoDTO> InventoryCheckDTOList = inventoryCheckService.getInventoryCheckList(query);
         model.addAttribute("infoCheckDTOList",InventoryCheckDTOList);
         return "inventory/inventoryCheck :: checkInfoList";
-    }
-
-    /**
-     * 打开入库单详情页面
-     * @param model
-     * @param id
-     * @return
-     */
-    @GetMapping("selectInDetailById")
-    public String selectInDetailById(Model model,@Param("id") Long id){
-        InventoryInInfoDTO inventoryInInfoDTO = inventoryInService.selectInDetailById(id);
-        model.addAttribute("inventoryInInfo",inventoryInInfoDTO);
-        return "inventory/inventoryIn :: inventoryInInfo";
     }
 
     /**

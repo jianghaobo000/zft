@@ -1,7 +1,9 @@
 package cdu.jhb.commodity.command;
 
+import cdu.jhb.commodity.dto.data.CommodityDTO;
 import cdu.jhb.domain.commodity.Commodity;
 import cdu.jhb.domain.commodity.gateway.CommodityGateway;
+import cdu.jhb.util.Convert;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,10 +20,12 @@ public class CommodityModExe {
     private final CommodityGateway commodityGateway;
     /**
      *
-     * @param commodity
+     * @param commodityDTO
      * @return
      */
-    public Boolean addCommodity(Commodity commodity){
+    public Boolean addCommodity(CommodityDTO commodityDTO){
+        // 将数据传输对象DTO转换为实体
+        Commodity commodity = Convert.entityConvert(commodityDTO,Commodity.class);
         return commodityGateway.addCommodity(commodity);
     }
 }

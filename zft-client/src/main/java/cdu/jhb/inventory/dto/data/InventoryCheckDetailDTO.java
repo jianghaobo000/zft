@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InventoryCheckDetailDTO extends CommodityDTO {
+public class InventoryCheckDetailDTO {
     /**
      * 盘点单明细ID
      */

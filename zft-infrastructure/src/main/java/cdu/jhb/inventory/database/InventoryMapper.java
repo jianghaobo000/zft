@@ -1,6 +1,8 @@
 package cdu.jhb.inventory.database;
 
+import cdu.jhb.domain.inventory.InventoryInfo;
 import cdu.jhb.inventory.database.dataobject.InventoryDO;
+import cdu.jhb.inventory.database.dataobject.SupplierDO;
 import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
 import cdu.jhb.inventory.dto.data.InventoryListQuery;
 import cdu.jhb.inventory.dto.data.SupplierDTO;
@@ -19,8 +21,8 @@ import java.util.List;
 @Mapper
 public interface InventoryMapper extends BaseMapper<InventoryDO> {
 
-    List<InventoryInfoDTO> getInventoryList(@Param("param") InventoryListQuery query);
+    List<InventoryInfo> getInventoryList(@Param("param") InventoryListQuery query);
 
-    List<SupplierDTO> getSupplierList(@Param("tenant_id") Long tenantId);
+    List<SupplierDO> getSupplierList(@Param("tenant_id") Long tenantId);
 
 }

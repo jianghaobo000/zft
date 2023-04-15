@@ -1,6 +1,7 @@
 package cdu.jhb.domain.account.gateway;
 
 import cdu.jhb.account.dto.data.AccountDTO;
+import cdu.jhb.domain.account.Account;
 
 /**
 * @description: TODO
@@ -9,7 +10,7 @@ import cdu.jhb.account.dto.data.AccountDTO;
 * @version 1.0
 */
 public interface AccountGateway {
-    AccountDTO findAccountByName(String name,String countryCode);
+    Account findAccountByName(String name, String countryCode);
 
     Boolean findCountryCode(String countryCode) throws Exception;
 }

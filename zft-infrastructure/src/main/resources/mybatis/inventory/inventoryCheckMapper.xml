@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cdu.jhb.inventory.database.InventoryCheckMapper">
 
-    <select id="getInventoryCheckList" resultType="cdu.jhb.inventory.dto.data.InventoryCheckInfoDTO">
+    <select id="getInventoryCheckList" resultType="cdu.jhb.domain.inventory.InventoryCheckInfo">
         SELECT
             i.inventory_check_id,
             i.inventory_check_status,

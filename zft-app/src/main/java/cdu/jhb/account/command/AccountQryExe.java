@@ -2,7 +2,9 @@ package cdu.jhb.account.command;
 
 import cdu.jhb.account.database.AccountMapper;
 import cdu.jhb.account.dto.data.AccountDTO;
+import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.gateway.AccountGateway;
+import cdu.jhb.util.Convert;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
@@ -30,8 +32,9 @@ public class AccountQryExe {
      * @param countryCode
      * @return
      */
-    public AccountDTO findAccountByName(String name,String countryCode) {
-        return accountGateway.findAccountByName(name,countryCode);
+    public Boolean findAccountByName(String name,String password,String code,String countryCode) throws Exception {
+        Account account = accountGateway.findAccountByName(name,countryCode);
+        return account.isOk(password, code);
     }
 
     /**

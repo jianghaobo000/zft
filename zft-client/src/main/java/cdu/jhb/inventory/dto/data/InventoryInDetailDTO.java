@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 /**
 * @description: 入库单明细DTO
 * @author jhb
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InventoryInDetailDTO extends CommodityDTO {
+public class InventoryInDetailDTO {
     /**
      * 入库单明细ID
      */
@@ -44,6 +46,36 @@ public class InventoryInDetailDTO extends CommodityDTO {
      * 商品国家码
      */
     private String inventory_in_country_code;
+
+    /**
+     * 商品规格
+     */
+    private String inventory_in_commodity_specification;
+
+    /**
+     * 商品是否拆零销售
+     */
+    private Integer inventory_in_split_sale_status;
+
+    /**
+     * 商品进价(大)
+     */
+    private BigDecimal inventory_in_commodity_large_bid_price;
+
+    /**
+     * 商品进价(小)
+     */
+    private BigDecimal inventory_in_commodity_small_bid_price;
+
+    /**
+     * 商品售价(大)
+     */
+    private BigDecimal inventory_in_commodity_large_sale_price;
+
+    /**
+     * 商品售价(小)
+     */
+    private BigDecimal inventory_in_commodity_small_sale_price;
 
     /**
      * 商品库存单位（大）

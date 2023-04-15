@@ -29,7 +29,6 @@ public class CommodityServiceImpl implements CommodityServiceI {
      */
     @Override
     public Boolean addCommodity(CommodityDTO commodityDTO) {
-        Commodity commodity = DozerBeanMapperBuilder.buildDefault().map(commodityDTO,Commodity.class);
-        return commodityModExe.addCommodity(commodity);
+        return commodityModExe.addCommodity(commodityDTO);
     }
 }

@@ -1,10 +1,12 @@
 package cdu.jhb.inventory;
 
+import cdu.jhb.domain.inventory.InventoryOutInfo;
 import cdu.jhb.domain.inventory.gateway.InventoryGateway;
 import cdu.jhb.domain.inventory.gateway.InventoryOutGateway;
 import cdu.jhb.inventory.database.InventoryOutMapper;
 import cdu.jhb.inventory.dto.data.InventoryOutInfoDTO;
 import cdu.jhb.inventory.dto.data.InventoryOutListQuery;
+import cdu.jhb.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
@@ -29,9 +31,8 @@ public class InventoryOutGatewayImpl implements InventoryOutGateway {
      * @return
      */
     @Override
-    public List<InventoryOutInfoDTO> getInventoryOutList(InventoryOutListQuery query) {
-        Jedis jedis = new Jedis();
-        query.setInventory_out_tenant_id(Long.valueOf(jedis.get("tenantId")));
+    public List<InventoryOutInfo> getInventoryOutList(InventoryOutListQuery query) {
+        query.setInventory_out_tenant_id(RedisUtil.getLocalTenantId());
         return inventoryOutMapper.getInventoryOutList(query);
     }
 }

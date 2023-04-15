@@ -1,5 +1,6 @@
 package cdu.jhb.inventory.database;
 
+import cdu.jhb.domain.inventory.InventoryOutInfo;
 import cdu.jhb.inventory.database.dataobject.InventoryOutDO;
 import cdu.jhb.inventory.dto.data.InventoryOutInfoDTO;
 import cdu.jhb.inventory.dto.data.InventoryOutListQuery;
@@ -23,6 +24,6 @@ public interface InventoryOutMapper extends BaseMapper<InventoryOutDO> {
      * @param query
      * @return
      */
-    List<InventoryOutInfoDTO> getInventoryOutList(@Param("param") InventoryOutListQuery query);
+    List<InventoryOutInfo> getInventoryOutList(@Param("param") InventoryOutListQuery query);
 
 }

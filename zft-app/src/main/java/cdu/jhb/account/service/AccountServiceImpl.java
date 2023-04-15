@@ -5,6 +5,7 @@ import cdu.jhb.account.command.AccountModExe;
 import cdu.jhb.account.command.AccountQryExe;
 import cdu.jhb.account.dto.data.AccountDTO;
 import cdu.jhb.domain.account.Account;
+import cdu.jhb.util.Convert;
 import cdu.jhb.util.GetMsg;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import lombok.RequiredArgsConstructor;
@@ -34,16 +35,15 @@ public class AccountServiceImpl implements AccountServiceI {
     /**
      * 获取验证码图片
      * @param response
-     * @param request
      * @return
      */
     @Override
-    public void getMsg(HttpServletResponse response, HttpServletRequest request) {
+    public void getMsg(HttpServletResponse response) {
         response.setHeader("Pragma","No-cache");
         response.setHeader("Cache-Control","No-cache");
         response.setDateHeader("Expires",0);
         response.setContentType("image/jpeg");
-        BufferedImage image= GetMsg.getMsg(request);
+        BufferedImage image= GetMsg.getMsg();
         try {
             ImageIO.write(image,"JPEG",response.getOutputStream());
             response.getOutputStream().flush();
@@ -60,9 +60,7 @@ public class AccountServiceImpl implements AccountServiceI {
     @Override
     public Boolean verification(String name,String password,String code,String countryCode) throws Exception {
         if(accountQryExe.findCountryCode(countryCode)) {
-            AccountDTO accountDTO = accountQryExe.findAccountByName(name,countryCode);
-            Account account = DozerBeanMapperBuilder.buildDefault().map(accountDTO,Account.class);
-            return account.isOk(password, code);
+            return accountQryExe.findAccountByName(name,password,code,countryCode);
         }
         return false;
     }

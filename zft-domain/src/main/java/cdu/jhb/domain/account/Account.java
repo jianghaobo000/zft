@@ -1,6 +1,8 @@
 package cdu.jhb.domain.account;
 
 import cdu.jhb.account.dto.data.AccountDTO;
+import cdu.jhb.common.Constant;
+import cdu.jhb.common.DictException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,17 +41,17 @@ public class Account {
     public boolean isOk(String password, String code) throws Exception {
         Jedis jedis = new Jedis();
         if(this.account_id==null){
-            throw new Exception("账号不存在！");
+            throw new Exception(DictException.ACCOUNT_NOT_EXIST);
         }
         if(this.getAccount_password().equals(password)){
-            if(!jedis.get("code").equals(code)){
-                throw new Exception("验证码错误！");
+            if(!jedis.get(Constant.VALID_CODE).equals(code)){
+                throw new Exception(DictException.VALID_CODE_ERROR);
             }
         }else{
-            throw new Exception("密码错误！");
+            throw new Exception(DictException.ACCOUNT_PASSWORD_ERROR);
         }
-        jedis.set("accountName",this.account_name);
-        jedis.set("tenantId",this.account_tenant_id.toString());
+        jedis.set(Constant.ACCOUNT_NAME,this.account_name);
+        jedis.set(Constant.TENANT_ID,this.account_tenant_id.toString());
         return true;
     }
 

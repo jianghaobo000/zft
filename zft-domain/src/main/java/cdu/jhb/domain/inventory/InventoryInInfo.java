@@ -1,10 +1,12 @@
 package cdu.jhb.domain.inventory;
 
+import cdu.jhb.inventory.dto.data.InventoryInDetailDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
 * @description: 入库单信息实体

@@ -1,11 +1,8 @@
 package cdu.jhb.inventory.database;
 
+import cdu.jhb.domain.inventory.InventoryInInfo;
 import cdu.jhb.inventory.database.dataobject.InventoryInDO;
-import cdu.jhb.inventory.database.dataobject.InventoryInDetailDO;
-import cdu.jhb.inventory.dto.data.InventoryInDTO;
-import cdu.jhb.inventory.dto.data.InventoryInInfoDTO;
 import cdu.jhb.inventory.dto.data.InventoryInListQuery;
-import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,7 +23,7 @@ public interface InventoryInMapper extends BaseMapper<InventoryInDO> {
      * @param query
      * @return
      */
-    List<InventoryInInfoDTO> getInventoryInList(@Param("param") InventoryInListQuery query);
+    List<InventoryInInfo> getInventoryInList(@Param("param") InventoryInListQuery query);
 
     /**
      * 获取入库单
@@ -34,5 +31,5 @@ public interface InventoryInMapper extends BaseMapper<InventoryInDO> {
      * @param tenantId
      * @return
      */
-    InventoryInInfoDTO getInventoryInInfo(@Param("id")Long id,@Param("tenantId")Long tenantId);
+    InventoryInInfo getInventoryInInfo(@Param("id")Long id,@Param("tenantId")Long tenantId);
 }

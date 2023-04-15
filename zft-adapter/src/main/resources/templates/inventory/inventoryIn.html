@@ -238,28 +238,30 @@
                         <table class="table table-striped" style="font-size: 16px;">
                             <thead>
                             <tr>
-                                <td scope="col" width="15%">药品名</td>
-                                <td scope="col" width="15%">国家码</td>
-                                <td scope="col" width="10%">售价(元)</td>
-                                <td scope="col" width="10%">生产批号</td>
-                                <td scope="col" width="10%">生产日期</td>
-                                <td scope="col" width="10%">效期</td>
-                                <td scope="col" width="10%">入库数量</td>
-                                <td scope="col" width="10%">进价(元)</td>
-                                <td scope="col" width="10%">金额(元)</td>
+                                <td scope="col" width="10%">商品ID</td>
+                                <td scope="col" width="12%">商品名</td>
+                                <td scope="col" width="10%">国家编码</td>
+                                <td scope="col" width="13%">规格</td>
+                                <td scope="col" width="15%">售价</td>
+                                <td scope="col" width="15%">进价</td>
+                                <td scope="col" width="15%">入库数量</td>
+                                <td scope="col" width="10%">入库金额(元)</td>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="inDetail:${inventoryInInfo.getInDetailDTOList()}">
+                            <tr th:each="inDetail:${inventoryInInfo.getInventory_in_detail_list()}">
+                                <td th:text="${inDetail.getInventory_in_commodity_id()}"></td>
                                 <td th:text="${inDetail.getInventory_in_commodity_name()}"></td>
                                 <td th:text="${inDetail.getInventory_in_country_code()}"></td>
-                                <td th:text="${inDetail.getInventory_in_commodity_name()}"></td>
-                                <td th:text="${inDetail.getInventory_in_commodity_name()}"></td>
-                                <td th:text="${inDetail.getInventory_in_commodity_name()}"></td>
-                                <td th:text="${inDetail.getInventory_in_commodity_name()}"></td>
-                                <td th:text="${inDetail.getInventory_in_commodity_name()}"></td>
-                                <td th:text="${inDetail.getInventory_in_commodity_name()}"></td>
-                                <td th:text="${inDetail.getInventory_in_commodity_name()}"></td>
+                                <td th:text="${inDetail.getInventory_in_commodity_specification()}"></td>
+                                <td th:if="${inDetail.getInventory_in_split_sale_status() == 1}" th:text="${inDetail.getInventory_in_commodity_large_sale_price()}+'元/'+${inDetail.getInventory_in_large_unit()}+','+${inDetail.getInventory_in_commodity_small_sale_price()}+'元/'+${inDetail.getInventory_in_small_unit()}"></td>
+                                <td th:if="${inDetail.getInventory_in_split_sale_status() == 1}" th:text="${inDetail.getInventory_in_commodity_large_bid_price()}+'元/'+${inDetail.getInventory_in_large_unit()}+','+${inDetail.getInventory_in_commodity_small_bid_price()}+'元/'+${inDetail.getInventory_in_small_unit()}"></td>
+                                <td th:if="${inDetail.getInventory_in_split_sale_status() == 1}" th:text="${inDetail.getInventory_in_large_num()}+${inDetail.getInventory_in_large_unit()}+${inDetail.getInventory_in_small_num()}+${inDetail.getInventory_in_small_unit()}"></td>
+                                <td th:if="${inDetail.getInventory_in_split_sale_status() == 1}" th:text="${inDetail.getInventory_in_large_num()*inDetail.getInventory_in_commodity_large_bid_price()+inDetail.getInventory_in_small_num()*inDetail.getInventory_in_commodity_small_bid_price()}"></td>
+                                <td th:if="${inDetail.getInventory_in_split_sale_status() == 0}" th:text="${inDetail.getInventory_in_commodity_large_sale_price()}+'元/'+${inDetail.getInventory_in_large_unit()}"></td>
+                                <td th:if="${inDetail.getInventory_in_split_sale_status() == 0}" th:text="${inDetail.getInventory_in_commodity_large_bid_price()}+'元/'+${inDetail.getInventory_in_large_unit()}"></td>
+                                <td th:if="${inDetail.getInventory_in_split_sale_status() == 0}" th:text="${inDetail.getInventory_in_large_num()}+${inDetail.getInventory_in_large_unit()}"></td>
+                                <td th:if="${inDetail.getInventory_in_split_sale_status() == 0}" th:text="${inDetail.getInventory_in_large_num()*inDetail.getInventory_in_commodity_large_bid_price()}"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -338,7 +340,7 @@
                 contentType: false,
                 processData: false,
                 success: function (data) {
-                    $("#inInfoList").html(data);
+                    $("#inInfoList").append(data);
                 },
                 error:function (data) {
                     layer.msg('请求失败，请刷新重试');
@@ -405,18 +407,17 @@
          * @param id
          */
         function detail(id) {
-            $.ajax({
-                url: '/inventory/selectInDetailById',
-                type: 'GET',
-                data: id,
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                    $("#inventoryInInfo").html(data);
-                },
-                error:function (data) {
-                    layer.msg('请求失败，请刷新重试');
+            axios.get('/inventory/selectInDetailById',{
+                params: {
+                    id: id,
                 }
+            }).then(function (response) {
+                $("#inventoryInInfo").append(response.data);
+                // 打开弹窗
+                shadow.style.display = "block";
+                detailed.style.display = "block";
+            }).error(function () {
+                layer.msg('请求失败，请刷新重试');
             })
         }
     </script>

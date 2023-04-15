@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InventoryInInfoDTO extends CommodityDTO {
+public class InventoryInInfoDTO {
     /**
      * 入库单ID
      */
