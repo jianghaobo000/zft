@@ -311,12 +311,6 @@
             add.style.display = "none";
         };
 
-        // 打开详情弹窗
-        select.onclick = function () {
-            shadow.style.display = "block";
-            detailed.style.display = "block";
-        };
-
         // 关闭详情弹窗
         function close3() {
             shadow.style.display = "none";
@@ -356,8 +350,6 @@
             $.ajax({
                 url: '/inventory/supplierList',
                 type: 'GET',
-                contentType: false,
-                processData: false,
                 success: function (response) {
                     response.forEach((item)=>{
                         //先创建好select里面的option元素
@@ -368,7 +360,6 @@
                         $(option).text(item.supplier_name);
                         //获取select 下拉框对象,并将option添加进select
                         $('#supplier').append(option);
-                        $('#supplier2').append(option);
                     });
                 },
                 error:function (response) {
@@ -380,8 +371,6 @@
             $.ajax({
                 url: '/account/getAccountList',
                 type: 'GET',
-                contentType: false,
-                processData: false,
                 success: function (response) {
                     response.forEach((item)=>{
                         //先创建好select里面的option元素
@@ -392,7 +381,6 @@
                         $(option).text(item.account_name);
                         //获取select 下拉框对象,并将option添加进select
                         $('#operator').append(option);
-                        $('#operator2').append(option);
                     });
                 },
                 error:function (response) {
@@ -411,7 +399,6 @@
                 type: 'GET',
                 contentType: false,
                 processData: false,
-                async: false,
                 success: function (response) {
                     $("#inventoryInInfo").html(response);
                     // 打开弹窗

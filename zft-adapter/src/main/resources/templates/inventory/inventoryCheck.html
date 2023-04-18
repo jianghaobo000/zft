@@ -90,6 +90,7 @@
                 </tr>
                 </tbody>
             </table>
+            <p th:if="${infoCheckDTOList.size() == 0}" class="no-data">暂无数据</p>
         </div>
         <div class="bottom">
             <div class="float-left">
@@ -222,8 +223,8 @@
         </div>
     </div>
 </div>
-<div class="inventory-detailed" th:fragment="inventoryCheckInfo" id="inventoryCheckInfo">
-    <div class="inventory-pop">
+<div class="inventory-detailed" id="inventory-detailed">
+    <div class="inventory-pop" th:fragment="inventoryCheckInfo" id="inventoryCheckInfo">
         <div class="top">
             <p th:text="'盘点单'+${inventoryCheckInfo.getInventory_check_id()}+'详情'"></p>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" onclick="close3()" viewBox="0 0 16 16">
@@ -298,7 +299,6 @@
     const close2 = document.getElementById("addClose2");
     const detailed = document.getElementById("inventory-detailed");
     const select = document.getElementById("select1");
-    const close3 = document.getElementById("selectClose");
 
     // 打开新增弹窗
     btn1.onclick = function () {
@@ -316,12 +316,6 @@
     close2.onclick = function () {
         shadow.style.display = "none";
         add.style.display = "none";
-    };
-
-    // 打开详情弹窗
-    select.onclick = function () {
-        shadow.style.display = "block";
-        detailed.style.display = "block";
     };
 
     // 关闭详情弹窗
@@ -361,7 +355,7 @@
     });
 
     /**
-     * 刷新入库单一览页面信息
+     * 刷新盘点单一览页面信息
      */
     const form1 = document.getElementById("form1");
     form1.addEventListener('submit',function (event) {
@@ -378,7 +372,7 @@
             success: function (data) {
                 $("#checkInfoList").html(data);
             },
-            error:function (data) {
+            error:function () {
                 layer.msg('请求失败，请刷新重试');
             }
         })
@@ -400,7 +394,7 @@
                 shadow.style.display = "block";
                 detailed.style.display = "block";
             },
-            error:function (response) {
+            error:function () {
                 layer.msg('请求失败，请刷新重试');
             }
         })

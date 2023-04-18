@@ -51,9 +51,7 @@
             i.inventory_check_bid_money,
             i.inventory_check_sale_money,
             i.inventory_check_variety,
-            i.inventory_check_category,
-            i.inventory_check_remarks,
-            i.inventory_check_money
+            i.inventory_check_remarks
         FROM inventory_check_table i
         LEFT JOIN account_table a ON i.inventory_check_operator_id = a.account_id
         WHERE
