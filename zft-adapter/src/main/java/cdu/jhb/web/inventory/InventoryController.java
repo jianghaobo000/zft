@@ -2,6 +2,7 @@ package cdu.jhb.web.inventory;
 
 import cdu.jhb.commodity.dto.data.CommodityDTO;
 import cdu.jhb.domain.inventory.InventoryCheck;
+import cdu.jhb.domain.inventory.InventoryOutInfo;
 import cdu.jhb.domain.inventory.Supplier;
 import cdu.jhb.inventory.api.InventoryCheckServiceI;
 import cdu.jhb.inventory.api.InventoryInServiceI;
@@ -116,6 +117,7 @@ public class InventoryController {
     public String toInventoryOut(Model model){
         List<InventoryOutInfoDTO> inventoryOutDTOList = inventoryOutService.getInventoryOutList(new InventoryOutListQuery());
         model.addAttribute("infoOutDTOList",inventoryOutDTOList);
+        model.addAttribute("inventoryOutInfo",new InventoryOutInfoDTO());
         return "inventory/inventoryOut";
     }
 
@@ -133,6 +135,19 @@ public class InventoryController {
     }
 
     /**
+     * 打开出库单详情页面
+     * @param model
+     * @param id
+     * @return
+     */
+    @GetMapping("selectOutDetailById")
+    public String selectOutDetailById(Model model,@RequestParam("id") Long id){
+        InventoryOutInfoDTO inventoryOutInfoDTO = inventoryOutService.selectOutDetailById(id);
+        model.addAttribute("inventoryOutInfo",inventoryOutInfoDTO);
+        return "inventory/inventoryOut :: inventoryOutInfo";
+    }
+
+    /**
      * 跳转库存盘点界面
      * @return
      */
@@ -140,6 +155,7 @@ public class InventoryController {
     public String toInventoryCheck(Model model){
         List<InventoryCheckInfoDTO> InventoryCheckDTOList = inventoryCheckService.getInventoryCheckList(new InventoryCheckListQuery());
         model.addAttribute("infoCheckDTOList",InventoryCheckDTOList);
+        model.addAttribute("inventoryCheckInfo",new InventoryCheckInfoDTO());
         return "inventory/inventoryCheck";
     }
 
@@ -152,6 +168,19 @@ public class InventoryController {
         List<InventoryCheckInfoDTO> InventoryCheckDTOList = inventoryCheckService.getInventoryCheckList(query);
         model.addAttribute("infoCheckDTOList",InventoryCheckDTOList);
         return "inventory/inventoryCheck :: checkInfoList";
+    }
+
+    /**
+     * 打开盘点单详情页面
+     * @param model
+     * @param id
+     * @return
+     */
+    @GetMapping("selectCheckDetailById")
+    public String selectCheckDetailById(Model model,@RequestParam("id") Long id){
+        InventoryCheckInfoDTO inventoryCheckInfoDTO = inventoryCheckService.selectCheckDetailById(id);
+        model.addAttribute("inventoryCheckInfo",inventoryCheckInfoDTO);
+        return "inventory/inventoryCheck :: inventoryCheckInfo";
     }
 
     /**

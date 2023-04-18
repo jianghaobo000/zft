@@ -26,4 +26,12 @@ public interface InventoryOutMapper extends BaseMapper<InventoryOutDO> {
      */
     List<InventoryOutInfo> getInventoryOutList(@Param("param") InventoryOutListQuery query);
 
+    /**
+     * 获取出库单主表
+     * @param id
+     * @param tenantId
+     * @return
+     */
+    InventoryOutInfo getInventoryOutInfo(@Param("id")Long id,@Param("tenantId")Long tenantId);
+
 }

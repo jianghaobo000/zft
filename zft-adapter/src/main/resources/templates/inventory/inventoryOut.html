@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <div th:replace="~{common/common::cjbar}"/>
-    <title>库存</title>
+    <title>库存-盘点</title>
 </head>
 <body style="background-color: rgb(225,228,232);">
 <div th:replace="~{common/common::headbar}"/>
@@ -89,7 +89,7 @@
                     <td th:text="${inventoryOut.getInventory_out_create_time()}"></td>
                     <td th:text="${inventoryOut.getInventory_out_time()}"></td>
                     <td>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select1">查看</button>
+                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" th:onclick="|detail('${inventoryOut.getInventory_out_id()}')|">查看</button>
                         <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
                     </td>
                 </tr>
@@ -120,7 +120,7 @@
 <div class="inventory-add" id="inventory-add">
     <div class="inventory-pop">
         <div class="top">
-            <p>出库单</p>
+            <p></p>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" id="addClose" viewBox="0 0 16 16">
                 <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
             </svg>
@@ -229,25 +229,20 @@
     </div>
 </div>
 <div class="inventory-detailed" id="inventory-detailed">
-    <div class="inventory-pop">
+    <div class="inventory-pop" th:fragment="inventoryOutInfo" id="inventoryOutInfo">
         <div class="top">
-            <p>入库单***********详情</p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" id="selectClose" viewBox="0 0 16 16">
+            <p th:text="'出库单'+${inventoryOutInfo.getInventory_out_id()}+'详情'"></p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right"  onclick="close3()" viewBox="0 0 16 16">
                 <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
             </svg>
         </div>
         <div class="info">
             <div class="info1">
-                <p>入库人:</p>
-                <p>姜昊波</p>
-                <p>供应商:</p>
-                <p>姜昊波</p>
-                <p>随货单号:</p>
-                <p>姜昊波</p>
-                <p>备注:</p>
-                <p>姜昊波</p>
+                <p th:text="'出库人: '+${inventoryOutInfo.getInventory_out_operator()}"></p>
+                <p th:text="'出库类型: '+${inventoryOutInfo.getInventory_out_category()}"></p>
+                <p th:text="'备注: '+${inventoryOutInfo.getInventory_out_remarks()}"></p>
                 <div class="float-right">
-                    <p>品种：0 金额：0.00元</p>
+                    <p th:text="'品种: '+${inventoryOutInfo.getInventory_out_variety()}+' 金额: '+${inventoryOutInfo.getInventory_out_money()}+' 元'"></p>
                 </div>
             </div>
             <div class="info2">
@@ -255,39 +250,27 @@
                     <table class="table table-striped" style="font-size: 16px;">
                         <thead>
                         <tr>
-                            <td scope="col" width="15%">药品名</td>
-                            <td scope="col" width="15%">国家码</td>
-                            <td scope="col" width="10%">售价(元)</td>
-                            <td scope="col" width="10%">生产批号</td>
-                            <td scope="col" width="10%">生产日期</td>
-                            <td scope="col" width="10%">效期</td>
-                            <td scope="col" width="10%">入库数量</td>
-                            <td scope="col" width="10%">进价(元)</td>
-                            <td scope="col" width="10%">金额(元)</td>
+                            <td scope="col" width="10%">商品ID</td>
+                            <td scope="col" width="17%">商品名</td>
+                            <td scope="col" width="10%">国家编码</td>
+                            <td scope="col" width="13%">规格</td>
+                            <td scope="col" width="20%">售价</td>
+                            <td scope="col" width="20%">出库数量</td>
+                            <td scope="col" width="10%">出库金额(元)</td>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>感冒灵颗粒</td>
-                            <td>H524234332</td>
-                            <td>30.00</td>
-                            <td>20230302001</td>
-                            <td>2023年1月5日</td>
-                            <td>2025年1月5日</td>
-                            <td>300盒</td>
-                            <td>25.00</td>
-                            <td>7500.00</td>
-                        </tr>
-                        <tr>
-                            <td>感冒灵颗粒</td>
-                            <td>H524234332</td>
-                            <td>30.00</td>
-                            <td>20230302001</td>
-                            <td>2023年1月5日</td>
-                            <td>2025年1月5日</td>
-                            <td>300盒</td>
-                            <td>25.00</td>
-                            <td>7500.00</td>
+                        <tr th:each="outDetail:${inventoryOutInfo.getInventory_out_detail_list()}">
+                            <td th:text="${outDetail.getInventory_out_commodity_id()}"></td>
+                            <td th:text="${outDetail.getInventory_out_commodity_name()}"></td>
+                            <td th:text="${outDetail.getInventory_out_country_code()}"></td>
+                            <td th:text="${outDetail.getInventory_out_commodity_specification()}"></td>
+                            <td th:if="${outDetail.getInventory_out_split_sale_status() == 1}" th:text="${outDetail.getInventory_out_commodity_large_sale_price()}+'元/'+${outDetail.getInventory_out_large_unit()}+','+${outDetail.getInventory_out_commodity_small_sale_price()}+'元/'+${outDetail.getInventory_out_small_unit()}"></td>
+                            <td th:if="${outDetail.getInventory_out_split_sale_status() == 1}" th:text="${outDetail.getInventory_out_large_num()}+${outDetail.getInventory_out_large_unit()}+${outDetail.getInventory_out_small_num()}+${outDetail.getInventory_out_small_unit()}"></td>
+                            <td th:if="${outDetail.getInventory_out_split_sale_status() == 1}" th:text="${outDetail.getInventory_out_large_num()*outDetail.getInventory_out_commodity_large_sale_price()+outDetail.getInventory_out_small_num()*outDetail.getInventory_out_commodity_small_sale_price()}"></td>
+                            <td th:if="${outDetail.getInventory_out_split_sale_status() == 0}" th:text="${outDetail.getInventory_out_commodity_large_sale_price()}+'元/'+${outDetail.getInventory_out_large_unit()}"></td>
+                            <td th:if="${outDetail.getInventory_out_split_sale_status() == 0}" th:text="${outDetail.getInventory_out_large_num()}+${outDetail.getInventory_out_large_unit()}"></td>
+                            <td th:if="${outDetail.getInventory_out_split_sale_status() == 0}" th:text="${outDetail.getInventory_out_large_num()*outDetail.getInventory_out_commodity_large_sale_price()}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -318,7 +301,6 @@
     const close2 = document.getElementById("addClose2");
     const detailed = document.getElementById("inventory-detailed");
     const select = document.getElementById("select1");
-    const close3 = document.getElementById("selectClose");
 
     // 打开新增弹窗
     btn1.onclick = function () {
@@ -345,7 +327,7 @@
     };
 
     // 关闭详情弹窗
-    close3.onclick = function () {
+    function close3() {
         shadow.style.display = "none";
         detailed.style.display = "none";
     };
@@ -402,6 +384,28 @@
             }
         })
     });
+
+    /**
+     * 查看入库单
+     * @param id
+     */
+    function detail(id) {
+        $.ajax({
+            url: '/inventory/selectOutDetailById?id='+id,
+            type: 'GET',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $("#inventoryOutInfo").html(response);
+                // 打开弹窗
+                shadow.style.display = "block";
+                detailed.style.display = "block";
+            },
+            error:function (response) {
+                layer.msg('请求失败，请刷新重试');
+            }
+        })
+    }
 </script>
 </body>
 </html>

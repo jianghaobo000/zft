@@ -20,4 +20,6 @@ import java.util.List;
 public interface InventoryCheckMapper extends BaseMapper<InventoryCheckDO> {
 
     List<InventoryCheckInfo> getInventoryCheckList(@Param("param") InventoryCheckListQuery query);
+
+    InventoryCheckInfo getInventoryCheckInfo(@Param("id")Long id,@Param("tenantId")Long tenantId);
 }

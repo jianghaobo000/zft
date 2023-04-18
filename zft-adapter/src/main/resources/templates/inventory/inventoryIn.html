@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <div th:replace="~{common/common::cjbar}"/>
-    <title>库存</title>
+    <title>库存-入库</title>
 </head>
 <body style="background-color: rgb(225,228,232);">
     <div th:replace="~{common/common::headbar}"/>
@@ -220,7 +220,7 @@
         <div class="inventory-pop" th:fragment="inventoryInInfo" id="inventoryInInfo">
             <div class="top">
                 <p th:text="'入库单'+${inventoryInInfo.getInventory_in_id()}+'详情'"></p>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" id="selectClose" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" onclick="close3()" viewBox="0 0 16 16">
                     <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                 </svg>
             </div>
@@ -292,7 +292,6 @@
         const close2 = document.getElementById("addClose2");
         const detailed = document.getElementById("inventory-detailed");
         const select = document.getElementById("select1");
-        const close3 = document.getElementById("selectClose");
 
         // 打开新增弹窗
         btn1.onclick = function () {
@@ -319,7 +318,7 @@
         };
 
         // 关闭详情弹窗
-        close3.onclick = function () {
+        function close3() {
             shadow.style.display = "none";
             detailed.style.display = "none";
         };
@@ -340,9 +339,9 @@
                 contentType: false,
                 processData: false,
                 success: function (data) {
-                    $("#inInfoList").append(data);
+                    $("#inInfoList").html(data);
                 },
-                error:function (data) {
+                error:function () {
                     layer.msg('请求失败，请刷新重试');
                 }
             })
@@ -407,17 +406,21 @@
          * @param id
          */
         function detail(id) {
-            axios.get('/inventory/selectInDetailById',{
-                params: {
-                    id: id,
+            $.ajax({
+                url: '/inventory/selectInDetailById?id='+id,
+                type: 'GET',
+                contentType: false,
+                processData: false,
+                async: false,
+                success: function (response) {
+                    $("#inventoryInInfo").html(response);
+                    // 打开弹窗
+                    shadow.style.display = "block";
+                    detailed.style.display = "block";
+                },
+                error:function (response) {
+                    layer.msg('请求失败，请刷新重试');
                 }
-            }).then(function (response) {
-                $("#inventoryInInfo").append(response.data);
-                // 打开弹窗
-                shadow.style.display = "block";
-                detailed.style.display = "block";
-            }).error(function () {
-                layer.msg('请求失败，请刷新重试');
             })
         }
     </script>

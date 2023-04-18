@@ -28,6 +28,11 @@ public class InventoryCheckServiceImpl implements InventoryCheckServiceI {
     private final InventoryQryExe inventoryQryExe;
 
 
+    /**
+     * 获取盘点单列表
+     * @param query
+     * @return
+     */
     @Override
     public List<InventoryCheckInfoDTO> getInventoryCheckList(InventoryCheckListQuery query) {
         if(!Constant.NULL_STRING.equals(query.getInventory_check_begin_time()) && !Constant.NULL_STRING.equals(query.getInventory_check_end_time())){
@@ -35,5 +40,16 @@ public class InventoryCheckServiceImpl implements InventoryCheckServiceI {
             query.setInventory_check_end_time(query.getInventory_check_end_time()+Constant.END_TIME);
         }
         return inventoryQryExe.getInventoryCheckList(query);
+    }
+
+
+    /**
+     * 查询盘点单明细列表
+     * @param id
+     * @return
+     */
+    @Override
+    public InventoryCheckInfoDTO selectCheckDetailById(Long id) {
+        return inventoryQryExe.selectCheckDetailById(id);
     }
 }

@@ -41,4 +41,14 @@ public class InventoryOutServiceImpl implements InventoryOutServiceI {
         }
         return inventoryQryExe.getInventoryOutList(query);
     }
+
+    /**
+     * 获取出库单详情
+     * @param id
+     * @return
+     */
+    @Override
+    public InventoryOutInfoDTO selectOutDetailById(Long id) {
+        return inventoryQryExe.selectOutDetailById(id);
+    }
 }

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 /**
 * @description: TODO
 * @author jhb
@@ -33,6 +35,31 @@ public class InventoryCheckDetail {
      * 商品名称
      */
     private String inventory_check_commodity_name;
+
+    /**
+     * 商品国家码
+     */
+    private String inventory_check_country_code;
+
+    /**
+     * 商品规格
+     */
+    private String inventory_check_commodity_specification;
+
+    /**
+     * 商品是否拆零销售
+     */
+    private Integer inventory_check_split_sale_status;
+
+    /**
+     * 商品盈亏金额(进价)
+     */
+    private BigDecimal inventory_check_commodity_bid_money;
+
+    /**
+     * 商品盈亏金额(售价)
+     */
+    private BigDecimal inventory_check_commodity_sale_money;
 
     /**
      * 商品库存单位（大）

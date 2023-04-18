@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 /**
 * @description: 出库单明细实体
 * @author jhb
@@ -33,6 +35,31 @@ public class InventoryOutDetail {
      * 商品名称
      */
     private String inventory_out_commodity_name;
+
+    /**
+     * 商品国家码
+     */
+    private String inventory_out_country_code;
+
+    /**
+     * 商品规格
+     */
+    private String inventory_out_commodity_specification;
+
+    /**
+     * 商品是否拆零销售
+     */
+    private Integer inventory_out_split_sale_status;
+
+    /**
+     * 商品售价(大)
+     */
+    private BigDecimal inventory_out_commodity_large_sale_price;
+
+    /**
+     * 商品售价(小)
+     */
+    private BigDecimal inventory_out_commodity_small_sale_price;
 
     /**
      * 商品库存单位（大）

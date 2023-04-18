@@ -3,6 +3,7 @@ package cdu.jhb.inventory.api;
 import cdu.jhb.inventory.dto.data.InventoryCheckInfoDTO;
 import cdu.jhb.inventory.dto.data.InventoryCheckListQuery;
 import cdu.jhb.inventory.dto.data.InventoryInDTO;
+import cdu.jhb.inventory.dto.data.InventoryOutInfoDTO;
 
 import java.util.List;
 
@@ -15,5 +16,7 @@ import java.util.List;
 public interface InventoryCheckServiceI {
 
     List<InventoryCheckInfoDTO> getInventoryCheckList(InventoryCheckListQuery query);
+
+    InventoryCheckInfoDTO selectCheckDetailById(Long id);
 
 }

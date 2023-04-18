@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <div th:replace="~{common/common::cjbar}"/>
-    <title>库存</title>
+    <title>库存-盘点</title>
 </head>
 <body style="background-color: rgb(225,228,232);">
 <div th:replace="~{common/common::headbar}"/>
@@ -84,7 +84,7 @@
                     <td th:text="${inventoryCheck.getInventory_check_create_time()}"></td>
                     <td th:text="${inventoryCheck.getInventory_check_time()}"></td>
                     <td>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" id="select1">查看</button>
+                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" th:onclick="|detail('${inventoryCheck.getInventory_check_id()}')|">查看</button>
                         <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
                     </td>
                 </tr>
@@ -222,22 +222,20 @@
         </div>
     </div>
 </div>
-<div class="inventory-detailed" id="inventory-detailed">
+<div class="inventory-detailed" th:fragment="inventoryCheckInfo" id="inventoryCheckInfo">
     <div class="inventory-pop">
         <div class="top">
-            <p>盘点单***********详情</p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" id="selectClose" viewBox="0 0 16 16">
+            <p th:text="'盘点单'+${inventoryCheckInfo.getInventory_check_id()}+'详情'"></p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" onclick="close3()" viewBox="0 0 16 16">
                 <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
             </svg>
         </div>
         <div class="info">
             <div class="info1">
-                <p>盘点人:</p>
-                <p>姜昊波</p>
-                <p>备注:</p>
-                <p>姜昊波</p>
+                <p th:text="'盘点人: '+${inventoryCheckInfo.getInventory_check_operator()}"></p>
+                <p th:text="'备注: '+${inventoryCheckInfo.getInventory_check_remarks()}"></p>
                 <div class="float-right">
-                    <p>品种：0 金额：0.00元</p>
+                    <p th:text="'品种: '+${inventoryCheckInfo.getInventory_check_variety()}+' 盈亏金额: '+${inventoryCheckInfo.getInventory_check_bid_money()}+' 元(进价) '+${inventoryCheckInfo.getInventory_check_sale_money()}+'元（售价）'"></p>
                 </div>
             </div>
             <div class="info2">
@@ -245,10 +243,10 @@
                     <table class="table table-striped" style="font-size: 16px;">
                         <thead>
                         <tr>
-                            <td scope="col" width="15%">药品名</td>
-                            <td scope="col" width="10%">国家码</td>
-                            <td scope="col" width="10%">类型</td>
-                            <td scope="col" width="10%">批次号</td>
+                            <td scope="col" width="10%">商品ID</td>
+                            <td scope="col" width="13%">商品名</td>
+                            <td scope="col" width="10%">国家编码</td>
+                            <td scope="col" width="12%">商品规格</td>
                             <td scope="col" width="11%">盈亏金额-进价(元)</td>
                             <td scope="col" width="11%">盈亏金额-售价(元)</td>
                             <td scope="col" width="11%">账面数量</td>
@@ -257,27 +255,19 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>感冒灵颗粒</td>
-                            <td>H524234332</td>
-                            <td>中西成药</td>
-                            <td>20230302001</td>
-                            <td><span style="color: green">+300.21</span></td>
-                            <td><span style="color: green">+344.33</span></td>
-                            <td>60盒3袋</td>
-                            <td>77盒3袋</td>
-                            <td><span style="color: green">+17</span>盒</td>
-                        </tr>
-                        <tr>
-                            <td>健胃消食片</td>
-                            <td>H524234442</td>
-                            <td>中西成药</td>
-                            <td>20230302001</td>
-                            <td><span style="color: red">-200.21</span></td>
-                            <td><span style="color: red">-244.33</span></td>
-                            <td>49盒</td>
-                            <td>39盒</td>
-                            <td><span style="color: red">-10</span>盒</td>
+                        <tr th:each="checkDetail:${inventoryCheckInfo.getInventory_check_detail_list()}">
+                            <td th:text="${checkDetail.getInventory_check_commodity_id()}"></td>
+                            <td th:text="${checkDetail.getInventory_check_commodity_name()}"></td>
+                            <td th:text="${checkDetail.getInventory_check_country_code()}"></td>
+                            <td th:text="${checkDetail.getInventory_check_commodity_specification()}"></td>
+                            <td th:style="${checkDetail.getInventory_check_commodity_bid_money()} >= 0 ? 'color: green' : 'color: red'"  th:text="${checkDetail.getInventory_check_commodity_bid_money()}"></td>
+                            <td th:style="${checkDetail.getInventory_check_commodity_sale_money()} >= 0 ? 'color: green' : 'color: red'"  th:text="${checkDetail.getInventory_check_commodity_sale_money()}"></td>
+                            <td th:if="${checkDetail.getInventory_check_split_sale_status() == 1}" th:text="${checkDetail.getInventory_check_before_large_num()}+${checkDetail.getInventory_check_large_unit()}+${checkDetail.getInventory_check_before_small_num()}+${checkDetail.getInventory_check_small_unit()}"></td>
+                            <td th:if="${checkDetail.getInventory_check_split_sale_status() == 1}" th:text="${checkDetail.getInventory_check_after_large_num()}+${checkDetail.getInventory_check_large_unit()}+${checkDetail.getInventory_check_after_small_num()}+${checkDetail.getInventory_check_small_unit()}"></td>
+                            <td th:if="${checkDetail.getInventory_check_split_sale_status() == 1}" th:style="${checkDetail.getInventory_check_commodity_bid_money()} >= 0 ? 'color: green' : 'color: red'" th:text="${checkDetail.getInventory_check_large_num()}+${checkDetail.getInventory_check_large_unit()}+${checkDetail.getInventory_check_small_num()}+${checkDetail.getInventory_check_small_unit()}"></td>
+                            <td th:if="${checkDetail.getInventory_check_split_sale_status() == 0}" th:text="${checkDetail.getInventory_check_before_large_num()}+${checkDetail.getInventory_check_large_unit()}"></td>
+                            <td th:if="${checkDetail.getInventory_check_split_sale_status() == 0}" th:text="${checkDetail.getInventory_check_after_large_num()}+${checkDetail.getInventory_check_large_unit()}"></td>
+                            <td th:if="${checkDetail.getInventory_check_split_sale_status() == 0}" th:style="${checkDetail.getInventory_check_commodity_bid_money()} >= 0 ? 'color: green' : 'color: red'" th:text="${checkDetail.getInventory_check_large_num()}+${checkDetail.getInventory_check_large_unit()}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -335,7 +325,7 @@
     };
 
     // 关闭详情弹窗
-    close3.onclick = function () {
+    function close3() {
         shadow.style.display = "none";
         detailed.style.display = "none";
     };
@@ -393,6 +383,28 @@
             }
         })
     });
+
+    /**
+     * 查看盘点单
+     * @param id
+     */
+    function detail(id) {
+        $.ajax({
+            url: '/inventory/selectCheckDetailById?id='+id,
+            type: 'GET',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $("#inventoryCheckInfo").html(response);
+                // 打开弹窗
+                shadow.style.display = "block";
+                detailed.style.display = "block";
+            },
+            error:function (response) {
+                layer.msg('请求失败，请刷新重试');
+            }
+        })
+    }
 </script>
 </body>
 </html>

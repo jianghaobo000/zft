@@ -107,12 +107,50 @@ public class InventoryQryExe {
     }
 
     /**
+     * 查询出库单明细
+     * @param id
+     * @return
+     */
+    public InventoryOutInfoDTO selectOutDetailById(Long id){
+        // 查询出库单主表实体
+        InventoryOutInfo inventoryOutInfo = inventoryOutGateway.selectOutInfo(id);
+        // 转化DTO数据传输对象
+        InventoryOutInfoDTO inventoryOutInfoDTO = Convert.entityConvert(inventoryOutInfo,InventoryOutInfoDTO.class);
+        // 查询出库单明细表实体
+        List<InventoryOutDetail> outDetailList = inventoryOutGateway.selectOutDetail(id);
+        // 转化DTO数据传输对象
+        List<InventoryOutDetailDTO> outDetailDTOList = Convert.listConvert(outDetailList,InventoryOutDetailDTO.class);
+        // 组装返回数据
+        inventoryOutInfoDTO.setInventory_out_detail_list(outDetailDTOList);
+        return inventoryOutInfoDTO;
+    }
+
+    /**
      * 查询盘点单列表
      * @return
      */
     public List<InventoryCheckInfoDTO> getInventoryCheckList(InventoryCheckListQuery query){
         List<InventoryCheckInfo> inventoryCheckInfoList = inventoryCheckGateway.getInventoryCheckList(query);
         return Convert.listConvert(inventoryCheckInfoList,InventoryCheckInfoDTO.class);
+    }
+
+    /**
+     * 查询盘点单明细
+     * @param id
+     * @return
+     */
+    public InventoryCheckInfoDTO selectCheckDetailById(Long id) {
+        // 查询盘点单主表实体
+        InventoryCheckInfo inventoryCheckInfo = inventoryCheckGateway.selectCheckInfo(id);
+        // 转化DTO数据传输对象
+        InventoryCheckInfoDTO inventoryCheckInfoDTO = Convert.entityConvert(inventoryCheckInfo,InventoryCheckInfoDTO.class);
+        // 查询盘点单明细表实体
+        List<InventoryCheckDetail> checkDetailList = inventoryCheckGateway.selectCheckDetail(id);
+        // 转化DTO数据传输对象
+        List<InventoryCheckDetailDTO> checkDetailDTOList = Convert.listConvert(checkDetailList,InventoryCheckDetailDTO.class);
+        // 组装返回数据
+        inventoryCheckInfoDTO.setInventory_check_detail_list(checkDetailDTOList);
+        return inventoryCheckInfoDTO;
     }
 
     /**

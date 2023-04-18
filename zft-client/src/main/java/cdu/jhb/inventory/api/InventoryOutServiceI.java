@@ -1,6 +1,7 @@
 package cdu.jhb.inventory.api;
 
 import cdu.jhb.inventory.dto.data.InventoryOutDTO;
+import cdu.jhb.inventory.dto.data.InventoryOutDetailDTO;
 import cdu.jhb.inventory.dto.data.InventoryOutInfoDTO;
 import cdu.jhb.inventory.dto.data.InventoryOutListQuery;
 
@@ -15,4 +16,6 @@ import java.util.List;
 public interface InventoryOutServiceI {
 
     List<InventoryOutInfoDTO> getInventoryOutList(InventoryOutListQuery query);
+
+    InventoryOutInfoDTO selectOutDetailById(Long id);
 }
