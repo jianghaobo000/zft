@@ -4,6 +4,7 @@ import cdu.jhb.commodity.dto.data.CommodityDTO;
 import cdu.jhb.domain.commodity.Commodity;
 import cdu.jhb.domain.commodity.gateway.CommodityGateway;
 import cdu.jhb.util.Convert;
+import cdu.jhb.util.PinYinConvert;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,8 @@ public class CommodityModExe {
     public Boolean addCommodity(CommodityDTO commodityDTO){
         // 将数据传输对象DTO转换为实体
         Commodity commodity = Convert.entityConvert(commodityDTO,Commodity.class);
+        // 添加拼音码
+        commodity.setCommodity_pinyin(PinYinConvert.getAllPinYinAndHeadChar(commodity.getCommodity_name()));
         return commodityGateway.addCommodity(commodity);
     }
 }

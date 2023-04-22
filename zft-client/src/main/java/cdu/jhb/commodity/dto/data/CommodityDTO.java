@@ -30,6 +30,11 @@ public class CommodityDTO {
     private String commodity_name;
 
     /**
+     * 商品拼音
+     */
+    private String commodity_pinyin;
+
+    /**
      * 商品国家编码
      */
     private String commodity_country_code;

@@ -2,6 +2,8 @@ package cdu.jhb.web.commodity;
 
 import cdu.jhb.commodity.api.CommodityServiceI;
 import cdu.jhb.commodity.dto.data.CommodityDTO;
+import cdu.jhb.common.Constant;
+import cdu.jhb.domain.commodity.Commodity;
 import cdu.jhb.inventory.dto.data.InventoryDTO;
 import cdu.jhb.inventory.dto.data.InventoryListQuery;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,5 +41,18 @@ public class CommodityController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    /**
+     * 查询药品
+     * @return
+     */
+    @GetMapping("selectCommodity")
+    public ResponseEntity<?> selectCommodity(@RequestParam("name") String name){
+        List<CommodityDTO> commodityDTOList = new ArrayList<>();
+        if(!name.equals(Constant.NULL_STRING)){
+            commodityDTOList = commodityService.selectCommodity(name);
+        }
+        return ResponseEntity.ok(commodityDTOList);
     }
 }

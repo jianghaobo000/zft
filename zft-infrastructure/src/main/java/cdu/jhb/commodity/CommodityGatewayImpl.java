@@ -10,6 +10,7 @@ import cdu.jhb.inventory.database.InventoryMapper;
 import cdu.jhb.inventory.database.dataobject.InventoryDO;
 import cdu.jhb.util.Convert;
 import cdu.jhb.util.RedisUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
 * @description: 商品网关层
@@ -70,5 +72,21 @@ public class CommodityGatewayImpl implements CommodityGateway {
             }
         }
         return false;
+    }
+
+    /**
+     * 搜索药品
+     * @param name
+     * @return
+     */
+    @Override
+    public List<Commodity> selectCommodity(String name) {
+        QueryWrapper<CommodityDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda()
+                .like(CommodityDO::getCommodity_name,name)
+                .or()
+                .like(CommodityDO::getCommodity_pinyin,name);
+        List<CommodityDO> commodityDOList = commodityMapper.selectList(queryWrapper);
+        return Convert.listConvert(commodityDOList,Commodity.class);
     }
 }

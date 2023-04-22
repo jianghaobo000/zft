@@ -2,12 +2,15 @@ package cdu.jhb.commodity.service;
 
 import cdu.jhb.commodity.api.CommodityServiceI;
 import cdu.jhb.commodity.command.CommodityModExe;
+import cdu.jhb.commodity.command.CommodityQryExe;
 import cdu.jhb.commodity.dto.data.CommodityDTO;
 import cdu.jhb.domain.commodity.Commodity;
 import cdu.jhb.domain.commodity.gateway.CommodityGateway;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
 * @description: 商品
@@ -21,6 +24,7 @@ public class CommodityServiceImpl implements CommodityServiceI {
 
     private final CommodityModExe commodityModExe;
 
+    private final CommodityQryExe commodityQryExe;
 
     /**
      * 新增品项
@@ -30,5 +34,15 @@ public class CommodityServiceImpl implements CommodityServiceI {
     @Override
     public Boolean addCommodity(CommodityDTO commodityDTO) {
         return commodityModExe.addCommodity(commodityDTO);
+    }
+
+    /**
+     * 搜索药品
+     * @param name
+     * @return
+     */
+    @Override
+    public List<CommodityDTO> selectCommodity(String name) {
+        return commodityQryExe.selectCommodity(name);
     }
 }

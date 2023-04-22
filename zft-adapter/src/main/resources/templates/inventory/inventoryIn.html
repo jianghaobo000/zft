@@ -157,7 +157,10 @@
                                     </svg>
                                 </button>
                             </div>
-                            <input type="text" class="form-control" placeholder="请输入 药品名/国家码 搜索药品" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                            <input type="text" id="selectCommodity" class="form-control" placeholder="请输入 药品名/国家码 搜索药品" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        </div>
+                        <div class="select-input" id="select-input">
+                            <table id="select-input-table" class="select-input-table" style="width: 100%;"></table>
                         </div>
                         <div class="float-right">
                             <p>品种：0 金额：0.00元</p>
@@ -410,6 +413,48 @@
                 }
             })
         }
+
+        const selectCommodity = document.getElementById("selectCommodity");
+        const selectInput = document.getElementById("select-input");
+        let timer;
+
+        selectCommodity.addEventListener('focus', function(){
+            selectInput.style.display = "block";
+        });
+
+        selectCommodity.addEventListener('blur', function () {
+            selectInput.style.display = "none";
+        });
+
+        selectCommodity.addEventListener('input', function () {
+            let inputValue = $(this).val();
+            $.ajax({
+                url: '/commodity/selectCommodity?name='+inputValue,
+                type: 'GET',
+                success: function(response) {
+                    selectInput.style.display = "block";
+                    let htmlStr = "";
+                    // 处理响应数据
+                    response.forEach((item)=>{
+                        htmlStr += "<tr>" +
+                            "<td class='select-input-td' style='width: 5%;'></td>" +
+                            "<td class='select-input-td' style='width: 35%;text-align: left;'>" + item.commodity_name + "</td>" +
+                            "<td class='select-input-td' style='width: 30%;text-align: center;'>" + item.commodity_specification + "</td>" +
+                            "<td class='select-input-td' style='width: 25%;text-align: right;'>" + item.commodity_manufacturer + "</td>" +
+                            "<td class='select-input-td' style='width: 5%;'></td>" +
+                            "</tr>";
+                    });
+                    if(htmlStr === ""){
+                        selectInput.style.display = "none";
+                    }
+                    $('#select-input-table').html(htmlStr);
+                },
+                error: function() {
+                    // 处理错误
+                    layer.msg("请求失败，请刷新重试");
+                }
+            });
+        });
     </script>
 </body>
 </html>

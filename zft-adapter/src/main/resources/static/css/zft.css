@@ -157,6 +157,31 @@ tr:hover .td-hover{
     background-color: #167bff !important;
 }
 
+.select-input{
+    width: 460px;
+    position: absolute;
+    z-index: 500;
+    top: 230px;
+    left: 80px;
+    max-height: 300px;
+    display: none;
+    overflow: auto;
+    border: 1px rgb(207,213,215) solid;
+    background-color: white;
+    border-radius: 2px;
+}
+
+.select-input-table tr:hover{
+    color: rgb(54,85,204);
+    background-color: rgb(212,218,240);
+}
+
+.select-input-td{
+    height: 40px;
+    border: 0;
+    border-bottom: 1px rgb(207,213,215) solid;
+}
+
 /* 门诊CSS */
 .clinic{
     width: 100%;

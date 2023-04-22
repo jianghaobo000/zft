@@ -20,4 +20,11 @@ public interface CommodityServiceI {
      */
     Boolean addCommodity(CommodityDTO commodityDTO);
 
+    /**
+     * 搜索药品
+     * @param name
+     * @return
+     */
+    List<CommodityDTO> selectCommodity(String name);
+
 }

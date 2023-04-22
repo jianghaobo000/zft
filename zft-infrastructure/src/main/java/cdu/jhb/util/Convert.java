@@ -20,6 +20,9 @@ public class Convert {
      * @return
      */
     public static <S, T> T entityConvert(S source, Class<T> targetClass) {
+        if(source==null){
+            return null;
+        }
         return DozerBeanMapperBuilder.buildDefault().map(source, targetClass);
     }
 
@@ -30,6 +33,9 @@ public class Convert {
      * @return
      */
     public static <S, T> List<T> listConvert(List<S> sourceList, Class<T> targetClass) {
+        if(sourceList==null){
+            return null;
+        }
         return sourceList.stream().map(source -> DozerBeanMapperBuilder.buildDefault().map(source, targetClass)).collect(Collectors.toList());
     }
 }
