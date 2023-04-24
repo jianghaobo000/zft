@@ -45,10 +45,9 @@ public class InventoryController {
      * @return
      */
     @GetMapping("toInventory")
-    public String toInventory(Model model){
+    public ResponseEntity<?> toInventory(){
         List<InventoryInfoDTO> infoDTOList = inventoryService.getInventoryList(new InventoryListQuery());
-        model.addAttribute("infoDTOList",infoDTOList);
-        return "inventory/inventory";
+        return ResponseEntity.ok(infoDTOList);
     }
 
     /**
@@ -56,10 +55,19 @@ public class InventoryController {
      * @return
      */
     @PostMapping("toInventoryByQuery")
-    public String toInventory(InventoryListQuery query, Model model){
+    public ResponseEntity<?> toInventory(InventoryListQuery query){
         List<InventoryInfoDTO> infoDTOList = inventoryService.getInventoryList(query);
-        model.addAttribute("infoDTOList",infoDTOList);
-        return "inventory/inventory :: infoList";
+        return ResponseEntity.ok(infoDTOList);
+    }
+
+    /**
+     * 通过名称查询药品物资列表
+     * @return
+     */
+    @GetMapping("selectInventoryByName")
+    public ResponseEntity<?> toInventory(@RequestParam("name")String name){
+        List<InventoryInfoDTO> infoDTOList = inventoryService.getInventoryList(new InventoryListQuery(name,null,null,null));
+        return ResponseEntity.ok(infoDTOList);
     }
 
     /**
@@ -77,12 +85,9 @@ public class InventoryController {
      * @return
      */
     @GetMapping("toInventoryIn")
-    public String toInventoryIn(Model model){
+    public ResponseEntity<?> toInventoryIn(){
         List<InventoryInInfoDTO> inventoryInDTOList = inventoryInService.getInventoryInList(new InventoryInListQuery());
-        model.addAttribute("infoInDTOList",inventoryInDTOList);
-        // 第一次跳转页面需要对不赋值对象传一个空对象
-        model.addAttribute("inventoryInInfo",new InventoryInInfoDTO());
-        return "inventory/inventoryIn";
+        return ResponseEntity.ok(inventoryInDTOList);
     }
 
     /**
@@ -90,23 +95,20 @@ public class InventoryController {
      * @return
      */
     @PostMapping("toInventoryInByQuery")
-    public String toInventoryInByQuery(Model model,InventoryInListQuery query){
+    public ResponseEntity<?> toInventoryInByQuery(InventoryInListQuery query){
         List<InventoryInInfoDTO> inventoryInDTOList = inventoryInService.getInventoryInList(query);
-        model.addAttribute("infoInDTOList",inventoryInDTOList);
-        return "inventory/inventoryIn :: inInfoList";
+        return ResponseEntity.ok(inventoryInDTOList);
     }
 
     /**
      * 打开入库单详情页面
-     * @param model
      * @param id
      * @return
      */
     @GetMapping("selectInDetailById")
-    public String selectInDetailById(Model model,@RequestParam("id") Long id){
+    public ResponseEntity<?> selectInDetailById(@RequestParam("id") Long id){
         InventoryInInfoDTO inventoryInInfoDTO = inventoryInService.selectInDetailById(id);
-        model.addAttribute("inventoryInInfo",inventoryInInfoDTO);
-        return "inventory/inventoryIn :: inventoryInInfo";
+        return ResponseEntity.ok(inventoryInInfoDTO);
     }
 
     /**
@@ -114,11 +116,9 @@ public class InventoryController {
      * @return
      */
     @GetMapping("toInventoryOut")
-    public String toInventoryOut(Model model){
+    public ResponseEntity<?> toInventoryOut(){
         List<InventoryOutInfoDTO> inventoryOutDTOList = inventoryOutService.getInventoryOutList(new InventoryOutListQuery());
-        model.addAttribute("infoOutDTOList",inventoryOutDTOList);
-        model.addAttribute("inventoryOutInfo",new InventoryOutInfoDTO());
-        return "inventory/inventoryOut";
+        return ResponseEntity.ok(inventoryOutDTOList);
     }
 
     /**
@@ -128,10 +128,9 @@ public class InventoryController {
      * @return
      */
     @PostMapping("toInventoryOutByQuery")
-    public String toInventoryOutByQuery(Model model,InventoryOutListQuery query){
+    public ResponseEntity<?> toInventoryOutByQuery(Model model,InventoryOutListQuery query){
         List<InventoryOutInfoDTO> inventoryOutDTOList = inventoryOutService.getInventoryOutList(query);
-        model.addAttribute("infoOutDTOList",inventoryOutDTOList);
-        return "inventory/inventoryOut :: outInfoList";
+        return ResponseEntity.ok(inventoryOutDTOList);
     }
 
     /**
@@ -141,10 +140,9 @@ public class InventoryController {
      * @return
      */
     @GetMapping("selectOutDetailById")
-    public String selectOutDetailById(Model model,@RequestParam("id") Long id){
+    public ResponseEntity<?> selectOutDetailById(@RequestParam("id") Long id){
         InventoryOutInfoDTO inventoryOutInfoDTO = inventoryOutService.selectOutDetailById(id);
-        model.addAttribute("inventoryOutInfo",inventoryOutInfoDTO);
-        return "inventory/inventoryOut :: inventoryOutInfo";
+        return ResponseEntity.ok(inventoryOutInfoDTO);
     }
 
     /**
@@ -152,11 +150,9 @@ public class InventoryController {
      * @return
      */
     @GetMapping("toInventoryCheck")
-    public String toInventoryCheck(Model model){
-        List<InventoryCheckInfoDTO> InventoryCheckDTOList = inventoryCheckService.getInventoryCheckList(new InventoryCheckListQuery());
-        model.addAttribute("infoCheckDTOList",InventoryCheckDTOList);
-        model.addAttribute("inventoryCheckInfo",new InventoryCheckInfoDTO());
-        return "inventory/inventoryCheck";
+    public ResponseEntity<?> toInventoryCheck(){
+        List<InventoryCheckInfoDTO> inventoryCheckDTOList = inventoryCheckService.getInventoryCheckList(new InventoryCheckListQuery());
+        return ResponseEntity.ok(inventoryCheckDTOList);
     }
 
     /**
@@ -164,23 +160,20 @@ public class InventoryController {
      * @return
      */
     @PostMapping("toInventoryCheckByQuery")
-    public String toInventoryCheckByQuery(Model model,InventoryCheckListQuery query){
-        List<InventoryCheckInfoDTO> InventoryCheckDTOList = inventoryCheckService.getInventoryCheckList(query);
-        model.addAttribute("infoCheckDTOList",InventoryCheckDTOList);
-        return "inventory/inventoryCheck :: checkInfoList";
+    public ResponseEntity<?> toInventoryCheckByQuery(InventoryCheckListQuery query){
+        List<InventoryCheckInfoDTO> inventoryCheckDTOList = inventoryCheckService.getInventoryCheckList(query);
+        return ResponseEntity.ok(inventoryCheckDTOList);
     }
 
     /**
      * 打开盘点单详情页面
-     * @param model
      * @param id
      * @return
      */
     @GetMapping("selectCheckDetailById")
-    public String selectCheckDetailById(Model model,@RequestParam("id") Long id){
+    public ResponseEntity<?> selectCheckDetailById(@RequestParam("id") Long id){
         InventoryCheckInfoDTO inventoryCheckInfoDTO = inventoryCheckService.selectCheckDetailById(id);
-        model.addAttribute("inventoryCheckInfo",inventoryCheckInfoDTO);
-        return "inventory/inventoryCheck :: inventoryCheckInfo";
+        return ResponseEntity.ok(inventoryCheckInfoDTO);
     }
 
     /**

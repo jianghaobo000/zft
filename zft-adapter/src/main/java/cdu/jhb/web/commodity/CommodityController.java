@@ -55,4 +55,8 @@ public class CommodityController {
         }
         return ResponseEntity.ok(commodityDTOList);
     }
+
+    public ResponseEntity<?> selectCommodityById(@RequestParam("id") long id){
+        return null;
+    }
 }

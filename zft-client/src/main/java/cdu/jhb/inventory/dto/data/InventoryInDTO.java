@@ -37,11 +37,6 @@ public class InventoryInDTO {
     private Long inventory_in_supplier_id;
 
     /**
-     * 随货单号
-     */
-    private String inventory_in_delivery;
-
-    /**
      * 入库时间
      */
     private String inventory_in_time;
