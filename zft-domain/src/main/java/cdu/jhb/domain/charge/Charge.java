@@ -17,30 +17,30 @@ public class Charge {
     /**
      * 收费单主表ID
      */
-    private Long charge_id;
+    private Long chargeId;
 
     /**
      * 收费单患者ID
      */
-    private Long charge_patient_id;
+    private Long chargePatientId;
 
     /**
      * 收费单总金额
      */
-    private Integer charge_money;
+    private Integer chargeMoney;
 
     /**
      * 收费单状态
      */
-    private String charge_status;
+    private String chargeStatus;
 
     /**
      * 收费单所属诊所
      */
-    private Long charge_tenant_id;
+    private Long chargeTenantId;
 
     /**
      * 收费时间
      */
-    private String charge_time;
+    private String chargeTime;
 }

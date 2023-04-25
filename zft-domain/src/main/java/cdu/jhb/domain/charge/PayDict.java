@@ -17,10 +17,10 @@ public class PayDict {
     /**
      * 支付方式ID
      */
-    private Long pay_id;
+    private Long payId;
 
     /**
      * 支付名称
      */
-    private String pay_name;
+    private String payName;
 }

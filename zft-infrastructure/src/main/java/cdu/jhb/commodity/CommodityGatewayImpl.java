@@ -45,17 +45,17 @@ public class CommodityGatewayImpl implements CommodityGateway {
         // 将实体转换为表对象
         CommodityDO commodityDO = Convert.entityConvert(commodity, CommodityDO.class);
         // 从redis缓存中获取当前登录租户国家码
-        commodityDO.setCommodity_tenant_id(RedisUtil.getLocalTenantId());
+        commodityDO.setCommodityTenantId(RedisUtil.getLocalTenantId());
         // 如果没有商品ID，则为新增，反之修改
-        if(commodityDO.getCommodity_id()==null){
+        if(commodityDO.getCommodityId()==null){
             int row1 = commodityMapper.insert(commodityDO);
             if(row1 == 1){
                 InventoryDO inventoryDO = new InventoryDO();
-                inventoryDO.setInventory_commodity_id(commodityDO.getCommodity_id());
-                inventoryDO.setInventory_commodity_name(commodityDO.getCommodity_name());
-                inventoryDO.setInventory_large_unit(commodityDO.getCommodity_large_unit());
-                inventoryDO.setInventory_small_unit(commodityDO.getCommodity_small_unit());
-                inventoryDO.setInventory_tenant_id(commodityDO.getCommodity_tenant_id());
+                inventoryDO.setInventoryCommodityId(commodityDO.getCommodityId());
+                inventoryDO.setInventoryCommodityName(commodityDO.getCommodityName());
+                inventoryDO.setInventoryLargeUnit(commodityDO.getCommodityLargeUnit());
+                inventoryDO.setInventorySmallUnit(commodityDO.getCommoditySmallUnit());
+                inventoryDO.setInventoryTenantId(commodityDO.getCommodityTenantId());
                 int row2 = inventoryMapper.insert(inventoryDO);
                 return row2 == 1;
             }
@@ -63,10 +63,10 @@ public class CommodityGatewayImpl implements CommodityGateway {
             int row1 = commodityMapper.updateById(commodityDO);
             if(row1 == 1){
                 UpdateWrapper<InventoryDO> updateWrapper = new UpdateWrapper<>();
-                updateWrapper.lambda().eq(InventoryDO::getInventory_commodity_id,commodityDO.getCommodity_id())
-                        .set(InventoryDO::getInventory_commodity_name,commodityDO.getCommodity_name())
-                        .set(InventoryDO::getInventory_large_unit,commodityDO.getCommodity_large_unit())
-                        .set(InventoryDO::getInventory_small_unit,commodityDO.getCommodity_small_unit());
+                updateWrapper.lambda().eq(InventoryDO::getInventoryCommodityId,commodityDO.getCommodityId())
+                        .set(InventoryDO::getInventoryCommodityName,commodityDO.getCommodityName())
+                        .set(InventoryDO::getInventoryLargeUnit,commodityDO.getCommodityLargeUnit())
+                        .set(InventoryDO::getInventorySmallUnit,commodityDO.getCommoditySmallUnit());
                 int row2 = inventoryMapper.update(null,updateWrapper);
                 return row2 == 1;
             }
@@ -83,9 +83,9 @@ public class CommodityGatewayImpl implements CommodityGateway {
     public List<Commodity> selectCommodity(String name) {
         QueryWrapper<CommodityDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda()
-                .like(CommodityDO::getCommodity_name,name)
+                .like(CommodityDO::getCommodityName,name)
                 .or()
-                .like(CommodityDO::getCommodity_pinyin,name);
+                .like(CommodityDO::getCommodityPinyin,name);
         List<CommodityDO> commodityDOList = commodityMapper.selectList(queryWrapper);
         return Convert.listConvert(commodityDOList,Commodity.class);
     }

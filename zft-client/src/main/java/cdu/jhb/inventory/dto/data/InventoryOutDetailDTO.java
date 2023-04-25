@@ -23,87 +23,87 @@ public class InventoryOutDetailDTO {
      * 出库单明细ID
      */
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long inventory_out_detail_id;
+    private Long inventoryOutDetailId;
 
     /**
      * 出库单主表ID
      */
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long inventory_out_id;
+    private Long inventoryOutId;
 
     /**
      * 商品ID
      */
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long inventory_out_commodity_id;
+    private Long inventoryOutCommodityId;
 
     /**
      * 商品名称
      */
-    private String inventory_out_commodity_name;
+    private String inventoryOutCommodityName;
 
     /**
      * 商品国家码
      */
-    private String inventory_out_country_code;
+    private String inventoryOutCountryCode;
 
     /**
      * 商品规格
      */
-    private String inventory_out_commodity_specification;
+    private String inventoryOutCommoditySpecification;
 
     /**
      * 商品是否拆零销售
      */
-    private Integer inventory_out_split_sale_status;
+    private Integer inventoryOutSplitSaleStatus;
 
     /**
      * 商品售价(大)
      */
-    private BigDecimal inventory_out_commodity_large_sale_price;
+    private BigDecimal inventoryOutCommodityLargeSalePrice;
 
     /**
      * 商品售价(小)
      */
-    private BigDecimal inventory_out_commodity_small_sale_price;
+    private BigDecimal inventoryOutCommoditySmallSalePrice;
 
     /**
      * 商品库存单位（大）
      */
-    private String inventory_out_large_unit;
+    private String inventoryOutLargeUnit;
 
     /**
      * 商品库存单位（小）
      */
-    private String inventory_out_small_unit;
+    private String inventoryOutSmallUnit;
 
     /**
      * 商品出库前数量（大）
      */
-    private Integer inventory_out_before_large_num;
+    private Integer inventoryOutBeforeLargeNum;
 
     /**
      * 商品出库前数量（小）
      */
-    private Integer inventory_out_before_small_num;
+    private Integer inventoryOutBeforeSmallNum;
 
     /**
      * 商品出库后数量（大）
      */
-    private Integer inventory_out_after_large_num;
+    private Integer inventoryOutAfterLargeNum;
 
     /**
      * 商品出库后数量（小）
      */
-    private Integer inventory_out_after_small_num;
+    private Integer inventoryOutAfterSmallNum;
 
     /**
      * 商品出库数量（大）
      */
-    private Integer inventory_out_large_num;
+    private Integer inventoryOutLargeNum;
 
     /**
      * 商品出库数量（小）
      */
-    private Integer inventory_out_small_num;
+    private Integer inventoryOutSmallNum;
 }

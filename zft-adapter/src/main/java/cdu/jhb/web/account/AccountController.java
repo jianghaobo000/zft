@@ -2,18 +2,14 @@ package cdu.jhb.web.account;
 
 import cdu.jhb.account.api.AccountServiceI;
 import cdu.jhb.account.dto.data.AccountDTO;
+import cdu.jhb.account.dto.data.LoginData;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
@@ -50,15 +46,13 @@ public class AccountController {
 
     /**
      * 登录验证
-     * @param account_name
-     * @param account_password
+     * loginDTO 登录请求参数
      * @return
      */
     @PostMapping(path = "login")
-    public ResponseEntity<?> login(@Param("account_name") String account_name,@Param("account_password") String account_password,
-                        @Param("code")String code,@Param("country_code")String country_code) throws Exception {
-        if(accountService.verification(account_name,account_password,code,country_code)){
-            return ResponseEntity.ok().build();
+    public ResponseEntity<?> login(@RequestBody LoginData loginData) throws Exception {
+        if(accountService.verification(loginData.getAccountName(),loginData.getAccountPassword(),loginData.getCode(),loginData.getCountryCode())){
+            return ResponseEntity.status(HttpStatus.OK).build();
         }
         // 状态码401
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

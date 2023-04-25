@@ -21,45 +21,45 @@ public class InventoryInInfo {
     /**
      * 入库单ID
      */
-    private Long inventory_in_id;
+    private String inventoryInId;
 
     /**
      * 入库单状态
      */
-    private String inventory_in_status;
+    private String inventoryInStatus;
 
     /**
      * 入库单供应商
      */
-    private String inventory_in_supplier_name;
+    private String inventoryInSupplierName;
 
     /**
      * 入库时间
      */
-    private String inventory_in_time;
+    private String inventoryInTime;
 
     /**
      * 入库单创建时间
      */
-    private String inventory_in_create_time;
+    private String inventoryInCreateTime;
 
     /**
      * 入库人
      */
-    private String inventory_in_operator;
+    private String inventoryInOperator;
 
     /**
      * 入库品种数
      */
-    private Integer inventory_in_variety;
+    private Integer inventoryInVariety;
 
     /**
      * 入库单备注
      */
-    private String inventory_in_remarks;
+    private String inventoryInRemarks;
 
     /**
      * 入库单金额
      */
-    private BigDecimal inventory_in_money;
+    private BigDecimal inventoryInMoney;
 }

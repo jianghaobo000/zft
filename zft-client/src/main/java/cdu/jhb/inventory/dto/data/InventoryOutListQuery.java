@@ -1,5 +1,7 @@
 package cdu.jhb.inventory.dto.data;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,35 +19,37 @@ public class InventoryOutListQuery {
     /**
      * 出库单状态
      */
-    private String inventory_out_status;
+    private String inventoryOutStatus;
 
     /**
      * 出库单类型 1:创建时间 2:出库时间
      */
-    private Integer inventory_out_date_status;
+    private Integer inventoryOutDateStatus;
 
     /**
      * 出库单开始时间
      */
-    private String inventory_out_begin_time;
+    private String inventoryOutBeginTime;
 
     /**
      * 出库单结束时间
      */
-    private String inventory_out_end_time;
+    private String inventoryOutEndTime;
 
     /**
      * 出库单类型 领料出库、报损出库
      */
-    private String inventory_out_category;
+    private String inventoryOutCategory;
 
     /**
      * 出库人ID
      */
-    private Long inventory_out_operator_id;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long inventoryOutOperatorId;
 
     /**
      * 出库单所属诊所
      */
-    private Long inventory_out_tenant_id;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long inventoryOutTenantId;
 }

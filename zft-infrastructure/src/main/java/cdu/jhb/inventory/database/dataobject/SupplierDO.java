@@ -20,20 +20,20 @@ public class SupplierDO {
     /**
      * 供应商ID
      */
-    private Long supplier_id;
+    private Long supplierId;
 
     /**
      * 供应商名称
      */
-    private String supplier_name;
+    private String supplierName;
 
     /**
      * 供应商启用状态
      */
-    private Integer supplier_status;
+    private Integer supplierStatus;
 
     /**
      * 供应商所属诊所
      */
-    private Long supplier_tenant_id;
+    private Long supplierTenantId;
 }

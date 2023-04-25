@@ -17,45 +17,45 @@ public class PrescriptionDTO {
     /**
      * 处方ID
      */
-    private long prescription_id;
+    private long prescriptionId;
 
     /**
      * 处方类别
      */
-    private String prescription_category;
+    private String prescriptionCategory;
 
     /**
      * 处方医嘱
      */
-    private String prescription_order;
+    private String prescriptionOrder;
 
     /**
      * 处方开设时间
      */
-    private String prescription_time;
+    private String prescriptionTime;
 
     /**
      * 处方开设医生ID
      */
-    private Integer prescription_doctor_id;
+    private Integer prescriptionDoctorId;
 
     /**
      * 处方开设医生名字
      */
-    private String prescription_doctor_name;
+    private String prescriptionDoctorName;
 
     /**
      * 处方所属患者ID
      */
-    private Long prescription_patient_id;
+    private Long prescriptionPatientId;
 
     /**
      * 处方所属患者名字
      */
-    private String prescription_patient_name;
+    private String prescriptionPatientName;
 
     /**
      * 处方所属诊所
      */
-    private Long prescription_tenant_id;
+    private Long prescriptionTenantId;
 }

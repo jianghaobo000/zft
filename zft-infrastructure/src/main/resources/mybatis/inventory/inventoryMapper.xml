@@ -12,6 +12,7 @@
             c.commodity_category,
             c.commodity_bar_code,
             c.commodity_manufacturer,
+            c.commodity_specification,
             c.commodity_approval_no,
             c.commodity_large_unit,
             c.commodity_small_unit,
@@ -25,16 +26,16 @@
         FROM inventory_table i
         LEFT JOIN commodity_table c ON i.inventory_commodity_id = c.commodity_id
         WHERE 1 = 1
-        <if test="param.inventory_commodity_name != null and param.inventory_commodity_name !=''">
-            AND c.commodity_name LIKE CONCAT('%',#{param.inventory_commodity_name},'%')
+        <if test="param.inventoryCommodityName != null and param.inventoryCommodityName !=''">
+            AND c.commodity_name LIKE CONCAT('%',#{param.inventoryCommodityName},'%')
         </if>
-        <if test="param.inventory_manufacturer != null and param.inventory_manufacturer !=''">
-            AND c.commodity_manufacturer LIKE CONCAT('%',#{param.inventory_manufacturer},'%')
+        <if test="param.inventoryManufacturer != null and param.inventoryManufacturer !=''">
+            AND c.commodity_manufacturer LIKE CONCAT('%',#{param.inventoryManufacturer},'%')
         </if>
-        <if test="param.inventory_category != null and param.inventory_category !=''">
-            AND c.commodity_category LIKE CONCAT('%',#{param.inventory_category},'%')
+        <if test="param.inventoryCategory != null and param.inventoryCategory !=''">
+            AND c.commodity_category LIKE CONCAT('%',#{param.inventoryCategory},'%')
         </if>
-        AND i.inventory_tenant_id = #{param.inventory_tenant_id}
+        AND i.inventory_tenant_id = #{param.inventoryTenantId}
     </select>
 
     <select id="getSupplierList" resultType="cdu.jhb.inventory.database.dataobject.SupplierDO">

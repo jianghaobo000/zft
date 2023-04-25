@@ -51,7 +51,7 @@ public class AccountGatewayImpl implements AccountGateway {
     @Override
     public Boolean findCountryCode(String countryCode) throws Exception {
         QueryWrapper<TenantDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(TenantDO::getTenant_country_code,countryCode);
+        queryWrapper.lambda().eq(TenantDO::getTenantCountryCode,countryCode);
         TenantDO tenantDO = tenantMapper.selectOne(queryWrapper);
         if(tenantDO==null){
             throw new Exception(DictException.COUNTRY_CODE_NOT_EXIST);

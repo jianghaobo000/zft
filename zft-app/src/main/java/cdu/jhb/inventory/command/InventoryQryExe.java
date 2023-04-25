@@ -93,7 +93,7 @@ public class InventoryQryExe {
         // 转化DTO数据传输对象
         List<InventoryInDetailDTO> inDetailDTOList = Convert.listConvert(inDetailList,InventoryInDetailDTO.class);
         // 组装返回数据
-        inventoryInInfoDTO.setInventory_in_detail_list(inDetailDTOList);
+        inventoryInInfoDTO.setInventoryInDetailList(inDetailDTOList);
         return inventoryInInfoDTO;
     }
 
@@ -121,7 +121,7 @@ public class InventoryQryExe {
         // 转化DTO数据传输对象
         List<InventoryOutDetailDTO> outDetailDTOList = Convert.listConvert(outDetailList,InventoryOutDetailDTO.class);
         // 组装返回数据
-        inventoryOutInfoDTO.setInventory_out_detail_list(outDetailDTOList);
+        inventoryOutInfoDTO.setInventoryOutDetailList(outDetailDTOList);
         return inventoryOutInfoDTO;
     }
 
@@ -149,7 +149,7 @@ public class InventoryQryExe {
         // 转化DTO数据传输对象
         List<InventoryCheckDetailDTO> checkDetailDTOList = Convert.listConvert(checkDetailList,InventoryCheckDetailDTO.class);
         // 组装返回数据
-        inventoryCheckInfoDTO.setInventory_check_detail_list(checkDetailDTOList);
+        inventoryCheckInfoDTO.setInventoryCheckDetailList(checkDetailDTOList);
         return inventoryCheckInfoDTO;
     }
 

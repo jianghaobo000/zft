@@ -24,40 +24,40 @@ public class InventoryDO {
      * 库存ID
      */
     @TableId(type = IdType.ID_WORKER)
-    private Long inventory_id;
+    private Long inventoryId;
 
     /**
      * 商品ID
      */
-    private Long inventory_commodity_id;
+    private Long inventoryCommodityId;
 
     /**
      * 商品名称
      */
-    private String inventory_commodity_name;
+    private String inventoryCommodityName;
 
     /**
      * 商品库存数量（大）
      */
-    private Integer inventory_large_num;
+    private Integer inventoryLargeNum;
 
     /**
      * 商品库存单位（大）
      */
-    private String inventory_large_unit;
+    private String inventoryLargeUnit;
 
     /**
      * 商品库存数量（小）
      */
-    private Integer inventory_small_num;
+    private Integer inventorySmallNum;
 
     /**
      * 商品库存单位（小）
      */
-    private String inventory_small_unit;
+    private String inventorySmallUnit;
 
     /**
      * 商品所属诊所
      */
-    private Long inventory_tenant_id;
+    private Long inventoryTenantId;
 }

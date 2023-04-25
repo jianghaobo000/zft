@@ -19,22 +19,22 @@
         FROM inventory_check_table i
         LEFT JOIN account_table a ON i.inventory_check_operator_id = a.account_id
         WHERE
-            i.inventory_check_tenant_id = #{param.inventory_check_tenant_id}
-        <if test="param.inventory_check_status != null and param.inventory_check_status !=''">
-            AND i.inventory_check_status = #{param.inventory_check_status}
+            i.inventory_check_tenant_id = #{param.inventoryCheckTenantId}
+        <if test="param.inventoryCheckStatus != null and param.inventoryCheckStatus !=''">
+            AND i.inventory_check_status = #{param.inventoryCheckStatus}
         </if>
-        <if test="param.inventory_check_operator_id != null">
-            AND i.inventory_check_operator_id = #{param.inventory_check_operator_id}
+        <if test="param.inventoryCheckOperatorId != null">
+            AND i.inventory_check_operator_id = #{param.inventoryCheckOperatorId}
         </if>
-        <if test="param.inventory_check_date_category == 1">
-            <if test="param.inventory_check_begin_time != '' and param.inventory_check_end_time != ''">
-                AND i.inventory_check_create_time BETWEEN #{param.inventory_check_begin_time} AND #{param.inventory_check_end_time}
+        <if test="param.inventoryCheckDateCategory == 1">
+            <if test="param.inventoryCheckBeginTime != '' and param.inventoryCheckEndTime != ''">
+                AND i.inventory_check_create_time BETWEEN #{param.inventoryCheckBeginTime} AND #{param.inventoryCheckEndTime}
             </if>
             ORDER BY i.inventory_check_create_time DESC
         </if>
-        <if test="param.inventory_check_date_category == 2">
-            <if test="param.inventory_check_begin_time != '' and param.inventory_check_end_time != ''">
-                AND i.inventory_check_time BETWEEN #{param.inventory_check_begin_time} AND #{param.inventory_check_end_time}
+        <if test="param.inventoryCheckDateCategory == 2">
+            <if test="param.inventoryCheckBeginTime != '' and param.inventoryCheckEndTime != ''">
+                AND i.inventory_check_time BETWEEN #{param.inventoryCheckBeginTime} AND #{param.inventoryCheckEndTime}
             </if>
             ORDER BY i.inventory_check_time DESC
         </if>

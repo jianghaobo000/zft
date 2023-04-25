@@ -20,41 +20,42 @@ public class InventoryDTO {
      * 库存ID
      */
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long inventory_id;
+    private Long InventoryId;
 
     /**
      * 商品ID
      */
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long inventory_commodity_id;
+    private Long InventoryCommodityId;
 
     /**
      * 商品名称
      */
-    private String inventory_commodity_name;
+    private String InventoryCommodityName;
 
     /**
      * 商品库存数量（大）
      */
-    private Integer inventory_large_num;
+    private Integer InventoryLargeNum;
 
     /**
      * 商品库存单位（大）
      */
-    private String inventory_large_unit;
+    private String InventoryLargeUnit;
 
     /**
      * 商品库存数量（小）
      */
-    private Integer inventory_small_num;
+    private Integer InventorySmallNum;
 
     /**
      * 商品库存单位（小）
      */
-    private String inventory_small_unit;
+    private String InventorySmallUnit;
 
     /**
      * 商品所属诊所
      */
-    private Long inventory_tenant_id;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long InventoryTenantId;
 }

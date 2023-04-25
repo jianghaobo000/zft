@@ -17,30 +17,30 @@ public class InventoryCheckListQuery {
     /**
      * 盘点单状态
      */
-    private String inventory_check_status;
+    private String InventoryCheckStatus;
 
     /**
      * 盘点单类型 1:创建时间 2:出库时间
      */
-    private Integer inventory_check_date_category;
+    private Integer InventoryCheckDateCategory;
 
     /**
      * 盘点单开始时间
      */
-    private String inventory_check_begin_time;
+    private String InventoryCheckBeginTime;
 
     /**
      * 盘点单结束时间
      */
-    private String inventory_check_end_time;
+    private String InventoryCheckEndTime;
 
     /**
      * 盘点人ID
      */
-    private Long inventory_check_operator_id;
+    private Long InventoryCheckOperatorId;
 
     /**
      * 盘点单所属诊所
      */
-    private Long inventory_check_tenant_id;
+    private Long InventoryCheckTenantId;
 }

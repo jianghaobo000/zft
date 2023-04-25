@@ -41,7 +41,7 @@ public class InventoryInGatewayImpl implements InventoryInGateway {
     @Override
     public List<InventoryInInfo> getInventoryInList(InventoryInListQuery query) {
         // 从redis中取出当前登录用户的租户ID
-        query.setInventory_in_tenant_id(RedisUtil.getLocalTenantId());
+        query.setInventoryInTenantId(RedisUtil.getLocalTenantId());
         return inventoryInMapper.getInventoryInList(query);
     }
 
@@ -63,7 +63,7 @@ public class InventoryInGatewayImpl implements InventoryInGateway {
     @Override
     public List<InventoryInDetail> selectInDetail(Long id) {
         QueryWrapper<InventoryInDetailDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(InventoryInDetailDO::getInventory_in_id,id);
+        queryWrapper.lambda().eq(InventoryInDetailDO::getInventoryInId,id);
         List<InventoryInDetailDO> inDetailDOList = inventoryInDetailMapper.selectList(queryWrapper);
         return Convert.listConvert(inDetailDOList,InventoryInDetail.class);
     }

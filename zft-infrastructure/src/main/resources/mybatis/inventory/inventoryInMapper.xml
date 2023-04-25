@@ -19,25 +19,25 @@
         LEFT JOIN supplier_table s ON i.inventory_in_supplier_id = s.supplier_id
         LEFT JOIN account_table a ON i.inventory_in_operator_id = a.account_id
         WHERE
-            i.inventory_in_tenant_id = #{param.inventory_in_tenant_id}
-        <if test="param.inventory_in_status != null and param.inventory_in_status !=''">
-            AND i.inventory_in_status = #{param.inventory_in_status}
+            i.inventory_in_tenant_id = #{param.inventoryInTenantId}
+        <if test="param.inventoryInStatus != null and param.inventoryInStatus !=''">
+            AND i.inventory_in_status = #{param.inventoryInStatus}
         </if>
-        <if test="param.inventory_in_supplier_id != null">
-            AND i.inventory_in_supplier_id = #{param.inventory_in_supplier_id}
+        <if test="param.inventoryInSupplierId != null">
+            AND i.inventory_in_supplier_id = #{param.inventoryInSupplierId}
         </if>
-        <if test="param.inventory_in_operator_id != null">
-            AND i.inventory_in_operator_id = #{param.inventory_in_operator_id}
+        <if test="param.inventoryInOperatorId != null">
+            AND i.inventory_in_operator_id = #{param.inventoryInOperatorId}
         </if>
-        <if test="param.inventory_in_date_category == 1">
-            <if test="param.inventory_in_begin_time != '' and param.inventory_in_end_time != ''">
-                AND i.inventory_in_create_time BETWEEN #{param.inventory_in_begin_time} AND #{param.inventory_in_end_time}
+        <if test="param.inventoryInDateCategory == 1">
+            <if test="param.inventoryInBeginTime != '' and param.inventoryInEndTime != ''">
+                AND i.inventory_in_create_time BETWEEN #{param.inventoryInBeginTime} AND #{param.inventoryInEndTime}
             </if>
             ORDER BY i.inventory_in_create_time DESC
         </if>
-        <if test="param.inventory_in_date_category == 2">
-            <if test="param.inventory_in_begin_time != '' and param.inventory_in_end_time != ''">
-                AND i.inventory_in_time BETWEEN #{param.inventory_in_begin_time} AND #{param.inventory_in_end_time}
+        <if test="param.inventoryInDateCategory == 2">
+            <if test="param.inventoryInBeginTime != '' and param.inventoryInEndTime != ''">
+                AND i.inventory_in_time BETWEEN #{param.inventoryInBeginTime} AND #{param.inventoryInEndTime}
             </if>
             ORDER BY i.inventory_in_time DESC
         </if>

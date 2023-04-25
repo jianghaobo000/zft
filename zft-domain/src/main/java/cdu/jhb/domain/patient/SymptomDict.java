@@ -17,10 +17,10 @@ public class SymptomDict {
     /**
      * 症状ID
      */
-    private Long symptom_id;
+    private Long symptomId;
 
     /**
      * 症状名
      */
-    private String symptom_name;
+    private String symptomName;
 }

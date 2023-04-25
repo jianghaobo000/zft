@@ -1,6 +1,8 @@
 package cdu.jhb.inventory.dto.data;
 
 import cdu.jhb.commodity.dto.data.CommodityDTO;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,50 +23,51 @@ public class InventoryOutInfoDTO {
     /**
      * 出库单ID
      */
-    private Long inventory_out_id;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long inventoryOutId;
 
     /**
      * 出库单状态
      */
-    private String inventory_out_status;
+    private String inventoryOutStatus;
 
     /**
      * 出库类型
      */
-    private String inventory_out_category;
+    private String inventoryOutCategory;
 
     /**
      * 出库品种数
      */
-    private int inventory_out_variety;
+    private int inventoryOutVariety;
 
     /**
      * 出库时间
      */
-    private String inventory_out_time;
+    private String inventoryOutTime;
 
     /**
      * 出库单创建时间
      */
-    private String inventory_out_create_time;
+    private String inventoryOutCreateTime;
 
     /**
      * 出库人
      */
-    private String inventory_out_operator;
+    private String inventoryOutOperator;
 
     /**
      * 出库单金额
      */
-    private BigDecimal inventory_out_money;
+    private BigDecimal inventoryOutMoney;
 
     /**
      * 出库单备注
      */
-    private String inventory_out_remarks;
+    private String inventoryOutRemarks;
 
     /**
      * 出库单明细列表
      */
-    private List<InventoryOutDetailDTO> inventory_out_detail_list;
+    private List<InventoryOutDetailDTO> inventoryOutDetailList;
 }

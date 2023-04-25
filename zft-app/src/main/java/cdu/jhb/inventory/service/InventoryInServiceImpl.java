@@ -36,9 +36,9 @@ public class InventoryInServiceImpl implements InventoryInServiceI {
     @Override
     public List<InventoryInInfoDTO> getInventoryInList(InventoryInListQuery query) {
         //设置日期格式 开始时间为一天的开始，结束时间为一天的最后
-        if(!Constant.NULL_STRING.equals(query.getInventory_in_begin_time()) && !Constant.NULL_STRING.equals(query.getInventory_in_end_time())){
-            query.setInventory_in_begin_time(query.getInventory_in_begin_time()+Constant.BEGIN_TIME);
-            query.setInventory_in_end_time(query.getInventory_in_end_time()+Constant.END_TIME);
+        if(!Constant.NULL_STRING.equals(query.getInventoryInBeginTime()) && !Constant.NULL_STRING.equals(query.getInventoryInEndTime())){
+            query.setInventoryInBeginTime(query.getInventoryInBeginTime()+Constant.BEGIN_TIME);
+            query.setInventoryInEndTime(query.getInventoryInEndTime()+Constant.END_TIME);
         }
         return inventoryQryExe.getInventoryInList(query);
     }

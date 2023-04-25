@@ -17,45 +17,45 @@ public class Tenant {
     /**
      * 诊所ID
      */
-    private Long tenant_id;
+    private Long tenantId;
 
     /**
      * 诊所名称
      */
-    private String tenant_name;
+    private String tenantName;
 
     /**
      * 诊所国家码
      */
-    private String tenant_country_code;
+    private String tenantCountryCode;
 
     /**
      * 诊所所在地区（省级）
      */
-    private String tenant_area_province;
+    private String tenantAreaProvince;
 
     /**
      * 诊所所在地区（市级）
      */
-    private String tenant_area_urban;
+    private String tenantAreaUrban;
 
     /**
      * 诊所所在地区（县级）
      */
-    private String tenant_area_county;
+    private String tenantAreaCounty;
 
     /**
      * 诊所等级
      */
-    private String tenant_rate;
+    private String tenantRate;
 
     /**
      * 诊所开设时间
      */
-    private String tenant_begin_time;
+    private String tenantBeginTime;
 
     /**
      * 诊所介绍
      */
-    private String tenant_introduce;
+    private String tenantIntroduce;
 }

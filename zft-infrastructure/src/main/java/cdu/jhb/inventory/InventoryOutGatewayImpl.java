@@ -41,7 +41,7 @@ public class InventoryOutGatewayImpl implements InventoryOutGateway {
      */
     @Override
     public List<InventoryOutInfo> getInventoryOutList(InventoryOutListQuery query) {
-        query.setInventory_out_tenant_id(RedisUtil.getLocalTenantId());
+        query.setInventoryOutTenantId(RedisUtil.getLocalTenantId());
         return inventoryOutMapper.getInventoryOutList(query);
     }
 
@@ -63,7 +63,7 @@ public class InventoryOutGatewayImpl implements InventoryOutGateway {
     @Override
     public List<InventoryOutDetail> selectOutDetail(Long id) {
         QueryWrapper<InventoryOutDetailDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(InventoryOutDetailDO::getInventory_out_id,id);
+        queryWrapper.lambda().eq(InventoryOutDetailDO::getInventoryOutId,id);
         List<InventoryOutDetailDO> outDetailDOList = inventoryOutDetailMapper.selectList(queryWrapper);
         return Convert.listConvert(outDetailDOList, InventoryOutDetail.class);
     }

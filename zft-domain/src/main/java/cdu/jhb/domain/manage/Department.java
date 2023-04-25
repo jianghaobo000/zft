@@ -17,33 +17,33 @@ public class Department {
     /**
      * 科室ID
      */
-    private Long department_id;
+    private Long departmentId;
 
     /**
      * 科室名称
      */
-    private String department_name;
+    private String departmentName;
 
     /**
      * 科室类别
      */
-    private String department_category;
+    private String departmentCategory;
 
     /**
      * 科室评级
      */
-    private Integer department_rate;
+    private Integer departmentRate;
 
     /**
      * 科室介绍
      */
-    private String department_introduce;
+    private String departmentIntroduce;
     /**
      * 科室人数
      */
-    private Integer department_employee_num;
+    private Integer departmentEmployeeNum;
     /**
      * 科室所属诊所
      */
-    private Integer department_tenant_id;
+    private Integer departmentTenantId;
 }

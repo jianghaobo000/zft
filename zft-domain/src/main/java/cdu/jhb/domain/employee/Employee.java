@@ -17,63 +17,63 @@ public class Employee {
     /**
      * 员工ID
      */
-    private Long employee_id;
+    private Long employeeId;
 
     /**
      * 员工姓名
      */
-    private String employee_name;
+    private String employeeName;
 
     /**
      * 员工生日
      */
-    private String employee_birthday;
+    private String employeeBirthday;
 
     /**
      * 员工姓名
      */
-    private String employee_sex;
+    private String employeeSex;
 
     /**
      * 员工电话
      */
-    private String employee_phone;
+    private String employeePhone;
 
     /**
      * 员工职位
      */
-    private String employee_position;
+    private String employeePosition;
 
     /**
      * 员工账号ID
      */
-    private Long employee_account_id;
+    private Long employeeAccountId;
 
     /**
      * 员工头像
      */
-    private String employee_picture;
+    private String employeePicture;
 
     /**
      * 员工身份证号
      */
-    private Integer employee_id_number;
+    private Integer employeeIdNumber;
 
     /**
      * 员工所属科室ID
      */
-    private Long employee_department_id;
+    private Long employeeDepartmentId;
 
     /**
      * 员工所属科室名字
      */
-    private String employee_department_name;
+    private String employeeDepartmentName;
     /**
      * 员工介绍
      */
-    private String employee_introduce;
+    private String employeeIntroduce;
     /**
      * 员工所属诊所
      */
-    private Long employee_tenant_id;
+    private Long employeeTenantId;
 }

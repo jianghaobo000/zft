@@ -7,14 +7,14 @@
     <title>登录</title>
 </head>
 <body>
-    <form ref="form" @submit.prevent="login" id="login">
+    <form ref="form" action="" @submit.prevent="login" id="login">
         <h1 class="h3 mb-3 font-weight-normal">用户登录</h1>
         <label for="inputAccount" class="sr-only">账号</label>
-        <input type="text" id="inputAccount" name="account_name" v-model="loginData.account_name" class="form-control" style="background-color: rgba(255,255,255,0.2)" placeholder="账号" required autofocus>
+        <input type="text" id="inputAccount" name="account_name" v-model="loginData.accountName" class="form-control" style="background-color: rgba(255,255,255,0.2)" placeholder="账号" required autofocus>
         <label for="inputPassword" class="sr-only">密码</label>
-        <input type="password" id="inputPassword" name="account_password" v-model="loginData.account_password" class="form-control" style="background-color: rgba(255,255,255,0.2)" placeholder="密码" required>
+        <input type="password" id="inputPassword" name="account_password" v-model="loginData.accountPassword" class="form-control" style="background-color: rgba(255,255,255,0.2)" placeholder="密码" required>
         <label for="inputCountryCode" class="sr-only">国家码</label>
-        <input type="text" id="inputCountryCode" name="country_code" v-model="loginData.country_code" class="form-control" style="background-color: rgba(255,255,255,0.2)" placeholder="国家码" required><br>
+        <input type="text" id="inputCountryCode" name="country_code" v-model="loginData.countryCode" class="form-control" style="background-color: rgba(255,255,255,0.2)" placeholder="国家码" required><br>
         <label for="inputVerificationCode" class="sr-only">验证码</label>
         <input type="text" id="inputVerificationCode" name="code" v-model="loginData.code" class="form-control" style="background-color: rgba(255,255,255,0.2)" placeholder="验证码" required><br>
         <div v-on:click="getImg"><img style="width: 300px;height: 100px;" ref="img"></div>
@@ -25,15 +25,14 @@
             el: "#login",
             data: {
                 loginData:{
-                    account_name: '',
-                    account_password: '',
-                    country_code: '',
+                    accountName: '',
+                    accountPassword: '',
+                    countryCode: '',
                     code: '',
                 }
             },
             methods: {
                 getImg(){
-                    console.log("555");
                     axios({
                         method: 'GET',
                         url: 'http://localhost:8080/account/getImg',
@@ -54,19 +53,13 @@
                     $.ajax({
                         url: '/account/login',
                         type: 'POST',
-                        data: this.loginData,
-                        contentType: false,
-                        processData: false,
+                        data: JSON.stringify(this.loginData),
+                        contentType: 'application/json',
                         success: function (response) {
-                            if(response.status === 200){
-                                window.location.href = "localhost:8080/clinic/clinic.html";
-                            }
-                            if(response.status === 401){
-                                layer.msg('账号密码错误，请刷新重试');
-                            }
+                            window.location.href = "http://localhost:8080/clinic/toClinic";
                         },
-                        error:function () {
-                            layer.msg('请求入库单一览查询失败，请刷新重试');
+                        error:function (err) {
+                            layer.msg(err.message);
                         }
                     })
                 }

@@ -17,25 +17,25 @@
         FROM inventory_out_table i
         LEFT JOIN account_table a ON i.inventory_out_operator_id = a.account_id
         WHERE
-            i.inventory_out_tenant_id = #{param.inventory_out_tenant_id}
-        <if test="param.inventory_out_status != null and param.inventory_out_status !=''">
-            AND i.inventory_out_status = #{param.inventory_out_status}
+            i.inventory_out_tenant_id = #{param.inventoryOutTenantId}
+        <if test="param.inventoryOutStatus != null and param.inventoryOutStatus !=''">
+            AND i.inventory_out_status = #{param.inventoryOutStatus}
         </if>
-        <if test="param.inventory_out_category != null and param.inventory_out_category !=''">
-            AND i.inventory_out_category = #{param.inventory_out_category}
+        <if test="param.inventoryOutCategory != null and param.inventoryOutCategory !=''">
+            AND i.inventory_out_category = #{param.inventoryOutCategory}
         </if>
-        <if test="param.inventory_out_operator_id != null">
-            AND i.inventory_out_operator_id = #{param.inventory_out_operator_id}
+        <if test="param.inventoryOutOperatorId != null">
+            AND i.inventory_out_operator_id = #{param.inventoryOutOperatorId}
         </if>
-        <if test="param.inventory_out_date_status == 1">
-            <if test="param.inventory_out_begin_time != '' and param.inventory_out_end_time != ''">
-                AND i.inventory_out_create_time BETWEEN #{param.inventory_out_begin_time} AND #{param.inventory_out_end_time}
+        <if test="param.inventoryOutDateStatus == 1">
+            <if test="param.inventoryOutBeginTime != '' and param.inventoryOutEndTime != ''">
+                AND i.inventory_out_create_time BETWEEN #{param.inventoryOutBeginTime} AND #{param.inventoryOutEndTime}
             </if>
             ORDER BY i.inventory_out_create_time DESC
         </if>
-        <if test="param.inventory_out_date_status == 2">
-            <if test="param.inventory_out_begin_time != '' and param.inventory_out_end_time != ''">
-                AND i.inventory_out_time BETWEEN #{param.inventory_out_begin_time} AND #{param.inventory_out_end_time}
+        <if test="param.inventoryOutDateStatus == 2">
+            <if test="param.inventoryOutBeginTime != '' and param.inventoryOutEndTime != ''">
+                AND i.inventory_out_time BETWEEN #{param.inventoryOutBeginTime} AND #{param.inventoryOutEndTime}
             </if>
             ORDER BY i.inventory_out_time DESC
         </if>

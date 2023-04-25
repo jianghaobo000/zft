@@ -19,95 +19,95 @@ public class InventoryInDetail {
     /**
      * 入库单明细ID
      */
-    private Long inventory_in_detail_id;
+    private Long inventoryInDetailId;
 
     /**
      * 入库单主表ID
      */
-    private Long inventory_in_id;
+    private Long inventoryInId;
 
     /**
      * 商品ID
      */
-    private Long inventory_in_commodity_id;
+    private Long inventoryInCommodityId;
 
     /**
      * 商品名称
      */
-    private String inventory_in_commodity_name;
+    private String inventoryInCommodityName;
 
     /**
      * 商品国家码
      */
-    private String inventory_in_country_code;
+    private String inventoryInCountryCode;
 
     /**
      * 商品规格
      */
-    private String inventory_in_commodity_specification;
+    private String inventoryInCommoditySpecification;
 
     /**
      * 商品是否拆零销售
      */
-    private Integer inventory_in_split_sale_status;
+    private Integer inventoryInSplitSaleStatus;
 
     /**
      * 商品进价(大)
      */
-    private BigDecimal inventory_in_commodity_large_bid_price;
+    private BigDecimal inventoryInCommodityLargeBidPrice;
 
     /**
      * 商品进价(小)
      */
-    private BigDecimal inventory_in_commodity_small_bid_price;
+    private BigDecimal inventoryInCommoditySmallBidPrice;
 
     /**
      * 商品售价(大)
      */
-    private BigDecimal inventory_in_commodity_large_sale_price;
+    private BigDecimal inventoryInCommodityLargeSalePrice;
 
     /**
      * 商品售价(小)
      */
-    private BigDecimal inventory_in_commodity_small_sale_price;
+    private BigDecimal inventoryInCommoditySmallSalePrice;
 
     /**
      * 商品库存单位（大）
      */
-    private String inventory_in_large_unit;
+    private String inventoryInLargeUnit;
 
     /**
      * 商品库存单位（小）
      */
-    private String inventory_in_small_unit;
+    private String inventoryInSmallUnit;
 
     /**
      * 商品入库前数量（大）
      */
-    private Integer inventory_in_before_large_num;
+    private Integer inventoryInBeforeLargeNum;
 
     /**
      * 商品入库前数量（小）
      */
-    private Integer inventory_in_before_small_num;
+    private Integer inventoryInBeforeSmallNum;
 
     /**
      * 商品入库后数量（大）
      */
-    private Integer inventory_in_after_large_num;
+    private Integer inventoryInAfterLargeNum;
 
     /**
      * 商品入库后数量（小）
      */
-    private Integer inventory_in_after_small_num;
+    private Integer inventoryInAfterSmallNum;
 
     /**
      * 商品入库数量（大）
      */
-    private Integer inventory_in_large_num;
+    private Integer inventoryInLargeNum;
 
     /**
      * 商品入库数量（小）
      */
-    private Integer inventory_in_small_num;
+    private Integer inventoryInSmallNum;
 }

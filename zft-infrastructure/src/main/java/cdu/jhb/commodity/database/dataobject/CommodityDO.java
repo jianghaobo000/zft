@@ -25,115 +25,115 @@ public class CommodityDO {
      * 商品ID
      */
     @TableId(type = IdType.ID_WORKER)
-    private Long commodity_id;
+    private Long commodityId;
 
     /**
      * 商品名称
      */
-    private String commodity_name;
+    private String commodityName;
 
     /**
      * 商品拼音
      */
-    private String commodity_pinyin;
+    private String commodityPinyin;
 
     /**
      * 商品国家编码
      */
-    private String commodity_country_code;
+    private String commodityCountryCode;
 
     /**
      * 商品类别
      */
-    private String commodity_category;
+    private String commodityCategory;
 
     /**
      * 商品条码
      */
-    private String commodity_bar_code;
+    private String commodityBarCode;
 
     /**
      * 商品生产厂家
      */
-    private String commodity_manufacturer;
+    private String commodityManufacturer;
 
     /**
      * 商品批准文号
      */
-    private String commodity_approval_no;
+    private String commodityApprovalNo;
 
     /**
      * 商品规格
      */
-    private String commodity_specification;
+    private String commoditySpecification;
 
     /**
      * 商品单位（大）
      */
-    private String commodity_large_unit;
+    private String commodityLargeUnit;
 
     /**
      * 商品单位（小）
      */
-    private String commodity_small_unit;
+    private String commoditySmallUnit;
 
     /**
      * 商品定价（大）
      */
-    private BigDecimal commodity_large_price;
+    private BigDecimal commodityLargePrice;
 
     /**
      * 商品定价（小）
      */
-    private BigDecimal commodity_small_price;
+    private BigDecimal commoditySmallPrice;
 
     /**
      * 商品大小转换比
      */
-    private Integer commodity_dosage_form;
+    private Integer commodityDosageForm;
 
     /**
      * 商品剂型
      */
-    private String commodity_form_drug;
+    private String commodityFormDrug;
 
     /**
      * 商品剂量
      */
-    private String commodity_dosage;
+    private String commodityDosage;
 
     /**
      * 商品剂量单位
      */
-    private String commodity_dosage_unit;
+    private String commodityDosageUnit;
 
     /**
      * 商品服用方式
      */
-    private String commodity_take;
+    private String commodityTake;
 
     /**
      * 商品服用频率
      */
-    private String commodity_usage_frequency;
+    private String commodityUsageFrequency;
 
     /**
      * 商品单词服用剂量
      */
-    private String commodity_single_dose;
+    private String commoditySingleDose;
 
     /**
      * 商品是否拆零销售
      */
-    private Integer commodity_split_sale_status;
+    private Integer commoditySplitSaleStatus;
 
     /**
      * 商品使用状态
      */
-    private Integer commodity_enable_status;
+    private Integer commodityEnableStatus;
 
     /**
      * 商品所属诊所
      */
-    private Long commodity_tenant_id;
+    private Long commodityTenantId;
 }

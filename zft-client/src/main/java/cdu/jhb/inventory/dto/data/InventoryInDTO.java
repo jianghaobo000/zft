@@ -23,57 +23,58 @@ public class InventoryInDTO {
      * 入库单ID
      */
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long inventory_in_id;
+    private Long inventoryInId;
 
     /**
      * 入库单状态
      */
-    private String inventory_in_status;
+    private String inventoryInStatus;
 
     /**
      * 入库单供应商ID
      */
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long inventory_in_supplier_id;
+    private Long inventoryInSupplierId;
 
     /**
      * 入库时间
      */
-    private String inventory_in_time;
+    private String inventoryInTime;
 
     /**
      * 入库单创建时间
      */
-    private String inventory_in_create_time;
+    private String inventoryInCreateTime;
 
     /**
      * 入库人
      */
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long inventory_in_operator_id;
+    private Long inventoryInOperatorId;
 
     /**
      * 入库品种数
      */
-    private Integer inventory_in_variety;
+    private Integer inventoryInVariety;
 
     /**
      * 入库单备注
      */
-    private String inventory_in_remarks;
+    private String inventoryInRemarks;
 
     /**
      * 入库单金额
      */
-    private BigDecimal inventory_in_money;
+    private BigDecimal inventoryInMoney;
 
     /**
      * 入库单所属诊所
      */
-    private Long inventory_in_tenant_id;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long inventoryInTenantId;
 
     /**
      * 入库单明细列表
      */
-    private List<InventoryInDetailDTO> inventory_in_detail_list;
+    private List<InventoryInDetailDTO> inventoryInDetailList;
 }

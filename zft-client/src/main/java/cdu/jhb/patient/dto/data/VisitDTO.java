@@ -17,40 +17,40 @@ public class VisitDTO {
     /**
      * 就诊ID
      */
-    private Long visit_id;
+    private Long visitId;
 
     /**
      * 就诊患者ID
      */
-    private Long visit_patient_id;
+    private Long visitPatientId;
 
     /**
      * 就诊患者姓名
      */
-    private String visit_patient_name;
+    private String visitPatientName;
 
     /**
      * 就诊时间
      */
-    private String visit_time;
+    private String visitTime;
 
     /**
      * 就诊症状
      */
-    private String visit_symptom;
+    private String visitSymptom;
 
     /**
      * 就诊医生ID
      */
-    private Long visit_doctor_id;
+    private Long visitDoctorId;
 
     /**
      * 就诊医生名称
      */
-    private String visit_doctor_name;
+    private String visitDoctorName;
 
     /**
      * 就诊所属诊所
      */
-    private Long visit_tenant_id;
+    private Long visitTenantId;
 }

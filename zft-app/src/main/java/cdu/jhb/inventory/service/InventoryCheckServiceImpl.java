@@ -35,9 +35,9 @@ public class InventoryCheckServiceImpl implements InventoryCheckServiceI {
      */
     @Override
     public List<InventoryCheckInfoDTO> getInventoryCheckList(InventoryCheckListQuery query) {
-        if(!Constant.NULL_STRING.equals(query.getInventory_check_begin_time()) && !Constant.NULL_STRING.equals(query.getInventory_check_end_time())){
-            query.setInventory_check_begin_time(query.getInventory_check_begin_time()+Constant.BEGIN_TIME);
-            query.setInventory_check_end_time(query.getInventory_check_end_time()+Constant.END_TIME);
+        if(!Constant.NULL_STRING.equals(query.getInventoryCheckBeginTime()) && !Constant.NULL_STRING.equals(query.getInventoryCheckEndTime())){
+            query.setInventoryCheckBeginTime(query.getInventoryCheckBeginTime()+Constant.BEGIN_TIME);
+            query.setInventoryCheckEndTime(query.getInventoryCheckEndTime()+Constant.END_TIME);
         }
         return inventoryQryExe.getInventoryCheckList(query);
     }

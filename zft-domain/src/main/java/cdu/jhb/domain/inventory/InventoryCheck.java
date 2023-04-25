@@ -21,50 +21,50 @@ public class InventoryCheck {
     /**
      * 盘点单ID
      */
-    private Long inventory_check_id;
+    private Long inventoryCheckId;
 
     /**
      * 盘点时间
      */
-    private String inventory_check_time;
+    private String inventoryCheckTime;
 
     /**
      * 盘点单创建时间
      */
-    private String inventory_check_create_time;
+    private String inventoryCheckCreateTime;
 
     /**
      * 盘点单盈亏数量
      */
-    private BigDecimal inventory_check_num;
+    private BigDecimal inventoryCheckNum;
 
     /**
      * 盘点单盈亏金额-进价
      */
-    private BigDecimal inventory_check_bid_money;
+    private BigDecimal inventoryCheckBidMoney;
 
     /**
      * 盘点单盈亏金额-售价
      */
-    private BigDecimal inventory_check_sale_money;
+    private BigDecimal inventoryCheckSaleMoney;
 
     /**
      * 盘点人
      */
-    private Long inventory_check_operator_id;
+    private Long inventoryCheckOperatorId;
 
     /**
      * 盘点品种数
      */
-    private Integer inventory_check_variety;
+    private Integer inventoryCheckVariety;
 
     /**
      * 盘点单备注
      */
-    private String inventory_check_remarks;
+    private String inventoryCheckRemarks;
 
     /**
      * 盘点单所属诊所
      */
-    private Long inventory_check_tenant_id;
+    private Long inventoryCheckTenantId;
 }

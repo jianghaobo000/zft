@@ -22,10 +22,10 @@ public class PayDictDO {
      * 支付方式ID
      */
     @TableId(type = IdType.ID_WORKER)
-    private Long pay_id;
+    private Long payId;
 
     /**
      * 支付名称
      */
-    private String pay_name;
+    private String payName;
 }

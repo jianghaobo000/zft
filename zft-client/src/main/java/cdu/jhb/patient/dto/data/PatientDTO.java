@@ -17,60 +17,60 @@ public class PatientDTO {
     /**
      * 患者ID
      */
-    private Long patient_id;
+    private Long patientId;
 
     /**
      * 患者姓名
      */
-    private String patient_name;
+    private String patientName;
 
     /**
      * 患者性别
      */
-    private String patient_sex;
+    private String patientSex;
 
     /**
      * 患者生日
      */
-    private String patient_birthday;
+    private String patientBirthday;
 
     /**
      * 患者医保号
      */
-    private Integer patient_medical_number;
+    private Integer patientMedicalNumber;
 
     /**
      * 患者医保余额
      */
-    private Integer patient_medical_balance;
+    private Integer patientMedicalBalance;
 
     /**
      * 患者身份证号
      */
-    private Integer patient_id_number;
+    private Integer patientIdNumber;
 
     /**
      * 患者所患疾病
      */
-    private String patient_disease;
+    private String patientDisease;
 
     /**
      * 患者所属科室ID
      */
-    private Long patient_department_id;
+    private Long patientDepartmentId;
 
     /**
      * 患者所属科室名字
      */
-    private String patient_department_name;
+    private String patientDepartmentName;
 
     /**
      * 患者就诊时间
      */
-    private String patient_time;
+    private String patientTime;
 
     /**
      * 患者所属诊所
      */
-    private Long patient_tenant_id;
+    private Long patientTenantId;
 }

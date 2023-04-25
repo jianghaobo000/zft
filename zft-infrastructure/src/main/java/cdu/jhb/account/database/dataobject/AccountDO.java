@@ -23,17 +23,17 @@ public class AccountDO {
      * 账户ID
      */
     @TableId(type = IdType.ID_WORKER)
-    private Long account_id;
+    private Long accountId;
     /**
      * 账户名
      */
-    private String account_name;
+    private String accountName;
     /**
      * 账户密码
      */
-    private String account_password;
+    private String accountPassword;
     /**
      * 账户所属租户
      */
-    private Long account_tenant_id;
+    private Long accountTenantId;
 }

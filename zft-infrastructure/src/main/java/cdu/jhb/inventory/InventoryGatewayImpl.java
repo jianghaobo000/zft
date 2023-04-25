@@ -27,7 +27,7 @@ public class InventoryGatewayImpl implements InventoryGateway {
     @Override
     public List<InventoryInfo> getInventoryList(InventoryListQuery query) {
         // 从redis中取出当前登录用户的租户ID
-        query.setInventory_tenant_id(RedisUtil.getLocalTenantId());
+        query.setInventoryTenantId(RedisUtil.getLocalTenantId());
         return inventoryMapper.getInventoryList(query);
     }
 }

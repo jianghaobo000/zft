@@ -28,7 +28,7 @@ public class CommodityModExe {
         // 将数据传输对象DTO转换为实体
         Commodity commodity = Convert.entityConvert(commodityDTO,Commodity.class);
         // 添加拼音码
-        commodity.setCommodity_pinyin(PinYinConvert.getAllPinYinAndHeadChar(commodity.getCommodity_name()));
+        commodity.setCommodityPinyin(PinYinConvert.getAllPinYinAndHeadChar(commodity.getCommodityName()));
         return commodityGateway.addCommodity(commodity);
     }
 }

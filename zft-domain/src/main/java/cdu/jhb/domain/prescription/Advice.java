@@ -17,80 +17,80 @@ public class Advice {
     /**
      * 医嘱ID
      */
-    private Long advice_id;
+    private Long adviceId;
 
     /**
      * 患者ID
      */
-    private Long advice_patient_id;
+    private Long advicePatientId;
 
     /**
      * 时间
      */
-    private String advice_time;
+    private String adviceTime;
 
     /**
      * 既往史
      */
-    private String advice_past_history;
+    private String advicePastHistory;
 
     /**
      * 遗传史
      */
-    private String advice_genetic_history;
+    private String adviceGeneticHistory;
 
     /**
      * 体温
      */
-    private String advice_temperature;
+    private String adviceTemperature;
 
     /**
      * 血压（高压）
      */
-    private Integer advice_high_pressure;
+    private Integer adviceHighPressure;
 
     /**
      * 血压（低压）
      */
-    private Integer advice_low_pressure;
+    private Integer adviceLowPressure;
 
     /**
      * 心率
      */
-    private Integer advice_heart_rate;
+    private Integer adviceHeartRate;
 
     /**
      * 描述症状
      */
-    private String advice_description;
+    private String adviceDescription;
 
     /**
      * 婚姻状态
      */
-    private String advice_marital_status;
+    private String adviceMaritalStatus;
 
     /**
      * 育子状态
      */
-    private String advice_fertile_status;
+    private String adviceFertileStatus;
 
     /**
      * 望闻问切
      */
-    private String advice_look_hear_ask;
+    private String adviceLookHearAsk;
 
     /**
      * 诊断
      */
-    private String advice_diagnosis;
+    private String adviceDiagnosis;
 
     /**
      * 治法
      */
-    private String advice_treatment_method;
+    private String adviceTreatmentMethod;
 
     /**
      * 医嘱所属诊所
      */
-    private Long advice_tenant_id;
+    private Long adviceTenantId;
 }

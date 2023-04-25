@@ -17,35 +17,35 @@ public class InventoryInListQuery {
     /**
      * 入库单状态
      */
-    private String inventory_in_status;
+    private String inventoryInStatus;
 
     /**
      * 入库单类型 1:创建时间 2:入库时间
      */
-    private Integer inventory_in_date_category;
+    private Integer inventoryInDateCategory;
 
     /**
      * 入库单开始时间
      */
-    private String inventory_in_begin_time;
+    private String inventoryInBeginTime;
 
     /**
      * 入库单结束时间
      */
-    private String inventory_in_end_time;
+    private String inventoryInEndTime;
 
     /**
      * 入库单供应商ID
      */
-    private Long inventory_in_supplier_id;
+    private Long inventoryInSupplierId;
 
     /**
      * 入库人ID
      */
-    private Long inventory_in_operator_id;
+    private Long inventoryInOperatorId;
 
     /**
      * 入库单所属诊所
      */
-    private Long inventory_in_tenant_id;
+    private Long inventoryInTenantId;
 }

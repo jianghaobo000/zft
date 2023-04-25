@@ -21,17 +21,18 @@ public class AccountDTO {
      * 账户ID
      */
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long account_id;
+    private Long accountId;
     /**
      * 账户名
      */
-    private String account_name;
+    private String accountName;
     /**
      * 账户密码
      */
-    private String account_password;
+    private String accountPassword;
     /**
      * 账户所属租户
      */
-    private Long account_tenant_id;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long accountTenantId;
 }

@@ -43,7 +43,7 @@ public class InventoryCheckGatewayImpl implements InventoryCheckGateway {
     @Override
     public List<InventoryCheckInfo> getInventoryCheckList(InventoryCheckListQuery query) {
         // 从redis中取出当前登录用户的租户ID
-        query.setInventory_check_tenant_id(RedisUtil.getLocalTenantId());
+        query.setInventoryCheckTenantId(RedisUtil.getLocalTenantId());
         return inventoryCheckMapper.getInventoryCheckList(query);
     }
 
@@ -65,7 +65,7 @@ public class InventoryCheckGatewayImpl implements InventoryCheckGateway {
     @Override
     public List<InventoryCheckDetail> selectCheckDetail(Long id) {
         QueryWrapper<InventoryCheckDetailDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(InventoryCheckDetailDO::getInventory_check_id,id);
+        queryWrapper.lambda().eq(InventoryCheckDetailDO::getInventoryCheckId,id);
         List<InventoryCheckDetailDO> checkDetailDOList = inventoryCheckDetailMapper.selectList(queryWrapper);
         return Convert.listConvert(checkDetailDOList, InventoryCheckDetail.class);
     }

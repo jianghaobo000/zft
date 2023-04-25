@@ -17,20 +17,20 @@ public class InventoryListQuery {
     /**
      * 商品名字
      */
-    private String inventory_commodity_name;
+    private String inventoryCommodityName;
 
     /**
      * 商品生产厂家
      */
-    private String inventory_manufacturer;
+    private String inventoryManufacturer;
 
     /**
      * 商品类型
      */
-    private String inventory_category;
+    private String inventoryCategory;
 
     /**
      * 商品属诊所
      */
-    private Long inventory_tenant_id;
+    private Long inventoryTenantId;
 }

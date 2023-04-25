@@ -14,10 +14,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,9 +42,8 @@ public class InventoryController {
      * @return
      */
     @GetMapping("toInventory")
-    public ResponseEntity<?> toInventory(){
-        List<InventoryInfoDTO> infoDTOList = inventoryService.getInventoryList(new InventoryListQuery());
-        return ResponseEntity.ok(infoDTOList);
+    public String toInventory(){
+        return "inventory/inventory";
     }
 
     /**
@@ -55,7 +51,7 @@ public class InventoryController {
      * @return
      */
     @PostMapping("toInventoryByQuery")
-    public ResponseEntity<?> toInventory(InventoryListQuery query){
+    public ResponseEntity<?> toInventory(@RequestBody InventoryListQuery query){
         List<InventoryInfoDTO> infoDTOList = inventoryService.getInventoryList(query);
         return ResponseEntity.ok(infoDTOList);
     }
@@ -85,9 +81,8 @@ public class InventoryController {
      * @return
      */
     @GetMapping("toInventoryIn")
-    public ResponseEntity<?> toInventoryIn(){
-        List<InventoryInInfoDTO> inventoryInDTOList = inventoryInService.getInventoryInList(new InventoryInListQuery());
-        return ResponseEntity.ok(inventoryInDTOList);
+    public String toInventoryIn(){
+        return "inventory/inventoryIn";
     }
 
     /**
@@ -95,7 +90,7 @@ public class InventoryController {
      * @return
      */
     @PostMapping("toInventoryInByQuery")
-    public ResponseEntity<?> toInventoryInByQuery(InventoryInListQuery query){
+    public ResponseEntity<?> toInventoryInByQuery(@RequestBody InventoryInListQuery query){
         List<InventoryInInfoDTO> inventoryInDTOList = inventoryInService.getInventoryInList(query);
         return ResponseEntity.ok(inventoryInDTOList);
     }
@@ -116,26 +111,23 @@ public class InventoryController {
      * @return
      */
     @GetMapping("toInventoryOut")
-    public ResponseEntity<?> toInventoryOut(){
-        List<InventoryOutInfoDTO> inventoryOutDTOList = inventoryOutService.getInventoryOutList(new InventoryOutListQuery());
-        return ResponseEntity.ok(inventoryOutDTOList);
+    public String toInventoryOut(){
+        return "inventory/inventoryOut";
     }
 
     /**
      * 条件查询跳转库存出库列表界面
-     * @param model
      * @param query
      * @return
      */
     @PostMapping("toInventoryOutByQuery")
-    public ResponseEntity<?> toInventoryOutByQuery(Model model,InventoryOutListQuery query){
+    public ResponseEntity<?> toInventoryOutByQuery(@RequestBody InventoryOutListQuery query){
         List<InventoryOutInfoDTO> inventoryOutDTOList = inventoryOutService.getInventoryOutList(query);
         return ResponseEntity.ok(inventoryOutDTOList);
     }
 
     /**
      * 打开出库单详情页面
-     * @param model
      * @param id
      * @return
      */
@@ -150,17 +142,16 @@ public class InventoryController {
      * @return
      */
     @GetMapping("toInventoryCheck")
-    public ResponseEntity<?> toInventoryCheck(){
-        List<InventoryCheckInfoDTO> inventoryCheckDTOList = inventoryCheckService.getInventoryCheckList(new InventoryCheckListQuery());
-        return ResponseEntity.ok(inventoryCheckDTOList);
+    public String toInventoryCheck(){
+        return "inventory/inventoryCheck";
     }
 
     /**
-     * 跳转库存盘点界面
+     * 查询库存盘点一览
      * @return
      */
     @PostMapping("toInventoryCheckByQuery")
-    public ResponseEntity<?> toInventoryCheckByQuery(InventoryCheckListQuery query){
+    public ResponseEntity<?> toInventoryCheckByQuery(@RequestBody InventoryCheckListQuery query){
         List<InventoryCheckInfoDTO> inventoryCheckDTOList = inventoryCheckService.getInventoryCheckList(query);
         return ResponseEntity.ok(inventoryCheckDTOList);
     }
