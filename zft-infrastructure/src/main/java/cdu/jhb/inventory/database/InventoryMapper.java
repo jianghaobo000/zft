@@ -7,6 +7,7 @@ import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
 import cdu.jhb.inventory.dto.data.InventoryListQuery;
 import cdu.jhb.inventory.dto.data.SupplierDTO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.service.IService;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

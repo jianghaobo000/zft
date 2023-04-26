@@ -62,7 +62,7 @@ public class InventoryInDO {
     /**
      * 入库单备注
      */
-    private String inventoryRemarks;
+    private String inventoryInRemarks;
 
     /**
      * 入库单金额

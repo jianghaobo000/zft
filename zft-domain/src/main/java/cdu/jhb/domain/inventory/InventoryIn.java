@@ -5,8 +5,11 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import redis.clients.jedis.Jedis;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 /**
 * @description: 入库单实体
@@ -67,4 +70,9 @@ public class InventoryIn {
      * 入库单所属诊所
      */
     private Long inventoryInTenantId;
+
+    /**
+     * 入库单明细列表
+     */
+    private List<InventoryInDetail> inventoryInDetails;
 }

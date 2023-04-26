@@ -34,6 +34,16 @@ public class InventoryDTO {
     private String InventoryCommodityName;
 
     /**
+     * 商品拼音码
+     */
+    private String InventoryCommodityPinyin;
+
+    /**
+     * 商品大小单位转换比
+     */
+    private Integer inventoryDosageForm;
+
+    /**
      * 商品库存数量（大）
      */
     private Integer InventoryLargeNum;

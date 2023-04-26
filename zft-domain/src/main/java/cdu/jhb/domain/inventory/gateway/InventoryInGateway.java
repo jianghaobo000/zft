@@ -1,5 +1,6 @@
 package cdu.jhb.domain.inventory.gateway;
 
+import cdu.jhb.domain.inventory.InventoryIn;
 import cdu.jhb.domain.inventory.InventoryInDetail;
 import cdu.jhb.domain.inventory.InventoryInInfo;
 import cdu.jhb.inventory.dto.data.InventoryInDTO;
@@ -37,4 +38,19 @@ public interface InventoryInGateway {
      * @return
      */
     List<InventoryInDetail> selectInDetail(Long id);
+
+    /**
+     * 保存入库单
+     * @param inventoryIn
+     * @param inDetailList
+     * @return
+     */
+    Boolean saveInventoryIn(InventoryIn inventoryIn,List<InventoryInDetail> inDetailList);
+
+    /**
+     * 待入库发起入库
+     * @param id
+     * @return
+     */
+    Boolean waitToSave(String id);
 }

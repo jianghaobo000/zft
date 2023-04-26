@@ -107,6 +107,28 @@ public class InventoryController {
     }
 
     /**
+     * 保存入库单
+     * @param inventoryInDTO
+     * @return
+     */
+    @PostMapping("saveInventoryIn")
+    public ResponseEntity<?> saveInventoryIn(@RequestBody InventoryInDTO inventoryInDTO){
+        inventoryInService.saveInventoryIn(inventoryInDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 待入库发起入库
+     * @param id
+     * @return
+     */
+    @GetMapping("waitToSave")
+    public ResponseEntity<?> waitToSave(String id){
+        inventoryInService.waitToSave(id);
+        return ResponseEntity.ok().build();
+    }
+
+    /**
      * 跳转库存出库界面
      * @return
      */

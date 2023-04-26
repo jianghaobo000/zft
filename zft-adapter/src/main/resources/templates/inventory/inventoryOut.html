@@ -13,43 +13,43 @@
     </div>
     <div class="right">
         <div class="top">
-            <form id="form1" th:action="@{/inventory/toInventoryOutByQuery}" method="post">
+            <form ref="form1" @submit.prevent="selectInventoryInSubmit">
                 <div class="form-group" style="float: left;width: 150px;margin-right: 15px;">
-                    <select class="form-control" name="inventory_out_status">
+                    <select class="form-control" name="inventoryInStatus" v-model="InventoryInListQuery.inventoryInStatus">
                         <option value="">全部状态</option>
-                        <option value="待出库">待出库</option>
-                        <option value="已出库">已出库</option>
+                        <option value="待入库">待入库</option>
+                        <option value="已入库">已入库</option>
                     </select>
                 </div>
                 <div class="form-group" style="float: left;width: 120px;margin-right: 15px;">
-                    <select class="form-control" name="inventory_out_date_status">
+                    <select class="form-control" name="inventoryInDateCategory" v-model="InventoryInListQuery.inventoryInDateCategory">
                         <option value="1" selected>创建日期</option>
-                        <option value="2">出库日期</option>
+                        <option value="2">入库日期</option>
                     </select>
                 </div>
                 <div style="float: left;margin-right: 15px;">
                     <div class="layui-inline">
                         <div class="layui-inline" id="test6">
                             <div class="layui-input-inline float-left" style="width: 100px;">
-                                <input type="text" name="inventory_out_begin_time" autocomplete="off" id="test-startDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="开始日期">
+                                <input type="text" autocomplete="off" id="test-startDate-1" v-model="InventoryInListQuery.inventoryInBeginTime" class="layui-input" name="inventoryInBeginTime" style="border: 1px rgb(206,212,218) solid" readonly placeholder="开始日期">
                             </div>
                             <div class="layui-form-mid float-left" style="margin: 0 auto;">-</div>
                             <div class="layui-input-inline float-left" style="width: 100px;">
-                                <input type="text" name="inventory_out_end_time" autocomplete="off" id="test-endDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="结束日期">
+                                <input type="text" autocomplete="off" id="test-endDate-1" v-model="InventoryInListQuery.inventoryInEndTime" class="layui-input" name="inventoryInEndTime" style="border: 1px rgb(206,212,218) solid" readonly placeholder="结束日期">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-group" style="float: left;width: 140px;margin-right: 15px;">
-                    <select class="form-control" name="inventory_out_category">
-                        <option value="">全部类型</option>
-                        <option value="领料出库">领料出库</option>
-                        <option value="报损出库">报损出库</option>
+                <div class="form-group" style="float: left;width: 160px;margin-right: 15px;">
+                    <select class="form-control" v-model="InventoryInListQuery.inventoryInSupplierId" name="inventoryInSupplierId">
+                        <option value="">全部供应商</option>
+                        <option v-for="supplier in supplierList" :value="supplier.supplierId">{{ supplier.supplierName }}</option>
                     </select>
                 </div>
                 <div class="form-group" style="float: left;width: 140px;margin-right: 15px;">
-                    <select class="form-control" id="operator" name="inventory_out_operator_id">
-                        <option value="">全部出库人</option>
+                    <select class="form-control" v-model="InventoryInListQuery.inventoryInOperatorId" name="inventoryInOperatorId">
+                        <option value="">全部入库人</option>
+                        <option v-for="account in accountList" :value="account.accountId">{{ account.accountName }}</option>
                     </select>
                 </div>
                 <div style="float: left;">
@@ -60,42 +60,42 @@
                 <button type="button" class="btn btn-outline-primary">导出</button>
             </div>
             <div style="float: right;">
-                <button type="button" class="btn btn-primary" id="add">新增出库</button>
+                <button type="button" class="btn btn-primary" v-on:click="openAddPage">新增入库</button>
             </div>
         </div>
-        <div class="info" id="outInfoList" th:fragment="outInfoList">
+        <div class="info">
             <table class="table table-striped" style="font-size: 15px;text-align: center;">
                 <thead>
                 <tr>
-                    <td scope="col" width="15%">出库单号</td>
+                    <td scope="col" width="15%">入库单号</td>
                     <td scope="col" width="5%">状态</td>
-                    <td scope="col" width="15%">出库类型</td>
+                    <td scope="col" width="15%">供应商</td>
                     <td scope="col" width="5%">品种</td>
                     <td scope="col" width="10%">金额(元)</td>
-                    <td scope="col" width="10%">出库人</td>
+                    <td scope="col" width="10%">入库人</td>
                     <td scope="col" width="15%">创建日期</td>
-                    <td scope="col" width="15%">出库日期</td>
+                    <td scope="col" width="15%">入库日期</td>
                     <td scope="col" width="10%">操作</td>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="inventoryOut:${infoOutDTOList}">
-                    <td th:text="${inventoryOut.getInventory_out_id()}"></td>
-                    <td th:text="${inventoryOut.getInventory_out_status()}"></td>
-                    <td th:text="${inventoryOut.getInventory_out_category()}"></td>
-                    <td th:text="${inventoryOut.getInventory_out_variety()}"></td>
-                    <td th:text="${inventoryOut.getInventory_out_money()}"></td>
-                    <td th:text="${inventoryOut.getInventory_out_operator()}"></td>
-                    <td th:text="${inventoryOut.getInventory_out_create_time()}"></td>
-                    <td th:text="${inventoryOut.getInventory_out_time()}"></td>
+                <tr v-for="inventoryIn in inventoryInList">
+                    <td>{{inventoryIn.inventoryInId}}</td>
+                    <td>{{inventoryIn.inventoryInStatus}}</td>
+                    <td>{{inventoryIn.inventoryInSupplierName}}</td>
+                    <td>{{inventoryIn.inventoryInVariety}}</td>
+                    <td>{{parseFloat(inventoryIn.inventoryInMoney).toFixed(2)}}</td>
+                    <td>{{inventoryIn.inventoryInOperator}}</td>
+                    <td>{{inventoryIn.inventoryInCreateTime}}</td>
+                    <td>{{inventoryIn.inventoryInTime === null ? '--' : inventoryIn.inventoryInTime}}</td>
                     <td>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" th:onclick="|detail('${inventoryOut.getInventory_out_id()}')|">查看</button>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
+                        <button type="button" v-if="inventoryIn.inventoryInStatus === '已入库'" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" v-on:click="detailed(inventoryIn.inventoryInId)">查看</button>
+                        <button type="button" v-if="inventoryIn.inventoryInStatus === '待入库'" class="layui-btn layui-btn-primary layui-btn-xs" v-on:click="waitToSave(inventoryIn.inventoryInId)">发起入库</button>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <p th:if="${infoOutDTOList.size() == 0}" class="no-data">暂无数据</p>
+            <p v-if="inventoryInList.length === 0" class="no-data">暂无数据</p>
         </div>
         <div class="bottom">
             <div class="float-left">
@@ -112,32 +112,40 @@
                 </nav>
             </div>
             <div class="float-right">
-                <p>共4条出库单，金额100.00元</p>
+                <p>共4条入库单，金额100.00元</p>
             </div>
         </div>
     </div>
 </div>
-<div class="inventory-add" id="inventory-add">
+<div class="inventory-add" ref="add">
     <div class="inventory-pop">
         <div class="top">
-            <p></p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" id="addClose" viewBox="0 0 16 16">
-                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-            </svg>
+            <p>新增入库单</p>
+            <div>
+                <svg v-on:click="closeAddPage" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
         </div>
         <div class="info">
             <div class="info1">
-                <p>出库人: 姜昊波</p>
-                <p><span style="color: red">*</span> 出库类型</p>
+                <p><span style="color: red">*</span> 入库人</p>
+                <div class="form-group" style="float: left;width: 140px;margin-right: 30px;">
+                    <select class="form-control" name="inventoryInOperatorId" v-model="inventoryAdd.inventoryInOperatorId">
+                        <option value="" style="display: none">请选择入库人</option>
+                        <option v-for="account in accountList" :value="account.accountId">{{ account.accountName }}</option>
+                    </select>
+                </div>
+                <p><span style="color: red">*</span> 供应商</p>
                 <div class="form-group" style="float: left;width: 200px;margin-right: 30px;">
-                    <select class="form-control" name="">
-                        <option value="">领料出库</option>
-                        <option value="">报损出库</option>
+                    <select class="form-control" name="inventoryInSupplierId" v-model="inventoryAdd.inventoryInSupplierId">
+                        <option value="" style="display: none">请选择供应商</option>
+                        <option v-for="supplier in supplierList" :value="supplier.supplierId">{{ supplier.supplierName }}</option>
                     </select>
                 </div>
                 <p>备注</p>
                 <div class="form-group" style="float: left;width: 200px;margin-right: 30px;">
-                    <input type="text" class="form-control" name="">
+                    <input type="text" class="form-control" name="inventoryRemarks" v-model="inventoryAdd.inventoryInRemarks">
                 </div>
             </div>
             <hr>
@@ -151,60 +159,57 @@
                                 </svg>
                             </button>
                         </div>
-                        <input type="text" class="form-control" placeholder="请输入 药品名/国家码 搜索药品" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        <input v-on:focus="onFocus($event.target.value)" v-on:input="onInput($event.target.value)" v-on:blur="onBlur" type="text" id="selectCommodity" class="form-control" placeholder="请输入 药品名/国家码 搜索药品" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                    </div>
+                    <div class="select-input" ref="selectInput">
+                        <table id="select-input-table" class="select-input-table" style="width: 100%;">
+                            <tr v-for="inventory in inventoryList" v-on:mousedown="InsertAdd(inventory)">
+                                <td class="select-input-td" style="width: 5%"></td>
+                                <td class="select-input-td" style="width: 35%;text-align: left;">{{inventory.commodityName}}</td>
+                                <td class="select-input-td" style="width: 35%;text-align: center;">{{inventory.commodityManufacturer}}</td>
+                                <td class="select-input-td" style="width: 20%;text-align: right">{{inventory.inventoryLargeNum + inventory.commodityLargeUnit}}{{ inventory.commoditySplitSaleStatus === 1 ? inventory.inventorySmallNum + inventory.commoditySmallUnit : ''}}</td>
+                                <td class="select-input-td" style="width: 5%"></td>
+                            </tr>
+                        </table>
                     </div>
                     <div class="float-right">
-                        <p>品种：0 金额：0.00元</p>
+                        <p>品种：{{variety}}种 金额：{{inventoryAddMoney}}元</p>
                     </div>
                 </div>
                 <div class="table1">
                     <table class="table table-striped" style="font-size: 16px;text-align: center;">
                         <thead>
                         <tr>
-                            <td scope="col" width="16%">药品名</td>
-                            <td scope="col" width="10%">国家码</td>
-                            <td scope="col" width="15%">厂家</td>
-                            <td scope="col" width="10%">批次号</td>
-                            <td scope="col" width="10%">效期</td>
-                            <td scope="col" width="10%">当前库存</td>
-                            <td scope="col" width="10%"><span style="color: red">*</span> 出库数量</td>
-                            <td scope="col" width="7%">售价(元)</td>
-                            <td scope="col" width="7%">金额(元)</td>
-                            <td scope="col" width="5%"></td>
+                            <td scope="col" width="10%">药品ID</td>
+                            <td scope="col" width="10%">商品名</td>
+                            <td scope="col" width="10%">国家编码</td>
+                            <td scope="col" width="10%">规格</td>
+                            <td scope="col" width="15%">售价(元)</td>
+                            <td scope="col" width="15%">进价(元)</td>
+                            <td scope="col" width="15%"><span style="color: red">*</span> 入库数量</td>
+                            <td scope="col" width="8%">入库金额(元)</td>
+                            <td scope="col" width="7%"></td>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>感冒灵颗粒</td>
-                            <td>H524234332</td>
-                            <td>四川大吉医药集团</td>
-                            <td>20230302001</td>
-                            <td>2023年1月5日</td>
-                            <td>1000盒</td>
-                            <td>300盒</td>
-                            <td>25.00</td>
-                            <td>7500.00</td>
+                        <tr v-for="inAdd in inventoryAdd.inventoryInDetailList">
+                            <td>{{inAdd.inventoryInCommodityId}}</td>
+                            <td>{{inAdd.inventoryInCommodityName}}</td>
+                            <td>{{inAdd.inventoryInCountryCode}}</td>
+                            <td>{{inAdd.inventoryInCommoditySpecification}}</td>
                             <td>
-                                <div class="td-hover">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
-                                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                    </svg>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>感冒灵颗粒</td>
-                            <td>H524234332</td>
-                            <td>四川大吉医药集团</td>
-                            <td>20230302001</td>
-                            <td>2023年1月5日</td>
-                            <td>1000盒</td>
-                            <td>300盒</td>
-                            <td>25.00</td>
-                            <td>7500.00</td>
+                                {{inAdd.inventoryInCommodityLargeSalePrice + '元/' + inAdd.inventoryInLargeUnit}}
+                                {{inAdd.inventoryInSplitSaleStatus === 1 ? '，' + inAdd.inventoryInCommoditySmallSalePrice + '元/' + inAdd.inventoryInSmallUnit : ''}}</td>
                             <td>
-                                <div class="td-hover">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
+                                <input type="number" style="width: 50px;" v-model="inAdd.inventoryInCommodityLargeBidPrice">{{'元/' + inAdd.inventoryInLargeUnit}}
+                                <input type="number" style="width: 50px;" v-model="inAdd.inventoryInCommoditySmallBidPrice" v-if="inAdd.inventoryInSplitSaleStatus === 1">{{+inAdd.inventoryInSplitSaleStatus === 1 ? '元/' + inAdd.inventoryInSmallUnit : ''}}</td>
+                            <td>
+                                <input type="number" style="width: 50px;" v-model="inAdd.inventoryInLargeNum" @input="inAdd.inventoryInLargeNum = Number($event.target.value.replace(/\D/g, ''))">{{inAdd.inventoryInLargeUnit}}
+                                <input type="number" style="width: 50px;" v-model="inAdd.inventoryInSmallNum" @input="inAdd.inventoryInSmallNum = Number($event.target.value.replace(/\D/g, ''))" v-if="inAdd.inventoryInSplitSaleStatus === 1">{{inAdd.inventoryInSplitSaleStatus === 1 ? inAdd.inventoryInSmallUnit : ''}}</td>
+                            <td>{{(inAdd.inventoryInLargeNum * inAdd.inventoryInCommodityLargeBidPrice + inAdd.inventoryInSmallNum * inAdd.inventoryInCommoditySmallBidPrice).toFixed(2)}}</td>
+                            <td>
+                                <div class="td-hover" v-on:click="deleteAdd(inAdd)" style="text-align: center;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 15 15">
                                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                                     </svg>
                                 </div>
@@ -212,37 +217,40 @@
                         </tr>
                         </tbody>
                     </table>
+                    <p v-if="inventoryAdd.inventoryInDetailList.length === 0" class="no-data">暂无数据</p>
                 </div>
             </div>
             <div class="save">
                 <div style="float: right;">
-                    <button type="button" class="btn btn-primary">保存出库</button>
+                    <button type="button" class="btn btn-primary" @click="save(1)">保存入库</button>
                 </div>
                 <div style="float: right;margin-right: 15px;">
-                    <button type="button" class="btn btn-primary">等待出库</button>
+                    <button type="button" class="btn btn-primary" @click="save(2)">等待入库</button>
                 </div>
                 <div style="float: right;margin-right: 15px;">
-                    <button type="button" class="btn btn-outline-primary" id="addClose2">取消</button>
+                    <button type="button" class="btn btn-outline-primary" v-on:click="closeAddPage">取消</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="inventory-detailed" id="inventory-detailed">
-    <div class="inventory-pop" th:fragment="inventoryOutInfo" id="inventoryOutInfo">
+<div class="inventory-detailed" ref="detail">
+    <div class="inventory-pop">
         <div class="top">
-            <p th:text="'出库单'+${inventoryOutInfo.getInventory_out_id()}+'详情'"></p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right"  onclick="close3()" viewBox="0 0 16 16">
-                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-            </svg>
+            <p>{{'入库单' + inventoryInDetail.inventoryInId + '详情'}}</p>
+            <div>
+                <svg v-on:click="closeDetailPage" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
         </div>
         <div class="info">
             <div class="info1">
-                <p th:text="'出库人: '+${inventoryOutInfo.getInventory_out_operator()}"></p>
-                <p th:text="'出库类型: '+${inventoryOutInfo.getInventory_out_category()}"></p>
-                <p th:text="'备注: '+${inventoryOutInfo.getInventory_out_remarks()}"></p>
+                <p>{{'入库人: '+inventoryInDetail.inventoryInOperator}}</p>
+                <p>{{'供应商: '+inventoryInDetail.inventoryInSupplierName}}</p>
+                <p>{{'备注: '+inventoryInDetail.inventoryInRemarks}}</p>
                 <div class="float-right">
-                    <p th:text="'品种: '+${inventoryOutInfo.getInventory_out_variety()}+' 金额: '+${inventoryOutInfo.getInventory_out_money()}+' 元'"></p>
+                    <p>{{'品种: '+inventoryInDetail.inventoryInVariety + ' 金额: ' + parseFloat(inventoryInDetail.inventoryInMoney).toFixed(2)}}</p>
                 </div>
             </div>
             <div class="info2">
@@ -251,26 +259,36 @@
                         <thead>
                         <tr>
                             <td scope="col" width="10%">商品ID</td>
-                            <td scope="col" width="17%">商品名</td>
+                            <td scope="col" width="12%">商品名</td>
                             <td scope="col" width="10%">国家编码</td>
                             <td scope="col" width="13%">规格</td>
-                            <td scope="col" width="20%">售价</td>
-                            <td scope="col" width="20%">出库数量</td>
-                            <td scope="col" width="10%">出库金额(元)</td>
+                            <td scope="col" width="15%">售价</td>
+                            <td scope="col" width="15%">进价</td>
+                            <td scope="col" width="15%">入库数量</td>
+                            <td scope="col" width="10%">入库金额(元)</td>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="outDetail:${inventoryOutInfo.getInventory_out_detail_list()}">
-                            <td th:text="${outDetail.getInventory_out_commodity_id()}"></td>
-                            <td th:text="${outDetail.getInventory_out_commodity_name()}"></td>
-                            <td th:text="${outDetail.getInventory_out_country_code()}"></td>
-                            <td th:text="${outDetail.getInventory_out_commodity_specification()}"></td>
-                            <td th:if="${outDetail.getInventory_out_split_sale_status() == 1}" th:text="${outDetail.getInventory_out_commodity_large_sale_price()}+'元/'+${outDetail.getInventory_out_large_unit()}+','+${outDetail.getInventory_out_commodity_small_sale_price()}+'元/'+${outDetail.getInventory_out_small_unit()}"></td>
-                            <td th:if="${outDetail.getInventory_out_split_sale_status() == 1}" th:text="${outDetail.getInventory_out_large_num()}+${outDetail.getInventory_out_large_unit()}+${outDetail.getInventory_out_small_num()}+${outDetail.getInventory_out_small_unit()}"></td>
-                            <td th:if="${outDetail.getInventory_out_split_sale_status() == 1}" th:text="${outDetail.getInventory_out_large_num()*outDetail.getInventory_out_commodity_large_sale_price()+outDetail.getInventory_out_small_num()*outDetail.getInventory_out_commodity_small_sale_price()}"></td>
-                            <td th:if="${outDetail.getInventory_out_split_sale_status() == 0}" th:text="${outDetail.getInventory_out_commodity_large_sale_price()}+'元/'+${outDetail.getInventory_out_large_unit()}"></td>
-                            <td th:if="${outDetail.getInventory_out_split_sale_status() == 0}" th:text="${outDetail.getInventory_out_large_num()}+${outDetail.getInventory_out_large_unit()}"></td>
-                            <td th:if="${outDetail.getInventory_out_split_sale_status() == 0}" th:text="${outDetail.getInventory_out_large_num()*outDetail.getInventory_out_commodity_large_sale_price()}"></td>
+                        <tr v-for="inDetail in inventoryInDetail.inventoryInDetailList">
+                            <td>{{inDetail.inventoryInCommodityId}}</td>
+                            <td>{{inDetail.inventoryInCommodityName}}</td>
+                            <td>{{inDetail.inventoryInCountryCode}}</td>
+                            <td>{{inDetail.inventoryInCommoditySpecification}}</td>
+                            <td>
+                                {{parseFloat(inDetail.inventoryInCommodityLargeSalePrice).toFixed(2) + '元/' + inDetail.inventoryInLargeUnit}}
+                                {{inDetail.inventoryInSplitSaleStatus === 1 ? ','+parseFloat(inDetail.inventoryInCommoditySmallSalePrice).toFixed(2) + '元/' + inDetail.inventoryInSmallUnit : ''}}
+                            </td>
+                            <td>
+                                {{parseFloat(inDetail.inventoryInCommodityLargeBidPrice).toFixed(2) + '元/' + inDetail.inventoryInLargeUnit}}
+                                {{inDetail.inventoryInSplitSaleStatus === 1 ? ','+parseFloat(inDetail.inventoryInCommoditySmallBidPrice).toFixed(2) + '元/' + inDetail.inventoryInSmallUnit : ''}}
+                            </td>
+                            <td>
+                                {{inDetail.inventoryInLargeNum}}{{inDetail.inventoryInLargeUnit}}
+                                {{inDetail.inventoryInSplitSaleStatus === 1 ? inDetail.inventoryInSmallNum + inDetail.inventoryInSmallUnit : ''}}
+                            </td>
+                            <td>
+                                {{(inDetail.inventoryInLargeNum * inDetail.inventoryInCommodityLargeBidPrice + inDetail.inventoryInSmallNum * inDetail.inventoryInCommoditySmallBidPrice).toFixed(2)}}
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -283,9 +301,384 @@
 
 </div>
 <script>
+    let vm = new Vue({
+        el: "#inventoryIn",
+        data: {
+            // 查询条件
+            InventoryInListQuery: {
+                inventoryInStatus: '',
+                inventoryInDateCategory: 1,
+                inventoryInBeginTime: '',
+                inventoryInEndTime: '',
+                inventoryInSupplierId: '',
+                inventoryInOperatorId: '',
+                inventoryInTenantId: ''
+            },
+            // 供应商列表
+            supplierList: [{
+                supplierId: '',
+                supplierName: '',
+            }],
+            // 入库人列表
+            accountList: [{
+                accountId: '',
+                accountName: '',
+            }],
+            // 入库单列表
+            inventoryInList: [{
+                inventoryInId:'',
+                inventoryInStatus: '',
+                inventoryInTime: '',
+                inventoryInCreateTime: '',
+                inventoryInOperator: '',
+                inventoryInSupplierName: '',
+                inventoryInRemarks: '',
+                inventoryInVariety: '',
+                inventoryInMoney: '',
+            }],
+            // 入库单明细
+            inventoryInDetail:{
+                inventoryInId:'',
+                inventoryInOperator: '',
+                inventoryInSupplierName: '',
+                inventoryInRemarks: '',
+                inventoryInVariety: '',
+                inventoryInMoney: '',
+                inventoryInDetailList: [{
+                    inventoryInCommodityId: '',
+                    inventoryInCommodityName: '',
+                    inventoryInCountryCode: '',
+                    inventoryInCommoditySpecification: '',
+                    inventoryInSplitSaleStatus: '',
+                    inventoryInCommodityLargeBidPrice: '',
+                    inventoryInCommoditySmallBidPrice: '',
+                    inventoryInCommodityLargeSalePrice: '',
+                    inventoryInCommoditySmallSalePrice: '',
+                    inventoryInLargeUnit: '',
+                    inventoryInSmallUnit: '',
+                    inventoryInDosageForm: '',
+                    inventoryInLargeNum: '',
+                    inventoryInSmallNum: '',
+                }]
+            },
+            // 库存列表
+            inventoryList:[{
+                commodityId: '',
+                commodityName: '',
+                commodityCountryCode: '',
+                commodityCategory: '',
+                commodityBarCode: '',
+                commodityManufacturer: '',
+                commodityApprovalNo: '',
+                commoditySpecification: '',
+                commodityLargeUnit: '',
+                commoditySmallUnit: '',
+                inventoryLargeNum: '',
+                inventorySmallNum: '',
+                commoditySplitSaleStatus: '',
+                commodityLargePrice: '',
+                commoditySmallPrice: '',
+                commodityDosageForm: '',
+                commodityEnableStatus: '',
+            }],
+            // 入库单新增
+            inventoryAdd:{
+                inventoryInId:'',
+                inventoryInStatus: '',
+                inventoryInOperatorId: '',
+                inventoryInTime: '',
+                inventoryInCreateTime: '',
+                inventoryInSupplierId: '',
+                inventoryInRemarks: '',
+                inventoryInVariety: '',
+                inventoryInMoney: '',
+                inventoryInDetailList: [{
+                    inventoryInDetailId: '',
+                    inventoryInId: '',
+                    inventoryInCommodityId: '',
+                    inventoryInCommodityName: '',
+                    inventoryInCountryCode: '',
+                    inventoryInCommoditySpecification: '',
+                    inventoryInSplitSaleStatus: '',
+                    inventoryInCommodityLargeBidPrice:'',
+                    inventoryInCommoditySmallBidPrice: '',
+                    inventoryInCommodityLargeSalePrice: '',
+                    inventoryInCommoditySmallSalePrice: '',
+                    inventoryInDosageForm:'',
+                    inventoryInBeforeLargeNum: '',
+                    inventoryInBeforeSmallNum: '',
+                    inventoryInAfterLargeNum: '',
+                    inventoryInAfterSmallNum: '',
+                    inventoryInLargeUnit: '',
+                    inventoryInSmallUnit: '',
+                    inventoryInLargeNum: '',
+                    inventoryInSmallNum: '',
+                }]
+            }
+        },
+        methods: {
+            // 入库单一览查询请求
+            selectInventoryInSubmit(event){
+                // 防止回调中this指向ajax回调函数本身导致失效
+                let that = this;
+                // 阻止表单默认提交行为
+                event.preventDefault();
+                // 创建FormData对象
+                $.ajax({
+                    url: '/inventory/toInventoryInByQuery',
+                    type: 'POST',
+                    data: JSON.stringify(this.InventoryInListQuery),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        // 先清空上一次数据再push
+                        that.inventoryInList.splice(0, that.inventoryInList.length);
+                        response.forEach((item) => {
+                            that.inventoryInList.push(item);
+                        });
+                    },
+                    error:function () {
+                        layer.msg('请求入库单一览查询失败，请刷新重试');
+                    }
+                })
+            },
+            // 查看入库单详情
+            detailed(id){
+                // 防止回调中this指向ajax回调函数本身导致失效
+                let that = this;
+                $.ajax({
+                    url: '/inventory/selectInDetailById?id='+id,
+                    type: 'GET',
+                    contentType:false,
+                    success: function (response) {
+                        that.inventoryInDetail = response;
+                        // 打开详情弹窗
+                        that.openDetailPage();
+                    },
+                    error:function () {
+                        layer.msg('请求查看入库单详情失败，请刷新重试');
+                    }
+                })
+            },
+            // 点击添加药品到入库单新增列表
+            InsertAdd(inventory){
+                // 不存在才加入
+                const exist = this.inventoryAdd.inventoryInDetailList.find(obj => obj.inventoryInCommodityId === inventory.commodityId);
+                if(exist === undefined){
+                    this.inventoryAdd.inventoryInDetailList.push({
+                        inventoryInId: '',
+                        inventoryInCommodityId: inventory.commodityId,
+                        inventoryInCommodityName: inventory.commodityName,
+                        inventoryInCountryCode: inventory.commodityCountryCode,
+                        inventoryInCommoditySpecification: inventory.commoditySpecification,
+                        inventoryInSplitSaleStatus: inventory.commoditySplitSaleStatus,
+                        inventoryInCommodityLargeSalePrice: inventory.commodityLargePrice,
+                        inventoryInCommoditySmallSalePrice: inventory.commoditySmallPrice,
+                        inventoryInCommodityLargeBidPrice: 0.00,
+                        inventoryInCommoditySmallBidPrice: 0.00,
+                        inventoryInLargeUnit: inventory.commodityLargeUnit,
+                        inventoryInSmallUnit: inventory.commoditySmallUnit,
+                        inventoryInDosageForm: inventory.commodityDosageForm,
+                        inventoryInLargeNum: 0,
+                        inventoryInSmallNum: 0,
+                    });
+                }
+            },
+            // 搜索药品输入框变化事件监听
+            onInput(inputValue){
+                // 防止回调中this指向ajax回调函数本身导致失效
+                let that = this;
+                // 请求商品数据
+                $.ajax({
+                    url: '/inventory/selectInventoryByName?name='+inputValue,
+                    type: 'GET',
+                    success: function(response) {
+                        that.showSelect();
+                        that.inventoryList.splice(0, that.inventoryList.length);
+                        // 处理响应数据
+                        response.forEach((item)=>{
+                            that.inventoryList.push(item);
+                        });
+                    },
+                    error: function() {
+                        layer.msg("请求库存列表失败，请刷新重试");
+                    }
+                });
+            },
+            // 搜索药品输入框失去焦点事件监听
+            onBlur(){
+                this.hideSelect();
+            },
+            // 删除列表元素
+            deleteAdd(add){
+                const index = this.inventoryAdd.inventoryInDetailList.findIndex(item => item === add);
+                this.inventoryAdd.inventoryInDetailList.splice(index,1);
+            },
+            // 打开详情弹窗
+            openDetailPage(){
+                this.$refs.shadow.style.display = "block";
+                this.$refs.detail.style.display = "block";
+            },
+            // 关闭详情弹窗
+            closeDetailPage(){
+                this.$refs.shadow.style.display = "none";
+                this.$refs.detail.style.display = "none";
+            },
+            // 打开新增弹窗
+            openAddPage(){
+                this.$refs.shadow.style.display = "block";
+                this.$refs.add.style.display = "block";
+            },
+            // 关闭新增弹窗
+            closeAddPage(){
+                this.$refs.shadow.style.display = "none";
+                this.$refs.add.style.display = "none";
+            },
+            // 显示搜索商品列表
+            showSelect(){
+                this.$refs.selectInput.style.display = "block";
+            },
+            // 隐藏搜索商品列表
+            hideSelect(){
+                this.$refs.selectInput.style.display = "none";
+            },
+            // 入库一览列表刷新
+            refresh(){
+                let that = this;
+                // 重新发起请求
+                $.ajax({
+                    url: '/inventory/toInventoryInByQuery',
+                    type: 'POST',
+                    data: JSON.stringify(this.InventoryInListQuery),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        // 先清空再PUSH
+                        response.forEach((item) => {
+                            that.inventoryInList.push(item);
+                        });
+                    },
+                    error:function () {
+                        layer.msg('请求入库单一览查询失败，请刷新重试');
+                    }
+                });
+            },
+            // 点击进行保存入库或者等待入库
+            save(status){
+                if(this.inventoryAdd.inventoryInOperatorId === ''){
+                    layer.msg("请选择入库人");
+                    return;
+                }
+                if(this.inventoryAdd.inventoryInSupplierId === ''){
+                    layer.msg("请选择供应商");
+                    return;
+                }
+                // 保存入库
+                if(status === 1){
+                    this.inventoryAdd.inventoryInStatus = '已入库';
+                }else{
+                    this.inventoryAdd.inventoryInStatus = '待入库';
+                }
+                let that = this;
+                $.ajax({
+                    url: '/inventory/saveInventoryIn',
+                    type: 'POST',
+                    data: JSON.stringify(this.inventoryAdd),
+                    contentType: 'application/json',
+                    success: function() {
+                        layer.msg("新增入库单成功");
+                        that.closeAddPage();
+                        // 清空新增列表
+                        that.inventoryAdd.inventoryInDetailList.splice(0, that.inventoryAdd.inventoryInDetailList.length);
+                        // 清空入库列表
+                        that.inventoryInList.splice(0, that.inventoryInList.length);
+                        // 刷新入库单一览界面
+                        that.refresh();
+                    },
+                    error: function() {
+                        layer.msg("保存入库单信息失败，请刷新重试");
+                    }
+                });
+            },
+            // 待入库发起入库
+            waitToSave(id){
+                let that = this;
+                $.ajax({
+                    url: '/inventory/waitToSave?id='+id,
+                    type: 'GET',
+                    success: function () {
+                        layer.msg("发起入库成功");
+                        // 清空入库列表
+                        that.inventoryInList.splice(0, that.inventoryInList.length);
+                        // 刷新入库单一览界面
+                        that.refresh();
+                    },
+                    error: function () {
+                        layer.msg("发起入库失败，请检查入库单是否存在");
+                    }
+                })
+            }
+        },
+        computed: {
+            // 计算新增入库单总金额
+            inventoryAddMoney(){
+                let inventoryAddMoney = 0;
+                this.inventoryAdd.inventoryInDetailList.forEach(inAdd => {
+                    inventoryAddMoney += inAdd.inventoryInLargeNum * inAdd.inventoryInCommodityLargeBidPrice + inAdd.inventoryInSmallNum * inAdd.inventoryInCommoditySmallBidPrice
+                });
+                this.inventoryAdd.inventoryInMoney = inventoryAddMoney;
+                return inventoryAddMoney.toFixed(2);
+            },
+            // 计算品种数
+            variety(){
+                let varietyNum;
+                varietyNum = this.inventoryAdd.inventoryInDetailList.length;
+                this.inventoryAdd.inventoryInVariety = varietyNum;
+                // 返回品种数
+                return varietyNum;
+            },
+        },
+        mounted() {
+            // 先清空所有data的list，因为初始定义格式为一个全是空值的list
+            this.inventoryInList.splice(0, this.inventoryInList.length);
+            this.supplierList.splice(0, this.supplierList.length);
+            this.accountList.splice(0, this.accountList.length);
+            this.inventoryList.splice(0, this.inventoryList.length);
+            this.inventoryAdd.inventoryInDetailList.splice(0, this.inventoryAdd.inventoryInDetailList.length);
+            this.inventoryInDetail.inventoryInDetailList.splice(0,this.inventoryInDetail.inventoryInDetailList.length);
+            // 防止回调中this指向ajax回调函数本身导致失效
+            let that = this;
+            // 初始化加载数据
+            that.refresh();
+            // 获取供应商列表
+            $.ajax({
+                url: '/inventory/supplierList',
+                type: 'GET',
+                success: function (response) {
+                    response.forEach((item) => {
+                        that.supplierList.push(item);
+                    });
+                },
+                error:function () {
+                    layer.msg('请求供应商列表失败，请刷新重试');
+                }
+            });
+            //获取入库人列表
+            $.ajax({
+                url: '/account/getAccountList',
+                type: 'GET',
+                success: function (response) {
+                    response.forEach((item) => {
+                        that.accountList.push(item);
+                    });
+                },
+                error:function () {
+                    layer.msg('请求入库人列表失败，请刷新重试');
+                }
+            })
+        }
+    });
+
     layui.use('laydate', function(){
         var laydate = layui.laydate;
-
         //日期范围
         laydate.render({
             elem: '#test6'
@@ -294,112 +687,6 @@
             ,range: ['#test-startDate-1', '#test-endDate-1']
         });
     });
-    const btn1 = document.getElementById("add");
-    const shadow = document.getElementById("shadow");
-    const add = document.getElementById("inventory-add");
-    const close1 = document.getElementById("addClose");
-    const close2 = document.getElementById("addClose2");
-    const detailed = document.getElementById("inventory-detailed");
-    const select = document.getElementById("select1");
-
-    // 打开新增弹窗
-    btn1.onclick = function () {
-        shadow.style.display = "block";
-        add.style.display = "block";
-    };
-
-    // 关闭新增弹窗
-    close1.onclick = function () {
-        shadow.style.display = "none";
-        add.style.display = "none";
-    };
-
-    // 关闭新增弹窗
-    close2.onclick = function () {
-        shadow.style.display = "none";
-        add.style.display = "none";
-    };
-
-    // 关闭详情弹窗
-    function close3() {
-        shadow.style.display = "none";
-        detailed.style.display = "none";
-    };
-
-    /**
-     * 页面初始加载
-     * @type {HTMLElement}
-     */
-    $(document).ready(function() {
-        // 获取入库人列表
-        $.ajax({
-            url: '/account/getAccountList',
-            type: 'GET',
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                response.forEach((item)=>{
-                    //先创建好select里面的option元素
-                    const option = document.createElement("option");
-                    //转换DOM对象为JQ对象,好用JQ里面提供的方法 给option的value赋值
-                    $(option).val(item.account_id);
-                    //给option的text赋值,这就是你点开下拉框能够看到的东西
-                    $(option).text(item.account_name);
-                    //获取select 下拉框对象,并将option添加进select
-                    $('#operator').append(option);
-                });
-            },
-            error:function (response) {
-                layer.msg('请求失败，请刷新重试');
-            }
-        })
-    });
-
-    /**
-     * 刷新出库单一览页面信息
-     */
-    const form1 = document.getElementById("form1");
-    form1.addEventListener('submit',function (event) {
-        // 阻止表单默认提交行为
-        event.preventDefault();
-        // 创建FormData对象
-        const formData1 = new FormData(form1);
-        $.ajax({
-            url: '/inventory/toInventoryOutByQuery',
-            type: 'POST',
-            data: formData1,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                $("#outInfoList").html(data);
-            },
-            error:function (data) {
-                layer.msg('请求失败，请刷新重试');
-            }
-        })
-    });
-
-    /**
-     * 查看出库单
-     * @param id
-     */
-    function detail(id) {
-        $.ajax({
-            url: '/inventory/selectOutDetailById?id='+id,
-            type: 'GET',
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                $("#inventoryOutInfo").html(response);
-                // 打开弹窗
-                shadow.style.display = "block";
-                detailed.style.display = "block";
-            },
-            error:function (response) {
-                layer.msg('请求失败，请刷新重试');
-            }
-        })
-    }
 </script>
 </body>
 </html>

@@ -52,4 +52,24 @@ public class InventoryInServiceImpl implements InventoryInServiceI {
     public InventoryInInfoDTO selectInDetailById(Long id) {
         return inventoryQryExe.selectInDetailById(id);
     }
+
+    /**
+     * 保存入库单
+     * @param inventoryInDTO
+     * @return
+     */
+    @Override
+    public Boolean saveInventoryIn(InventoryInDTO inventoryInDTO) {
+        return inventoryModExe.saveInventoryIn(inventoryInDTO);
+    }
+
+    /**
+     * 待入库发起入库
+     * @param id
+     * @return
+     */
+    @Override
+    public Boolean waitToSave(String id) {
+        return inventoryModExe.waitToSave(id);
+    }
 }

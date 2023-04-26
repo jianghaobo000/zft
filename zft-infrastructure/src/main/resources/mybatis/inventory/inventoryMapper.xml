@@ -27,7 +27,10 @@
         LEFT JOIN commodity_table c ON i.inventory_commodity_id = c.commodity_id
         WHERE 1 = 1
         <if test="param.inventoryCommodityName != null and param.inventoryCommodityName !=''">
-            AND c.commodity_name LIKE CONCAT('%',#{param.inventoryCommodityName},'%')
+            AND (
+                    c.commodity_name LIKE CONCAT('%',#{param.inventoryCommodityName},'%')
+                    OR c.commodity_pinyin LIKE  CONCAT('%',#{param.inventoryCommodityName},'%')
+                )
         </if>
         <if test="param.inventoryManufacturer != null and param.inventoryManufacturer !=''">
             AND c.commodity_manufacturer LIKE CONCAT('%',#{param.inventoryManufacturer},'%')

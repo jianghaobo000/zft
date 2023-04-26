@@ -77,6 +77,11 @@ public class InventoryOutDetailDO {
     private String inventoryOutSmallUnit;
 
     /**
+     * 商品大小单位转换比
+     */
+    private Integer inventoryOutDosageForm;
+
+    /**
      * 商品出库前数量（大）
      */
     private Integer inventoryOutBeforeLargeNum;

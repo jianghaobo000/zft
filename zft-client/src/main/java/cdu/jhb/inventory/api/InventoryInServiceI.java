@@ -15,7 +15,31 @@ import java.util.List;
 */
 public interface InventoryInServiceI {
 
+    /**
+     * 获取入库单列表
+     * @param query
+     * @return
+     */
     List<InventoryInInfoDTO> getInventoryInList(InventoryInListQuery query);
 
+    /**
+     * 查询入库单详情
+     * @param id
+     * @return
+     */
     InventoryInInfoDTO selectInDetailById(Long id);
+
+    /**
+     * 保存入库单
+     * @param inventoryInDTO
+     * @return
+     */
+    Boolean saveInventoryIn(InventoryInDTO inventoryInDTO);
+
+    /**
+     * 待入库发起入库
+     * @param id
+     * @return
+     */
+    Boolean waitToSave(String id);
 }

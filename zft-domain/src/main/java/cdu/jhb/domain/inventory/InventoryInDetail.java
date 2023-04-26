@@ -82,6 +82,11 @@ public class InventoryInDetail {
     private String inventoryInSmallUnit;
 
     /**
+     * 商品大小单位转换比
+     */
+    private Integer inventoryInDosageForm;
+
+    /**
      * 商品入库前数量（大）
      */
     private Integer inventoryInBeforeLargeNum;
