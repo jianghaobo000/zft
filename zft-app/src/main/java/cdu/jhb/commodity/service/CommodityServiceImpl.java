@@ -3,10 +3,7 @@ package cdu.jhb.commodity.service;
 import cdu.jhb.commodity.api.CommodityServiceI;
 import cdu.jhb.commodity.command.CommodityModExe;
 import cdu.jhb.commodity.command.CommodityQryExe;
-import cdu.jhb.commodity.dto.data.CommodityDTO;
-import cdu.jhb.domain.commodity.Commodity;
-import cdu.jhb.domain.commodity.gateway.CommodityGateway;
-import com.github.dozermapper.core.DozerBeanMapperBuilder;
+import cdu.jhb.commodity.data.dto.CommodityDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -2,17 +2,14 @@ package cdu.jhb.inventory.service;
 
 import cdu.jhb.common.Constant;
 import cdu.jhb.inventory.api.InventoryInServiceI;
-import cdu.jhb.inventory.api.InventoryServiceI;
 import cdu.jhb.inventory.command.InventoryModExe;
 import cdu.jhb.inventory.command.InventoryQryExe;
-import cdu.jhb.inventory.dto.data.InventoryInDTO;
-import cdu.jhb.inventory.dto.data.InventoryInInfoDTO;
-import cdu.jhb.inventory.dto.data.InventoryInListQuery;
-import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
+import cdu.jhb.inventory.data.dto.InventoryInDTO;
+import cdu.jhb.inventory.data.dto.InventoryInInfoDTO;
+import cdu.jhb.inventory.data.request.InventoryInListQuery;
+import cdu.jhb.inventory.data.response.InventoryInListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
 * @description: 库存服务层
@@ -34,7 +31,7 @@ public class InventoryInServiceImpl implements InventoryInServiceI {
      * @return
      */
     @Override
-    public List<InventoryInInfoDTO> getInventoryInList(InventoryInListQuery query) {
+    public InventoryInListResponse getInventoryInList(InventoryInListQuery query) {
         //设置日期格式 开始时间为一天的开始，结束时间为一天的最后
         if(!Constant.NULL_STRING.equals(query.getInventoryInBeginTime()) && !Constant.NULL_STRING.equals(query.getInventoryInEndTime())){
             query.setInventoryInBeginTime(query.getInventoryInBeginTime()+Constant.BEGIN_TIME);
@@ -69,7 +66,7 @@ public class InventoryInServiceImpl implements InventoryInServiceI {
      * @return
      */
     @Override
-    public Boolean waitToSave(String id) {
-        return inventoryModExe.waitToSave(id);
+    public Boolean waitToSaveIn(Long id) {
+        return inventoryModExe.waitToSaveIn(id);
     }
 }

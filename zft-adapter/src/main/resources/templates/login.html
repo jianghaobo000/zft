@@ -58,8 +58,8 @@
                         success: function (response) {
                             window.location.href = "http://localhost:8080/clinic/toClinic";
                         },
-                        error:function (err) {
-                            layer.msg(err.message);
+                        error:function (error) {
+                            layer.msg(error.responseJSON.message);
                         }
                     })
                 }

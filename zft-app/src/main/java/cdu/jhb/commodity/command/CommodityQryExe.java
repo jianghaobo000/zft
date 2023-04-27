@@ -1,11 +1,10 @@
 package cdu.jhb.commodity.command;
 
 import cdu.jhb.commodity.database.CommodityMapper;
-import cdu.jhb.commodity.dto.data.CommodityDTO;
+import cdu.jhb.commodity.data.dto.CommodityDTO;
 import cdu.jhb.domain.commodity.Commodity;
 import cdu.jhb.domain.commodity.gateway.CommodityGateway;
 import cdu.jhb.util.Convert;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

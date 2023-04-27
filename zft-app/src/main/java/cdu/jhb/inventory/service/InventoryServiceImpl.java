@@ -1,14 +1,13 @@
 package cdu.jhb.inventory.service;
 
-import cdu.jhb.commodity.dto.data.CommodityDTO;
+import cdu.jhb.commodity.data.dto.CommodityDTO;
 import cdu.jhb.domain.commodity.Commodity;
-import cdu.jhb.domain.inventory.Supplier;
 import cdu.jhb.inventory.api.InventoryServiceI;
 import cdu.jhb.inventory.command.InventoryModExe;
 import cdu.jhb.inventory.command.InventoryQryExe;
-import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
-import cdu.jhb.inventory.dto.data.InventoryListQuery;
-import cdu.jhb.inventory.dto.data.SupplierDTO;
+import cdu.jhb.inventory.data.dto.InventoryInfoDTO;
+import cdu.jhb.inventory.data.request.InventoryListQuery;
+import cdu.jhb.inventory.data.dto.SupplierDTO;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

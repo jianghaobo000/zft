@@ -1,11 +1,8 @@
 package cdu.jhb.web.commodity;
 
 import cdu.jhb.commodity.api.CommodityServiceI;
-import cdu.jhb.commodity.dto.data.CommodityDTO;
+import cdu.jhb.commodity.data.dto.CommodityDTO;
 import cdu.jhb.common.Constant;
-import cdu.jhb.domain.commodity.Commodity;
-import cdu.jhb.inventory.dto.data.InventoryDTO;
-import cdu.jhb.inventory.dto.data.InventoryListQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

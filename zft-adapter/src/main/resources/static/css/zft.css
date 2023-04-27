@@ -680,13 +680,14 @@ tr:hover .td-hover{
     margin-bottom: 10px;
 }
 .inventory .right .info{
-    height: 730px;
+    height: 750px;
     margin-bottom: 10px;
     border-bottom: 1px rgb(207,213,215) solid;
+    overflow: auto;
 }
 
 .inventory .right .bottom{
-    height: 60px;
+    height: 40px;
 }
 
 .inventory .right .bottom p{

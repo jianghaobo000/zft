@@ -1,15 +1,13 @@
 package cdu.jhb.account.command;
 
 import cdu.jhb.account.database.AccountMapper;
-import cdu.jhb.account.dto.data.AccountDTO;
+import cdu.jhb.account.data.dto.AccountDTO;
 import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.gateway.AccountGateway;
-import cdu.jhb.util.Convert;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -32,7 +30,7 @@ public class AccountQryExe {
      * @param countryCode
      * @return
      */
-    public Boolean findAccountByName(String name,String password,String code,String countryCode) throws Exception {
+    public Boolean findAccountByName(String name,String password,String code,String countryCode) {
         Account account = accountGateway.findAccountByName(name,countryCode);
         return account.isOk(password, code);
     }
@@ -43,7 +41,7 @@ public class AccountQryExe {
      * @return
      * @throws Exception
      */
-    public Boolean findCountryCode(String countryCode) throws Exception {
+    public Boolean findCountryCode(String countryCode) {
         return accountGateway.findCountryCode(countryCode);
     }
 

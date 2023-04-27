@@ -1,12 +1,10 @@
 package cdu.jhb.domain.inventory.gateway;
 
+import cdu.jhb.domain.inventory.InventoryCheck;
 import cdu.jhb.domain.inventory.InventoryCheckDetail;
 import cdu.jhb.domain.inventory.InventoryCheckInfo;
-import cdu.jhb.domain.inventory.InventoryOutDetail;
-import cdu.jhb.domain.inventory.InventoryOutInfo;
-import cdu.jhb.inventory.dto.data.InventoryCheckInfoDTO;
-import cdu.jhb.inventory.dto.data.InventoryCheckListQuery;
-import cdu.jhb.inventory.dto.data.InventoryOutListQuery;
+import cdu.jhb.inventory.data.request.InventoryCheckListQuery;
+import cdu.jhb.inventory.data.response.InventoryCheckListResponse;
 
 import java.util.List;
 
@@ -23,7 +21,7 @@ public interface InventoryCheckGateway {
      * @param query
      * @return
      */
-    List<InventoryCheckInfo> getInventoryCheckList(InventoryCheckListQuery query);
+    InventoryCheckListResponse getInventoryCheckList(InventoryCheckListQuery query);
 
     /**
      * 获取盘点单主表
@@ -38,4 +36,19 @@ public interface InventoryCheckGateway {
      * @return
      */
     List<InventoryCheckDetail> selectCheckDetail(Long id);
+
+    /**
+     * 保存盘点单
+     * @param inventoryCheck
+     * @param checkDetailList
+     * @return
+     */
+    Boolean saveInventoryCheck(InventoryCheck inventoryCheck,List<InventoryCheckDetail> checkDetailList);
+
+    /**
+     * 待盘点重新发起
+     * @param id
+     * @return
+     */
+    Boolean waitToSaveCheck(Long id);
 }

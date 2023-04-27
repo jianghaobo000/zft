@@ -2,7 +2,7 @@ package cdu.jhb.account.database;
 
 
 import cdu.jhb.account.database.dataobject.AccountDO;
-import cdu.jhb.account.dto.data.AccountDTO;
+import cdu.jhb.account.data.dto.AccountDTO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

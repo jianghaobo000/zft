@@ -2,12 +2,12 @@ package cdu.jhb.inventory.service;
 
 import cdu.jhb.common.Constant;
 import cdu.jhb.inventory.api.InventoryCheckServiceI;
-import cdu.jhb.inventory.api.InventoryServiceI;
 import cdu.jhb.inventory.command.InventoryModExe;
 import cdu.jhb.inventory.command.InventoryQryExe;
-import cdu.jhb.inventory.dto.data.InventoryCheckInfoDTO;
-import cdu.jhb.inventory.dto.data.InventoryCheckListQuery;
-import cdu.jhb.inventory.dto.data.InventoryInDTO;
+import cdu.jhb.inventory.data.dto.InventoryCheckDTO;
+import cdu.jhb.inventory.data.dto.InventoryCheckInfoDTO;
+import cdu.jhb.inventory.data.request.InventoryCheckListQuery;
+import cdu.jhb.inventory.data.response.InventoryCheckListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +34,7 @@ public class InventoryCheckServiceImpl implements InventoryCheckServiceI {
      * @return
      */
     @Override
-    public List<InventoryCheckInfoDTO> getInventoryCheckList(InventoryCheckListQuery query) {
+    public InventoryCheckListResponse getInventoryCheckList(InventoryCheckListQuery query) {
         if(!Constant.NULL_STRING.equals(query.getInventoryCheckBeginTime()) && !Constant.NULL_STRING.equals(query.getInventoryCheckEndTime())){
             query.setInventoryCheckBeginTime(query.getInventoryCheckBeginTime()+Constant.BEGIN_TIME);
             query.setInventoryCheckEndTime(query.getInventoryCheckEndTime()+Constant.END_TIME);
@@ -51,5 +51,25 @@ public class InventoryCheckServiceImpl implements InventoryCheckServiceI {
     @Override
     public InventoryCheckInfoDTO selectCheckDetailById(Long id) {
         return inventoryQryExe.selectCheckDetailById(id);
+    }
+
+    /**
+     * 新增盘点单
+     * @param inventoryCheckDTO
+     * @return
+     */
+    @Override
+    public Boolean saveInventoryCheck(InventoryCheckDTO inventoryCheckDTO) {
+        return inventoryModExe.saveInventoryCheck(inventoryCheckDTO);
+    }
+
+    /**
+     * 待盘点重新发起
+     * @param id
+     * @return
+     */
+    @Override
+    public Boolean waitToSaveCheck(Long id) {
+        return inventoryModExe.waitToSaveCheck(id);
     }
 }

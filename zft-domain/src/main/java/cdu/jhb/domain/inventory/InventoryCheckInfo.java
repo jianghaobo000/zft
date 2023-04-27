@@ -27,11 +27,6 @@ public class InventoryCheckInfo {
     private String inventoryCheckStatus;
 
     /**
-     * 盘点单盈亏数量
-     */
-    private String inventoryCheckNum;
-
-    /**
      * 盘点时间
      */
     private String inventoryCheckTime;
@@ -40,16 +35,6 @@ public class InventoryCheckInfo {
      * 盘点单创建时间
      */
     private String inventoryCheckCreateTime;
-
-    /**
-     * 盘点单盈亏金额-进价
-     */
-    private BigDecimal inventoryCheckBidMoney;
-
-    /**
-     * 盘点单盈亏金额-售价
-     */
-    private BigDecimal inventoryCheckSaleMoney;
 
     /**
      * 盘点人

@@ -1,11 +1,9 @@
 package cdu.jhb.inventory.api;
 
-import cdu.jhb.inventory.dto.data.InventoryInDTO;
-import cdu.jhb.inventory.dto.data.InventoryInInfoDTO;
-import cdu.jhb.inventory.dto.data.InventoryInListQuery;
-import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
-
-import java.util.List;
+import cdu.jhb.inventory.data.dto.InventoryInDTO;
+import cdu.jhb.inventory.data.dto.InventoryInInfoDTO;
+import cdu.jhb.inventory.data.request.InventoryInListQuery;
+import cdu.jhb.inventory.data.response.InventoryInListResponse;
 
 /**
 * @description: TODO
@@ -20,7 +18,7 @@ public interface InventoryInServiceI {
      * @param query
      * @return
      */
-    List<InventoryInInfoDTO> getInventoryInList(InventoryInListQuery query);
+    InventoryInListResponse getInventoryInList(InventoryInListQuery query);
 
     /**
      * 查询入库单详情
@@ -41,5 +39,5 @@ public interface InventoryInServiceI {
      * @param id
      * @return
      */
-    Boolean waitToSave(String id);
+    Boolean waitToSaveIn(Long id);
 }

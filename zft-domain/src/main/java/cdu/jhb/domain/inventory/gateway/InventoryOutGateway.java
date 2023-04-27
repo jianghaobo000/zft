@@ -1,9 +1,8 @@
 package cdu.jhb.domain.inventory.gateway;
 
-import cdu.jhb.domain.inventory.InventoryOutDetail;
-import cdu.jhb.domain.inventory.InventoryOutInfo;
-import cdu.jhb.inventory.dto.data.InventoryOutInfoDTO;
-import cdu.jhb.inventory.dto.data.InventoryOutListQuery;
+import cdu.jhb.domain.inventory.*;
+import cdu.jhb.inventory.data.request.InventoryOutListQuery;
+import cdu.jhb.inventory.data.response.InventoryOutListResponse;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public interface InventoryOutGateway {
      * @param query
      * @return
      */
-    List<InventoryOutInfo> getInventoryOutList(InventoryOutListQuery query);
+    InventoryOutListResponse getInventoryOutList(InventoryOutListQuery query);
 
     /**
      * 获取出库单主表
@@ -35,4 +34,19 @@ public interface InventoryOutGateway {
      * @return
      */
     List<InventoryOutDetail> selectOutDetail(Long id);
+
+    /**
+     * 保存入库单
+     * @param inventoryOut
+     * @param outDetailList
+     * @return
+     */
+    Boolean saveInventoryOut(InventoryOut inventoryOut, List<InventoryOutDetail> outDetailList);
+
+    /**
+     * 待入库发起入库
+     * @param id
+     * @return
+     */
+    Boolean waitToSaveOut(Long id);
 }

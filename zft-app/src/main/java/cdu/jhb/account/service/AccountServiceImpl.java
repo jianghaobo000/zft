@@ -3,16 +3,12 @@ package cdu.jhb.account.service;
 import cdu.jhb.account.api.AccountServiceI;
 import cdu.jhb.account.command.AccountModExe;
 import cdu.jhb.account.command.AccountQryExe;
-import cdu.jhb.account.dto.data.AccountDTO;
-import cdu.jhb.domain.account.Account;
-import cdu.jhb.util.Convert;
+import cdu.jhb.account.data.dto.AccountDTO;
 import cdu.jhb.util.GetMsg;
-import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -58,7 +54,7 @@ public class AccountServiceImpl implements AccountServiceI {
      * @return
      */
     @Override
-    public Boolean verification(String name,String password,String code,String countryCode) throws Exception {
+    public Boolean verification(String name,String password,String code,String countryCode){
         if(accountQryExe.findCountryCode(countryCode)) {
             return accountQryExe.findAccountByName(name,password,code,countryCode);
         }

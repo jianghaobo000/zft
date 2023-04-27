@@ -1,9 +1,9 @@
 package cdu.jhb.inventory.api;
 
-import cdu.jhb.inventory.dto.data.InventoryCheckInfoDTO;
-import cdu.jhb.inventory.dto.data.InventoryCheckListQuery;
-import cdu.jhb.inventory.dto.data.InventoryInDTO;
-import cdu.jhb.inventory.dto.data.InventoryOutInfoDTO;
+import cdu.jhb.inventory.data.dto.InventoryCheckDTO;
+import cdu.jhb.inventory.data.dto.InventoryCheckInfoDTO;
+import cdu.jhb.inventory.data.request.InventoryCheckListQuery;
+import cdu.jhb.inventory.data.response.InventoryCheckListResponse;
 
 import java.util.List;
 
@@ -15,8 +15,12 @@ import java.util.List;
 */
 public interface InventoryCheckServiceI {
 
-    List<InventoryCheckInfoDTO> getInventoryCheckList(InventoryCheckListQuery query);
+    InventoryCheckListResponse getInventoryCheckList(InventoryCheckListQuery query);
 
     InventoryCheckInfoDTO selectCheckDetailById(Long id);
+
+    Boolean saveInventoryCheck(InventoryCheckDTO inventoryCheckDTO);
+
+    Boolean waitToSaveCheck(Long id);
 
 }

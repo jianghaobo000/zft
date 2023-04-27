@@ -3,12 +3,10 @@ package cdu.jhb.inventory;
 import cdu.jhb.domain.inventory.InventoryInfo;
 import cdu.jhb.domain.inventory.gateway.InventoryGateway;
 import cdu.jhb.inventory.database.InventoryMapper;
-import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
-import cdu.jhb.inventory.dto.data.InventoryListQuery;
+import cdu.jhb.inventory.data.request.InventoryListQuery;
 import cdu.jhb.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import redis.clients.jedis.Jedis;
 
 import java.util.List;
 

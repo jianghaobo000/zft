@@ -35,6 +35,27 @@ public class Constant {
     // 待入库
     public final static String WAIT_WAREHOUSING = "待入库";
 
+    // 已出库
+    public final static String ALREADY_OUTBOUND = "已出库";
+
+    // 待出库
+    public final static String WAIT_OUTBOUND = "未出库";
+
+    // 已盘点
+    public final static String ALREADY_CHECK = "已盘点";
+
+    // 待盘点
+    public final static String WAIT_CHECK = "未盘点";
+
+    // 盘盈
+    public final static String CHECK_PROFIT = "盘盈";
+
+    // 盘亏
+    public final static String CHECK_LOSS = "盘亏";
+
+    // 盘平
+    public final static String CHECK_EQUAL = "盘平";
+
     // 大单位数量
     public final static String LARGE_NUM = "largeNum";
 
@@ -46,4 +67,10 @@ public class Constant {
 
     // 年月日 格式
     public final static String YMD = "yyyy-MM-dd";
+
+    // 分页开始下标
+    public final static String START_INDEX = "startIndex";
+
+    // 分页结束下标
+    public final static String END_INDEX = "endIndex";
 }

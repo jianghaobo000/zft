@@ -4,12 +4,10 @@ import cdu.jhb.domain.tenant.Tenant;
 import cdu.jhb.domain.tenant.gateway.TenantGateway;
 import cdu.jhb.tenant.api.TenantServiceI;
 import cdu.jhb.tenant.command.query.TenantQryExe;
-import cdu.jhb.tenant.dto.data.TenantDTO;
+import cdu.jhb.tenant.data.dto.TenantDTO;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
 * @description: 租户服务层

@@ -1,10 +1,8 @@
 package cdu.jhb.account.api;
 
-import cdu.jhb.account.dto.data.AccountDTO;
+import cdu.jhb.account.data.dto.AccountDTO;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
@@ -17,7 +15,7 @@ public interface AccountServiceI {
 
     void getMsg(HttpServletResponse response);
 
-    Boolean verification(String name,String password,String code,String countryCode) throws Exception;
+    Boolean verification(String name,String password,String code,String countryCode);
 
     List<AccountDTO> getAccountList();
 

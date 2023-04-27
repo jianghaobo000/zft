@@ -6,6 +6,7 @@
     <title>库存-盘点</title>
 </head>
 <body style="background-color: rgb(225,228,232);">
+<div id="inventoryCheck">
 <div th:replace="~{common/common::headbar}"/>
 <div class="inventory">
     <div class="left">
@@ -13,16 +14,16 @@
     </div>
     <div class="right">
         <div class="top">
-            <form id="form1" th:action="@{/inventory/toInventoryCheckByQuery}" method="post">
+            <form ref="form1" @submit.prevent="selectInventoryCheckSubmit">
                 <div class="form-group" style="float: left;width: 150px;margin-right: 15px;">
-                    <select class="form-control" name="inventory_check_status">
+                    <select class="form-control" name="inventoryCheckStatus" v-model="InventoryCheckListQuery.inventoryCheckStatus">
                         <option value="">全部状态</option>
-                        <option value="待入库">待盘点</option>
-                        <option value="已入库">已盘点</option>
+                        <option value="待盘点">待盘点</option>
+                        <option value="已盘点">已盘点</option>
                     </select>
                 </div>
                 <div class="form-group" style="float: left;width: 120px;margin-right: 15px;">
-                    <select class="form-control" name="inventory_check_date_category">
+                    <select class="form-control" name="inventoryCheckDateCategory" v-model="InventoryCheckListQuery.inventoryCheckDateCategory">
                         <option value="1" selected>创建日期</option>
                         <option value="2">盘点日期</option>
                     </select>
@@ -31,108 +32,115 @@
                     <div class="layui-inline">
                         <div class="layui-inline" id="test6">
                             <div class="layui-input-inline float-left" style="width: 100px;">
-                                <input type="text" name="inventory_check_begin_time" autocomplete="off" id="test-startDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="开始日期">
+                                <input type="text" autocomplete="off" id="test-startDate-1" v-model="InventoryCheckListQuery.inventoryCheckBeginTime" class="layui-input" name="inventoryCheckBeginTime" style="border: 1px rgb(206,212,218) solid" readonly placeholder="开始日期">
                             </div>
                             <div class="layui-form-mid float-left" style="margin: 0 auto;">-</div>
                             <div class="layui-input-inline float-left" style="width: 100px;">
-                                <input type="text" name="inventory_check_end_time" autocomplete="off" id="test-endDate-1" class="layui-input" style="border: 1px rgb(206,212,218) solid" readonly placeholder="结束日期">
+                                <input type="text" autocomplete="off" id="test-endDate-1" v-model="InventoryCheckListQuery.inventoryCheckEndTime" class="layui-input" name="inventoryCheckEndTime" style="border: 1px rgb(206,212,218) solid" readonly placeholder="结束日期">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group" style="float: left;width: 140px;margin-right: 15px;">
-                    <select class="form-control" name="inventory_check_operator_id" id="operator">
+                    <select class="form-control" v-model="InventoryCheckListQuery.inventoryCheckOperatorId" name="inventoryCheckOperatorId">
                         <option value="">全部盘点人</option>
+                        <option v-for="account in accountList" :value="account.accountId">{{ account.accountName }}</option>
                     </select>
                 </div>
                 <div style="float: left;">
-                    <button type="sumit" class="btn btn-outline-primary">查询</button>
+                    <button type="submit" class="btn btn-outline-primary">查询</button>
                 </div>
             </form>
             <div style="float: right;margin-left: 15px;">
                 <button type="button" class="btn btn-outline-primary">导出</button>
             </div>
             <div style="float: right;">
-                <button type="button" class="btn btn-primary" id="add">新增盘点</button>
+                <button type="button" class="btn btn-primary" v-on:click="openAddPage">新增盘点</button>
             </div>
         </div>
-        <div class="info" th:fragment="checkInfoList" id="checkInfoList">
+        <div class="info">
             <table class="table table-striped" style="font-size: 15px;text-align: center;">
                 <thead>
                 <tr>
-                    <td scope="col" width="12%">盘点单号</td>
-                    <td scope="col" width="5%">状态</td>
-                    <td scope="col" width="5%">品种</td>
-                    <td scope="col" width="12%">盈亏数量</td>
-                    <td scope="col" width="12%">盈亏金额-进价(元)</td>
-                    <td scope="col" width="12%">盈亏金额-售价(元)</td>
-                    <td scope="col" width="8%">盘点人</td>
-                    <td scope="col" width="12%">创建日期</td>
-                    <td scope="col" width="12%">盘点日期</td>
+                    <td scope="col" width="14%">盘点单号</td>
+                    <td scope="col" width="12%">状态</td>
+                    <td scope="col" width="12%">品种</td>
+                    <td scope="col" width="12%">盘点人</td>
+                    <td scope="col" width="20%">创建日期</td>
+                    <td scope="col" width="20%">盘点日期</td>
                     <td scope="col" width="10%">操作</td>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="inventoryCheck:${infoCheckDTOList}">
-                    <td th:text="${inventoryCheck.getInventory_check_id()}"></td>
-                    <td th:text="${inventoryCheck.getInventory_check_status()}"></td>
-                    <td th:text="${inventoryCheck.getInventory_check_variety()}"></td>
-                    <td th:text="${inventoryCheck.getInventory_check_num()}"></td>
-                    <td th:style="${inventoryCheck.getInventory_check_bid_money()} >= 0 ? 'color: green' : 'color: red'" th:text="${inventoryCheck.getInventory_check_bid_money()}"></td>
-                    <td th:style="${inventoryCheck.getInventory_check_sale_money()} >= 0 ? 'color: green' : 'color: red'" th:text="${inventoryCheck.getInventory_check_sale_money()}"></td>
-                    <td th:text="${inventoryCheck.getInventory_check_operator()}"></td>
-                    <td th:text="${inventoryCheck.getInventory_check_create_time()}"></td>
-                    <td th:text="${inventoryCheck.getInventory_check_time()}"></td>
+                <tr v-for="inventoryCheck in inventoryCheckList">
+                    <td>{{inventoryCheck.inventoryCheckId}}</td>
+                    <td>{{inventoryCheck.inventoryCheckStatus}}</td>
+                    <td>{{inventoryCheck.inventoryCheckVariety}}</td>
+                    <td>{{inventoryCheck.inventoryCheckOperator}}</td>
+                    <td>{{inventoryCheck.inventoryCheckCreateTime}}</td>
+                    <td>{{inventoryCheck.inventoryCheckTime === null ? '--' : inventoryCheck.inventoryCheckTime}}</td>
                     <td>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" th:onclick="|detail('${inventoryCheck.getInventory_check_id()}')|">查看</button>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">撤回</button>
+                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-right: 10px;" v-on:click="detailed(inventoryCheck.inventoryCheckId)">查看</button>
+                        <button type="button" v-if="inventoryCheck.inventoryCheckStatus === '待盘点'" class="layui-btn layui-btn-primary layui-btn-xs" v-on:click="waitToSave(inventoryCheck.inventoryCheckId)">发起盘点</button>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <p th:if="${infoCheckDTOList.size() == 0}" class="no-data">暂无数据</p>
+            <p v-if="inventoryCheckList.length === 0" class="no-data">暂无数据</p>
         </div>
         <div class="bottom">
             <div class="float-left">
-                <nav aria-label="Page navigation example">
+                <nav aria-label="Page navigation example" class="float-left" style="margin-right: 30px">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">上一页</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">65</a></li>
-                        <li class="page-item"><a class="page-link" href="#">66</a></li>
-                        <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                        <li :class="pageData.pageIndex > 1 ? 'page-item' : 'page-item disabled'"><a class="page-link" v-on:click="previousPage">上一页</a></li>
+                        <li class="page-item">
+                            <div class="form-group" style="float: left;width: 70px;">
+                                <input type="number" v-on:blur="pageBlur()" class="form-control" v-model="pageData.pageIndex"  @input="pageData.pageIndex = Number($event.target.value.replace(/\D/g, ''))">
+                            </div>
+                        </li>
+                        <li :class="pageData.pageIndex < pageData.maxPage ? 'page-item' : 'page-item disabled'"><a class="page-link" v-on:click="nextPage">下一页</a></li>
                     </ul>
                 </nav>
+                <span class="float-left" style="font-size: 16px;position: relative;top:7px;margin-right: 30px">共{{pageData.maxPage}}页</span>
+                <div class="btn-group float-left">
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        {{pageData.pageSize}}条/页
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" v-on:click="setPageSize(15)">15条/页</a>
+                        <a class="dropdown-item" v-on:click="setPageSize(30)">30条/页</a>
+                        <a class="dropdown-item" v-on:click="setPageSize(50)">50条/页</a>
+                    </div>
+                </div>
             </div>
             <div class="float-right">
-                <p>共4条盘点单，金额100.00元</p>
+                <p>共 {{pageData.total}} 条盘点单</p>
             </div>
         </div>
     </div>
 </div>
-<div class="inventory-add" id="inventory-add">
+<div class="inventory-add" ref="add">
     <div class="inventory-pop">
         <div class="top">
-            <p>盘点单</p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" id="addClose" viewBox="0 0 16 16">
-                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-            </svg>
+            <p>新增盘点单</p>
+            <div>
+                <svg v-on:click="closeAddPage" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
         </div>
         <div class="info">
             <div class="info1">
                 <p><span style="color: red">*</span> 盘点人</p>
                 <div class="form-group" style="float: left;width: 140px;margin-right: 30px;">
-                    <select class="form-control" name="">
-                        <option value="">姜昊波</option>
-                        <option value="">甲乙丙</option>
-                        <option value="">梁医生</option>
+                    <select class="form-control" name="inventoryCheckOperatorId" v-model="inventoryCheckAdd.inventoryCheckOperatorId">
+                        <option value="" style="display: none">请选择盘点人</option>
+                        <option v-for="account in accountList" :value="account.accountId">{{ account.accountName }}</option>
                     </select>
                 </div>
                 <p>备注</p>
                 <div class="form-group" style="float: left;width: 200px;margin-right: 30px;">
-                    <input type="text" class="form-control" name="">
+                    <input type="text" class="form-control" name="inventoryRemarks" v-model="inventoryCheckAdd.inventoryCheckRemarks">
                 </div>
             </div>
             <hr>
@@ -146,60 +154,58 @@
                                 </svg>
                             </button>
                         </div>
-                        <input type="text" class="form-control" placeholder="请输入 药品名/国家码 搜索药品" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        <input v-on:focus="onInput($event.target.value)" v-on:input="onInput($event.target.value)" v-on:blur="onBlur" type="text" id="selectCommodity" class="form-control" placeholder="请输入 药品名/国家码 搜索药品" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                    </div>
+                    <div class="select-input" ref="selectInput">
+                        <table id="select-input-table" class="select-input-table" style="width: 100%;">
+                            <tr v-for="inventory in inventoryList" v-on:mousedown="InsertAdd(inventory)">
+                                <td class="select-input-td" style="width: 5%"></td>
+                                <td class="select-input-td" style="width: 35%;text-align: left;">{{inventory.commodityName}}</td>
+                                <td class="select-input-td" style="width: 35%;text-align: center;">{{inventory.commodityManufacturer}}</td>
+                                <td class="select-input-td" style="width: 20%;text-align: right">{{inventory.inventoryLargeNum + inventory.commodityLargeUnit}}{{ inventory.commoditySplitSaleStatus === 1 ? inventory.inventorySmallNum + inventory.commoditySmallUnit : ''}}</td>
+                                <td class="select-input-td" style="width: 5%"></td>
+                            </tr>
+                        </table>
                     </div>
                     <div class="float-right">
-                        <p>品种：0 金额：0.00元</p>
+                        <p>品种：{{variety}}种</p>
                     </div>
                 </div>
                 <div class="table1">
                     <table class="table table-striped" style="font-size: 16px;text-align: center;">
                         <thead>
                         <tr>
+                            <td scope="col" width="15%">药品ID</td>
                             <td scope="col" width="15%">药品名</td>
-                            <td scope="col" width="10%">国家码</td>
-                            <td scope="col" width="10%">类型</td>
-                            <td scope="col" width="10%">批次号</td>
-                            <td scope="col" width="10%">盈亏金额-进价(元)</td>
-                            <td scope="col" width="10%">盈亏金额-售价(元)</td>
-                            <td scope="col" width="10%">账面数量</td>
-                            <td scope="col" width="10%"><span style="color: red">*</span> 实际数量</td>
-                            <td scope="col" width="10%">盈亏数量</td>
+                            <td scope="col" width="15%">国家码</td>
+                            <td scope="col" width="15%">规格</td>
+                            <td scope="col" width="20%">账面数量</td>
+                            <td scope="col" width="15%"><span style="color: red">*</span> 实际数量</td>
                             <td scope="col" width="5%"></td>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>感冒灵颗粒</td>
-                            <td>H524234332</td>
-                            <td>中西成药</td>
-                            <td>20230302001</td>
-                            <td><span style="color: green">+300.21</span></td>
-                            <td><span style="color: green">+344.33</span></td>
-                            <td>60盒3袋</td>
-                            <td>77盒3袋</td>
-                            <td><span style="color: green">+17</span>盒</td>
+                        <tr v-for="checkAdd in inventoryCheckAdd.inventoryCheckDetailList">
+                            <td>{{checkAdd.inventoryCheckCommodityId}}</td>
+                            <td>{{checkAdd.inventoryCheckCommodityName}}</td>
+                            <td>{{checkAdd.inventoryCheckCountryCode}}</td>
+                            <td>{{checkAdd.inventoryCheckCommoditySpecification}}</td>
                             <td>
-                                <div class="td-hover">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
-                                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                    </svg>
-                                </div>
+                                {{checkAdd.inventoryCheckBeforeLargeNum + checkAdd.inventoryCheckLargeUnit}}
+                                {{checkAdd.inventoryCheckSplitSaleStatus === 1 ? checkAdd.inventoryCheckBeforeSmallNum + checkAdd.inventoryCheckSmallUnit : ''}}
                             </td>
-                        </tr>
-                        <tr>
-                            <td>健胃消食片</td>
-                            <td>H524234442</td>
-                            <td>中西成药</td>
-                            <td>20230302001</td>
-                            <td><span style="color: red">-200.21</span></td>
-                            <td><span style="color: red">-244.33</span></td>
-                            <td>49盒</td>
-                            <td>39盒</td>
-                            <td><span style="color: red">-10</span>盒</td>
                             <td>
-                                <div class="td-hover">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
+                                <input type="number" style="width: 50px;"
+                                       v-model="checkAdd.inventoryCheckAfterLargeNum"
+                                       @input="checkAdd.inventoryCheckAfterLargeNum = Number($event.target.value.replace(/\D/g, ''))">{{checkAdd.inventoryCheckLargeUnit}}
+                                <input type="number" style="width: 50px;"
+                                       v-model="checkAdd.inventoryCheckAfterSmallNum"
+                                       @input="checkAdd.inventoryCheckAfterSmallNum = Number($event.target.value.replace(/\D/g, ''))"
+                                       v-if="checkAdd.inventoryCheckSplitSaleStatus === 1">{{checkAdd.inventoryCheckSplitSaleStatus === 1 ? checkAdd.inventoryCheckSmallUnit : ''}}
+                            </td>
+                            <td>
+                                <div class="td-hover" v-on:click="deleteAdd(checkAdd)" style="text-align: center;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 15 15">
                                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                                     </svg>
                                 </div>
@@ -207,36 +213,39 @@
                         </tr>
                         </tbody>
                     </table>
+                    <p v-if="inventoryCheckAdd.inventoryCheckDetailList.length === 0" class="no-data">暂无数据</p>
                 </div>
             </div>
             <div class="save">
                 <div style="float: right;">
-                    <button type="button" class="btn btn-primary">保存盘点</button>
+                    <button type="button" class="btn btn-primary" @click="save(1)">保存盘点</button>
                 </div>
                 <div style="float: right;margin-right: 15px;">
-                    <button type="button" class="btn btn-primary">等待盘点</button>
+                    <button type="button" class="btn btn-primary" @click="save(2)">等待盘点</button>
                 </div>
                 <div style="float: right;margin-right: 15px;">
-                    <button type="button" class="btn btn-outline-primary" id="addClose2">取消</button>
+                    <button type="button" class="btn btn-outline-primary" v-on:click="closeAddPage">取消</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="inventory-detailed" id="inventory-detailed">
-    <div class="inventory-pop" th:fragment="inventoryCheckInfo" id="inventoryCheckInfo">
+<div class="inventory-detailed" ref="detail">
+    <div class="inventory-pop">
         <div class="top">
-            <p th:text="'盘点单'+${inventoryCheckInfo.getInventory_check_id()}+'详情'"></p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" onclick="close3()" viewBox="0 0 16 16">
-                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-            </svg>
+            <p>{{'盘点单' + inventoryCheckDetail.inventoryCheckId + '详情'}}</p>
+            <div>
+                <svg v-on:click="closeDetailPage" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
         </div>
         <div class="info">
             <div class="info1">
-                <p th:text="'盘点人: '+${inventoryCheckInfo.getInventory_check_operator()}"></p>
-                <p th:text="'备注: '+${inventoryCheckInfo.getInventory_check_remarks()}"></p>
+                <p>{{'盘点人: '+inventoryCheckDetail.inventoryCheckOperator}}</p>
+                <p>{{'备注: '+inventoryCheckDetail.inventoryCheckRemarks}}</p>
                 <div class="float-right">
-                    <p th:text="'品种: '+${inventoryCheckInfo.getInventory_check_variety()}+' 盈亏金额: '+${inventoryCheckInfo.getInventory_check_bid_money()}+' 元(进价) '+${inventoryCheckInfo.getInventory_check_sale_money()}+'元（售价）'"></p>
+                    <p>{{'品种: '+inventoryCheckDetail.inventoryCheckVariety}}</p>
                 </div>
             </div>
             <div class="info2">
@@ -248,27 +257,37 @@
                             <td scope="col" width="13%">商品名</td>
                             <td scope="col" width="10%">国家编码</td>
                             <td scope="col" width="12%">商品规格</td>
-                            <td scope="col" width="11%">盈亏金额-进价(元)</td>
-                            <td scope="col" width="11%">盈亏金额-售价(元)</td>
-                            <td scope="col" width="11%">账面数量</td>
-                            <td scope="col" width="11%"><span style="color: red">*</span> 实际数量</td>
-                            <td scope="col" width="11%">盈亏数量</td>
+                            <td scope="col" width="15%">账面数量</td>
+                            <td scope="col" width="15%"><span style="color: red">*</span> 实际数量</td>
+                            <td scope="col" width="14%">盈亏数量</td>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="checkDetail:${inventoryCheckInfo.getInventory_check_detail_list()}">
-                            <td th:text="${checkDetail.getInventory_check_commodity_id()}"></td>
-                            <td th:text="${checkDetail.getInventory_check_commodity_name()}"></td>
-                            <td th:text="${checkDetail.getInventory_check_country_code()}"></td>
-                            <td th:text="${checkDetail.getInventory_check_commodity_specification()}"></td>
-                            <td th:style="${checkDetail.getInventory_check_commodity_bid_money()} >= 0 ? 'color: green' : 'color: red'"  th:text="${checkDetail.getInventory_check_commodity_bid_money()}"></td>
-                            <td th:style="${checkDetail.getInventory_check_commodity_sale_money()} >= 0 ? 'color: green' : 'color: red'"  th:text="${checkDetail.getInventory_check_commodity_sale_money()}"></td>
-                            <td th:if="${checkDetail.getInventory_check_split_sale_status() == 1}" th:text="${checkDetail.getInventory_check_before_large_num()}+${checkDetail.getInventory_check_large_unit()}+${checkDetail.getInventory_check_before_small_num()}+${checkDetail.getInventory_check_small_unit()}"></td>
-                            <td th:if="${checkDetail.getInventory_check_split_sale_status() == 1}" th:text="${checkDetail.getInventory_check_after_large_num()}+${checkDetail.getInventory_check_large_unit()}+${checkDetail.getInventory_check_after_small_num()}+${checkDetail.getInventory_check_small_unit()}"></td>
-                            <td th:if="${checkDetail.getInventory_check_split_sale_status() == 1}" th:style="${checkDetail.getInventory_check_commodity_bid_money()} >= 0 ? 'color: green' : 'color: red'" th:text="${checkDetail.getInventory_check_large_num()}+${checkDetail.getInventory_check_large_unit()}+${checkDetail.getInventory_check_small_num()}+${checkDetail.getInventory_check_small_unit()}"></td>
-                            <td th:if="${checkDetail.getInventory_check_split_sale_status() == 0}" th:text="${checkDetail.getInventory_check_before_large_num()}+${checkDetail.getInventory_check_large_unit()}"></td>
-                            <td th:if="${checkDetail.getInventory_check_split_sale_status() == 0}" th:text="${checkDetail.getInventory_check_after_large_num()}+${checkDetail.getInventory_check_large_unit()}"></td>
-                            <td th:if="${checkDetail.getInventory_check_split_sale_status() == 0}" th:style="${checkDetail.getInventory_check_commodity_bid_money()} >= 0 ? 'color: green' : 'color: red'" th:text="${checkDetail.getInventory_check_large_num()}+${checkDetail.getInventory_check_large_unit()}"></td>
+                        <tr v-for="inDetail in inventoryCheckDetail.inventoryCheckDetailList">
+                            <td>{{inDetail.inventoryCheckCommodityId}}</td>
+                            <td>{{inDetail.inventoryCheckCommodityName}}</td>
+                            <td>{{inDetail.inventoryCheckCountryCode}}</td>
+                            <td>{{inDetail.inventoryCheckCommoditySpecification}}</td>
+                            <td>
+                                {{inDetail.inventoryCheckBeforeLargeNum}}{{inDetail.inventoryCheckLargeUnit}}
+                                {{inDetail.inventoryCheckSplitSaleStatus === 1 ? inDetail.inventoryCheckBeforeSmallNum + inDetail.inventoryCheckSmallUnit : ''}}
+                            </td>
+                            <td>
+                                {{inDetail.inventoryCheckAfterLargeNum}}{{inDetail.inventoryCheckLargeUnit}}
+                                {{inDetail.inventoryCheckSplitSaleStatus === 1 ? inDetail.inventoryCheckAfterSmallNum + inDetail.inventoryCheckSmallUnit : ''}}
+                            </td>
+                            <td v-if="inDetail.inventoryCheckStatus==='盘盈'" style="color: green">
+                                {{inDetail.inventoryCheckStatus}} {{inDetail.inventoryCheckLargeNum}}{{inDetail.inventoryCheckLargeUnit}}
+                                {{inDetail.inventoryCheckSplitSaleStatus === 1 ? inDetail.inventoryCheckSmallNum + inDetail.inventoryCheckSmallUnit : ''}}
+                            </td>
+                            <td v-if="inDetail.inventoryCheckStatus==='盘平'">
+                                {{inDetail.inventoryCheckStatus}} {{inDetail.inventoryCheckLargeNum}}{{inDetail.inventoryCheckLargeUnit}}
+                                {{inDetail.inventoryCheckSplitSaleStatus === 1 ? inDetail.inventoryCheckSmallNum + inDetail.inventoryCheckSmallUnit : ''}}
+                            </td>
+                            <td v-if="inDetail.inventoryCheckStatus==='盘亏'" style="color: red">
+                                {{inDetail.inventoryCheckStatus}} {{inDetail.inventoryCheckLargeNum}}{{inDetail.inventoryCheckLargeUnit}}
+                                {{inDetail.inventoryCheckSplitSaleStatus === 1 ? inDetail.inventoryCheckSmallNum + inDetail.inventoryCheckSmallUnit : ''}}
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -277,10 +296,403 @@
         </div>
     </div>
 </div>
-<div class="shadow" id="shadow">
-
+<div class="shadow" ref="shadow"></div>
 </div>
 <script>
+    let vm = new Vue({
+        el: "#inventoryCheck",
+        data: {
+            pageData:{
+                pageSize: 15,
+                pageIndex: 1,
+                total: 0,
+                maxPage: 1,
+            },
+            // 查询条件
+            InventoryCheckListQuery: {
+                inventoryCheckStatus: '',
+                inventoryCheckDateCategory: 1,
+                inventoryCheckBeginTime: '',
+                inventoryCheckEndTime: '',
+                inventoryCheckSupplierId: '',
+                inventoryCheckOperatorId: '',
+                inventoryCheckTenantId: '',
+                pageSize: 15,
+                pageIndex: 1,
+            },
+            // 盘点人列表
+            accountList: [{
+                accountId: '',
+                accountName: '',
+            }],
+            // 盘点单列表
+            inventoryCheckList: [{
+                inventoryCheckId:'',
+                inventoryCheckStatus: '',
+                inventoryCheckTime: '',
+                inventoryCheckCreateTime: '',
+                inventoryCheckOperator: '',
+                inventoryCheckRemarks: '',
+                inventoryCheckVariety: '',
+                inventoryCheckMoney: '',
+            }],
+            // 盘点单明细
+            inventoryCheckDetail:{
+                inventoryCheckId:'',
+                inventoryCheckOperator: '',
+                inventoryCheckRemarks: '',
+                inventoryCheckVariety: '',
+                inventoryCheckDetailList: [{
+                    inventoryCheckCommodityId: '',
+                    inventoryCheckCommodityName: '',
+                    inventoryCheckCountryCode: '',
+                    inventoryCheckCommoditySpecification: '',
+                    inventoryCheckSplitSaleStatus: '',
+                    inventoryCheckBeforeLargeNum: '',
+                    inventoryCheckBeforeSmallNum: '',
+                    inventoryCheckAfterLargeNum: '',
+                    inventoryCheckAfterSmallNum: '',
+                    inventoryCheckLargeUnit: '',
+                    inventoryCheckSmallUnit: '',
+                    inventoryCheckDosageForm: '',
+                    inventoryCheckStatus: '',
+                    inventoryCheckLargeNum: '',
+                    inventoryCheckSmallNum: '',
+                }]
+            },
+            // 库存列表
+            inventoryList:[{
+                commodityId: '',
+                commodityName: '',
+                commodityCountryCode: '',
+                commodityCategory: '',
+                commodityBarCode: '',
+                commodityManufacturer: '',
+                commodityApprovalNo: '',
+                commoditySpecification: '',
+                commodityLargeUnit: '',
+                commoditySmallUnit: '',
+                inventoryLargeNum: '',
+                inventorySmallNum: '',
+                commoditySplitSaleStatus: '',
+                commodityLargePrice: '',
+                commoditySmallPrice: '',
+                commodityDosageForm: '',
+                commodityEnableStatus: '',
+            }],
+            // 盘点单新增
+            inventoryCheckAdd:{
+                inventoryCheckId:'',
+                inventoryCheckStatus: '',
+                inventoryCheckOperatorId: '',
+                inventoryCheckTime: '',
+                inventoryCheckCreateTime: '',
+                inventoryCheckRemarks: '',
+                inventoryCheckVariety: '',
+                inventoryCheckMoney: '',
+                inventoryCheckTenantId: '',
+                inventoryCheckDetailList: [{
+                    inventoryCheckDetailId: '',
+                    inventoryCheckId: '',
+                    inventoryCheckCommodityId: '',
+                    inventoryCheckCommodityName: '',
+                    inventoryCheckCountryCode: '',
+                    inventoryCheckCommoditySpecification: '',
+                    inventoryCheckSplitSaleStatus: '',
+                    inventoryCheckDosageForm:'',
+                    inventoryCheckBeforeLargeNum: '',
+                    inventoryCheckBeforeSmallNum: '',
+                    inventoryCheckAfterLargeNum: '',
+                    inventoryCheckAfterSmallNum: '',
+                    inventoryCheckLargeUnit: '',
+                    inventoryCheckSmallUnit: '',
+                    inventoryCheckStatus: '',
+                    inventoryCheckLargeNum: '',
+                    inventoryCheckSmallNum: '',
+                }]
+            }
+        },
+        methods: {
+            // 盘点单一览查询请求
+            selectInventoryCheckSubmit(event){
+                // 防止回调中this指向ajax回调函数本身导致失效
+                let that = this;
+                // 阻止表单默认提交行为
+                event.preventDefault();
+                // 创建FormData对象
+                $.ajax({
+                    url: '/inventory/toInventoryCheckByQuery',
+                    type: 'POST',
+                    data: JSON.stringify(this.InventoryCheckListQuery),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        // 先清空上一次数据再push
+                        that.inventoryCheckList.splice(0, that.inventoryCheckList.length);
+                        response.checkDTOList.forEach((item) => {
+                            that.inventoryCheckList.push(item);
+                        });
+                        that.pageData.pageIndex = that.InventoryCheckListQuery.pageIndex;
+                        that.pageData.pageSize = that.InventoryCheckListQuery.pageSize;
+                        that.pageData.total = response.total;
+                        that.pageData.maxPage = response.maxPage;
+                    },
+                    error:function () {
+                        layer.msg('请求盘点单一览查询失败，请刷新重试');
+                    }
+                })
+            },
+            // 查看盘点单详情
+            detailed(id){
+                // 防止回调中this指向ajax回调函数本身导致失效
+                let that = this;
+                $.ajax({
+                    url: '/inventory/selectCheckDetailById?id='+id,
+                    type: 'GET',
+                    contentType:false,
+                    success: function (response) {
+                        that.inventoryCheckDetail = response;
+                        // 打开详情弹窗
+                        that.openDetailPage();
+                    },
+                    error:function () {
+                        layer.msg('请求查看盘点单详情失败，请刷新重试');
+                    }
+                })
+            },
+            // 点击添加药品到盘点单新增列表
+            InsertAdd(inventory){
+                // 不存在才加入
+                const exist = this.inventoryCheckAdd.inventoryCheckDetailList.find(obj => obj.inventoryCheckCommodityId === inventory.commodityId);
+                if(exist === undefined){
+                    this.inventoryCheckAdd.inventoryCheckDetailList.push({
+                        inventoryCheckId: '',
+                        inventoryCheckCommodityId: inventory.commodityId,
+                        inventoryCheckCommodityName: inventory.commodityName,
+                        inventoryCheckCountryCode: inventory.commodityCountryCode,
+                        inventoryCheckCommoditySpecification: inventory.commoditySpecification,
+                        inventoryCheckSplitSaleStatus: inventory.commoditySplitSaleStatus,
+                        inventoryCheckCommodityLargeSalePrice: inventory.commodityLargePrice,
+                        inventoryCheckCommoditySmallSalePrice: inventory.commoditySmallPrice,
+                        inventoryCheckLargeUnit: inventory.commodityLargeUnit,
+                        inventoryCheckSmallUnit: inventory.commoditySmallUnit,
+                        inventoryCheckDosageForm: inventory.commodityDosageForm,
+                        inventoryCheckLargeNum: 0,
+                        inventoryCheckSmallNum: 0,
+                        inventoryCheckBeforeLargeNum: inventory.inventoryLargeNum,
+                        inventoryCheckBeforeSmallNum: inventory.inventorySmallNum,
+                        inventoryCheckAfterLargeNum: 0,
+                        inventoryCheckAfterSmallNum: 0,
+                        inventoryCheckStatus:'',
+                    });
+                }
+            },
+            // 搜索药品输入框焦点事件监听
+            onFocus(){
+                this.showSelect();
+            },
+            // 搜索药品输入框变化事件监听
+            onInput(inputValue){
+                // 防止回调中this指向ajax回调函数本身导致失效
+                let that = this;
+                // 请求商品数据
+                $.ajax({
+                    url: '/inventory/selectInventoryByName?status=1&name='+inputValue,
+                    type: 'GET',
+                    success: function(response) {
+                        that.showSelect();
+                        that.inventoryList.splice(0, that.inventoryList.length);
+                        // 处理响应数据
+                        response.forEach((item)=>{
+                            that.inventoryList.push(item);
+                        });
+                    },
+                    error: function() {
+                        layer.msg("请求库存列表失败，请刷新重试");
+                    }
+                });
+            },
+            // 搜索药品输入框失去焦点事件监听
+            onBlur(){
+                this.hideSelect();
+            },
+            // 删除列表元素
+            deleteAdd(add){
+                const index = this.inventoryCheckAdd.inventoryCheckDetailList.findIndex(item => item === add);
+                this.inventoryCheckAdd.inventoryCheckDetailList.splice(index,1);
+            },
+            // 打开详情弹窗
+            openDetailPage(){
+                this.$refs.shadow.style.display = "block";
+                this.$refs.detail.style.display = "block";
+            },
+            // 关闭详情弹窗
+            closeDetailPage(){
+                this.$refs.shadow.style.display = "none";
+                this.$refs.detail.style.display = "none";
+            },
+            // 打开新增弹窗
+            openAddPage(){
+                this.$refs.shadow.style.display = "block";
+                this.$refs.add.style.display = "block";
+            },
+            // 关闭新增弹窗
+            closeAddPage(){
+                this.$refs.shadow.style.display = "none";
+                this.$refs.add.style.display = "none";
+            },
+            // 显示搜索商品列表
+            showSelect(){
+                this.$refs.selectInput.style.display = "block";
+            },
+            // 隐藏搜索商品列表
+            hideSelect(){
+                this.$refs.selectInput.style.display = "none";
+            },
+            // 盘点一览列表刷新
+            refresh(){
+                let that = this;
+                // 重新发起请求
+                $.ajax({
+                    url: '/inventory/toInventoryCheckByQuery',
+                    type: 'POST',
+                    data: JSON.stringify(this.InventoryCheckListQuery),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        // 清空盘点列表
+                        that.inventoryCheckList.splice(0, that.inventoryCheckList.length);
+                        // 先清空再PUSH
+                        response.checkDTOList.forEach((item) => {
+                            that.inventoryCheckList.push(item);
+                        });
+                        that.pageData.pageIndex = that.InventoryCheckListQuery.pageIndex;
+                        that.pageData.pageSize = that.InventoryCheckListQuery.pageSize;
+                        that.pageData.total = response.total;
+                        that.pageData.maxPage = response.maxPage;
+                    },
+                    error:function () {
+                        layer.msg('请求盘点单一览查询失败，请刷新重试');
+                    }
+                });
+            },
+            // 点击进行保存盘点或者等待盘点
+            save(status){
+                if(this.inventoryCheckAdd.inventoryCheckOperatorId === ''){
+                    layer.msg("请选择盘点人");
+                    return;
+                }
+                let length = this.inventoryCheckAdd.inventoryCheckDetailList.length;
+                if(length === 0) {
+                    layer.msg("请至少选择一个商品!");
+                    return;
+                }
+                // 保存盘点
+                if(status === 1){
+                    this.inventoryCheckAdd.inventoryCheckStatus = '已盘点';
+                }else{
+                    this.inventoryCheckAdd.inventoryCheckStatus = '待盘点';
+                }
+                let that = this;
+                $.ajax({
+                    url: '/inventory/saveInventoryCheck',
+                    type: 'POST',
+                    data: JSON.stringify(this.inventoryCheckAdd),
+                    contentType: 'application/json',
+                    success: function() {
+                        layer.msg("新增盘点单成功");
+                        that.closeAddPage();
+                        // 清空新增列表
+                        that.inventoryCheckAdd.inventoryCheckDetailList.splice(0, that.inventoryCheckAdd.inventoryCheckDetailList.length);
+                        // 刷新盘点单一览界面
+                        that.refresh();
+                    },
+                    error: function() {
+                        layer.msg("保存盘点单信息失败，请刷新重试");
+                    }
+                });
+            },
+            // 待盘点发起盘点
+            waitToSave(id){
+                let that = this;
+                $.ajax({
+                    url: '/inventory/waitToSaveCheck?id='+id,
+                    type: 'GET',
+                    success: function () {
+                        layer.msg("发起盘点成功");
+                        // 刷新盘点单一览界面
+                        that.refresh();
+                    },
+                    error: function (error) {
+                        layer.msg(error.responseJSON.message);
+                    }
+                })
+            },
+            // 上一页
+            previousPage(){
+                this.pageData.pageIndex--;
+                this.InventoryCheckListQuery.pageIndex = this.pageData.pageIndex;
+                this.refresh();
+            },
+            // 下一页
+            nextPage(){
+                this.pageData.pageIndex++;
+                this.InventoryCheckListQuery.pageIndex = this.pageData.pageIndex;
+                this.refresh();
+            },
+            // 设置页面大小
+            setPageSize(size){
+                this.pageData.pageSize = size;
+                this.InventoryCheckListQuery.pageSize = this.pageData.pageSize;
+                this.refresh();
+            },
+            // 输入页数发起请求
+            pageBlur(){
+                if(this.pageData.pageIndex > this.pageData.maxPage){
+                    this.pageData.pageIndex = this.pageData.maxPage;
+                }
+                if(this.pageData.pageIndex < 1){
+                    this.pageData.pageIndex = 1;
+                }
+                this.InventoryCheckListQuery.pageIndex = this.pageData.pageIndex;
+                this.refresh();
+            },
+        },
+        computed: {
+            // 计算品种数
+            variety(){
+                let varietyNum;
+                varietyNum = this.inventoryCheckAdd.inventoryCheckDetailList.length;
+                this.inventoryCheckAdd.inventoryCheckVariety = varietyNum;
+                // 返回品种数
+                return varietyNum;
+            },
+        },
+        mounted() {
+            // 先清空所有data的list，因为初始定义格式为一个全是空值的list
+            this.inventoryCheckList.splice(0, this.inventoryCheckList.length);
+            this.accountList.splice(0, this.accountList.length);
+            this.inventoryList.splice(0, this.inventoryList.length);
+            this.inventoryCheckAdd.inventoryCheckDetailList.splice(0, this.inventoryCheckAdd.inventoryCheckDetailList.length);
+            this.inventoryCheckDetail.inventoryCheckDetailList.splice(0,this.inventoryCheckDetail.inventoryCheckDetailList.length);
+            // 防止回调中this指向ajax回调函数本身导致失效
+            let that = this;
+            // 初始化加载数据
+            that.refresh();
+            //获取盘点人列表
+            $.ajax({
+                url: '/account/getAccountList',
+                type: 'GET',
+                success: function (response) {
+                    response.forEach((item) => {
+                        that.accountList.push(item);
+                    });
+                },
+                error:function () {
+                    layer.msg('请求盘点人列表失败，请刷新重试');
+                }
+            })
+        }
+    });
+
     layui.use('laydate', function(){
         var laydate = layui.laydate;
 
@@ -292,113 +704,7 @@
             ,range: ['#test-startDate-1', '#test-endDate-1']
         });
     });
-    const btn1 = document.getElementById("add");
-    const shadow = document.getElementById("shadow");
-    const add = document.getElementById("inventory-add");
-    const close1 = document.getElementById("addClose");
-    const close2 = document.getElementById("addClose2");
-    const detailed = document.getElementById("inventory-detailed");
-    const select = document.getElementById("select1");
 
-    // 打开新增弹窗
-    btn1.onclick = function () {
-        shadow.style.display = "block";
-        add.style.display = "block";
-    };
-
-    // 关闭新增弹窗
-    close1.onclick = function () {
-        shadow.style.display = "none";
-        add.style.display = "none";
-    };
-
-    // 关闭新增弹窗
-    close2.onclick = function () {
-        shadow.style.display = "none";
-        add.style.display = "none";
-    };
-
-    // 关闭详情弹窗
-    function close3() {
-        shadow.style.display = "none";
-        detailed.style.display = "none";
-    };
-
-    /**
-     * 页面初始加载
-     * @type {HTMLElement}
-     */
-    $(document).ready(function() {
-        // 获取盘点人列表
-        $.ajax({
-            url: '/account/getAccountList',
-            type: 'GET',
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                response.forEach((item)=>{
-                    //先创建好select里面的option元素
-                    const option = document.createElement("option");
-                    //转换DOM对象为JQ对象,好用JQ里面提供的方法 给option的value赋值
-                    $(option).val(item.account_id);
-                    //给option的text赋值,这就是你点开下拉框能够看到的东西
-                    $(option).text(item.account_name);
-                    //获取select 下拉框对象,并将option添加进select
-                    $('#operator').append(option);
-                    $('#operator2').append(option);
-                });
-            },
-            error:function (response) {
-                layer.msg('请求失败，请刷新重试');
-            }
-        })
-    });
-
-    /**
-     * 刷新盘点单一览页面信息
-     */
-    const form1 = document.getElementById("form1");
-    form1.addEventListener('submit',function (event) {
-        // 阻止表单默认提交行为
-        event.preventDefault();
-        // 创建FormData对象
-        const formData1 = new FormData(form1);
-        $.ajax({
-            url: '/inventory/toInventoryCheckByQuery',
-            type: 'POST',
-            data: formData1,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                $("#checkInfoList").html(data);
-            },
-            error:function () {
-                layer.msg('请求失败，请刷新重试');
-            }
-        })
-    });
-
-    /**
-     * 查看盘点单
-     * @param id
-     */
-    function detail(id) {
-        $.ajax({
-            url: '/inventory/selectCheckDetailById?id='+id,
-            type: 'GET',
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                $("#inventoryCheckInfo").html(response);
-                // 打开弹窗
-                shadow.style.display = "block";
-                detailed.style.display = "block";
-            },
-            error:function () {
-                layer.msg('请求失败，请刷新重试');
-            }
-        })
-    }
 </script>
 </body>
 </html>

@@ -2,12 +2,12 @@ package cdu.jhb.inventory.service;
 
 import cdu.jhb.common.Constant;
 import cdu.jhb.inventory.api.InventoryOutServiceI;
-import cdu.jhb.inventory.api.InventoryServiceI;
 import cdu.jhb.inventory.command.InventoryModExe;
 import cdu.jhb.inventory.command.InventoryQryExe;
-import cdu.jhb.inventory.dto.data.InventoryOutDTO;
-import cdu.jhb.inventory.dto.data.InventoryOutInfoDTO;
-import cdu.jhb.inventory.dto.data.InventoryOutListQuery;
+import cdu.jhb.inventory.data.dto.InventoryOutDTO;
+import cdu.jhb.inventory.data.dto.InventoryOutInfoDTO;
+import cdu.jhb.inventory.data.request.InventoryOutListQuery;
+import cdu.jhb.inventory.data.response.InventoryOutListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +33,7 @@ public class InventoryOutServiceImpl implements InventoryOutServiceI {
      * @return
      */
     @Override
-    public List<InventoryOutInfoDTO> getInventoryOutList(InventoryOutListQuery query) {
+    public InventoryOutListResponse getInventoryOutList(InventoryOutListQuery query) {
         //设置日期格式 开始时间为一天的开始，结束时间为一天的最后
         if(!Constant.NULL_STRING.equals(query.getInventoryOutBeginTime()) && !Constant.NULL_STRING.equals(query.getInventoryOutEndTime())){
             query.setInventoryOutBeginTime(query.getInventoryOutBeginTime()+Constant.BEGIN_TIME);
@@ -51,4 +51,26 @@ public class InventoryOutServiceImpl implements InventoryOutServiceI {
     public InventoryOutInfoDTO selectOutDetailById(Long id) {
         return inventoryQryExe.selectOutDetailById(id);
     }
+
+    /**
+     * 保存入库单
+     * @param inventoryOutDTO
+     * @return
+     */
+    @Override
+    public Boolean saveInventoryOut(InventoryOutDTO inventoryOutDTO) {
+        return inventoryModExe.saveInventoryOut(inventoryOutDTO);
+    }
+
+    /**
+     * 出库单重新发起
+     * @param id
+     * @return
+     */
+    @Override
+    public Boolean waitToSaveOut(Long id) {
+        return inventoryModExe.waitToSaveOut(id);
+    }
+
+
 }

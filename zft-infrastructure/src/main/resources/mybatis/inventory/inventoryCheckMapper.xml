@@ -11,9 +11,6 @@
             i.inventory_check_time,
             i.inventory_check_create_time,
             a.account_name AS inventory_check_operator,
-            i.inventory_check_num,
-            i.inventory_check_bid_money,
-            i.inventory_check_sale_money,
             i.inventory_check_variety,
             i.inventory_check_remarks
         FROM inventory_check_table i
@@ -47,9 +44,6 @@
             i.inventory_check_time,
             i.inventory_check_create_time,
             a.account_name AS inventory_check_operator,
-            i.inventory_check_num,
-            i.inventory_check_bid_money,
-            i.inventory_check_sale_money,
             i.inventory_check_variety,
             i.inventory_check_remarks
         FROM inventory_check_table i

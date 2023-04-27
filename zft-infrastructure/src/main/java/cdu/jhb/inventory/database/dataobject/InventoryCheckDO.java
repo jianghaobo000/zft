@@ -25,7 +25,13 @@ public class InventoryCheckDO {
     /**
      * 盘点单ID
      */
+    @TableId(type = IdType.ID_WORKER)
     private Long inventoryCheckId;
+
+    /**
+     * 盘点单状态
+     */
+    private String inventoryCheckStatus;
 
     /**
      * 盘点时间
@@ -36,21 +42,6 @@ public class InventoryCheckDO {
      * 盘点单创建时间
      */
     private String inventoryCheckCreateTime;
-
-    /**
-     * 盘点单盈亏数量
-     */
-    private BigDecimal inventoryCheckNum;
-
-    /**
-     * 盘点单盈亏金额-进价
-     */
-    private BigDecimal inventoryCheckBidMoney;
-
-    /**
-     * 盘点单盈亏金额-售价
-     */
-    private BigDecimal inventoryCheckSaleMoney;
 
     /**
      * 盘点人

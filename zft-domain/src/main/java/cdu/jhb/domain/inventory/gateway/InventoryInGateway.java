@@ -3,10 +3,8 @@ package cdu.jhb.domain.inventory.gateway;
 import cdu.jhb.domain.inventory.InventoryIn;
 import cdu.jhb.domain.inventory.InventoryInDetail;
 import cdu.jhb.domain.inventory.InventoryInInfo;
-import cdu.jhb.inventory.dto.data.InventoryInDTO;
-import cdu.jhb.inventory.dto.data.InventoryInInfoDTO;
-import cdu.jhb.inventory.dto.data.InventoryInListQuery;
-import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
+import cdu.jhb.inventory.data.request.InventoryInListQuery;
+import cdu.jhb.inventory.data.response.InventoryInListResponse;
 
 import java.util.List;
 
@@ -23,7 +21,7 @@ public interface InventoryInGateway {
      * @param query
      * @return
      */
-    List<InventoryInInfo> getInventoryInList(InventoryInListQuery query);
+    InventoryInListResponse getInventoryInList(InventoryInListQuery query);
 
     /**
      * 获取入库单主表信息
@@ -52,5 +50,5 @@ public interface InventoryInGateway {
      * @param id
      * @return
      */
-    Boolean waitToSave(String id);
+    Boolean waitToSaveIn(Long id);
 }

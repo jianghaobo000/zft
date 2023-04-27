@@ -1,9 +1,9 @@
 package cdu.jhb.inventory.api;
 
-import cdu.jhb.commodity.dto.data.CommodityDTO;
-import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
-import cdu.jhb.inventory.dto.data.InventoryListQuery;
-import cdu.jhb.inventory.dto.data.SupplierDTO;
+import cdu.jhb.commodity.data.dto.CommodityDTO;
+import cdu.jhb.inventory.data.dto.InventoryInfoDTO;
+import cdu.jhb.inventory.data.request.InventoryListQuery;
+import cdu.jhb.inventory.data.dto.SupplierDTO;
 
 import java.util.List;
 

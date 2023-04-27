@@ -2,21 +2,16 @@ package cdu.jhb.account;
 
 import cdu.jhb.account.database.AccountMapper;
 import cdu.jhb.account.database.dataobject.AccountDO;
-import cdu.jhb.account.dto.data.AccountDTO;
+import cdu.jhb.common.Constant;
 import cdu.jhb.common.DictException;
 import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.gateway.AccountGateway;
 import cdu.jhb.tenant.database.TenantMapper;
 import cdu.jhb.tenant.database.dataobject.TenantDO;
-import cdu.jhb.tenant.dto.data.TenantDTO;
 import cdu.jhb.util.Convert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
 * @description: TODO
@@ -39,6 +34,9 @@ public class AccountGatewayImpl implements AccountGateway {
     @Override
     public Account findAccountByName(String name, String countryCode) {
         AccountDO accountDO = accountMapper.selectAccount(name,countryCode);
+        if(accountDO == null){
+            throw new RuntimeException(DictException.ACCOUNT_NOT_EXIST);
+        }
         return Convert.entityConvert(accountDO,Account.class);
     }
 
@@ -46,15 +44,14 @@ public class AccountGatewayImpl implements AccountGateway {
      * 查询国家码是否存在
      * @param countryCode
      * @return
-     * @throws Exception
      */
     @Override
-    public Boolean findCountryCode(String countryCode) throws Exception {
+    public Boolean findCountryCode(String countryCode) {
         QueryWrapper<TenantDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(TenantDO::getTenantCountryCode,countryCode);
         TenantDO tenantDO = tenantMapper.selectOne(queryWrapper);
         if(tenantDO==null){
-            throw new Exception(DictException.COUNTRY_CODE_NOT_EXIST);
+            throw new RuntimeException(DictException.COUNTRY_CODE_NOT_EXIST);
         }
         return true;
     }

@@ -1,8 +1,8 @@
 package cdu.jhb.web.account;
 
 import cdu.jhb.account.api.AccountServiceI;
-import cdu.jhb.account.dto.data.AccountDTO;
-import cdu.jhb.account.dto.data.LoginData;
+import cdu.jhb.account.data.dto.AccountDTO;
+import cdu.jhb.account.data.request.LoginData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +50,7 @@ public class AccountController {
      * @return
      */
     @PostMapping(path = "login")
-    public ResponseEntity<?> login(@RequestBody LoginData loginData) throws Exception {
+    public ResponseEntity<?> login(@RequestBody LoginData loginData) {
         if(accountService.verification(loginData.getAccountName(),loginData.getAccountPassword(),loginData.getCode(),loginData.getCountryCode())){
             return ResponseEntity.status(HttpStatus.OK).build();
         }

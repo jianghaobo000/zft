@@ -38,6 +38,9 @@
         <if test="param.inventoryCategory != null and param.inventoryCategory !=''">
             AND c.commodity_category LIKE CONCAT('%',#{param.inventoryCategory},'%')
         </if>
+        <if test="param.status == 2">
+            AND (i.inventory_large_num > 0 OR i.inventory_small_num > 0)
+        </if>
         AND i.inventory_tenant_id = #{param.inventoryTenantId}
     </select>
 

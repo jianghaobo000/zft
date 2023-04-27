@@ -57,16 +57,6 @@ public class InventoryCheckDetailDO {
     private Integer inventoryCheckSplitSaleStatus;
 
     /**
-     * 商品盈亏金额(进价)
-     */
-    private BigDecimal inventoryCheckCommodityBidMoney;
-
-    /**
-     * 商品盈亏金额(售价)
-     */
-    private BigDecimal inventoryCheckCommoditySaleMoney;
-
-    /**
      * 商品库存单位（大）
      */
     private String inventoryCheckLargeUnit;
@@ -100,6 +90,11 @@ public class InventoryCheckDetailDO {
      * 商品盘点后数量（小）
      */
     private Integer inventoryCheckAfterSmallNum;
+
+    /**
+     * 商品盘点状态（盘盈、盘平、盘亏）
+     */
+    private String inventoryCheckStatus;
 
     /**
      * 商品盘点数量（大）

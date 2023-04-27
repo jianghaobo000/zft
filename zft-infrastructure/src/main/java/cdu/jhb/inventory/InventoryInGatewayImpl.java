@@ -1,11 +1,9 @@
 package cdu.jhb.inventory;
 
 import cdu.jhb.common.Constant;
-import cdu.jhb.domain.inventory.Inventory;
 import cdu.jhb.domain.inventory.InventoryIn;
 import cdu.jhb.domain.inventory.InventoryInDetail;
 import cdu.jhb.domain.inventory.InventoryInInfo;
-import cdu.jhb.domain.inventory.gateway.InventoryGateway;
 import cdu.jhb.domain.inventory.gateway.InventoryInGateway;
 import cdu.jhb.inventory.database.InventoryInDetailMapper;
 import cdu.jhb.inventory.database.InventoryInMapper;
@@ -13,22 +11,20 @@ import cdu.jhb.inventory.database.InventoryMapper;
 import cdu.jhb.inventory.database.dataobject.InventoryDO;
 import cdu.jhb.inventory.database.dataobject.InventoryInDO;
 import cdu.jhb.inventory.database.dataobject.InventoryInDetailDO;
-import cdu.jhb.inventory.dto.data.*;
+import cdu.jhb.inventory.data.dto.InventoryInInfoDTO;
+import cdu.jhb.inventory.data.request.InventoryInListQuery;
+import cdu.jhb.inventory.data.response.InventoryInListResponse;
 import cdu.jhb.util.Calculate;
 import cdu.jhb.util.Convert;
 import cdu.jhb.util.DateUtil;
 import cdu.jhb.util.RedisUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import redis.clients.jedis.Jedis;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -53,10 +49,18 @@ public class InventoryInGatewayImpl implements InventoryInGateway {
      * @return
      */
     @Override
-    public List<InventoryInInfo> getInventoryInList(InventoryInListQuery query) {
+    public InventoryInListResponse getInventoryInList(InventoryInListQuery query) {
         // 从redis中取出当前登录用户的租户ID
         query.setInventoryInTenantId(RedisUtil.getLocalTenantId());
-        return inventoryInMapper.getInventoryInList(query);
+        List<InventoryInInfo> inInfoList = inventoryInMapper.getInventoryInList(query);
+        // 分页
+        Map<String,Integer> pageMap = Calculate.assemblyPagination(query.getPageIndex(),query.getPageSize(),inInfoList.size());
+        InventoryInListResponse inListResponse = new InventoryInListResponse();
+        inListResponse.setTotal(inInfoList.size());
+        inListResponse.setMaxPage(inInfoList.size()/query.getPageSize() + 1);
+        inInfoList = inInfoList.subList(pageMap.get(Constant.START_INDEX),pageMap.get(Constant.END_INDEX));
+        inListResponse.setInDTOList(Convert.listConvert(inInfoList,InventoryInInfoDTO.class));
+        return inListResponse;
     }
 
     /**
@@ -108,7 +112,7 @@ public class InventoryInGatewayImpl implements InventoryInGateway {
      * @return
      */
     @Override
-    public Boolean waitToSave(String id) {
+    public Boolean waitToSaveIn(Long id) {
         // 找到对应的入库单
         InventoryInDO inventoryInDO = inventoryInMapper.selectById(id);
         // 修改入库单状态为已入库

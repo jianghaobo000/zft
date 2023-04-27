@@ -1,6 +1,5 @@
 package cdu.jhb.account.command;
 
-import cdu.jhb.account.dto.data.AccountDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

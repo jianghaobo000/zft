@@ -1,19 +1,22 @@
 package cdu.jhb.web.inventory;
 
-import cdu.jhb.commodity.dto.data.CommodityDTO;
-import cdu.jhb.domain.inventory.InventoryCheck;
-import cdu.jhb.domain.inventory.InventoryOutInfo;
-import cdu.jhb.domain.inventory.Supplier;
+import cdu.jhb.commodity.data.dto.CommodityDTO;
 import cdu.jhb.inventory.api.InventoryCheckServiceI;
 import cdu.jhb.inventory.api.InventoryInServiceI;
 import cdu.jhb.inventory.api.InventoryOutServiceI;
 import cdu.jhb.inventory.api.InventoryServiceI;
-import cdu.jhb.inventory.dto.data.*;
+import cdu.jhb.inventory.data.dto.*;
+import cdu.jhb.inventory.data.request.InventoryCheckListQuery;
+import cdu.jhb.inventory.data.request.InventoryInListQuery;
+import cdu.jhb.inventory.data.request.InventoryListQuery;
+import cdu.jhb.inventory.data.request.InventoryOutListQuery;
+import cdu.jhb.inventory.data.response.InventoryCheckListResponse;
+import cdu.jhb.inventory.data.response.InventoryInListResponse;
+import cdu.jhb.inventory.data.response.InventoryOutListResponse;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,8 +64,8 @@ public class InventoryController {
      * @return
      */
     @GetMapping("selectInventoryByName")
-    public ResponseEntity<?> toInventory(@RequestParam("name")String name){
-        List<InventoryInfoDTO> infoDTOList = inventoryService.getInventoryList(new InventoryListQuery(name,null,null,null));
+    public ResponseEntity<?> toInventory(@RequestParam("name")String name,@RequestParam("status")Integer status){
+        List<InventoryInfoDTO> infoDTOList = inventoryService.getInventoryList(new InventoryListQuery(name,null,null,status,null));
         return ResponseEntity.ok(infoDTOList);
     }
 
@@ -86,13 +89,13 @@ public class InventoryController {
     }
 
     /**
-     * 跳转库存入库界面
+     * 查询库存入库列表
      * @return
      */
     @PostMapping("toInventoryInByQuery")
     public ResponseEntity<?> toInventoryInByQuery(@RequestBody InventoryInListQuery query){
-        List<InventoryInInfoDTO> inventoryInDTOList = inventoryInService.getInventoryInList(query);
-        return ResponseEntity.ok(inventoryInDTOList);
+        InventoryInListResponse response = inventoryInService.getInventoryInList(query);
+        return ResponseEntity.ok(response);
     }
 
     /**
@@ -113,8 +116,10 @@ public class InventoryController {
      */
     @PostMapping("saveInventoryIn")
     public ResponseEntity<?> saveInventoryIn(@RequestBody InventoryInDTO inventoryInDTO){
-        inventoryInService.saveInventoryIn(inventoryInDTO);
-        return ResponseEntity.ok().build();
+        if(inventoryInService.saveInventoryIn(inventoryInDTO)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     /**
@@ -122,10 +127,12 @@ public class InventoryController {
      * @param id
      * @return
      */
-    @GetMapping("waitToSave")
-    public ResponseEntity<?> waitToSave(String id){
-        inventoryInService.waitToSave(id);
-        return ResponseEntity.ok().build();
+    @GetMapping("waitToSaveIn")
+    public ResponseEntity<?> waitToSaveIn(Long id){
+        if(inventoryInService.waitToSaveIn(id)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     /**
@@ -144,8 +151,8 @@ public class InventoryController {
      */
     @PostMapping("toInventoryOutByQuery")
     public ResponseEntity<?> toInventoryOutByQuery(@RequestBody InventoryOutListQuery query){
-        List<InventoryOutInfoDTO> inventoryOutDTOList = inventoryOutService.getInventoryOutList(query);
-        return ResponseEntity.ok(inventoryOutDTOList);
+        InventoryOutListResponse response = inventoryOutService.getInventoryOutList(query);
+        return ResponseEntity.ok(response);
     }
 
     /**
@@ -157,6 +164,32 @@ public class InventoryController {
     public ResponseEntity<?> selectOutDetailById(@RequestParam("id") Long id){
         InventoryOutInfoDTO inventoryOutInfoDTO = inventoryOutService.selectOutDetailById(id);
         return ResponseEntity.ok(inventoryOutInfoDTO);
+    }
+
+    /**
+     * 保存出库单
+     * @param inventoryOutDTO
+     * @return
+     */
+    @PostMapping("saveInventoryOut")
+    public ResponseEntity<?> saveInventoryOut(@RequestBody InventoryOutDTO inventoryOutDTO){
+        if(inventoryOutService.saveInventoryOut(inventoryOutDTO)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    /**
+     * 待出库发起出库
+     * @param id
+     * @return
+     */
+    @GetMapping("waitToSaveOut")
+    public ResponseEntity<?> waitToSaveOut(Long id){
+        if(inventoryOutService.waitToSaveOut(id)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     /**
@@ -174,8 +207,8 @@ public class InventoryController {
      */
     @PostMapping("toInventoryCheckByQuery")
     public ResponseEntity<?> toInventoryCheckByQuery(@RequestBody InventoryCheckListQuery query){
-        List<InventoryCheckInfoDTO> inventoryCheckDTOList = inventoryCheckService.getInventoryCheckList(query);
-        return ResponseEntity.ok(inventoryCheckDTOList);
+        InventoryCheckListResponse response = inventoryCheckService.getInventoryCheckList(query);
+        return ResponseEntity.ok(response);
     }
 
     /**
@@ -187,6 +220,32 @@ public class InventoryController {
     public ResponseEntity<?> selectCheckDetailById(@RequestParam("id") Long id){
         InventoryCheckInfoDTO inventoryCheckInfoDTO = inventoryCheckService.selectCheckDetailById(id);
         return ResponseEntity.ok(inventoryCheckInfoDTO);
+    }
+
+    /**
+     * 保存盘点单
+     * @param inventoryCheckDTO
+     * @return
+     */
+    @PostMapping("saveInventoryCheck")
+    public ResponseEntity<?> saveInventoryOut(@RequestBody InventoryCheckDTO inventoryCheckDTO){
+        if(inventoryCheckService.saveInventoryCheck(inventoryCheckDTO)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    /**
+     * 待盘点发起盘点
+     * @param id
+     * @return
+     */
+    @GetMapping("waitToSaveCheck")
+    public ResponseEntity<?> waitToSaveCheck(Long id){
+        if(inventoryCheckService.waitToSaveCheck(id)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     /**

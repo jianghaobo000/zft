@@ -1,8 +1,7 @@
 package cdu.jhb.domain.inventory.gateway;
 
 import cdu.jhb.domain.inventory.InventoryInfo;
-import cdu.jhb.inventory.dto.data.InventoryInfoDTO;
-import cdu.jhb.inventory.dto.data.InventoryListQuery;
+import cdu.jhb.inventory.data.request.InventoryListQuery;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package cdu.jhb.tenant.api;
 
-import cdu.jhb.tenant.dto.data.TenantDTO;
+import cdu.jhb.tenant.data.dto.TenantDTO;
 
 /**
 * @description: 租户服务层

@@ -2,8 +2,7 @@ package cdu.jhb.inventory.database;
 
 import cdu.jhb.domain.inventory.InventoryCheckInfo;
 import cdu.jhb.inventory.database.dataobject.InventoryCheckDO;
-import cdu.jhb.inventory.database.dataobject.InventoryDO;
-import cdu.jhb.inventory.dto.data.*;
+import cdu.jhb.inventory.data.request.InventoryCheckListQuery;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

@@ -8,12 +8,19 @@ import cdu.jhb.domain.inventory.gateway.InventoryCheckGateway;
 import cdu.jhb.domain.inventory.gateway.InventoryGateway;
 import cdu.jhb.domain.inventory.gateway.InventoryInGateway;
 import cdu.jhb.domain.inventory.gateway.InventoryOutGateway;
+import cdu.jhb.inventory.data.response.InventoryCheckListResponse;
+import cdu.jhb.inventory.data.response.InventoryOutListResponse;
 import cdu.jhb.inventory.database.InventoryCheckMapper;
 import cdu.jhb.inventory.database.InventoryInMapper;
 import cdu.jhb.inventory.database.InventoryMapper;
 import cdu.jhb.inventory.database.InventoryOutMapper;
 import cdu.jhb.inventory.database.dataobject.SupplierDO;
-import cdu.jhb.inventory.dto.data.*;
+import cdu.jhb.inventory.data.dto.*;
+import cdu.jhb.inventory.data.request.InventoryCheckListQuery;
+import cdu.jhb.inventory.data.request.InventoryInListQuery;
+import cdu.jhb.inventory.data.request.InventoryListQuery;
+import cdu.jhb.inventory.data.request.InventoryOutListQuery;
+import cdu.jhb.inventory.data.response.InventoryInListResponse;
 import cdu.jhb.util.Convert;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -73,9 +80,8 @@ public class InventoryQryExe {
      * 查询入库单列表
      * @return
      */
-    public List<InventoryInInfoDTO> getInventoryInList(InventoryInListQuery query){
-        List<InventoryInInfo> inventoryInInfoList = inventoryInGateway.getInventoryInList(query);
-        return Convert.listConvert(inventoryInInfoList,InventoryInInfoDTO.class);
+    public InventoryInListResponse getInventoryInList(InventoryInListQuery query){
+        return inventoryInGateway.getInventoryInList(query);
     }
 
     /**
@@ -101,9 +107,8 @@ public class InventoryQryExe {
      * 查询出库单列表
      * @return
      */
-    public List<InventoryOutInfoDTO> getInventoryOutList(InventoryOutListQuery query){
-        List<InventoryOutInfo> inventoryOutInfoList = inventoryOutGateway.getInventoryOutList(query);
-        return Convert.listConvert(inventoryOutInfoList,InventoryOutInfoDTO.class);
+    public InventoryOutListResponse getInventoryOutList(InventoryOutListQuery query){
+        return inventoryOutGateway.getInventoryOutList(query);
     }
 
     /**
@@ -129,9 +134,8 @@ public class InventoryQryExe {
      * 查询盘点单列表
      * @return
      */
-    public List<InventoryCheckInfoDTO> getInventoryCheckList(InventoryCheckListQuery query){
-        List<InventoryCheckInfo> inventoryCheckInfoList = inventoryCheckGateway.getInventoryCheckList(query);
-        return Convert.listConvert(inventoryCheckInfoList,InventoryCheckInfoDTO.class);
+    public InventoryCheckListResponse getInventoryCheckList(InventoryCheckListQuery query){
+        return inventoryCheckGateway.getInventoryCheckList(query);
     }
 
     /**

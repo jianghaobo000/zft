@@ -1,13 +1,11 @@
 package cdu.jhb.web.tenant;
 
 import cdu.jhb.tenant.api.TenantServiceI;
-import cdu.jhb.tenant.dto.data.TenantDTO;
+import cdu.jhb.tenant.data.dto.TenantDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.annotation.Resource;
 
 /**
 * @description: 租户Controller
