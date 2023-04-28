@@ -1,9 +1,16 @@
 package cdu.jhb.web.manage;
 
+import cdu.jhb.account.data.dto.EmployeeDTO;
+import cdu.jhb.manage.data.request.StaffInfoRequest;
+import cdu.jhb.manage.data.response.StaffInfoResponse;
+import cdu.jhb.manage.api.ManageServiceI;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
 * @description: 管理Controller
@@ -15,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @RequestMapping("manage")
 public class ManageController {
+
+    private final ManageServiceI manageService;
 
     /**
      * 跳转诊所管理界面
@@ -41,6 +50,51 @@ public class ManageController {
     @GetMapping("toStaff")
     public String toStaff(){
         return "manage/manageStaff";
+    }
+
+    /**
+     * 获取员工列表
+     * @param name
+     * @return
+     */
+    @GetMapping("getStaffList")
+    public ResponseEntity<?> getStaffList(String name){
+        List<EmployeeDTO> employeeDTOList = manageService.getStaffList(name);
+        return ResponseEntity.ok(employeeDTOList);
+    }
+
+    /**
+     * 保存或修改员工信息
+     */
+    @PostMapping("saveStaff")
+    public ResponseEntity<?> saveStaff(@RequestBody StaffInfoRequest staffInfoRequest){
+        if(manageService.saveStaff(staffInfoRequest)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    /**
+     * 删除用户
+     * @param eid 员工ID
+     * @return
+     */
+    @GetMapping("deleteStaff")
+    public ResponseEntity<?> deleteStaff(@RequestParam("eid") Long eid,@RequestParam("aid") Long aid,@RequestParam("pid") Long pid){
+        if(manageService.deleteStaff(eid,aid,pid)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    /**
+     * 通过ID获取员工详情
+     * @return
+     */
+    @GetMapping("getStaffInfo")
+    public ResponseEntity<?> getStaffInfo(@RequestParam("id") Long id){
+        StaffInfoResponse staffInfoResponse = manageService.getStaffInfo(id);
+        return ResponseEntity.ok(staffInfoResponse);
     }
 
     /**

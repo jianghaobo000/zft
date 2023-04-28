@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +29,8 @@ public class CommodityController {
      * 新增品项
      * @return
      */
-    @PostMapping("add")
-    public ResponseEntity<?> addCommodity(CommodityDTO commodityDTO){
+    @PostMapping("addCommodity")
+    public ResponseEntity<?> addCommodity(@RequestBody CommodityDTO commodityDTO){
         if(commodityService.addCommodity(commodityDTO)){
             return ResponseEntity.ok().build();
         }
@@ -47,13 +44,32 @@ public class CommodityController {
     @GetMapping("selectCommodity")
     public ResponseEntity<?> selectCommodity(@RequestParam("name") String name){
         List<CommodityDTO> commodityDTOList = new ArrayList<>();
-        if(!name.equals(Constant.NULL_STRING)){
+        if(!Constant.NULL_STRING.equals(name)){
             commodityDTOList = commodityService.selectCommodity(name);
         }
         return ResponseEntity.ok(commodityDTOList);
     }
 
-    public ResponseEntity<?> selectCommodityById(@RequestParam("id") long id){
-        return null;
+    /**
+     * 按照ID搜索商品信息
+     * @param id
+     * @return
+     */
+    @GetMapping("selectCommodityById")
+    public ResponseEntity<?> selectCommodityById(@RequestParam("id") Long id){
+        CommodityDTO commodityDTO = commodityService.selectCommodityById(id);
+        return ResponseEntity.ok(commodityDTO);
+    }
+
+    /**
+     * 设置商品启用状态
+     * @return
+     */
+    @GetMapping("enableOrDeactivate")
+    public ResponseEntity<?> enableOrDeactivate(@RequestParam("id")Long id,@RequestParam("enable") Integer enable){
+        if(commodityService.enableOrDeactivate(id,enable)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }

@@ -4,6 +4,8 @@ import cdu.jhb.commodity.api.CommodityServiceI;
 import cdu.jhb.commodity.command.CommodityModExe;
 import cdu.jhb.commodity.command.CommodityQryExe;
 import cdu.jhb.commodity.data.dto.CommodityDTO;
+import cdu.jhb.domain.commodity.Commodity;
+import cdu.jhb.util.Convert;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +43,26 @@ public class CommodityServiceImpl implements CommodityServiceI {
     @Override
     public List<CommodityDTO> selectCommodity(String name) {
         return commodityQryExe.selectCommodity(name);
+    }
+
+    /**
+     * 通过ID搜索商品
+     * @param id
+     * @return
+     */
+    @Override
+    public CommodityDTO selectCommodityById(Long id) {
+        return commodityQryExe.selectCommodityById(id);
+    }
+
+    /**
+     * 设置商品启用状态
+     * @param id
+     * @param enable
+     * @return
+     */
+    @Override
+    public Boolean enableOrDeactivate(Long id, Integer enable) {
+        return commodityQryExe.enableOrDeactivate(id,enable);
     }
 }

@@ -27,13 +27,13 @@
         <if test="param.inventoryOutOperatorId != null">
             AND i.inventory_out_operator_id = #{param.inventoryOutOperatorId}
         </if>
-        <if test="param.inventoryOutDateStatus == 1">
+        <if test="param.inventoryOutDateCategory == 1">
             <if test="param.inventoryOutBeginTime != '' and param.inventoryOutEndTime != ''">
                 AND i.inventory_out_create_time BETWEEN #{param.inventoryOutBeginTime} AND #{param.inventoryOutEndTime}
             </if>
             ORDER BY i.inventory_out_create_time DESC
         </if>
-        <if test="param.inventoryOutDateStatus == 2">
+        <if test="param.inventoryOutDateCategory == 2">
             <if test="param.inventoryOutBeginTime != '' and param.inventoryOutEndTime != ''">
                 AND i.inventory_out_time BETWEEN #{param.inventoryOutBeginTime} AND #{param.inventoryOutEndTime}
             </if>

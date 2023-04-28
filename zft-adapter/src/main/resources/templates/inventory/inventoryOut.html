@@ -14,7 +14,7 @@
         </div>
         <div class="right">
             <div class="top">
-                <form ref="form1" @submit.prevent="selectInventoryOutSubmit">
+                <form ref="form1">
                     <div class="form-group" style="float: left;width: 150px;margin-right: 15px;">
                         <select class="form-control" name="inventoryOutStatus" v-model="InventoryOutListQuery.inventoryOutStatus">
                             <option value="">全部状态</option>
@@ -37,13 +37,13 @@
                     </div>
                     <div style="float: left;margin-right: 15px;">
                         <div class="layui-inline">
-                            <div class="layui-inline" id="test6">
+                            <div class="layui-inline" id="test2">
                                 <div class="layui-input-inline float-left" style="width: 100px;">
-                                    <input type="text" autocomplete="off" id="test-startDate-1" v-model="InventoryOutListQuery.inventoryOutBeginTime" class="layui-input" name="inventoryOutBeginTime" style="border: 1px rgb(206,212,218) solid" readonly placeholder="开始日期">
+                                    <input type="text" autocomplete="off" id="test-startDate-2" v-model="InventoryOutListQuery.inventoryOutBeginTime" class="layui-input" name="inventoryOutBeginTime" style="border: 1px rgb(206,212,218) solid" readonly placeholder="开始日期">
                                 </div>
                                 <div class="layui-form-mid float-left" style="margin: 0 auto;">-</div>
                                 <div class="layui-input-inline float-left" style="width: 100px;">
-                                    <input type="text" autocomplete="off" id="test-endDate-1" v-model="InventoryOutListQuery.inventoryOutEndTime" class="layui-input" name="inventoryOutEndTime" style="border: 1px rgb(206,212,218) solid" readonly placeholder="结束日期">
+                                    <input type="text" autocomplete="off" id="test-endDate-2" v-model="InventoryOutListQuery.inventoryOutEndTime" class="layui-input" name="inventoryOutEndTime" style="border: 1px rgb(206,212,218) solid" readonly placeholder="结束日期">
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                         </select>
                     </div>
                     <div style="float: left;">
-                        <button type="submit" class="btn btn-outline-primary">查询</button>
+                        <button type="button" class="btn btn-outline-primary" v-on:click="refresh">查询</button>
                     </div>
                 </form>
                 <div style="float: right;margin-left: 15px;">
@@ -429,34 +429,6 @@
             }
         },
         methods: {
-            // 出库单一览查询请求
-            selectInventoryOutSubmit(event){
-                // 防止回调中this指向ajax回调函数本身导致失效
-                let that = this;
-                // 阻止表单默认提交行为
-                event.preventDefault();
-                // 创建FormData对象
-                $.ajax({
-                    url: '/inventory/toInventoryOutByQuery',
-                    type: 'POST',
-                    data: JSON.stringify(this.InventoryOutListQuery),
-                    contentType: 'application/json',
-                    success: function (response) {
-                        // 先清空上一次数据再push
-                        that.inventoryOutList.splice(0, that.inventoryOutList.length);
-                        response.outDTOList.forEach((item) => {
-                            that.inventoryOutList.push(item);
-                        });
-                        that.pageData.pageIndex = that.InventoryOutListQuery.pageIndex;
-                        that.pageData.pageSize = that.InventoryOutListQuery.pageSize;
-                        that.pageData.total = response.total;
-                        that.pageData.maxPage = response.maxPage;
-                    },
-                    error:function () {
-                        layer.msg('请求出库单一览查询失败，请刷新重试');
-                    }
-                })
-            },
             // 查看出库单详情
             detailed(id){
                 // 防止回调中this指向ajax回调函数本身导致失效
@@ -732,20 +704,25 @@
                 error:function () {
                     layer.msg('请求出库人列表失败，请刷新重试');
                 }
-            })
+            });
+            layui.use('laydate', function(){
+                var laydate = layui.laydate;
+                //日期范围
+                laydate.render({
+                    elem: '#test2',
+                    //设置开始日期、日期日期的 input 选择器
+                    //数组格式为 2.6.6 开始新增，之前版本直接配置 true 或任意分割字符即可
+                    range: ['#test-startDate-2', '#test-endDate-2'],
+                    done: function (value) {
+                        let dataStr = value.toString().split(" - ");
+                        that.InventoryOutListQuery.inventoryOutBeginTime = dataStr[0];
+                        that.InventoryOutListQuery.inventoryOutEndTime = dataStr[1];
+                    }
+                });
+            });
         }
     });
 
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
-        //日期范围
-        laydate.render({
-            elem: '#test6'
-            //设置开始日期、日期日期的 input 选择器
-            //数组格式为 2.6.6 开始新增，之前版本直接配置 true 或任意分割字符即可
-            ,range: ['#test-startDate-1', '#test-endDate-1']
-        });
-    });
 </script>
 </body>
 </html>

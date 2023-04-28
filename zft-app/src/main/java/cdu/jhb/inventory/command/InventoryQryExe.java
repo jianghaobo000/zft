@@ -9,6 +9,7 @@ import cdu.jhb.domain.inventory.gateway.InventoryGateway;
 import cdu.jhb.domain.inventory.gateway.InventoryInGateway;
 import cdu.jhb.domain.inventory.gateway.InventoryOutGateway;
 import cdu.jhb.inventory.data.response.InventoryCheckListResponse;
+import cdu.jhb.inventory.data.response.InventoryListResponse;
 import cdu.jhb.inventory.data.response.InventoryOutListResponse;
 import cdu.jhb.inventory.database.InventoryCheckMapper;
 import cdu.jhb.inventory.database.InventoryInMapper;
@@ -64,6 +65,15 @@ public class InventoryQryExe {
     public List<InventoryInfoDTO> getInventoryList(InventoryListQuery query){
         List<InventoryInfo> inventoryInfoList = inventoryGateway.getInventoryList(query);
         return Convert.listConvert(inventoryInfoList,InventoryInfoDTO.class);
+    }
+
+    /**
+     * 通过条件获取商品列表分页
+     * @param query
+     * @return
+     */
+    public InventoryListResponse getInventoryListByPage(InventoryListQuery query) {
+        return inventoryGateway.getInventoryListByPage(query);
     }
 
     /**

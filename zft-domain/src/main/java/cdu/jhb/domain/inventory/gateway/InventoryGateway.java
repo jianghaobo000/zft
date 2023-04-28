@@ -2,6 +2,7 @@ package cdu.jhb.domain.inventory.gateway;
 
 import cdu.jhb.domain.inventory.InventoryInfo;
 import cdu.jhb.inventory.data.request.InventoryListQuery;
+import cdu.jhb.inventory.data.response.InventoryListResponse;
 
 import java.util.List;
 
@@ -18,4 +19,11 @@ public interface InventoryGateway {
      * @return
      */
     List<InventoryInfo> getInventoryList(InventoryListQuery query);
+
+    /**
+     * 药品物资页面获取商品列表分页
+     * @param query
+     * @return
+     */
+    InventoryListResponse getInventoryListByPage(InventoryListQuery query);
 }

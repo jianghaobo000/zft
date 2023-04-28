@@ -4,6 +4,7 @@ import cdu.jhb.commodity.data.dto.CommodityDTO;
 import cdu.jhb.inventory.data.dto.InventoryInfoDTO;
 import cdu.jhb.inventory.data.request.InventoryListQuery;
 import cdu.jhb.inventory.data.dto.SupplierDTO;
+import cdu.jhb.inventory.data.response.InventoryListResponse;
 
 import java.util.List;
 
@@ -20,6 +21,12 @@ public interface InventoryServiceI {
      * @return
      */
     List<InventoryInfoDTO> getInventoryList(InventoryListQuery query);
+
+    /**
+     * 分页获取库存商品列表
+     * @return
+     */
+    InventoryListResponse getInventoryListByPage(InventoryListQuery query);
 
     /**
      * 通过ID获取商品信息

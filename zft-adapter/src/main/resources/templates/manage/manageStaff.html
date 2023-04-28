@@ -7,7 +7,7 @@
 </head>
 <body style="background-color: rgb(225,228,232);">
 <div th:replace="~{common/common::headbar}"/>
-<div class="manage">
+<div class="manage" id="manageStaff">
     <div class="left">
         <div th:replace="~{common/common::manageMeau}"/>
     </div>
@@ -26,42 +26,30 @@
             <div class="info-left">
                 <div class="title">
                     <div class="form-group float-left" style="width: 150px;">
-                        <input type="text" class="form-control" name="" placeholder="查询员工">
+                        <input type="text" class="form-control" v-on:input="getStaffList($event.target.value)" placeholder="查询员工">
                     </div>
-                    <div class="add" id="addEquipment">
+                    <div class="add" v-on:click="addStaff">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill svg-text" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                         </svg>
                         新增员工
                     </div>
                 </div>
-                <div class="name">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill svg-text" style="color: #ff6587;" viewBox="0 0 16 16">
+                <div class="name" v-for="staff in staffList" v-on:click="detail(staff.employeeId)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill svg-text" :style="staff.employeeSex === '男' ? 'color: #5db2f1;':'color: #ff6587;'" viewBox="0 0 16 16">
                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                     </svg>&nbsp;
-                    姜昊波
-                </div>
-                <div class="name">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill svg-text" style="color: #ff6587;" viewBox="0 0 16 16">
-                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                    </svg>&nbsp;
-                    张医生
-                </div>
-                <div class="name">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill svg-text" style="color: #5db2f1;" viewBox="0 0 16 16">
-                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                    </svg>&nbsp;
-                    刘医生
+                    {{staff.employeeName}}
                 </div>
             </div>
             <div class="info-right">
                 <div class="title">
                     <p>员工详情</p>
                     <div style="float: right;margin-left: 10px;">
-                        <button type="button" class="btn btn-primary">保存</button>
+                        <button type="button" class="btn btn-primary" v-on:click="save">保存</button>
                     </div>
                     <div style="float: right;">
-                        <button type="button" class="btn btn-outline-primary">删除</button>
+                        <button type="button" class="btn btn-outline-primary" v-if="staffInfoResponse.employeeDTO.employeeId !== ''" v-on:click="deleteStaff(staffInfoResponse.employeeDTO.employeeId,staffInfoResponse.accountDTO.accountId,staffInfoResponse.practiceDTO.practiceId)">删除</button>
                     </div>
                 </div>
                 <div class="input">
@@ -69,16 +57,16 @@
                         <span style="color: red;">* </span>姓名
                     </div>
                     <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入姓名">
+                        <input type="text" class="form-control" v-model="staffInfoResponse.employeeDTO.employeeName" placeholder="请输入姓名">
                     </div>
                     <div class="text">
                         <span style="color: red;">* </span>性别
                     </div>
                     <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
-                        <select class="form-control" name="">
-                            <option value="0" style="display: none">请选择性别</option>
-                            <option value="1">男</option>
-                            <option value="2">女</option>
+                        <select class="form-control" v-model="staffInfoResponse.employeeDTO.employeeSex">
+                            <option value="" style="display: none">请选择性别</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
                         </select>
                     </div>
                     <div class="text">
@@ -87,7 +75,7 @@
                     <div style="float: left;width: 200px;">
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                <input type="text" class="layui-input" name="" id="test1" placeholder="请输入生日" style="border: 1px rgb(206,212,218) solid" readonly>
+                                <input type="text" class="layui-input" v-model="staffInfoResponse.employeeDTO.employeeBirthday" id="test1" placeholder="请输入生日" style="border: 1px rgb(206,212,218) solid" readonly>
                             </div>
                         </div>
                     </div>
@@ -97,28 +85,34 @@
                         <span style="color: red;">* </span>民族
                     </div>
                     <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
-                        <select class="form-control" name="">
-                            <option value="0" style="display: none">请选择民族</option>
-                            <option value="1">汉族</option>
-                            <option value="2">壮族</option>
-                            <option value="1">苗族</option>
-                            <option value="2">回族</option>
-                            <option value="1">藏族</option>
-                            <option value="2">白族</option>
-                            <option value="1">朝鲜族</option>
-                            <option value="2">高山族</option>
+                        <select class="form-control" v-model="staffInfoResponse.employeeDTO.employeeNation">
+                            <option value="" style="display: none">请选择民族</option>
+                            <option value="汉族">汉族</option>
+                            <option value="壮族">壮族</option>
+                            <option value="苗族">苗族</option>
+                            <option value="回族">回族</option>
+                            <option value="藏族">藏族</option>
+                            <option value="白族">白族</option>
+                            <option value="朝鲜族">朝鲜族</option>
+                            <option value="高山族">高山族</option>
                         </select>
+                    </div>
+                    <div class="text">
+                        联系电话
+                    </div>
+                    <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
+                        <input type="text" class="form-control" v-model="staffInfoResponse.employeeDTO.employeePhone" placeholder="请输入联系电话">
                     </div>
                     <div class="text">
                         <span style="color: red;">* </span>是否为医护技
                     </div>
                     <div class="form-group" style="float: left;width: 200px;margin-right: 50px;margin-top: 8px;">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                            <input class="form-check-input" type="radio" v-model="staffInfoResponse.employeeDTO.employeeMedicalNursingSkills" v-if="staffInfoResponse.employeeDTO.employeeMedicalNursingSkills === 1 ? 'checked' : ''" name="inlineRadioOptions" id="inlineRadio1" value="1">
                             <label class="form-check-label" for="inlineRadio1">是</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <input class="form-check-input" type="radio" v-model="staffInfoResponse.employeeDTO.employeeMedicalNursingSkills" v-if="staffInfoResponse.employeeDTO.employeeMedicalNursingSkills === 0 ? 'checked' : ''" name="inlineRadioOptions" id="inlineRadio2" value="0">
                             <label class="form-check-label" for="inlineRadio2">否</label>
                         </div>
                     </div>
@@ -132,19 +126,19 @@
                         <span style="color: red;">* </span>登录账号
                     </div>
                     <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入账号">
+                        <input type="text" class="form-control" v-model="staffInfoResponse.accountDTO.accountName" placeholder="请输入账号">
                     </div>
                     <div class="text">
                         <span style="color: red;">* </span>登录密码
                     </div>
                     <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入密码">
+                        <input type="password" class="form-control" v-model="staffInfoResponse.accountDTO.accountPassword" placeholder="请输入密码">
                     </div>
                     <div class="text">
                         <span style="color: red;">* </span>确认密码
                     </div>
                     <div class="form-group" style="float: left;width: 200px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入确认密码">
+                        <input type="password" class="form-control" v-model="password" placeholder="请输入确认密码">
                     </div>
                 </div>
                 <div class="input">
@@ -152,12 +146,12 @@
                         <span style="color: red;">* </span>权限
                     </div>
                     <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
-                        <select class="form-control" name="">
-                            <option value="0" style="display: none">请选择权限</option>
-                            <option value="0">老板</option>
-                            <option value="1">医生</option>
-                            <option value="2">药师</option>
-                            <option value="3">护士</option>
+                        <select class="form-control" v-model="staffInfoResponse.accountDTO.accountRole">
+                            <option value="" selected style="display: none">请选择权限</option>
+                            <option value="1">老板</option>
+                            <option value="2">医生</option>
+                            <option value="3">药师</option>
+                            <option value="4">库管员</option>
                         </select>
                     </div>
                 </div>
@@ -170,20 +164,14 @@
                         医护技HIS码
                     </div>
                     <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
-                        <select class="form-control" name="">
-                            <option value="0" style="display: none">请选择权限</option>
-                            <option value="0">老板</option>
-                            <option value="1">医生</option>
-                            <option value="2">药师</option>
-                            <option value="3">护士</option>
-                        </select>
+                        <input type="text" class="form-control" v-model="staffInfoResponse.practiceDTO.practiceId" placeholder="请输入医护技HIS码" readonly>
                     </div>
                     <div class="text">
                         有效证件类型
                     </div>
                     <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
-                        <select class="form-control" name="">
-                            <option value="0" style="display: none">请选择有效证件类型</option>
+                        <select class="form-control" v-model="staffInfoResponse.practiceDTO.practiceValidIdType">
+                            <option value="" selected style="display: none">请选择有效证件类型</option>
                             <option value="0">居民身份证(户口簿)</option>
                             <option value="1">护照</option>
                             <option value="2">港澳居民来往内地通行证</option>
@@ -196,7 +184,7 @@
                         有效证件号码
                     </div>
                     <div class="form-group" style="float: left;width: 200px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入有效证件号码">
+                        <input type="text" class="form-control" v-model="staffInfoResponse.practiceDTO.practiceValidIdNumber" placeholder="请输入有效证件号码">
                     </div>
                 </div>
                 <div class="input">
@@ -204,19 +192,19 @@
                         执业证书编号
                     </div>
                     <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入执业证书编号">
+                        <input type="text" class="form-control" v-model="staffInfoResponse.practiceDTO.practiceCertificateNumber" placeholder="请输入执业证书编号">
                     </div>
                     <div class="text">
                         资格证书编号
                     </div>
                     <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入资格证书编号">
+                        <input type="text" class="form-control" v-model="staffInfoResponse.practiceDTO.practiceQualificationCertificateNumber" placeholder="请输入资格证书编号">
                     </div>
                     <div class="text">
                         执业注册地
                     </div>
                     <div class="form-group" style="float: left;width: 200px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入执业注册地">
+                        <input type="text" class="form-control" v-model="staffInfoResponse.practiceDTO.practiceAddress" placeholder="请输入执业注册地">
                     </div>
                 </div>
                 <div class="input">
@@ -224,8 +212,8 @@
                         科室
                     </div>
                     <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
-                        <select class="form-control" name="">
-                            <option value="0" style="display: none">请选择科室</option>
+                        <select class="form-control" v-model="staffInfoResponse.practiceDTO.practiceId">
+                            <option value="" selected style="display: none">请选择科室</option>
                             <option value="0">消化内科</option>
                             <option value="1">骨科</option>
                             <option value="2">肿瘤科</option>
@@ -236,28 +224,28 @@
                         人员国家码
                     </div>
                     <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入人员国家码">
+                        <input type="text" class="form-control" v-model="staffInfoResponse.practiceDTO.practicePersonnelCountryCode" placeholder="请输入人员国家码">
                     </div>
                     <div class="text">
                         职务
                     </div>
                     <div class="form-group" style="float: left;width: 200px;">
-                        <select class="form-control" name="">
-                            <option value="0" style="display: none">请选择职称</option>
-                            <option value="0">医士</option>
-                            <option value="1">医师</option>
-                            <option value="2">主治医师</option>
-                            <option value="3">副主任医师</option>
-                            <option value="4">主任医师</option>
-                            <option value="5">药士</option>
-                            <option value="6">药师</option>
-                            <option value="7">副主任药师</option>
-                            <option value="8">主任药师</option>
-                            <option value="9">护士</option>
-                            <option value="10">护师</option>
-                            <option value="11">主管护师</option>
-                            <option value="12">副主任护师</option>
-                            <option value="13">主任护师</option>
+                        <select class="form-control" v-model="staffInfoResponse.practiceDTO.practiceTitle">
+                            <option value="" selected style="display: none">请选择职称</option>
+                            <option value="医士">医士</option>
+                            <option value="医师">医师</option>
+                            <option value="主治医师">主治医师</option>
+                            <option value="副主任医师">副主任医师</option>
+                            <option value="主任医师">主任医师</option>
+                            <option value="药士">药士</option>
+                            <option value="药师">药师</option>
+                            <option value="副主任药师">副主任药师</option>
+                            <option value="主任药师">主任药师</option>
+                            <option value="护士">护士</option>
+                            <option value="护师">护师</option>
+                            <option value="主管护师">主管护师</option>
+                            <option value="副主任护师">副主任护师</option>
+                            <option value="主任护师">主任护师</option>
                         </select>
                     </div>
                 </div>
@@ -268,7 +256,7 @@
                     <div style="float: left;width: 200px;margin-right: 50px;">
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                <input type="text" class="layui-input" name="patient_birthday" id="test2" placeholder="请输入开始执业时间" style="border: 1px rgb(206,212,218) solid" readonly>
+                                <input type="text" class="layui-input" v-model="staffInfoResponse.practiceDTO.practicePersonBeginTime" id="test2" placeholder="请输入开始执业时间" style="border: 1px rgb(206,212,218) solid" readonly>
                             </div>
                         </div>
                     </div>
@@ -278,7 +266,7 @@
                     <div style="float: left;width: 200px;margin-right: 50px;">
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                <input type="text" class="layui-input" name="patient_birthday" id="test3" placeholder="请输入结束执业时间" style="border: 1px rgb(206,212,218) solid" readonly>
+                                <input type="text" class="layui-input" v-model="staffInfoResponse.practiceDTO.practicePersonEndTime" id="test3" placeholder="请输入结束执业时间" style="border: 1px rgb(206,212,218) solid" readonly>
                             </div>
                         </div>
                     </div>
@@ -288,7 +276,7 @@
                     <div style="float: left;width: 200px;">
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                <input type="text" class="layui-input" name="patient_birthday" id="test4" placeholder="请输入开始执业时间" style="border: 1px rgb(206,212,218) solid" readonly>
+                                <input type="text" class="layui-input" v-model="staffInfoResponse.practiceDTO.practiceClinicBeginTime" id="test4" placeholder="请输入开始执业时间" style="border: 1px rgb(206,212,218) solid" readonly>
                             </div>
                         </div>
                     </div>
@@ -300,7 +288,7 @@
                     <div style="float: left;width: 200px;margin-right: 50px;">
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                <input type="text" class="layui-input" name="patient_birthday" id="test5" placeholder="请输入结束执业时间" style="border: 1px rgb(206,212,218) solid" readonly>
+                                <input type="text" class="layui-input" v-model="staffInfoResponse.practiceDTO.practiceClinicEndTime" id="test5" placeholder="请输入结束执业时间" style="border: 1px rgb(206,212,218) solid" readonly>
                             </div>
                         </div>
                     </div>
@@ -310,35 +298,197 @@
     </div>
 </div>
 <script>
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
+    let vm = new Vue({
+        el: "#manageStaff",
+        data: {
+            password: '',
+            staffInfoResponse:{
+                accountDTO: {
+                    accountId: '',
+                    accountName: '',
+                    accountPassword: '',
+                    accountRole: '',
+                    accountTenantId: '',
+                },
+                employeeDTO: {
+                    employeeId: '',
+                    employeeAccountId: '',
+                    employeePracticeId: '',
+                    employeeName: '',
+                    employeeBirthday: '',
+                    employeeNation: '',
+                    employeeSex: '',
+                    employeePhone: '',
+                    employeeMedicalNursingSkills: '',
+                    employeeTenantId: '',
+                },
+                practiceDTO: {
+                    practiceId: '',
+                    practiceValidIdType: '',
+                    practiceValidIdNumber: '',
+                    practiceCertificateNumber: '',
+                    practiceQualificationCertificateNumber: '',
+                    practiceAddress: '',
+                    practiceDepartmentId: '',
+                    practicePersonnelCountryCode: '',
+                    practiceTitle: '',
+                    practicePersonBeginTime: '',
+                    practicePersonEndTime: '',
+                    practiceClinicBeginTime: '',
+                    practiceClinicEndTime: '',
+                    practiceTenantId: '',
+                },
+            },
+            staffList: [{
+                employeeId: '',
+                employeeName: '',
+                employeeSex: '',
+            }],
+        },
+        methods: {
+            // 获取员工列表
+            getStaffList(name){
+                let that = this;
+                $.ajax({
+                    url: '/manage/getStaffList?name='+name,
+                    type: 'GET',
+                    success: function (response) {
+                        // 先清空
+                        that.staffList.splice(0,that.staffList.length);
+                        response.forEach((item) => {
+                            that.staffList.push(item);
+                        });
+                        if(that.staffList.length > 0){
+                            that.detail(that.staffList[0].employeeId);
+                        }
+                    },
+                    error: function () {
+                        layer.msg('获取员工列表失败，请刷新重试');
+                    }
+                });
+            },
+            // 新增员工
+            addStaff(){
+                //清空员工信息
+                debugger
+                this.staffInfoResponse = {};
+            },
+            // 获取员工信息
+            detail(id){
+                let that = this;
+                $.ajax({
+                    url: '/manage/getStaffInfo?id='+id,
+                    type: 'GET',
+                    success: function (response) {
+                        that.staffInfoResponse = response;
+                        that.password = response.accountDTO.accountPassword;
+                    },
+                    error: function () {
+                        layer.msg('获取员工信息失败，请刷新重试');
+                    }
+                });
+            },
+            // 保存员工信息
+            save(){
+                if(this.staffInfoResponse.employeeDTO.employeeName === ''){
+                    layer.msg('员工姓名不能为空');
+                    return;
+                }
+                if(this.staffInfoResponse.employeeDTO.employeeSex === ''){
+                    layer.msg('员工性别不能为空');
+                    return;
+                }
+                if(this.staffInfoResponse.employeeDTO.employeeBirthday === ''){
+                    layer.msg('员工生日不能为空');
+                    return;
+                }
+                if(this.staffInfoResponse.employeeDTO.employeeNation === ''){
+                    layer.msg('员工民族不能为空');
+                    return;
+                }
+                if(this.staffInfoResponse.accountDTO.accountName === ''){
+                    layer.msg('登录账号不能为空');
+                    return;
+                }
+                if(this.staffInfoResponse.accountDTO.accountPassword === ''){
+                    layer.msg('登录密码不能为空');
+                    return;
+                }
+                if(this.password === ''){
+                    layer.msg('确认密码不能为空');
+                    return;
+                }
+                if(this.staffInfoResponse.accountDTO.accountRole === ''){
+                    layer.msg('权限不能为空');
+                    return;
+                }
+                if(this.password !== this.staffInfoResponse.accountDTO.accountPassword){
+                    layer.msg('确认密码与密码不同');
+                    return;
+                }
+                $.ajax({
+                    url: '/manage/saveStaff',
+                    type: 'POST',
+                    data: JSON.stringify(this.staffInfoResponse),
+                    contentType: 'application/json',
+                    success: function () {
+                        layer.msg('保存成功');
+                    },
+                    error: function () {
+                        layer.msg('保存失败');
+                    }
+                });
+            },
+            // 删除员工
+            deleteStaff(eid,aid,pid){
+                $.ajax({
+                    url: '/manage/deleteStaff?eid='+eid+'&aid='+aid+'&pid='+pid,
+                    type: 'GET',
+                    success: function () {
+                        layer.msg('删除成功');
+                    },
+                    error: function (error) {
+                        layer.msg(error.responseJSON.message);
+                    }
+                });
+            },
+        },
+        computed: {
 
-        //初始赋值
-        laydate.render({
-            elem: '#test1'
-            ,value: ''
-            ,isInitValue: true
-        });
-        laydate.render({
-            elem: '#test2'
-            ,value: ''
-            ,isInitValue: true
-        });
-        laydate.render({
-            elem: '#test3'
-            ,value: ''
-            ,isInitValue: true
-        });
-        laydate.render({
-            elem: '#test4'
-            ,value: ''
-            ,isInitValue: true
-        });
-        laydate.render({
-            elem: '#test5'
-            ,value: ''
-            ,isInitValue: true
-        });
+        },
+        mounted(){
+            this.getStaffList('');
+            layui.use('laydate', function(){
+                var laydate = layui.laydate;
+
+                //初始赋值
+                laydate.render({
+                    elem: '#test1'
+                    ,value: ''
+                    ,isInitValue: true
+                });
+                laydate.render({
+                    elem: '#test2'
+                    ,value: ''
+                    ,isInitValue: true
+                });
+                laydate.render({
+                    elem: '#test3'
+                    ,value: ''
+                    ,isInitValue: true
+                });
+                laydate.render({
+                    elem: '#test4'
+                    ,value: ''
+                    ,isInitValue: true
+                });
+                laydate.render({
+                    elem: '#test5'
+                    ,value: ''
+                    ,isInitValue: true
+                });
+            });
+        },
     });
 </script>
 </body>

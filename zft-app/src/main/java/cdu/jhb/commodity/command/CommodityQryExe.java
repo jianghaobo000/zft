@@ -5,6 +5,7 @@ import cdu.jhb.commodity.data.dto.CommodityDTO;
 import cdu.jhb.domain.commodity.Commodity;
 import cdu.jhb.domain.commodity.gateway.CommodityGateway;
 import cdu.jhb.util.Convert;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -32,5 +33,25 @@ public class CommodityQryExe {
     public List<CommodityDTO> selectCommodity(String name) {
         List<Commodity> commodityList = commodityGateway.selectCommodity(name);
         return Convert.listConvert(commodityList,CommodityDTO.class);
+    }
+
+    /**
+     * 通过ID搜索商品
+     * @param id
+     * @return
+     */
+    public CommodityDTO selectCommodityById(Long id) {
+        Commodity commodity = commodityGateway.selectCommodityById(id);
+        return Convert.entityConvert(commodity,CommodityDTO.class);
+    }
+
+    /**
+     * 设置商品启用状态
+     * @param id
+     * @param enable
+     * @return
+     */
+    public Boolean enableOrDeactivate(Long id, Integer enable) {
+        return commodityGateway.enableOrDeactivate(id,enable);
     }
 }

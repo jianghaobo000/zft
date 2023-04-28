@@ -36,6 +36,11 @@ public class InventoryListQuery extends PageCommon {
     private Integer status;
 
     /**
+     * 是否查询禁用商品 1、查询  0、不查询
+     */
+    private Integer enable;
+
+    /**
      * 商品属诊所
      */
     private Long inventoryTenantId;

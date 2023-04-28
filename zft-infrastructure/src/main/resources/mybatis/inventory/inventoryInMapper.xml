@@ -61,23 +61,4 @@
             i.inventory_in_tenant_id = #{tenantId} AND i.inventory_in_id = #{id}
     </select>
 
-<!--    <select id="getInDetailList" resultType="cdu.jhb.inventory.database.dataobject.InventoryInDetailDO">-->
-<!--        SELECT-->
-<!--            i.inventory_in_detail_id,-->
-<!--            i.inventory_in_id,-->
-<!--            i.inventory_in_commodity_id,-->
-<!--            i.inventory_in_commodity_name,-->
-<!--            i.inventory_in_large_unit,-->
-<!--            i.inventory_in_small_unit,-->
-<!--            i.inventory_in_before_large_num,-->
-<!--            i.inventory_in_before_small_num,-->
-<!--            i.inventory_in_after_large_num,-->
-<!--            i.inventory_in_after_small_num,-->
-<!--            i.inventory_in_large_num,-->
-<!--            i.inventory_in_small_num-->
-<!--        FROM inventory_in_detail_table i-->
-<!--        WHERE i.inventory_in_id = #{id}-->
-
-<!--    </select>-->
-
 </mapper>

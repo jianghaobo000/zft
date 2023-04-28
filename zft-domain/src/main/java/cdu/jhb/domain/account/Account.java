@@ -21,14 +21,22 @@ public class Account {
      * 账户ID
      */
     private Long accountId;
+
     /**
      * 账户名
      */
     private String accountName;
+
     /**
      * 账户密码
      */
     private String accountPassword;
+
+    /**
+     * 账号权限（1、老板 2、医生 3、药师 4、库管员）
+     */
+    private Integer accountRole;
+
     /**
      * 账户所属租户
      */

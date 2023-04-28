@@ -14,4 +14,11 @@ public interface TenantServiceI {
      * @return
      */
     TenantDTO getTenant(Long tenantId);
+
+    /**
+     * 保存诊所
+     * @param tenantDTO
+     * @return
+     */
+    Boolean saveTenant(TenantDTO tenantDTO);
 }

@@ -26,4 +26,19 @@ public interface CommodityServiceI {
      */
     List<CommodityDTO> selectCommodity(String name);
 
+    /**
+     * 通过ID搜索商品
+     * @param id
+     * @return
+     */
+    CommodityDTO selectCommodityById(Long id);
+
+    /**
+     * 设置商品启用状态
+     * @param id
+     * @param enable
+     * @return
+     */
+    Boolean enableOrDeactivate(Long id,Integer enable);
+
 }

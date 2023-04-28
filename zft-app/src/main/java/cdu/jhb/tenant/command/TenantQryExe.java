@@ -1,8 +1,9 @@
-package cdu.jhb.tenant.command.query;
+package cdu.jhb.tenant.command;
 
 import cdu.jhb.domain.tenant.Tenant;
 import cdu.jhb.tenant.database.TenantMapper;
 import cdu.jhb.tenant.database.dataobject.TenantDO;
+import cdu.jhb.util.Convert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,9 @@ public class TenantQryExe {
     private final TenantMapper tenantMapper;
 
     public Tenant getTenant(Long tenantId){
-        QueryWrapper<TenantDO> queryWrapper = new QueryWrapper<TenantDO>()
-                .eq("tenant_id",tenantId);
+        QueryWrapper<TenantDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(TenantDO::getTenantId,tenantId);
         TenantDO tenantDO = tenantMapper.selectOne(queryWrapper);
-        return DozerBeanMapperBuilder.buildDefault().map(tenantDO,Tenant.class);
+        return Convert.entityConvert(tenantDO,Tenant.class);
     }
 }

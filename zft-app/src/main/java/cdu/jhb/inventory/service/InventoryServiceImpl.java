@@ -8,6 +8,8 @@ import cdu.jhb.inventory.command.InventoryQryExe;
 import cdu.jhb.inventory.data.dto.InventoryInfoDTO;
 import cdu.jhb.inventory.data.request.InventoryListQuery;
 import cdu.jhb.inventory.data.dto.SupplierDTO;
+import cdu.jhb.inventory.data.response.InventoryListResponse;
+import cdu.jhb.util.Convert;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,16 @@ public class InventoryServiceImpl implements InventoryServiceI {
     }
 
     /**
+     * 分页获取商品列表
+     * @param query
+     * @return
+     */
+    @Override
+    public InventoryListResponse getInventoryListByPage(InventoryListQuery query) {
+        return inventoryQryExe.getInventoryListByPage(query);
+    }
+
+    /**
      * 通过ID获取商品信息
      * @param id
      * @return
@@ -46,7 +58,7 @@ public class InventoryServiceImpl implements InventoryServiceI {
     @Override
     public CommodityDTO selectById(Long id) {
         Commodity commodity = inventoryQryExe.selectById(id);
-        return DozerBeanMapperBuilder.buildDefault().map(commodity,CommodityDTO.class);
+        return Convert.entityConvert(commodity,CommodityDTO.class);
     }
 
     @Override

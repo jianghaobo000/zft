@@ -12,6 +12,7 @@ import cdu.jhb.inventory.data.request.InventoryListQuery;
 import cdu.jhb.inventory.data.request.InventoryOutListQuery;
 import cdu.jhb.inventory.data.response.InventoryCheckListResponse;
 import cdu.jhb.inventory.data.response.InventoryInListResponse;
+import cdu.jhb.inventory.data.response.InventoryListResponse;
 import cdu.jhb.inventory.data.response.InventoryOutListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -50,13 +51,13 @@ public class InventoryController {
     }
 
     /**
-     * 条件查询药品物资列表
+     * 条件查询药品物资列表分页
      * @return
      */
     @PostMapping("toInventoryByQuery")
-    public ResponseEntity<?> toInventory(@RequestBody InventoryListQuery query){
-        List<InventoryInfoDTO> infoDTOList = inventoryService.getInventoryList(query);
-        return ResponseEntity.ok(infoDTOList);
+    public ResponseEntity<?> toInventoryByPage(@RequestBody InventoryListQuery query){
+        InventoryListResponse listResponse =  inventoryService.getInventoryListByPage(query);
+        return ResponseEntity.ok(listResponse);
     }
 
     /**
@@ -65,7 +66,7 @@ public class InventoryController {
      */
     @GetMapping("selectInventoryByName")
     public ResponseEntity<?> toInventory(@RequestParam("name")String name,@RequestParam("status")Integer status){
-        List<InventoryInfoDTO> infoDTOList = inventoryService.getInventoryList(new InventoryListQuery(name,null,null,status,null));
+        List<InventoryInfoDTO> infoDTOList = inventoryService.getInventoryList(new InventoryListQuery(name,null,null,status,0,null));
         return ResponseEntity.ok(infoDTOList);
     }
 
@@ -74,7 +75,7 @@ public class InventoryController {
      * @return
      */
     @GetMapping("selectById")
-    public ResponseEntity<?> selectById(Long id){
+    public ResponseEntity<?> selectById(@RequestParam("id") Long id){
         CommodityDTO commodityDTO = inventoryService.selectById(id);
         return ResponseEntity.ok(commodityDTO);
     }
@@ -128,7 +129,7 @@ public class InventoryController {
      * @return
      */
     @GetMapping("waitToSaveIn")
-    public ResponseEntity<?> waitToSaveIn(Long id){
+    public ResponseEntity<?> waitToSaveIn(@RequestParam("id") Long id){
         if(inventoryInService.waitToSaveIn(id)){
             return ResponseEntity.ok().build();
         }
@@ -185,7 +186,7 @@ public class InventoryController {
      * @return
      */
     @GetMapping("waitToSaveOut")
-    public ResponseEntity<?> waitToSaveOut(Long id){
+    public ResponseEntity<?> waitToSaveOut(@RequestParam("id") Long id){
         if(inventoryOutService.waitToSaveOut(id)){
             return ResponseEntity.ok().build();
         }
@@ -241,7 +242,7 @@ public class InventoryController {
      * @return
      */
     @GetMapping("waitToSaveCheck")
-    public ResponseEntity<?> waitToSaveCheck(Long id){
+    public ResponseEntity<?> waitToSaveCheck(@RequestParam("id") Long id){
         if(inventoryCheckService.waitToSaveCheck(id)){
             return ResponseEntity.ok().build();
         }

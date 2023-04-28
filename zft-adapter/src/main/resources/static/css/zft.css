@@ -921,6 +921,7 @@ tr:hover .td-hover{
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     float: left;
+    overflow: auto;
 }
 
 .manage .right .info .info-left .title{

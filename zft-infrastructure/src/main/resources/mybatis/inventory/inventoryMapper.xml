@@ -41,6 +41,9 @@
         <if test="param.status == 2">
             AND (i.inventory_large_num > 0 OR i.inventory_small_num > 0)
         </if>
+        <if test="param.enable == 0">
+            AND c.commodity_enable_status = 1
+        </if>
         AND i.inventory_tenant_id = #{param.inventoryTenantId}
     </select>
 

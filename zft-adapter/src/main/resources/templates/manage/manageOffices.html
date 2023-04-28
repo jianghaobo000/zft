@@ -156,6 +156,91 @@
 </div>
 
 <script>
+    let vm = new Vue({
+        el: "#manageClinic",
+        data: {
+            tenantInfo:{
+                tenantId: '',
+                tenantName: '',
+                tenantAbbreviation: '',
+                tenantTel: '',
+                tenantSize: '',
+                tenantAddress: '',
+                tenantBeginTime: '',
+                tenantIntroduce: '',
+                tenantRate: '',
+                tenantLegalName: '',
+                tenantLegalNumber: '',
+                tenantLicenseKey: '',
+                tenantCreditCode: '',
+                tenantCountryCode: '',
+                tenantRemarks: '',
+            }
+        },
+        methods: {
+            // 保存诊所信息
+            save(){
+                if(this.tenantInfo.tenantName === ''){
+                    layer.msg('诊所名称不能为空');
+                    return;
+                }
+                if(this.tenantInfo.tenantLegalName === ''){
+                    layer.msg('法定代表人姓名不能为空');
+                    return;
+                }
+                if(this.tenantInfo.tenantLegalNumber === ''){
+                    layer.msg('法定代表人身份证号不能为空');
+                    return;
+                }
+                if(this.tenantInfo.tenantCreditCode === ''){
+                    layer.msg('统一社会信用代码不能为空');
+                    return;
+                }
+                $.ajax({
+                    url: '/tenant/saveTenant',
+                    type: 'POST',
+                    data: JSON.stringify(this.tenantInfo),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        layer.msg('保存成功');
+                    },
+                    error: function () {
+                        layer.msg('保存失败');
+                    }
+                });
+            },
+            // 获取诊所信息
+            refresh(){
+                let that = this;
+                $.ajax({
+                    url: '/tenant/getTenantInfo',
+                    type: 'GET',
+                    success: function (response) {
+                        that.tenantInfo = response;
+                        // 渲染诊所等级
+                        layui.use(['rate'], function() {
+                            var rate = layui.rate;
+                            rate.render({
+                                elem: '#test1',
+                                value: that.tenantInfo.tenantRate,
+                                half: true,
+                                readonly: true,
+                            });
+                        });
+                    },
+                    error: function () {
+                        layer.msg('获取诊所信息失败，请刷新重试');
+                    }
+                });
+            }
+        },
+        computed: {
+
+        },
+        mounted(){
+            this.refresh();
+        },
+    });
 </script>
 </body>
 </html>

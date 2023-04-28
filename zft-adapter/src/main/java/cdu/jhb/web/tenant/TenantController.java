@@ -2,9 +2,14 @@ package cdu.jhb.web.tenant;
 
 import cdu.jhb.tenant.api.TenantServiceI;
 import cdu.jhb.tenant.data.dto.TenantDTO;
+import cdu.jhb.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -27,5 +32,27 @@ public class TenantController {
     @GetMapping("getTenant")
     public TenantDTO getTenant(Long tenantId){
         return tenantService.getTenant(tenantId);
+    }
+
+    /**
+     * 保存诊所信息
+     * @return
+     */
+    @PostMapping("saveTenant")
+    public ResponseEntity<?> saveTenant(@RequestBody TenantDTO tenantDTO){
+        if(tenantService.saveTenant(tenantDTO)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    /**
+     * 获取当前诊所信息
+     * @return
+     */
+    @GetMapping("getTenantInfo")
+    public ResponseEntity<?> getTenantInfo(){
+        TenantDTO tenantDTO = tenantService.getTenant(RedisUtil.getLocalTenantId());
+        return ResponseEntity.ok(tenantDTO);
     }
 }

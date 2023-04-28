@@ -1,5 +1,7 @@
 package cdu.jhb.manage.data.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +19,13 @@ public class DepartmentDTO {
     /**
      * 科室ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long departmentId;
+
+    /**
+     * 科室代码
+     */
+    private String departmentCode;
 
     /**
      * 科室名称
@@ -30,20 +38,28 @@ public class DepartmentDTO {
     private String departmentCategory;
 
     /**
-     * 科室评级
+     * 科室批准床位数
      */
-    private Integer departmentRate;
+    private Integer departmentBedNum;
+
+    /**
+     * 科室负责人
+     */
+    private String departmentHeader;
+
+    /**
+     * 科室联系电话
+     */
+    private String departmentTel;
 
     /**
      * 科室介绍
      */
     private String departmentIntroduce;
-    /**
-     * 科室人数
-     */
-    private Integer departmentEmployeeNum;
+
     /**
      * 科室所属诊所
      */
-    private Integer departmentTenantId;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long departmentTenantId;
 }

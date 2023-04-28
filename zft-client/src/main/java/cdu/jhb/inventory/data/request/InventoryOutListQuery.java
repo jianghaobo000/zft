@@ -25,7 +25,7 @@ public class InventoryOutListQuery extends PageCommon {
     /**
      * 出库单类型 1:创建时间 2:出库时间
      */
-    private Integer inventoryOutDateStatus;
+    private Integer inventoryOutDateCategory;
 
     /**
      * 出库单开始时间

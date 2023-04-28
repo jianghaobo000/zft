@@ -20,6 +20,11 @@ public class Department {
     private Long departmentId;
 
     /**
+     * 科室代码
+     */
+    private Long departmentCode;
+
+    /**
      * 科室名称
      */
     private String departmentName;
@@ -30,18 +35,25 @@ public class Department {
     private String departmentCategory;
 
     /**
-     * 科室评级
+     * 科室批准床位数
      */
-    private Integer departmentRate;
+    private Integer departmentBedNum;
+
+    /**
+     * 科室负责人
+     */
+    private String departmentHeader;
+
+    /**
+     * 科室联系电话
+     */
+    private String departmentTel;
 
     /**
      * 科室介绍
      */
     private String departmentIntroduce;
-    /**
-     * 科室人数
-     */
-    private Integer departmentEmployeeNum;
+
     /**
      * 科室所属诊所
      */

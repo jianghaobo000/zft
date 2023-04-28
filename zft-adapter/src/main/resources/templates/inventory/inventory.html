@@ -6,383 +6,485 @@
     <title>库存-药品/物资</title>
 </head>
 <body style="background-color: rgb(225,228,232);">
-<div th:replace="~{common/common::headbar}"/>
-<div class="inventory">
-    <div class="left">
-        <div th:replace="~{common/common::inventoryMeau}"/>
+<div id="inventory">
+    <div th:replace="~{common/common::headbar}"/>
+    <div class="inventory">
+        <div class="left">
+            <div th:replace="~{common/common::inventoryMeau}"/>
+        </div>
+        <div class="right">
+            <div class="top">
+                <form id="form1">
+                    <div class="form-group" style="float: left;width: 300px;margin-right: 15px;">
+                        <input type="text" class="form-control" v-model="InventoryListQuery.inventoryCommodityName" placeholder="品项名">
+                    </div>
+                    <div class="form-group" style="float: left;width: 300px;margin-right: 15px;">
+                        <input type="text" class="form-control" v-model="InventoryListQuery.inventoryManufacturer" placeholder="生产厂家">
+                    </div>
+                    <div class="form-group" style="float: left;width: 150px;margin-right: 15px;">
+                        <select class="form-control" v-model="InventoryListQuery.inventoryCategory">
+                            <option value="">全部类型</option>
+                            <option value="中西成药">中西成药</option>
+                            <option value="中药">中药</option>
+                            <option value="保健药品">保健药品</option>
+                            <option value="消耗品">消耗品</option>
+                        </select>
+                    </div>
+                    <div style="float: left;">
+                        <button type="button" class="btn btn-outline-primary" v-on:click="refresh">查询</button>
+                    </div>
+                </form>
+                <div style="float: right;margin-left: 15px;">
+                    <button type="button" class="btn btn-outline-primary">导出</button>
+                </div>
+                <div style="float: right;">
+                    <button type="button" class="btn btn-primary" v-on:click="openAddPage">新增品项</button>
+                </div>
+            </div>
+            <div class="info">
+                <table class="table table-striped" style="font-size: 15px;text-align: center;">
+                    <thead>
+                    <tr>
+                        <td scope="col" width="10%">品项名称</td>
+                        <td scope="col" width="10%">类型</td>
+                        <td scope="col" width="10%">生产厂家</td>
+                        <td scope="col" width="10%">国家编码</td>
+                        <td scope="col" width="10%">批准文号</td>
+                        <td scope="col" width="10%">条码</td>
+                        <td scope="col" width="15%">最新定价</td>
+                        <td scope="col" width="15%">库存数量</td>
+                        <td scope="col" width="10%">操作</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="commodity in commodityList">
+                        <td>{{commodity.commodityName}}</td>
+                        <td>{{commodity.commodityCategory}}</td>
+                        <td>{{commodity.commodityManufacturer}}</td>
+                        <td>{{commodity.commodityCountryCode}}</td>
+                        <td>{{commodity.commodityApprovalNo}}</td>
+                        <td>{{commodity.commodityBarCode}}</td>
+                        <td>
+                            {{commodity.commodityLargePrice + '元/' + commodity.commodityLargeUnit}}
+                            {{commodity.commoditySplitSaleStatus === 1 ? '，'+commodity.commoditySmallPrice + '元/' + commodity.commoditySmallUnit : ''}}
+                        </td>
+                        <td>
+                            {{commodity.inventoryLargeNum + commodity.commodityLargeUnit}}
+                            {{commodity.commoditySplitSaleStatus === 1 ? commodity.inventorySmallNum + commodity.commoditySmallUnit : ''}}
+                        </td>
+                        <td>
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left"
+                                    style="margin-right: 10px;" v-on:click="edit(commodity.commodityId)">编辑
+                            </button>
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left"
+                                    ref="enable1"
+                                    :style="commodity.commodityEnableStatus === 1 ? 'display:none' : 'display:block'"
+                                    v-on:click="enable(commodity.commodityId,1)">启用
+                            </button>
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left"
+                                    ref="deactivate1"
+                                    :style="commodity.commodityEnableStatus === 1 ? 'display:block' : 'display:none'"
+                                    v-on:click="enable(commodity.commodityId,0)">停用
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p class="no-data" v-if="commodityList.length === 0">暂无数据</p>
+            </div>
+            <div class="bottom">
+                <div class="float-left">
+                    <nav aria-label="Page navigation example" class="float-left" style="margin-right: 30px">
+                        <ul class="pagination">
+                            <li :class="pageData.pageIndex > 1 ? 'page-item' : 'page-item disabled'"><a
+                                    class="page-link" v-on:click="previousPage">上一页</a></li>
+                            <li class="page-item">
+                                <div class="form-group" style="float: left;width: 70px;">
+                                    <input type="number" v-on:blur="pageBlur()" class="form-control"
+                                           v-model="pageData.pageIndex"
+                                           @input="pageData.pageIndex = Number($event.target.value.replace(/\D/g, ''))">
+                                </div>
+                            </li>
+                            <li :class="pageData.pageIndex < pageData.maxPage ? 'page-item' : 'page-item disabled'"><a
+                                    class="page-link" v-on:click="nextPage">下一页</a></li>
+                        </ul>
+                    </nav>
+                    <span class="float-left" style="font-size: 16px;position: relative;top:7px;margin-right: 30px">共{{pageData.maxPage}}页</span>
+                    <div class="btn-group float-left">
+                        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false">
+                            {{pageData.pageSize}}条/页
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" v-on:click="setPageSize(15)">15条/页</a>
+                            <a class="dropdown-item" v-on:click="setPageSize(30)">30条/页</a>
+                            <a class="dropdown-item" v-on:click="setPageSize(50)">50条/页</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="float-right">
+                    <p>共 {{pageData.total}} 个商品</p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="right">
-        <div class="top">
-            <form id="form1" th:action="@{/inventory/toInventoryByQuery}" method="post">
-                <div class="form-group" style="float: left;width: 300px;margin-right: 15px;">
-                    <input type="text" class="form-control" name="inventory_commodity_name" placeholder="品项名">
+    <div class="inventory-add" ref="add">
+        <div class="inventory-pop2">
+            <div class="top">
+                <p>新增/编辑商品</p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                     class="bi bi-x-lg svg-text float-right" v-on:click="closeAddPage" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
+            <form id="form2">
+                <div class="info">
+                    <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
+                        <label><span style="color:red;">*</span> 品项名</label>
+                        <input type="text" v-model="commodityAdd.commodityName" class="form-control" placeholder="请输入品项名">
+                    </div>
+                    <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
+                        <label>国家编码</label>
+                        <input type="text" v-model="commodityAdd.commodityCountryCode" class="form-control" placeholder="请输入国家编码">
+                    </div>
+                    <div class="form-group float-left" style="width: 31%;">
+                        <label>准批文号</label>
+                        <input type="text" v-model="commodityAdd.commodityApprovalNo" class="form-control" placeholder="请输入准批文号">
+                    </div>
+                    <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
+                        <label><span style="color:red;">*</span> 商品类型</label>
+                        <select class="form-control" v-model="commodityAdd.commodityCategory">
+                            <option value="中西成药">中西成药</option>
+                            <option value="中药">中药</option>
+                            <option value="保健药品">保健药品</option>
+                            <option value="消耗品">消耗品</option>
+                        </select>
+                    </div>
+                    <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
+                        <label>生产厂家</label>
+                        <input type="text" v-model="commodityAdd.commodityManufacturer" class="form-control" placeholder="请输入生产厂家">
+                    </div>
+                    <div class="form-group float-left" style="width: 31%;">
+                        <label>规格</label>
+                        <input type="text" v-model="commodityAdd.commoditySpecification" class="form-control" placeholder="请输入规格">
+                    </div>
+                    <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
+                        <label>商品条码</label>
+                        <input type="text" v-model="commodityAdd.commodityBarCode" class="form-control" placeholder="请输入商品条码">
+                    </div>
+                    <hr>
+                    <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
+                        <label><span style="color:red;">*</span> 包装单位(大)</label>
+                        <select class="form-control" v-model="commodityAdd.commodityLargeUnit">
+                            <option value="盒">盒</option>
+                            <option value="瓶">瓶</option>
+                            <option value="袋">袋</option>
+                            <option value="包">包</option>
+                            <option value="支">支</option>
+                            <option value="mg">mg</option>
+                            <option value="g">g</option>
+                            <option value="kg">kg</option>
+                        </select>
+                    </div>
+                    <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
+                        <label><span style="color:red;">*</span> 拆零单位(小)</label>
+                        <select class="form-control" v-model="commodityAdd.commoditySmallUnit">
+                            <option value="颗">颗</option>
+                            <option value="瓶">瓶</option>
+                            <option value="袋">袋</option>
+                            <option value="包">包</option>
+                            <option value="支">支</option>
+                            <option value="粒">粒</option>
+                        </select>
+                    </div>
+                    <div class="form-group float-left" style="width: 31%;">
+                        <label>大小转换比</label>
+                        <input type="text" class="form-control" v-model="commodityAdd.commodityDosageForm" placeholder="请输入商品大小转换比">
+                    </div>
+                    <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
+                        <label>剂型</label>
+                        <select class="form-control" v-model="commodityAdd.commodityFormDrug">
+                            <option value="液体剂型">液体剂型</option>
+                            <option value="气体剂型">气体剂型</option>
+                            <option value="固体剂型">固体剂型</option>
+                            <option value="半固体剂型">半固体剂型</option>
+                        </select>
+                    </div>
+                    <div class="form-group float-left" style="width: 15%;margin-right: 1%;">
+                        <label>剂量</label>
+                        <input type="text" v-model="commodityAdd.commodityDosage" class="form-control" placeholder="请输入剂量">
+                    </div>
+                    <div class="form-group float-left" style="width: 15%;margin-right: 2%;">
+                        <label>剂量单位</label>
+                        <select class="form-control" v-model="commodityAdd.commodityDosageUnit">
+                            <option value="mg">mg</option>
+                            <option value="g">g</option>
+                            <option value="kg">kg</option>
+                            <option value="ml">ml</option>
+                            <option value="l">l</option>
+                        </select>
+                    </div>
+                    <div class="form-group float-left" style="width: 31%;">
+                        <label>服用方式</label>
+                        <select class="form-control" v-model="commodityAdd.commodityTake">
+                            <option value="空腹服">空腹服</option>
+                            <option value="饭前服">饭前服</option>
+                            <option value="饭后服">饭后服</option>
+                            <option value="睡前服">睡前服</option>
+                            <option value="顿服">顿服</option>
+                        </select>
+                    </div>
+                    <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
+                        <label>服用频次</label>
+                        <select class="form-control" v-model="commodityAdd.commodityUsageFrequency">
+                            <option value="一天一次">一天一次</option>
+                            <option value="一天两次">一天两次</option>
+                            <option value="一天三次">一天三次</option>
+                            <option value="两天一次">两天一次</option>
+                            <option value="一周两次">一周两次</option>
+                            <option value="两周一次">两周一次</option>
+                        </select>
+                    </div>
+                    <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
+                        <label>单次服用剂量</label>
+                        <input type="text" v-model="commodityAdd.commoditySingleDose" class="form-control" placeholder="请输入单次服用剂量">
+                    </div>
+                    <hr>
+                    <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
+                        <label><span style="color:red;">*</span> 定价(元)</label>
+                        <input type="text" v-model="commodityAdd.commodityLargePrice" class="form-control" placeholder="请输入定价">
+                    </div>
+                    <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
+                        <label>拆零单价(元)(可不填，填则可拆零销售)</label>
+                        <input type="text" v-model="commodityAdd.commoditySmallPrice" class="form-control" placeholder="请输入拆零单价">
+                    </div>
                 </div>
-                <div class="form-group" style="float: left;width: 300px;margin-right: 15px;">
-                    <input type="text" class="form-control" name="inventory_manufacturer" placeholder="生产厂家">
-                </div>
-                <div class="form-group" style="float: left;width: 150px;margin-right: 15px;">
-                    <select class="form-control" name="inventory_category">
-                        <option value="">全部类型</option>
-                        <option value="中西成药">中西成药</option>
-                        <option value="中药">中药</option>
-                        <option value="保健药品">保健药品</option>
-                        <option value="消耗品">消耗品</option>
-                    </select>
-                </div>
-                <div style="float: left;">
-                    <button type="submit" class="btn btn-outline-primary">查询</button>
+                <hr>
+                <div class="bottom">
+                    <div style="float: right;">
+                        <button type="submit" class="btn btn-primary" v-on:click="save">保存</button>
+                    </div>
+                    <div style="float: right;margin-right: 15px;">
+                        <button type="button" class="btn btn-outline-primary" v-on:click="closeAddPage">取消</button>
+                    </div>
                 </div>
             </form>
-            <div style="float: right;margin-left: 15px;">
-                <button type="button" class="btn btn-outline-primary">导出</button>
-            </div>
-            <div style="float: right;">
-                <button type="button" class="btn btn-primary" id="add">新增品项</button>
-            </div>
-        </div>
-        <div class="info" id="infoList" th:fragment="infoList">
-            <table class="table table-striped" style="font-size: 15px;text-align: center;">
-                <thead>
-                <tr>
-                    <td scope="col" width="10%">品项名称</td>
-                    <td scope="col" width="10%">类型</td>
-                    <td scope="col" width="10%">生产厂家</td>
-                    <td scope="col" width="10%">国家编码</td>
-                    <td scope="col" width="10%">批准文号</td>
-                    <td scope="col" width="10%">条码</td>
-                    <td scope="col" width="15%">最新定价</td>
-                    <td scope="col" width="15%">库存数量</td>
-                    <td scope="col" width="10%">操作</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="commodity:${infoDTOList}">
-                    <td th:text="${commodity.getCommodity_name()==''?'--':commodity.getCommodity_name()}"></td>
-                    <td th:text="${commodity.getCommodity_category()==''?'--':commodity.getCommodity_category()}"></td>
-                    <td th:text="${commodity.getCommodity_manufacturer()==''?'--':commodity.getCommodity_manufacturer()}"></td>
-                    <td th:text="${commodity.getCommodity_country_code()==''?'--':commodity.getCommodity_country_code()}"></td>
-                    <td th:text="${commodity.getCommodity_approval_no()==''?'--':commodity.getCommodity_approval_no()}"></td>
-                    <td th:text="${commodity.getCommodity_bar_code()==''?'--':commodity.getCommodity_bar_code()}"></td>
-                    <td th:if="${commodity.getCommodity_split_sale_status() == 0}" th:text="${commodity.getCommodity_large_price()}+'元/'+${commodity.getCommodity_large_unit()}"></td>
-                    <td th:if="${commodity.getCommodity_split_sale_status() == 0}" th:text="${commodity.getInventory_large_num()}+${commodity.getCommodity_large_unit()}"></td>
-                    <td th:if="${commodity.getCommodity_split_sale_status() == 1}" th:text="${commodity.getCommodity_large_price()}+'元/'+${commodity.getCommodity_large_unit()}+' '+${commodity.getCommodity_small_price()}+'元/'+${commodity.getCommodity_small_unit()}"></td>
-                    <td th:if="${commodity.getCommodity_split_sale_status() == 1}" th:text="${commodity.getInventory_large_num()}+${commodity.getCommodity_large_unit()}+${commodity.getInventory_small_num()}+${commodity.getCommodity_small_unit()}"></td>
-                    <td>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" style="margin-right: 10px;" th:onclick="|edit('${commodity.getCommodity_id()}')|">编辑</button>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" id="yes1" style="display: block;">启用</button>
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-xs float-left" id="no1" style="display: none;">停用</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <p th:if="${infoDTOList.size() == 0}" class="no-data">暂无数据</p>
-        </div>
-        <div class="bottom">
-            <div class="float-left">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">上一页</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">65</a></li>
-                        <li class="page-item"><a class="page-link" href="#">66</a></li>
-                        <li class="page-item"><a class="page-link" href="#">下一页</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="float-right">
-                <p>共4种药品可售，医保数(国)4个</p>
-            </div>
         </div>
     </div>
+    <div class="shadow" ref="shadow"></div>
 </div>
-<div class="inventory-add" id="inventory-add">
-    <div class="inventory-pop2">
-        <div class="top">
-            <p>新增/编辑商品</p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" id="addClose" viewBox="0 0 16 16">
-                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-            </svg>
-        </div>
-        <form id="form2" th:action="@{/commodity/add}" method="post">
-            <div class="info">
-                <input type="text" class="form-control" id="commodity_id" name="commodity_id" style="display: none;">
-                <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
-                    <label><span style="color:red;">*</span> 品项名</label>
-                    <input type="text" class="form-control" id="commodity_name" name="commodity_name" placeholder="请输入品项名">
-                </div>
-                <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
-                    <label>国家编码</label>
-                    <input type="text" class="form-control" id="commodity_country_code" name="commodity_country_code" placeholder="请输入国家编码">
-                </div>
-                <div class="form-group float-left" style="width: 31%;">
-                    <label>准批文号</label>
-                    <input type="text" class="form-control" id="commodity_approval_no" name="commodity_approval_no" placeholder="请输入准批文号">
-                </div>
-                <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
-                    <label><span style="color:red;">*</span> 商品类型</label>
-                    <select class="form-control" id="commodity_category" name="commodity_category">
-                        <option value="中西成药">中西成药</option>
-                        <option value="中药">中药</option>
-                        <option value="保健药品">保健药品</option>
-                        <option value="消耗品">消耗品</option>
-                    </select>
-                </div>
-                <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
-                    <label>生产厂家</label>
-                    <input type="text" class="form-control" id="commodity_manufacturer" name="commodity_manufacturer" placeholder="请输入生产厂家">
-                </div>
-                <div class="form-group float-left" style="width: 31%;">
-                    <label>规格</label>
-                    <input type="text" class="form-control" id="commodity_specification" name="commodity_specification" placeholder="请输入规格">
-                </div>
-                <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
-                    <label>商品条码</label>
-                    <input type="text" class="form-control" id="commodity_bar_code" name="commodity_bar_code" placeholder="请输入商品条码">
-                </div>
-                <hr>
-                <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
-                    <label><span style="color:red;">*</span> 包装单位(大)</label>
-                    <select class="form-control" id="commodity_large_unit" name="commodity_large_unit">
-                        <option value="盒">盒</option>
-                        <option value="瓶">瓶</option>
-                        <option value="袋">袋</option>
-                        <option value="包">包</option>
-                        <option value="支">支</option>
-                        <option value="mg">mg</option>
-                        <option value="g">g</option>
-                        <option value="kg">kg</option>
-                    </select>
-                </div>
-                <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
-                    <label><span style="color:red;">*</span> 拆零单位(小)</label>
-                    <select class="form-control" id="commodity_small_unit" name="commodity_small_unit">
-                        <option value="颗">颗</option>
-                        <option value="瓶">瓶</option>
-                        <option value="袋">袋</option>
-                        <option value="包">包</option>
-                        <option value="支">支</option>
-                        <option value="粒">粒</option>
-                    </select>
-                </div>
-                <div class="form-group float-left" style="width: 31%;">
-                    <label>大小转换比</label>
-                    <input type="text" class="form-control" id="commodity_dosage_form" name="commodity_dosage_form" placeholder="请输入商品大小转换比">
-                </div>
-                <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
-                    <label>剂型</label>
-                    <select class="form-control" id="commodity_form_drug" name="commodity_form_drug">
-                        <option value="液体剂型">液体剂型</option>
-                        <option value="气体剂型">气体剂型</option>
-                        <option value="固体剂型">固体剂型</option>
-                        <option value="半固体剂型">半固体剂型</option>
-                    </select>
-                </div>
-                <div class="form-group float-left" style="width: 15%;margin-right: 1%;">
-                    <label>剂量</label>
-                    <input type="text" class="form-control" id="commodity_dosage" name="commodity_dosage" placeholder="请输入剂量">
-                </div>
-                <div class="form-group float-left" style="width: 15%;margin-right: 2%;">
-                    <label>剂量单位</label>
-                    <select class="form-control" id="commodity_dosage_unit" name="commodity_dosage_unit">
-                        <option value="mg">mg</option>
-                        <option value="g">g</option>
-                        <option value="kg">kg</option>
-                        <option value="ml">ml</option>
-                        <option value="l">l</option>
-                    </select>
-                </div>
-                <div class="form-group float-left" style="width: 31%;">
-                    <label>服用方式</label>
-                    <select class="form-control" id="commodity_take" name="commodity_take">
-                        <option value="空腹服">空腹服</option>
-                        <option value="饭前服">饭前服</option>
-                        <option value="饭后服">饭后服</option>
-                        <option value="睡前服">睡前服</option>
-                        <option value="顿服">顿服</option>
-                    </select>
-                </div>
-                <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
-                    <label>服用频次</label>
-                    <select class="form-control" id="commodity_usage_frequency" name="commodity_usage_frequency">
-                        <option value="一天一次">一天一次</option>
-                        <option value="一天两次">一天两次</option>
-                        <option value="一天三次">一天三次</option>
-                        <option value="两天一次">两天一次</option>
-                        <option value="一周两次">一周两次</option>
-                        <option value="两周一次">两周一次</option>
-                    </select>
-                </div>
-                <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
-                    <label>单次服用剂量</label>
-                    <input type="text" class="form-control" id="commodity_single_dose" name="commodity_single_dose" placeholder="请输入单次服用剂量">
-                </div>
-                <hr>
-                <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
-                    <label><span style="color:red;">*</span> 定价(元)</label>
-                    <input type="text" class="form-control" id="commodity_large_price" name="commodity_large_price" placeholder="请输入定价">
-                </div>
-                <div class="form-group float-left" style="width: 31%;margin-right: 2%;">
-                    <label>拆零单价(元)(可不填，填则可拆零销售)</label>
-                    <input type="text" class="form-control" id="commodity_small_price" name="commodity_small_price" placeholder="请输入拆零单价">
-                </div>
-                <input type="text" class="form-control" id="commodity_split_sale_status" name="commodity_split_sale_status" style="display: none;">
-                <input type="text" class="form-control" id="commodity_enable_status" name="commodity_enable_status" style="display: none;">
-            </div>
-            <hr>
-            <div class="bottom">
-                <div style="float: right;">
-                    <button type="submit" class="btn btn-primary">保存</button>
-                </div>
-                <div style="float: right;margin-right: 15px;">
-                    <button type="button" class="btn btn-outline-primary" id="addClose2">取消</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-<div class="shadow" id="shadow"/>
 <script>
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
-
-        //日期范围
-        laydate.render({
-            elem: '#test6'
-            //设置开始日期、日期日期的 input 选择器
-            //数组格式为 2.6.6 开始新增，之前版本直接配置 true 或任意分割字符即可
-            ,range: ['#test-startDate-1', '#test-endDate-1']
-        });
-    });
-    const btn1 = document.getElementById("add");
-    const add = document.getElementById("inventory-add");
-    const close = document.getElementById("addClose");
-    const close2 = document.getElementById("addClose2");
-    const shadow = document.getElementById("shadow");
-    const yes = document.getElementById("yes1");
-    const no = document.getElementById("no1");
-
-    btn1.onclick = function () {
-        shadow.style.display = "block";
-        add.style.display = "block";
-    };
-
-    close.onclick = function () {
-        shadow.style.display = "none";
-        add.style.display = "none";
-    };
-
-    close2.onclick = function () {
-        shadow.style.display = "none";
-        add.style.display = "none";
-    };
-
-    yes.onclick = function () {
-        yes.style.display = "none";
-        no.style.display = "block";
-    };
-
-    no.onclick = function () {
-        no.style.display = "none";
-        yes.style.display = "block";
-    }
-
-
-    /**
-     * 刷新商品页面信息
-     */
-    const form1 = document.getElementById("form1");
-    form1.addEventListener('submit',function (event) {
-        // 阻止表单默认提交行为
-        event.preventDefault();
-        // 创建FormData对象
-        const formData1 = new FormData(form1);
-        $.ajax({
-            url: '/inventory/toInventoryByQuery',
-            type: 'POST',
-            data: formData1,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                $("#infoList").html(data);
+    let vm = new Vue({
+        el: "#inventory",
+        data: {
+            pageData: {
+                pageSize: 15,
+                pageIndex: 1,
+                total: 0,
+                maxPage: 1,
             },
-            error:function (data) {
-                layer.msg('请求失败，请刷新重试');
+            // 查询条件
+            InventoryListQuery: {
+                inventoryCommodityName: '',
+                inventoryManufacturer: '',
+                inventoryCategory: '',
+                status: 1,
+                inventoryTenantId: '',
+                pageSize: 15,
+                pageIndex: 1,
+                enable: 1,
+            },
+            // 库存列表
+            commodityList: [{
+                commodityId: '',
+                commodityName: '',
+                commodityCountryCode: '',
+                commodityCategory: '',
+                commodityBarCode: '',
+                commodityManufacturer: '',
+                commodityApprovalNo: '',
+                commoditySpecification: '',
+                commodityLargeUnit: '',
+                commoditySmallUnit: '',
+                commodityLargePrice: '',
+                commoditySmallPrice: '',
+                commodityDosageForm: '',
+                commodityEnableStatus: '',
+                inventoryLargeNum: '',
+                inventorySmallNum: '',
+                commoditySplitSaleStatus: '',
+            }],
+            // 品项新增
+            commodityAdd: {
+                commodityId: '',
+                commodityName: '',
+                commodityPinyin: '',
+                commodityCountryCode: '',
+                commodityCategory: '',
+                commodityBarCode: '',
+                commodityManufacturer: '',
+                commodityApprovalNo: '',
+                commoditySpecification: '',
+                commodityLargeUnit: '',
+                commoditySmallUnit: '',
+                commodityLargePrice: '',
+                commoditySmallPrice: '',
+                commodityDosageForm: '',
+                commodityFormDrug: '',
+                commodityDosage: '',
+                commodityDosageUnit: '',
+                commodityTake: '',
+                commodityUsageFrequency: '',
+                commoditySingleDose: '',
+                commoditySplitSaleStatus: '',
+                commodityEnableStatus: 1,
+                commodityTenantId: '',
             }
-        })
-    });
-
-    /**
-     * 提交新增品相请求
-     * @type {HTMLElement}
-     */
-    const form2 = document.getElementById("form2");
-    const commodity_small_price = document.getElementById("commodity_small_price");
-    form2.addEventListener('submit', function(event) {
-        // 阻止表单默认提交行为
-        event.preventDefault();
-
-        // 创建FormData对象
-        const formData2 = new FormData(form2);
-        // 判断是否拆零销售
-        if(commodity_small_price.value !== ''){
-            formData2.set("commodity_split_sale_status","1");
-        }else{
-            formData2.set("commodity_split_sale_status","0");
+        },
+        methods: {
+            // 打开新增弹窗
+            openAddPage() {
+                this.$refs.shadow.style.display = "block";
+                this.$refs.add.style.display = "block";
+            },
+            // 关闭新增弹窗
+            closeAddPage() {
+                this.$refs.shadow.style.display = "none";
+                this.$refs.add.style.display = "none";
+            },
+            // 药品物资一览列表刷新
+            refresh() {
+                // 防止回调中this指向ajax回调函数本身导致失效
+                let that = this;
+                $.ajax({
+                    url: '/inventory/toInventoryByQuery',
+                    type: 'POST',
+                    data: JSON.stringify(this.InventoryListQuery),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        // 先清空上一次数据再push
+                        that.commodityList.splice(0, that.commodityList.length);
+                        response.infoDTOList.forEach((item) => {
+                            that.commodityList.push(item);
+                        });
+                        that.pageData.pageIndex = that.InventoryListQuery.pageIndex;
+                        that.pageData.pageSize = that.InventoryListQuery.pageSize;
+                        that.pageData.total = response.total;
+                        that.pageData.maxPage = response.maxPage;
+                    },
+                    error: function () {
+                        layer.msg('请求药品物资一览查询失败，请刷新重试');
+                    }
+                });
+            },
+            // 点击进行保存药品物资或者等待药品物资
+            save() {
+                // 设置拆零销售状态
+                this.commodityAdd.commoditySplitSaleStatus = this.commodityAdd.commoditySmallPrice !== '' ? 1 : 0;
+                let that = this;
+                $.ajax({
+                    url: '/commodity/addCommodity',
+                    type: 'POST',
+                    data: JSON.stringify(this.commodityAdd),
+                    contentType: 'application/json',
+                    success: function () {
+                        that.closeAddPage();
+                        // 清空新增品项填写内容
+                        that.commodityAdd = {};
+                        // 刷新药品物资一览界面
+                        that.refresh();
+                        layer.msg("新增或修改药品物资成功");
+                    },
+                    error: function () {
+                        layer.msg("新增或修改药品物资信息失败，请刷新重试");
+                    }
+                });
+            },
+            // 编辑药品物资
+            edit(id) {
+                let that = this;
+                $.ajax({
+                    url: '/commodity/selectCommodityById?id=' + id,
+                    type: 'GET',
+                    success: function (response) {
+                        that.commodityAdd = response;
+                        that.openAddPage();
+                    },
+                    error: function () {
+                        layer.msg("编辑失败，请检查这个商品是否还存在！");
+                    }
+                });
+            },
+            // 启用商品
+            enable(id, isEnable) {
+                let that = this;
+                $.ajax({
+                    url: '/commodity/enableOrDeactivate?id=' + id + '&enable=' + isEnable,
+                    type: 'GET',
+                    success: function () {
+                        layer.msg(isEnable ? "启用商品成功" : "禁用商品成功");
+                        that.refresh();
+                    },
+                    error: function () {
+                        layer.msg("更改商品状态失败，请刷新重试");
+                    }
+                });
+            },
+            // 上一页
+            previousPage() {
+                this.pageData.pageIndex--;
+                this.InventoryListQuery.pageIndex = this.pageData.pageIndex;
+                this.refresh();
+            },
+            // 下一页
+            nextPage() {
+                this.pageData.pageIndex++;
+                this.InventoryListQuery.pageIndex = this.pageData.pageIndex;
+                this.refresh();
+            },
+            // 设置页面大小
+            setPageSize(size) {
+                this.pageData.pageSize = size;
+                this.InventoryListQuery.pageSize = this.pageData.pageSize;
+                this.refresh();
+            },
+            // 输入页数发起请求
+            pageBlur() {
+                if (this.pageData.pageIndex > this.pageData.maxPage) {
+                    this.pageData.pageIndex = this.pageData.maxPage;
+                }
+                if (this.pageData.pageIndex < 1) {
+                    this.pageData.pageIndex = 1;
+                }
+                this.InventoryListQuery.pageIndex = this.pageData.pageIndex;
+                this.refresh();
+            },
+        },
+        computed: {},
+        mounted() {
+            // 先清空所有data的list，因为初始定义格式为一个全是空值的list
+            this.commodityList.splice(0, this.commodityList.length);
+            // 防止回调中this指向ajax回调函数本身导致失效
+            let that = this;
+            // 初始化加载数据
+            that.refresh();
+            layui.use('laydate', function () {
+                var laydate = layui.laydate;
+                //日期范围
+                laydate.render({
+                    elem: '#test1',
+                    //设置开始日期、日期日期的 input 选择器
+                    //数组格式为 2.6.6 开始新增，之前版本直接配置 true 或任意分割字符即可
+                    range: ['#test-startDate-1', '#test-endDate-1'],
+                    done: function (value) {
+                        let dataStr = value.toString().split(" - ");
+                        that.InventoryListQuery.inventoryInBeginTime = dataStr[0];
+                        that.InventoryListQuery.inventoryInEndTime = dataStr[1];
+                    }
+                });
+            })
         }
-        // 设置启用状态为启用
-        formData2.set("commodity_enable_status","1");
-
-        // 发送POST请求
-        axios.post('/commodity/add', formData2)
-            .then(function(response) {
-                // 更新新增品项页面
-                if(response.status === 200){
-                    layer.msg('新增成功');
-                    // 关闭弹窗
-                    shadow.style.display = "none";
-                    add.style.display = "none";
-                    // 创建FormData对象
-                    const formData1 = new FormData(form1);
-                    window.location.href = '/inventory/toInventory?' +
-                        'inventory_commodity_name='+formData1.get("inventory_commodity_name")+
-                        '&inventory_manufacturer='+formData1.get("inventory_manufacturer")+
-                        '&inventory_category='+formData1.get("inventory_category")
-                }else{
-                    console.log("插入失败");
-                }
-            }).catch(function(error) {
-                console.error(error);
-            });
     });
-
-    /**
-     * 修改值查询回显
-     * @param id
-     */
-    function edit(id) {
-        axios.get('/inventory/selectById',{
-            params: {
-                id: id,
-            }
-        }).then(function (response) {
-            // 回显值
-            const formElements = document.getElementById("form2").elements;
-            for (let i = 0; i < formElements.length; i++) {
-                const element = formElements[i];
-                if (element.id in response.data) {
-                    element.value = response.data[element.id];
-                }
-            }
-            // 打开弹窗
-            shadow.style.display = "block";
-            add.style.display = "block";
-        })
-    }
-
-
-
 </script>
 </body>
 </html>

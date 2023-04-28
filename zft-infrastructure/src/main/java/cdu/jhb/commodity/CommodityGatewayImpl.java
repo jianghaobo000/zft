@@ -2,6 +2,7 @@ package cdu.jhb.commodity;
 
 import cdu.jhb.commodity.database.CommodityMapper;
 import cdu.jhb.commodity.database.dataobject.CommodityDO;
+import cdu.jhb.common.DictException;
 import cdu.jhb.domain.commodity.Commodity;
 import cdu.jhb.domain.commodity.gateway.CommodityGateway;
 import cdu.jhb.domain.inventory.Inventory;
@@ -33,7 +34,6 @@ public class CommodityGatewayImpl implements CommodityGateway {
 
     private final CommodityMapper commodityMapper;
     private final InventoryMapper inventoryMapper;
-    private final TenantGateway tenantGateway;
 
     /**
      * 新增品项
@@ -75,7 +75,7 @@ public class CommodityGatewayImpl implements CommodityGateway {
     }
 
     /**
-     * 搜索药品
+     * 搜索药品(可通过名称与拼音全拼简拼进行模糊查询)
      * @param name
      * @return
      */
@@ -85,8 +85,37 @@ public class CommodityGatewayImpl implements CommodityGateway {
         queryWrapper.lambda()
                 .like(CommodityDO::getCommodityName,name)
                 .or()
-                .like(CommodityDO::getCommodityPinyin,name);
+                .like(CommodityDO::getCommodityPinyin,name)
+                .eq(CommodityDO::getCommodityEnableStatus,1)
+                .eq(CommodityDO::getCommodityTenantId,RedisUtil.getLocalTenantId());
         List<CommodityDO> commodityDOList = commodityMapper.selectList(queryWrapper);
         return Convert.listConvert(commodityDOList,Commodity.class);
+    }
+
+    /**
+     * 通过ID搜索药品
+     * @param id
+     * @return
+     */
+    @Override
+    public Commodity selectCommodityById(Long id) {
+        CommodityDO commodityDO = commodityMapper.selectById(id);
+        return Convert.entityConvert(commodityDO,Commodity.class);
+    }
+
+    /**
+     * 设置商品启用状态
+     * @param id
+     * @param enable
+     * @return
+     */
+    @Override
+    public Boolean enableOrDeactivate(Long id, Integer enable) {
+        UpdateWrapper<CommodityDO> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.lambda().eq(CommodityDO::getCommodityId,id).set(CommodityDO::getCommodityEnableStatus,enable);
+        if(commodityMapper.update(null,updateWrapper) != 1){
+            throw new RuntimeException(DictException.UPDATE_PRODUCT_ENABLE_FAILED);
+        }
+        return true;
     }
 }
