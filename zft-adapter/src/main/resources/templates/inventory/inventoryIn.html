@@ -171,7 +171,7 @@
                                     </svg>
                                 </button>
                             </div>
-                            <input v-on:focus="onInput($event.target.value)" v-on:input="onInput($event.target.value)" v-on:blur="onBlur" type="text" id="selectCommodity" class="form-control" placeholder="请输入 药品名/国家码 搜索药品" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                            <input autocomplete="off" v-on:focus="onInput($event.target.value)" v-on:input="onInput($event.target.value)" v-on:blur="onBlur" type="text" id="selectCommodity" class="form-control" placeholder="请输入 药品名/国家码 搜索药品" aria-label="Example text with button addon" aria-describedby="button-addon1">
                         </div>
                         <div class="select-input" ref="selectInput">
                             <table id="select-input-table" class="select-input-table" style="width: 100%;">

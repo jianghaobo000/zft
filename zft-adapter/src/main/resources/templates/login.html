@@ -16,7 +16,7 @@
         <label for="inputCountryCode" class="sr-only">国家码</label>
         <input type="text" id="inputCountryCode" name="country_code" v-model="loginData.countryCode" class="form-control" style="background-color: rgba(255,255,255,0.2)" placeholder="国家码" required><br>
         <label for="inputVerificationCode" class="sr-only">验证码</label>
-        <input type="text" id="inputVerificationCode" name="code" v-model="loginData.code" class="form-control" style="background-color: rgba(255,255,255,0.2)" placeholder="验证码" required><br>
+        <input type="text" autocomplete="off" id="inputVerificationCode" name="code" v-model="loginData.code" class="form-control" style="background-color: rgba(255,255,255,0.2)" placeholder="验证码" required><br>
         <div v-on:click="getImg"><img style="width: 300px;height: 100px;" ref="img"></div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
     </form>

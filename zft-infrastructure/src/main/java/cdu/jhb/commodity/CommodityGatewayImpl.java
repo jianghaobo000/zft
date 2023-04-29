@@ -53,6 +53,8 @@ public class CommodityGatewayImpl implements CommodityGateway {
                 InventoryDO inventoryDO = new InventoryDO();
                 inventoryDO.setInventoryCommodityId(commodityDO.getCommodityId());
                 inventoryDO.setInventoryCommodityName(commodityDO.getCommodityName());
+                inventoryDO.setInventoryCommodityPinyin(commodityDO.getCommodityPinyin());
+                inventoryDO.setInventoryDosageForm(commodityDO.getCommodityDosageForm());
                 inventoryDO.setInventoryLargeUnit(commodityDO.getCommodityLargeUnit());
                 inventoryDO.setInventorySmallUnit(commodityDO.getCommoditySmallUnit());
                 inventoryDO.setInventoryTenantId(commodityDO.getCommodityTenantId());
@@ -65,6 +67,8 @@ public class CommodityGatewayImpl implements CommodityGateway {
                 UpdateWrapper<InventoryDO> updateWrapper = new UpdateWrapper<>();
                 updateWrapper.lambda().eq(InventoryDO::getInventoryCommodityId,commodityDO.getCommodityId())
                         .set(InventoryDO::getInventoryCommodityName,commodityDO.getCommodityName())
+                        .set(InventoryDO::getInventoryCommodityPinyin,commodityDO.getCommodityPinyin())
+                        .set(InventoryDO::getInventoryDosageForm,commodityDO.getCommodityDosageForm())
                         .set(InventoryDO::getInventoryLargeUnit,commodityDO.getCommodityLargeUnit())
                         .set(InventoryDO::getInventorySmallUnit,commodityDO.getCommoditySmallUnit());
                 int row2 = inventoryMapper.update(null,updateWrapper);
