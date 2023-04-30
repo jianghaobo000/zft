@@ -33,9 +33,9 @@ public class DepartmentDTO {
     private String departmentName;
 
     /**
-     * 科室类别
+     * 科室拼音码
      */
-    private String departmentCategory;
+    private String departmentPinYin;
 
     /**
      * 科室批准床位数

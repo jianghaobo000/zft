@@ -51,7 +51,7 @@
                     <div class="form-group" style="float: left;width: 140px;margin-right: 15px;">
                         <select class="form-control" v-model="InventoryOutListQuery.inventoryOutOperatorId" name="inventoryOutOperatorId">
                             <option value="">全部出库人</option>
-                            <option v-for="account in accountList" :value="account.accountId">{{ account.accountName }}</option>
+                            <option v-for="employee in employeeList" :value="employee.employeeId">{{ employee.employeeName }}</option>
                         </select>
                     </div>
                     <div style="float: left;">
@@ -146,7 +146,7 @@
                     <div class="form-group" style="float: left;width: 140px;margin-right: 30px;">
                         <select class="form-control" name="inventoryOutOperatorId" v-model="inventoryOutAdd.inventoryOutOperatorId">
                             <option value="" style="display: none">请选择出库人</option>
-                            <option v-for="account in accountList" :value="account.accountId">{{ account.accountName }}</option>
+                            <option v-for="employee in employeeList" :value="employee.employeeId">{{ employee.employeeName }}</option>
                         </select>
                     </div>
                     <p><span style="color: red">*</span> 出库类型</p>
@@ -332,9 +332,9 @@
                 pageIndex: 1,
             },
             // 出库人列表
-            accountList: [{
-                accountId: '',
-                accountName: '',
+            employeeList: [{
+                employeeId: '',
+                employeeName: '',
             }],
             // 出库单列表
             inventoryOutList: [{
@@ -684,7 +684,7 @@
         mounted() {
             // 先清空所有data的list，因为初始定义格式为一个全是空值的list
             this.inventoryOutList.splice(0, this.inventoryOutList.length);
-            this.accountList.splice(0, this.accountList.length);
+            this.employeeList.splice(0, this.employeeList.length);
             this.inventoryList.splice(0, this.inventoryList.length);
             this.inventoryOutAdd.inventoryOutDetailList.splice(0, this.inventoryOutAdd.inventoryOutDetailList.length);
             this.inventoryOutDetail.inventoryOutDetailList.splice(0,this.inventoryOutDetail.inventoryOutDetailList.length);
@@ -694,11 +694,11 @@
             that.refresh();
             //获取出库人列表
             $.ajax({
-                url: '/account/getAccountList',
+                url: '/account/getEmployeeList',
                 type: 'GET',
                 success: function (response) {
                     response.forEach((item) => {
-                        that.accountList.push(item);
+                        that.employeeList.push(item);
                     });
                 },
                 error:function () {

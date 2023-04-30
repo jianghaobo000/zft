@@ -8,7 +8,9 @@ import cdu.jhb.common.DictException;
 import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.Practice;
+import cdu.jhb.domain.manage.Department;
 import cdu.jhb.domain.manage.gateway.ManageGateway;
+import cdu.jhb.manage.data.request.DepartmentInfoRequest;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.util.Convert;
 import cdu.jhb.util.PinYinConvert;
@@ -36,6 +38,30 @@ public class ManageModExe {
 
     private final EmployeeMapper employeeMapper;
 
+
+    /**
+     * 保存或修改科室信息
+     * @param infoRequest
+     * @return
+     */
+    public Boolean saveDepartment(DepartmentInfoRequest infoRequest) {
+        // 转换拼音码
+        infoRequest.getDepartmentAdd().setDepartmentPinYin(PinYinConvert.getAllPinYinAndHeadChar(infoRequest.getDepartmentAdd().getDepartmentName()));
+        // 分离请求参数
+        Department department = Convert.entityConvert(infoRequest.getDepartmentAdd(),Department.class);
+        List<Employee> employeeList = Convert.listConvert(infoRequest.getDepartmentEmployeeList(),Employee.class);
+        return manageGateway.saveDepartment(department,employeeList);
+    }
+
+    /**
+     * 删除科室
+     * @param did
+     * @return
+     */
+    public Boolean deleteDepartmentById(Long did) {
+        return manageGateway.deleteDepartmentById(did);
+    }
+
     /**
      * 保存或修改员工信息
      * @param staffInfoRequest
@@ -45,7 +71,7 @@ public class ManageModExe {
         // 转换拼音
         staffInfoRequest.getEmployeeDTO().setEmployeePinYin(PinYinConvert.getAllPinYinAndHeadChar(staffInfoRequest.getEmployeeDTO().getEmployeeName()));
         // 转化内部为实体
-        Employee employee = Convert.entityConvert(staffInfoRequest.getAccountDTO(), Employee.class);
+        Employee employee = Convert.entityConvert(staffInfoRequest.getEmployeeDTO(), Employee.class);
         Account account = Convert.entityConvert(staffInfoRequest.getAccountDTO(),Account.class);
         Practice practice = Convert.entityConvert(staffInfoRequest.getPracticeDTO(),Practice.class);
         return manageGateway.saveStaff(employee,account,practice);

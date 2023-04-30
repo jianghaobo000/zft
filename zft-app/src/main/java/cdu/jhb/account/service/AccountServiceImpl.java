@@ -4,6 +4,7 @@ import cdu.jhb.account.api.AccountServiceI;
 import cdu.jhb.account.command.AccountModExe;
 import cdu.jhb.account.command.AccountQryExe;
 import cdu.jhb.account.data.dto.AccountDTO;
+import cdu.jhb.account.data.dto.EmployeeDTO;
 import cdu.jhb.util.GetMsg;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -68,5 +69,23 @@ public class AccountServiceImpl implements AccountServiceI {
     @Override
     public List<AccountDTO> getAccountList() {
         return accountQryExe.getAccountList();
+    }
+
+    /**
+     * 获取员工列表
+     * @return
+     */
+    @Override
+    public List<EmployeeDTO> getEmployeeList() {
+        return accountQryExe.getEmployeeList();
+    }
+
+    /**
+     * 获取没有分配科室的员工列表
+     * @return
+     */
+    @Override
+    public List<EmployeeDTO> getNoDepartEmployeeList() {
+        return accountQryExe.getNoDepartEmployeeList();
     }
 }

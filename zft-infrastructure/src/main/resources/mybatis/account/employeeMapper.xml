@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cdu.jhb.account.database.EmployeeMapper">
+
+    <select id="getDepartmentEmployeeList" resultType="cdu.jhb.account.database.dataobject.EmployeeDO">
+        SELECT *
+        FROM employee_table e
+        LEFT JOIN practice_table p ON e.employee_practice_id = p.practice_id
+        WHERE p.practice_department_id = #{did} AND e.employee_tenant_id = #{tenantId}
+    </select>
+
+    <select id="getEmployeeList" resultType="cdu.jhb.account.data.dto.EmployeeDTO">
+        SELECT * FROM employee_table a
+        WHERE a.employee_tenant_id = #{tenant_id}
+    </select>
+
+    <select id="getNoDepartEmployeeList" resultType="cdu.jhb.account.data.dto.EmployeeDTO">
+        SELECT *
+        FROM employee_table e
+        LEFT JOIN practice_table p ON e.employee_practice_id = p.practice_id
+        WHERE e.employee_tenant_id = #{tenantId} AND p.practice_tenant_id = #{tenantId}
+        AND (p.practice_department_id = '' OR p.practice_department_id IS NULL)
+    </select>
+
+    <update id="setDepartmentId">
+        UPDATE employee_table e
+        JOIN practice_table p ON e.employee_practice_id = p.practice_id
+        SET p.practice_department_id = #{did}
+        WHERE e.employee_id IN #{eids} AND e.employee_tenant_id = #{tenantId}
+    </update>
+
+    <update id="setDepartmentIdNull">
+        UPDATE employee_table e
+        JOIN practice_table p ON e.employee_practice_id = p.practice_id
+        SET p.practice_department_id = NULL
+        WHERE e.employee_id IN #{eids} AND e.employee_tenant_id = #{tenantId}
+    </update>
+
+</mapper>

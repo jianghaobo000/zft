@@ -9,7 +9,9 @@ import cdu.jhb.account.database.PracticeMapper;
 import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.Practice;
+import cdu.jhb.domain.manage.Department;
 import cdu.jhb.domain.manage.gateway.ManageGateway;
+import cdu.jhb.manage.data.dto.DepartmentDTO;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
 import cdu.jhb.util.Convert;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,26 @@ public class ManageQryExe {
     private final AccountMapper accountMapper;
 
     private final PracticeMapper practiceMapper;
+
+    /**
+     * 获取科室列表
+     * @param name
+     * @return
+     */
+    public List<DepartmentDTO> getDepartmentList(String name) {
+        List<Department> departmentList = manageGateway.getDepartmentList(name);
+        return Convert.listConvert(departmentList,DepartmentDTO.class);
+    }
+
+    /**
+     * 获取科室下的成员列表
+     * @param did
+     * @return
+     */
+    public List<EmployeeDTO> getDepartmentEmployeeList(Long did) {
+        List<Employee> employeeList = manageGateway.getDepartmentEmployeeList(did);
+        return Convert.listConvert(employeeList,EmployeeDTO.class);
+    }
 
     /**
      * 获取员工列表

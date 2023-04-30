@@ -4,6 +4,8 @@ import cdu.jhb.account.data.dto.EmployeeDTO;
 import cdu.jhb.manage.api.ManageServiceI;
 import cdu.jhb.manage.command.ManageModExe;
 import cdu.jhb.manage.command.ManageQryExe;
+import cdu.jhb.manage.data.dto.DepartmentDTO;
+import cdu.jhb.manage.data.request.DepartmentInfoRequest;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
 import lombok.AllArgsConstructor;
@@ -27,6 +29,46 @@ public class ManageServiceImpl implements ManageServiceI {
     private final ManageModExe manageModExe;
 
     private final ManageQryExe manageQryExe;
+
+    /**
+     * 获取科室列表
+     * @param name
+     * @return
+     */
+    @Override
+    public List<DepartmentDTO> getDepartmentList(String name) {
+        return manageQryExe.getDepartmentList(name);
+    }
+
+    /**
+     * 保存或修改科室信息
+     * @param infoRequest
+     * @return
+     */
+    @Override
+    public Boolean saveDepartment(DepartmentInfoRequest infoRequest) {
+        return manageModExe.saveDepartment(infoRequest);
+    }
+
+    /**
+     * 获取该科室下的成员列表
+     * @param did
+     * @return
+     */
+    @Override
+    public List<EmployeeDTO> getDepartmentEmployeeList(Long did) {
+        return manageQryExe.getDepartmentEmployeeList(did);
+    }
+
+    /**
+     * 删除科室
+     * @param did
+     * @return
+     */
+    @Override
+    public Boolean deleteDepartmentById(Long did) {
+        return manageModExe.deleteDepartmentById(did);
+    }
 
     /**
      * 获取员工列表

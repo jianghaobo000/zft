@@ -1,8 +1,11 @@
 package cdu.jhb.domain.manage.gateway;
 
+import cdu.jhb.account.data.dto.EmployeeDTO;
 import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.Practice;
+import cdu.jhb.domain.manage.Department;
+import cdu.jhb.manage.data.dto.DepartmentDTO;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
 
@@ -15,6 +18,32 @@ import java.util.List;
 * @version 1.0
 */
 public interface ManageGateway {
+
+    /**
+     * 获取科室列表
+     * @param name
+     * @return
+     */
+    List<Department> getDepartmentList(String name);
+
+    /**
+     * 获取科室下的成员列表
+     * @param did
+     * @return
+     */
+    List<Employee> getDepartmentEmployeeList(Long did);
+
+    /**
+     * 保存或修改科室信息
+     */
+    Boolean saveDepartment(Department department,List<Employee> employeeList);
+
+    /**
+     * 删除科室
+     * @param did
+     * @return
+     */
+    Boolean deleteDepartmentById(Long did);
 
     /**
      * 获取员工列表

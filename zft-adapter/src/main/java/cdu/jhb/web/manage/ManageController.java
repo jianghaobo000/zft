@@ -1,10 +1,13 @@
 package cdu.jhb.web.manage;
 
 import cdu.jhb.account.data.dto.EmployeeDTO;
+import cdu.jhb.manage.data.dto.DepartmentDTO;
+import cdu.jhb.manage.data.request.DepartmentInfoRequest;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
 import cdu.jhb.manage.api.ManageServiceI;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -41,6 +44,49 @@ public class ManageController {
     @GetMapping("toOffices")
     public String toOffices(){
         return "manage/manageOffices";
+    }
+
+    /**
+     * 获取科室列表
+     * @param name
+     * @return
+     */
+    @GetMapping("getDepartmentList")
+    public ResponseEntity<?> getDepartmentList(@RequestParam("name")String name){
+        List<DepartmentDTO> departmentDTOList = manageService.getDepartmentList(name);
+        return ResponseEntity.ok(departmentDTOList);
+    }
+
+    /**
+     * 保存或修改科室信息
+     * @return
+     */
+    @PostMapping("saveDepartment")
+    public ResponseEntity<?> saveDepartment(@RequestBody DepartmentInfoRequest infoRequest){
+        if(manageService.saveDepartment(infoRequest)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    /**
+     * 获取该科室的科室成员列表
+     */
+    @GetMapping("getDepartmentEmployeeList")
+    public ResponseEntity<?> getDepartmentEmployeeList(@RequestParam("did")Long did){
+        List<EmployeeDTO> employeeDTOList = manageService.getDepartmentEmployeeList(did);
+        return ResponseEntity.ok(employeeDTOList);
+    }
+
+    /**
+     * 删除科室信息
+     */
+    @GetMapping("deleteDepartmentById")
+    public ResponseEntity<?> deleteDepartmentById(@RequestParam("did")Long did){
+        if(manageService.deleteDepartmentById(did)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     /**

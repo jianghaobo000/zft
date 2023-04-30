@@ -7,7 +7,7 @@
 </head>
 <body style="background-color: rgb(225,228,232);">
 <div th:replace="~{common/common::headbar}"/>
-<div class="manage">
+<div class="manage" id="manageOffices">
     <div class="left">
         <div th:replace="~{common/common::manageMeau}"/>
     </div>
@@ -24,42 +24,28 @@
             <div class="info-left">
                 <div class="title">
                     <div class="form-group float-left" style="width: 150px;">
-                        <input type="text" class="form-control" name="" placeholder="查询科室">
+                        <input type="text" class="form-control" v-on:input="getDepartmentList($event.target.value)" placeholder="查询科室">
                     </div>
-                    <div class="add" id="addOffices">
+                    <div class="add" id="addOffices" v-on:click="addDepartment">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill svg-text" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                         </svg>
                         新增科室
                     </div>
                 </div>
-                <div class="name">
-                    儿科 (1102)
+                <div class="name" v-for="department in departmentList" v-on:click="detail(department)">
+                    {{department.departmentName+'('+department.departmentCode+')'}}
                 </div>
-                <div class="name">
-                    消化内科 (2045)
-                </div>
-                <div class="name">
-                    肿瘤科 (2871)
-                </div>
-                <div class="name">
-                    骨科 (1774)
-                </div>
-                <div class="name">
-                    泌尿科 (1023)
-                </div>
-                <div class="name">
-                    呼吸内科 (2650)
-                </div>
+                <p v-if="departmentList.length === 0" class="no-data">暂无科室</p>
             </div>
             <div class="info-right">
                 <div class="title">
                     <p>新增科室</p>
                     <div style="float: right;margin-left: 10px;">
-                        <button type="button" class="btn btn-primary">保存</button>
+                        <button type="button" class="btn btn-primary" v-on:click="save">保存</button>
                     </div>
                     <div style="float: right;">
-                        <button type="button" class="btn btn-outline-primary">删除</button>
+                        <button type="button" class="btn btn-outline-primary" v-on:click="deleteDepartmentById(departmentAdd.departmentId)">删除</button>
                     </div>
                 </div>
                 <div class="input">
@@ -67,13 +53,13 @@
                         诊所编码
                     </div>
                     <div class="form-group" style="float: left;width: 350px;margin-right: 50px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入诊所编码">
+                        <input type="text" class="form-control" v-model="departmentAdd.departmentTenantId" placeholder="诊所编码自动生成" readonly>
                     </div>
                     <div class="text">
                         <span style="color: red;">* </span>科室编码
                     </div>
                     <div class="form-group" style="float: left;width: 350px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入科室编码">
+                        <input type="text" class="form-control" v-model="departmentAdd.departmentCode" placeholder="请输入科室编码">
                     </div>
                 </div>
                 <div class="input">
@@ -81,13 +67,13 @@
                         <span style="color: red;">* </span>科室名称
                     </div>
                     <div class="form-group" style="float: left;width: 350px;margin-right: 50px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入科室名称">
+                        <input type="text" class="form-control" v-model="departmentAdd.departmentName" placeholder="请输入科室名称">
                     </div>
                     <div class="text">
-                        <span style="color: red;">* </span>科室类型
+                        科室联系电话
                     </div>
-                    <div class="form-group" style="float: left;width: 350px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入科室类型">
+                    <div class="form-group" style="float: left;width: 350px;margin-right: 50px;">
+                        <input type="text" class="form-control" v-model="departmentAdd.departmentTel" placeholder="请输入科室联系电话">
                     </div>
                 </div>
                 <div class="input">
@@ -95,113 +81,132 @@
                         批准床位数
                     </div>
                     <div class="form-group" style="float: left;width: 350px;margin-right: 50px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入批准床位数">
+                        <input type="text" class="form-control" v-model="departmentAdd.departmentBedNum" placeholder="请输入批准床位数">
                     </div>
                     <div class="text">
                         <span style="color: red;">* </span>科室负责人
                     </div>
                     <div class="form-group" style="float: left;width: 350px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入科室负责人">
+                        <input type="text" class="form-control" v-model="departmentAdd.departmentHeader" placeholder="请输入科室负责人">
+                    </div>
+                </div>
+                <div class="input" style="height: 120px">
+                    <div class="text">
+                        科室介绍
+                    </div>
+                    <div style="float: left;width: 900px;">
+                        <textarea class="form-control" style="resize:none;" rows="3" v-model="departmentAdd.departmentIntroduce" placeholder="请输入科室介绍"></textarea>
                     </div>
                 </div>
                 <div class="input">
                     <div class="text">
-                        科室联系电话
+                        科室成员
                     </div>
-                    <div class="form-group" style="float: left;width: 350px;margin-right: 50px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入科室联系电话">
-                    </div>
-                </div>
-                <div class="input">
-                    <div class="text">
-                        <span style="color: red;">* </span>科室成员
-                    </div>
-                    <div style="float: left;width: 350px;">
-                        <button type="button" class="btn btn-outline-primary btn-sm float-left" style="margin-right: 5px;">
+                    <div style="float: left;width: 1050px;">
+                        <button type="button" class="btn btn-outline-primary btn-sm float-left" style="margin-right: 5px;" v-for="employee in departmentEmployeeList" v-on:click="deleteFromList(employee)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                             </svg>
-                            姜昊波
+                            {{employee.employeeName}}
                         </button>
-                        <button type="button" class="btn btn-outline-primary btn-sm float-left" style="margin-right: 5px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                            </svg>
-                            张医生
-                        </button>
-                        <button type="button" class="btn btn-outline-primary btn-sm float-left" style="margin-right: 5px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                            </svg>
-                            刘医生
-                        </button>
-                        <button type="button" class="btn btn-outline-primary btn-sm float-left">
+                        <button type="button" class="btn btn-outline-primary btn-sm float-left" v-on:click="getEmployeeList">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
                             </svg>
                         </button>
                     </div>
                 </div>
-                <div class="input">
-                    <div class="text">
-                        科室介绍
-                    </div>
-                    <div style="float: left;width: 900px;">
-                        <textarea class="form-control" style="resize:none;" rows="3" placeholder="请输入科室介绍"></textarea>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
+    <div class="emp" ref="emp">
+        <div class="emp2">
+            <div class="head">
+                <div class="float-right">
+                    <div>
+                        <svg v-on:click="closeEmpPage" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg-text float-right" viewBox="0 0 16 16">
+                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom">
+                <div class="name" v-for="employee in employeeList" v-on:click="addEmployeeToDepartment(employee)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill svg-text" :style="employee.employeeSex === '男' ? 'color: #5db2f1;':'color: #ff6587;'" viewBox="0 0 16 16">
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    </svg>&nbsp;
+                    {{employee.employeeName}}
+                </div>
+                <p class="no-data" v-if="employeeList.length === 0">暂无成员没分配科室</p>
+            </div>
+        </div>
+    </div>
+    <div class="shadow" ref="shadow"></div>
 </div>
 
 <script>
     let vm = new Vue({
-        el: "#manageClinic",
+        el: "#manageOffices",
         data: {
-            tenantInfo:{
-                tenantId: '',
-                tenantName: '',
-                tenantAbbreviation: '',
-                tenantTel: '',
-                tenantSize: '',
-                tenantAddress: '',
-                tenantBeginTime: '',
-                tenantIntroduce: '',
-                tenantRate: '',
-                tenantLegalName: '',
-                tenantLegalNumber: '',
-                tenantLicenseKey: '',
-                tenantCreditCode: '',
-                tenantCountryCode: '',
-                tenantRemarks: '',
-            }
+            departmentList:[{
+                departmentId: null,
+                departmentCode: '',
+                departmentName: '',
+                departmentPinYin: '',
+                departmentBedNum: '',
+                departmentHeader: '',
+                departmentTel: '',
+                departmentIntroduce: '',
+                departmentTenantId: null,
+            }],
+            departmentAdd:{
+                departmentId: null,
+                departmentCode: '',
+                departmentName: '',
+                departmentPinYin: '',
+                departmentBedNum: '',
+                departmentHeader: '',
+                departmentTel: '',
+                departmentIntroduce: '',
+                departmentTenantId: null,
+            },
+            departmentEmployeeList:[{
+                employeeId: null,
+                employeeName:'',
+                employeeSex: '',
+            }],
+            employeeList:[{
+                employeeId: null,
+                employeeName:'',
+                employeeSex: '',
+            }]
         },
         methods: {
             // 保存诊所信息
             save(){
-                if(this.tenantInfo.tenantName === ''){
-                    layer.msg('诊所名称不能为空');
+                if(this.departmentAdd.departmentCode === ''){
+                    layer.msg('科室编码不能为空');
                     return;
                 }
-                if(this.tenantInfo.tenantLegalName === ''){
-                    layer.msg('法定代表人姓名不能为空');
+                if(this.departmentAdd.departmentName === ''){
+                    layer.msg('科室名称不能为空');
                     return;
                 }
-                if(this.tenantInfo.tenantLegalNumber === ''){
-                    layer.msg('法定代表人身份证号不能为空');
+                if(this.departmentAdd.departmentHeader === ''){
+                    layer.msg('科室负责人不能为空');
                     return;
                 }
-                if(this.tenantInfo.tenantCreditCode === ''){
-                    layer.msg('统一社会信用代码不能为空');
-                    return;
-                }
+                let that = this;
                 $.ajax({
-                    url: '/tenant/saveTenant',
+                    url: '/manage/saveDepartment',
                     type: 'POST',
-                    data: JSON.stringify(this.tenantInfo),
+                    data: JSON.stringify({
+                        departmentAdd: this.departmentAdd,
+                        departmentEmployeeList: this.departmentEmployeeList,
+                    }),
                     contentType: 'application/json',
-                    success: function (response) {
+                    success: function () {
+                        that.getDepartmentList('');
                         layer.msg('保存成功');
                     },
                     error: function () {
@@ -209,36 +214,134 @@
                     }
                 });
             },
-            // 获取诊所信息
-            refresh(){
+            // 获取科室列表
+            getDepartmentList(name){
                 let that = this;
                 $.ajax({
-                    url: '/tenant/getTenantInfo',
+                    url: '/manage/getDepartmentList?name='+name,
                     type: 'GET',
                     success: function (response) {
-                        that.tenantInfo = response;
-                        // 渲染诊所等级
-                        layui.use(['rate'], function() {
-                            var rate = layui.rate;
-                            rate.render({
-                                elem: '#test1',
-                                value: that.tenantInfo.tenantRate,
-                                half: true,
-                                readonly: true,
-                            });
+                        // 先清空
+                        that.departmentList.splice(0,that.departmentList.length);
+                        response.forEach(item=>{
+                            that.departmentList.push(item);
                         });
+                        if(that.departmentList.length>0){
+                            that.detail(that.departmentList[0]);
+                        }else {
+                            that.addDepartment();
+                        }
                     },
                     error: function () {
-                        layer.msg('获取诊所信息失败，请刷新重试');
+                        layer.msg('获取科室信息失败，请刷新重试');
                     }
                 });
+            },
+            // 详情
+            detail(department){
+                this.departmentAdd = department;
+                this.getDepartmentEmployeeList();
+            },
+            // 获取科室成员
+            getDepartmentEmployeeList(){
+                let that = this;
+                $.ajax({
+                    url: '/manage/getDepartmentEmployeeList?did='+that.departmentAdd.departmentId,
+                    type: 'GET',
+                    success: function (response) {
+                        // 先清空
+                        that.departmentEmployeeList.splice(0,that.departmentEmployeeList.length);
+                        response.forEach(item=>{
+                            that.departmentEmployeeList.push(item);
+                        })
+                    },
+                    error: function () {
+                        layer.msg('获取科室成员列表信息失败，请刷新重试');
+                    }
+                });
+            },
+            // 获取没有分配科室的员工列表
+            getEmployeeList(){
+                let that = this;
+                $.ajax({
+                    url: '/account/getNoDepartEmployeeList',
+                    type: 'GET',
+                    success: function (response) {
+                        // 先清空
+                        that.employeeList.splice(0,that.employeeList.length);
+                        response.forEach(item=>{
+                            that.employeeList.push(item);
+                        });
+                        // 去掉已经有的员工
+                        that.employeeList = that.employeeList.filter(item1 => !that.departmentEmployeeList.some(item2 => item1.employeeId === item2.employeeId));
+                        // 打开弹窗
+                        that.openEmpPage();
+                    },
+                    error: function () {
+                        layer.msg('获取没有分配科室的员工列表信息失败，请刷新重试');
+                    }
+                });
+            },
+            // 添加员工到科室
+            addEmployeeToDepartment(employee){
+                this.departmentEmployeeList.push(employee);
+                // 关闭弹窗
+                this.closeEmpPage();
+            },
+            // 删除科室
+            deleteDepartmentById(did){
+                let that = this;
+                $.ajax({
+                    url: '/manage/deleteDepartmentById?did='+did,
+                    type: 'GET',
+                    success: function () {
+                        that.getDepartmentList('');
+                        layer.msg('删除成功');
+                    },
+                    error: function () {
+                        layer.msg('删除科室信息失败，请刷新重试');
+                    }
+                });
+            },
+            // 新增科室时清空界面
+            addDepartment(){
+                this.departmentAdd = {
+                    departmentId: null,
+                    departmentCode: '',
+                    departmentName: '',
+                    departmentPinYin: '',
+                    departmentBedNum: '',
+                    departmentHeader: '',
+                    departmentTel: '',
+                    departmentIntroduce: '',
+                    departmentTenantId: null,
+                };
+                this.departmentEmployeeList =[];
+            },
+            // 从List中移除
+            deleteFromList(employee){
+                const index = this.departmentEmployeeList.findIndex(item => item === employee);
+                this.departmentEmployeeList.splice(index,1);
+            },
+            // 打开弹窗
+            openEmpPage(){
+                this.$refs.emp.style.display = 'block';
+                this.$refs.shadow.style.display = 'block';
+            },
+            // 关闭弹窗
+            closeEmpPage(){
+                this.$refs.emp.style.display = 'none';
+                this.$refs.shadow.style.display = 'none';
             }
         },
         computed: {
 
         },
         mounted(){
-            this.refresh();
+            this.departmentList.splice(0,this.departmentList.length);
+            this.departmentEmployeeList.splice(0,this.departmentEmployeeList.length);
+            this.employeeList.splice(0,this.employeeList.length);
+            this.getDepartmentList('');
         },
     });
 </script>

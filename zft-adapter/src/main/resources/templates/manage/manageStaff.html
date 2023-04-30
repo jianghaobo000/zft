@@ -49,7 +49,7 @@
                         <button type="button" class="btn btn-primary" v-on:click="save">保存</button>
                     </div>
                     <div style="float: right;">
-                        <button type="button" class="btn btn-outline-primary" v-if="staffInfoResponse.employeeDTO.employeeId !== ''" v-on:click="deleteStaff(staffInfoResponse.employeeDTO.employeeId,staffInfoResponse.accountDTO.accountId,staffInfoResponse.practiceDTO.practiceId)">删除</button>
+                        <button type="button" class="btn btn-outline-primary" v-if="staffInfoResponse.employeeDTO.employeeId !== null" v-on:click="deleteStaff(staffInfoResponse.employeeDTO.employeeId,staffInfoResponse.accountDTO.accountId,staffInfoResponse.practiceDTO.practiceId)">删除</button>
                     </div>
                 </div>
                 <div class="input">
@@ -172,12 +172,12 @@
                     <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
                         <select class="form-control" v-model="staffInfoResponse.practiceDTO.practiceValidIdType">
                             <option value="" selected style="display: none">请选择有效证件类型</option>
-                            <option value="0">居民身份证(户口簿)</option>
-                            <option value="1">护照</option>
-                            <option value="2">港澳居民来往内地通行证</option>
-                            <option value="3">中华人民共和国来往港澳通行证</option>
-                            <option value="2">士兵证</option>
-                            <option value="3">外国人居留证</option>
+                            <option value="居民身份证(户口簿)">居民身份证(户口簿)</option>
+                            <option value="护照">护照</option>
+                            <option value="港澳居民来往内地通行证">港澳居民来往内地通行证</option>
+                            <option value="中华人民共和国来往港澳通行证">中华人民共和国来往港澳通行证</option>
+                            <option value="士兵证">士兵证</option>
+                            <option value="外国人居留证">外国人居留证</option>
                         </select>
                     </div>
                     <div class="text">
@@ -212,7 +212,7 @@
                         科室
                     </div>
                     <div class="form-group" style="float: left;width: 200px;margin-right: 50px;">
-                        <select class="form-control" v-model="staffInfoResponse.practiceDTO.practiceId">
+                        <select class="form-control" v-model="staffInfoResponse.practiceDTO.practiceDepartmentId">
                             <option value="" selected style="display: none">请选择科室</option>
                             <option value="0">消化内科</option>
                             <option value="1">骨科</option>
@@ -304,14 +304,14 @@
             password: '',
             staffInfoResponse:{
                 accountDTO: {
-                    accountId: '',
+                    accountId: null,
                     accountName: '',
                     accountPassword: '',
                     accountRole: '',
-                    accountTenantId: '',
+                    accountTenantId: null,
                 },
                 employeeDTO: {
-                    employeeId: '',
+                    employeeId: null,
                     employeeAccountId: '',
                     employeePracticeId: '',
                     employeeName: '',
@@ -319,24 +319,24 @@
                     employeeNation: '',
                     employeeSex: '',
                     employeePhone: '',
-                    employeeMedicalNursingSkills: '',
-                    employeeTenantId: '',
+                    employeeMedicalNursingSkills: 1,
+                    employeeTenantId: null,
                 },
                 practiceDTO: {
-                    practiceId: '',
+                    practiceId: null,
                     practiceValidIdType: '',
                     practiceValidIdNumber: '',
                     practiceCertificateNumber: '',
                     practiceQualificationCertificateNumber: '',
                     practiceAddress: '',
-                    practiceDepartmentId: '',
+                    practiceDepartmentId: null,
                     practicePersonnelCountryCode: '',
                     practiceTitle: '',
-                    practicePersonBeginTime: '',
-                    practicePersonEndTime: '',
-                    practiceClinicBeginTime: '',
-                    practiceClinicEndTime: '',
-                    practiceTenantId: '',
+                    practicePersonBeginTime: null,
+                    practicePersonEndTime: null,
+                    practiceClinicBeginTime: null,
+                    practiceClinicEndTime: null,
+                    practiceTenantId: null,
                 },
             },
             staffList: [{
@@ -370,8 +370,44 @@
             // 新增员工
             addStaff(){
                 //清空员工信息
-                debugger
-                this.staffInfoResponse = {};
+                this.staffInfoResponse = {
+                    accountDTO: {
+                        accountId: null,
+                        accountName: '',
+                        accountPassword: '',
+                        accountRole: '',
+                        accountTenantId: null,
+                    },
+                    employeeDTO: {
+                        employeeId: null,
+                        employeeAccountId: '',
+                        employeePracticeId: '',
+                        employeeName: '',
+                        employeeBirthday: '',
+                        employeeNation: '',
+                        employeeSex: '',
+                        employeePhone: '',
+                        employeeMedicalNursingSkills: 1,
+                        employeeTenantId: null,
+                    },
+                    practiceDTO: {
+                        practiceId: null,
+                        practiceValidIdType: '',
+                        practiceValidIdNumber: '',
+                        practiceCertificateNumber: '',
+                        practiceQualificationCertificateNumber: '',
+                        practiceAddress: '',
+                        practiceDepartmentId: null,
+                        practicePersonnelCountryCode: '',
+                        practiceTitle: '',
+                        practicePersonBeginTime: null,
+                        practicePersonEndTime: null,
+                        practiceClinicBeginTime: null,
+                        practiceClinicEndTime: null,
+                        practiceTenantId: null,
+                    },
+                };
+                this.password = '';
             },
             // 获取员工信息
             detail(id){
@@ -426,12 +462,14 @@
                     layer.msg('确认密码与密码不同');
                     return;
                 }
+                let that = this;
                 $.ajax({
                     url: '/manage/saveStaff',
                     type: 'POST',
                     data: JSON.stringify(this.staffInfoResponse),
                     contentType: 'application/json',
                     success: function () {
+                        that.getStaffList('');
                         layer.msg('保存成功');
                     },
                     error: function () {
@@ -441,10 +479,12 @@
             },
             // 删除员工
             deleteStaff(eid,aid,pid){
+                let that = this;
                 $.ajax({
                     url: '/manage/deleteStaff?eid='+eid+'&aid='+aid+'&pid='+pid,
                     type: 'GET',
                     success: function () {
+                        that.getStaffList('');
                         layer.msg('删除成功');
                     },
                     error: function (error) {
@@ -458,6 +498,7 @@
         },
         mounted(){
             this.getStaffList('');
+            let that = this;
             layui.use('laydate', function(){
                 var laydate = layui.laydate;
 
@@ -466,26 +507,41 @@
                     elem: '#test1'
                     ,value: ''
                     ,isInitValue: true
+                    ,done: function (value) {
+                        that.staffInfoResponse.employeeDTO.employeeBirthday = value
+                    }
                 });
                 laydate.render({
                     elem: '#test2'
                     ,value: ''
                     ,isInitValue: true
+                    ,done: function (value) {
+                        that.staffInfoResponse.practiceDTO.practicePersonBeginTime = value
+                    }
                 });
                 laydate.render({
                     elem: '#test3'
                     ,value: ''
                     ,isInitValue: true
+                    ,done: function (value) {
+                        that.staffInfoResponse.practiceDTO.practicePersonEndTime = value
+                    }
                 });
                 laydate.render({
                     elem: '#test4'
                     ,value: ''
                     ,isInitValue: true
+                    ,done: function (value) {
+                        that.staffInfoResponse.practiceDTO.practiceClinicBeginTime = value
+                    }
                 });
                 laydate.render({
                     elem: '#test5'
                     ,value: ''
                     ,isInitValue: true
+                    ,done: function (value) {
+                        that.staffInfoResponse.practiceDTO.practiceClinicEndTime = value
+                    }
                 });
             });
         },

@@ -2,6 +2,7 @@ package cdu.jhb.web.account;
 
 import cdu.jhb.account.api.AccountServiceI;
 import cdu.jhb.account.data.dto.AccountDTO;
+import cdu.jhb.account.data.dto.EmployeeDTO;
 import cdu.jhb.account.data.request.LoginData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -66,6 +67,26 @@ public class AccountController {
     public ResponseEntity<?> getAccountList(){
         List<AccountDTO> accountDTOList = accountService.getAccountList();
         return ResponseEntity.ok(accountDTOList);
+    }
+
+    /**
+     * 获取员工列表
+     * @return
+     */
+    @GetMapping(path = "getEmployeeList")
+    public ResponseEntity<?> getEmployeeList(){
+        List<EmployeeDTO> employeeDTOList = accountService.getEmployeeList();
+        return ResponseEntity.ok(employeeDTOList);
+    }
+
+    /**
+     * 获取没有分配科室的员工列表
+     * @return
+     */
+    @GetMapping(path = "getNoDepartEmployeeList")
+    public ResponseEntity<?> getNoDepartEmployeeList(){
+        List<EmployeeDTO> employeeDTOList = accountService.getNoDepartEmployeeList();
+        return ResponseEntity.ok(employeeDTOList);
     }
 
 }

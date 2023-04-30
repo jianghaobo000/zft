@@ -1,6 +1,7 @@
 package cdu.jhb.account.database;
 
 
+import cdu.jhb.account.data.dto.EmployeeDTO;
 import cdu.jhb.account.database.dataobject.AccountDO;
 import cdu.jhb.account.data.dto.AccountDTO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -21,5 +22,6 @@ public interface AccountMapper extends BaseMapper<AccountDO> {
     AccountDO selectAccount(@Param("name") String name,@Param("countryCode") String countryCode);
 
     List<AccountDTO> getAccountList(@Param("tenant_id")Long tenantId);
+
 
 }

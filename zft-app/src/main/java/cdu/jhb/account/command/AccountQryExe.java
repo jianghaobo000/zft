@@ -1,9 +1,17 @@
 package cdu.jhb.account.command;
 
+import cdu.jhb.account.data.dto.EmployeeDTO;
 import cdu.jhb.account.database.AccountMapper;
 import cdu.jhb.account.data.dto.AccountDTO;
+import cdu.jhb.account.database.EmployeeMapper;
+import cdu.jhb.account.database.PracticeMapper;
+import cdu.jhb.account.database.dataobject.EmployeeDO;
 import cdu.jhb.domain.account.Account;
+import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.gateway.AccountGateway;
+import cdu.jhb.util.Convert;
+import cdu.jhb.util.RedisUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
@@ -23,6 +31,10 @@ public class AccountQryExe {
     private final AccountGateway accountGateway;
 
     private final AccountMapper accountMapper;
+
+    private final PracticeMapper practiceMapper;
+
+    private final EmployeeMapper employeeMapper;
 
     /**
      * 通过名字查询账号
@@ -50,8 +62,22 @@ public class AccountQryExe {
      * @return
      */
     public List<AccountDTO> getAccountList(){
-        Jedis jedis = new Jedis();
-        Long tenantId = Long.valueOf(jedis.get("tenantId"));
-        return accountMapper.getAccountList(tenantId);
+        return accountMapper.getAccountList(RedisUtil.getLocalTenantId());
+    }
+
+    /**
+     * 获取员工列表
+     * @return
+     */
+    public List<EmployeeDTO> getEmployeeList() {
+        return employeeMapper.getEmployeeList(RedisUtil.getLocalTenantId());
+    }
+
+    /**
+     * 获取没有分配科室的员工列表
+     * @return
+     */
+    public List<EmployeeDTO> getNoDepartEmployeeList() {
+        return employeeMapper.getNoDepartEmployeeList(RedisUtil.getLocalTenantId());
     }
 }
