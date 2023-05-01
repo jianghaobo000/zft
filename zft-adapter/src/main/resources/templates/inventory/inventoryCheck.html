@@ -651,7 +651,7 @@
             that.refresh();
             //获取盘点人列表
             $.ajax({
-                url: '/account/getEmployeeList',
+                url: '/account/getInventoryEmployeeList',
                 type: 'GET',
                 success: function (response) {
                     response.forEach((item) => {

@@ -13,7 +13,13 @@
 
     <select id="getEmployeeList" resultType="cdu.jhb.account.data.dto.EmployeeDTO">
         SELECT * FROM employee_table a
-        WHERE a.employee_tenant_id = #{tenant_id}
+        WHERE a.employee_tenant_id = #{tenantId}
+    </select>
+
+    <select id="getInventoryEmployeeList" resultType="cdu.jhb.account.data.dto.EmployeeDTO">
+        SELECT * FROM employee_table e
+        LEFT JOIN account_table a ON e.employee_account_id = a.account_id
+        WHERE e.employee_tenant_id = #{tenantId} AND a.account_role IN (1,4)
     </select>
 
     <select id="getNoDepartEmployeeList" resultType="cdu.jhb.account.data.dto.EmployeeDTO">

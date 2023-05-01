@@ -33,6 +33,13 @@ public interface EmployeeMapper extends BaseMapper<EmployeeDO> {
     List<EmployeeDTO> getEmployeeList(@Param("tenantId")Long tenantId);
 
     /**
+     * 获取库存模块成员列表
+     * @param tenantId
+     * @return
+     */
+    List<EmployeeDTO> getInventoryEmployeeList(@Param("tenantId")Long tenantId);
+
+    /**
      * 获取没有分配科室的成员列表
      * @param tenantId
      * @return

@@ -80,6 +80,16 @@ public class AccountController {
     }
 
     /**
+     * 获取库存模块员工列表
+     * @return
+     */
+    @GetMapping(path = "getInventoryEmployeeList")
+    public ResponseEntity<?> getInventoryEmployeeList(){
+        List<EmployeeDTO> employeeDTOList = accountService.getInventoryEmployeeList();
+        return ResponseEntity.ok(employeeDTOList);
+    }
+
+    /**
      * 获取没有分配科室的员工列表
      * @return
      */

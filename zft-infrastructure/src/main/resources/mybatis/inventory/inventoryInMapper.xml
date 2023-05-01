@@ -11,13 +11,13 @@
             s.supplier_name AS inventory_in_supplier_name,
             i.inventory_in_time,
             i.inventory_in_create_time,
-            a.account_name AS inventory_in_operator,
+            e.employee_name AS inventory_in_operator,
             i.inventory_in_variety,
             i.inventory_in_remarks,
             i.inventory_in_money
         FROM inventory_in_table i
         LEFT JOIN supplier_table s ON i.inventory_in_supplier_id = s.supplier_id
-        LEFT JOIN account_table a ON i.inventory_in_operator_id = a.account_id
+        LEFT JOIN employee_table e ON i.inventory_in_operator_id = e.employee_id
         WHERE
             i.inventory_in_tenant_id = #{param.inventoryInTenantId}
         <if test="param.inventoryInStatus != null and param.inventoryInStatus !=''">
@@ -50,13 +50,13 @@
             s.supplier_name AS inventory_in_supplier_name,
             i.inventory_in_time,
             i.inventory_in_create_time,
-            a.account_name AS inventory_in_operator,
+            e.employee_name AS inventory_in_operator,
             i.inventory_in_variety,
             i.inventory_in_remarks,
             i.inventory_in_money
         FROM inventory_in_table i
         LEFT JOIN supplier_table s ON i.inventory_in_supplier_id = s.supplier_id
-        LEFT JOIN account_table a ON i.inventory_in_operator_id = a.account_id
+        LEFT JOIN employee_table e ON i.inventory_in_operator_id = e.employee_id
         WHERE
             i.inventory_in_tenant_id = #{tenantId} AND i.inventory_in_id = #{id}
     </select>

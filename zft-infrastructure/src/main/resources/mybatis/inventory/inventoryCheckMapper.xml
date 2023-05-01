@@ -10,11 +10,11 @@
             i.inventory_check_status,
             i.inventory_check_time,
             i.inventory_check_create_time,
-            a.account_name AS inventory_check_operator,
+            e.employee_name AS inventory_check_operator,
             i.inventory_check_variety,
             i.inventory_check_remarks
         FROM inventory_check_table i
-        LEFT JOIN account_table a ON i.inventory_check_operator_id = a.account_id
+        LEFT JOIN employee_table e ON i.inventory_check_operator_id = e.employee_id
         WHERE
             i.inventory_check_tenant_id = #{param.inventoryCheckTenantId}
         <if test="param.inventoryCheckStatus != null and param.inventoryCheckStatus !=''">
@@ -43,11 +43,11 @@
             i.inventory_check_status,
             i.inventory_check_time,
             i.inventory_check_create_time,
-            a.account_name AS inventory_check_operator,
+            e.employee_name AS inventory_check_operator,
             i.inventory_check_variety,
             i.inventory_check_remarks
         FROM inventory_check_table i
-        LEFT JOIN account_table a ON i.inventory_check_operator_id = a.account_id
+        LEFT JOIN employee_table e ON i.inventory_check_operator_id = e.employee_id
         WHERE
             i.inventory_check_tenant_id = #{tenantId} AND i.inventory_check_id = #{id}
     </select>

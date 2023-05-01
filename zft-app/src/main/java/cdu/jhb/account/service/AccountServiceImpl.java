@@ -81,6 +81,15 @@ public class AccountServiceImpl implements AccountServiceI {
     }
 
     /**
+     * 获取库存模块员工列表
+     * @return
+     */
+    @Override
+    public List<EmployeeDTO> getInventoryEmployeeList() {
+        return accountQryExe.getInventoryEmployeeList();
+    }
+
+    /**
      * 获取没有分配科室的员工列表
      * @return
      */

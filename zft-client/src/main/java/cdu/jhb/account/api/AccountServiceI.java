@@ -22,6 +22,8 @@ public interface AccountServiceI {
 
     List<EmployeeDTO> getEmployeeList();
 
+    List<EmployeeDTO> getInventoryEmployeeList();
+
     List<EmployeeDTO> getNoDepartEmployeeList();
 
 }

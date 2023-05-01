@@ -74,6 +74,13 @@ public class AccountQryExe {
     }
 
     /**
+     * 获取库存模块员工列表
+     */
+    public List<EmployeeDTO> getInventoryEmployeeList(){
+        return employeeMapper.getInventoryEmployeeList(RedisUtil.getLocalTenantId());
+    }
+
+    /**
      * 获取没有分配科室的员工列表
      * @return
      */

@@ -11,11 +11,11 @@
             i.inventory_out_category,
             i.inventory_out_time,
             i.inventory_out_create_time,
-            a.account_name AS inventory_out_operator,
+            e.employee_name AS inventory_out_operator,
             i.inventory_out_variety,
             i.inventory_out_money
         FROM inventory_out_table i
-        LEFT JOIN account_table a ON i.inventory_out_operator_id = a.account_id
+        LEFT JOIN employee_table a ON i.inventory_out_operator_id = e.employee_id
         WHERE
             i.inventory_out_tenant_id = #{param.inventoryOutTenantId}
         <if test="param.inventoryOutStatus != null and param.inventoryOutStatus !=''">
@@ -47,13 +47,13 @@
             i.inventory_out_status,
             i.inventory_out_time,
             i.inventory_out_create_time,
-            a.account_name AS inventory_out_operator,
+            e.employee_name AS inventory_out_operator,
             i.inventory_out_variety,
             i.inventory_out_category,
             i.inventory_out_remarks,
             i.inventory_out_money
         FROM inventory_out_table i
-        LEFT JOIN account_table a ON i.inventory_out_operator_id = a.account_id
+        LEFT JOIN employee_table e ON i.inventory_out_operator_id = e.employee_id
         WHERE
             i.inventory_out_tenant_id = #{tenantId} AND i.inventory_out_id = #{id}
     </select>
