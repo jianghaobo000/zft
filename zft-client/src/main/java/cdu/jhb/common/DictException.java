@@ -29,4 +29,8 @@ public class DictException {
     public final static String DELETE_ACCOUNT_FAILED = "删除账号详情失败";
 
     public final static String DELETE_PRACTICE_FAILED = "删除执业详情失败";
+
+    public final static String DELETE_DEPARTMENT_FAILED = "删除科室详情失败";
+
+    public final static String DELETE_EQUIPMENT_FAILED = "删除设备详情失败";
 }

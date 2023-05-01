@@ -2,6 +2,7 @@ package cdu.jhb.manage.api;
 
 import cdu.jhb.account.data.dto.EmployeeDTO;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
+import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.request.DepartmentInfoRequest;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
@@ -70,4 +71,25 @@ public interface ManageServiceI {
      * @return
      */
     StaffInfoResponse getStaffInfo(Long id);
+
+    /**
+     * 获取设备列表
+     * @return
+     */
+    List<EquipmentDTO> getEquipmentList(String name);
+
+    /**
+     * 保存或修改设备信息
+     * @return
+     */
+    Boolean saveEquipment(EquipmentDTO equipmentDTO);
+
+    /**
+     * 删除设备信息
+     * @param eid
+     * @return
+     */
+    Boolean deleteEquipmentById(Long eid);
+
+
 }

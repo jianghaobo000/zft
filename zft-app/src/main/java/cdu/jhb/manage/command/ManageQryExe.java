@@ -10,9 +10,12 @@ import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.Practice;
 import cdu.jhb.domain.manage.Department;
+import cdu.jhb.domain.manage.Equipment;
 import cdu.jhb.domain.manage.gateway.ManageGateway;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
+import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
+import cdu.jhb.manage.database.EquipmentMapper;
 import cdu.jhb.util.Convert;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -37,6 +40,8 @@ public class ManageQryExe {
     private final AccountMapper accountMapper;
 
     private final PracticeMapper practiceMapper;
+
+    private final EquipmentMapper equipmentMapper;
 
     /**
      * 获取科室列表
@@ -82,5 +87,15 @@ public class ManageQryExe {
                 Convert.entityConvert(account, AccountDTO.class),
                 Convert.entityConvert(practice, PracticeDTO.class)
         );
+    }
+
+    /**
+     * 获取设备列表
+     * @param name
+     * @return
+     */
+    public List<EquipmentDTO> getEquipmentList(String name) {
+        List<Equipment> equipment = manageGateway.getEquipmentList(name);
+        return Convert.listConvert(equipment,EquipmentDTO.class);
     }
 }

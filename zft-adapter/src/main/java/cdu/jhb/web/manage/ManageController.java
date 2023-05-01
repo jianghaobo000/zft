@@ -2,6 +2,7 @@ package cdu.jhb.web.manage;
 
 import cdu.jhb.account.data.dto.EmployeeDTO;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
+import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.request.DepartmentInfoRequest;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
@@ -150,6 +151,39 @@ public class ManageController {
     @GetMapping("toEquipment")
     public String toEquipment(){
         return "manage/manageEquipment";
+    }
+
+    /**
+     * 获取设备列表
+     * @return
+     */
+    @GetMapping("getEquipmentList")
+    public ResponseEntity<?> getEquipmentList(@RequestParam("name") String name){
+        List<EquipmentDTO> equipmentDTOList = manageService.getEquipmentList(name);
+        return ResponseEntity.ok(equipmentDTOList);
+    }
+
+    /**
+     * 保存或修改设备信息
+     */
+    @PostMapping("saveEquipment")
+    public ResponseEntity<?> saveEquipment(@RequestBody EquipmentDTO equipmentDTO){
+        if(manageService.saveEquipment(equipmentDTO)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    /**
+     * 删除设备信息
+     * @return
+     */
+    @GetMapping("deleteEquipmentById")
+    public ResponseEntity<?> deleteEquipmentById(@RequestParam("eid")Long eid){
+        if(manageService.deleteEquipmentById(eid)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     /**

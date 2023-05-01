@@ -5,6 +5,7 @@ import cdu.jhb.manage.api.ManageServiceI;
 import cdu.jhb.manage.command.ManageModExe;
 import cdu.jhb.manage.command.ManageQryExe;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
+import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.request.DepartmentInfoRequest;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
@@ -109,5 +110,35 @@ public class ManageServiceImpl implements ManageServiceI {
     @Override
     public StaffInfoResponse getStaffInfo(Long id) {
         return manageQryExe.getStaffInfo(id);
+    }
+
+    /**
+     * 获取设备列表
+     * @param name
+     * @return
+     */
+    @Override
+    public List<EquipmentDTO> getEquipmentList(String name) {
+        return manageQryExe.getEquipmentList(name);
+    }
+
+    /**
+     * 保存或修改设备信息
+     * @param equipmentDTO
+     * @return
+     */
+    @Override
+    public Boolean saveEquipment(EquipmentDTO equipmentDTO) {
+        return manageModExe.saveEquipment(equipmentDTO);
+    }
+
+    /**
+     * 删除设备信息
+     * @param eid
+     * @return
+     */
+    @Override
+    public Boolean deleteEquipmentById(Long eid) {
+        return manageModExe.deleteEquipmentById(eid);
     }
 }

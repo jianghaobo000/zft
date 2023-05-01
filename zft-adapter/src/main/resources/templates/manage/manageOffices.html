@@ -81,7 +81,7 @@
                         批准床位数
                     </div>
                     <div class="form-group" style="float: left;width: 350px;margin-right: 50px;">
-                        <input type="text" class="form-control" v-model="departmentAdd.departmentBedNum" placeholder="请输入批准床位数">
+                        <input type="number" class="form-control" v-model="departmentAdd.departmentBedNum"  @input="departmentAdd.departmentBedNum = Number($event.target.value.replace(/\D/g, ''))" placeholder="请输入批准床位数">
                     </div>
                     <div class="text">
                         <span style="color: red;">* </span>科室负责人
@@ -109,7 +109,7 @@
                             </svg>
                             {{employee.employeeName}}
                         </button>
-                        <button type="button" class="btn btn-outline-primary btn-sm float-left" v-on:click="getEmployeeList">
+                        <button type="button" class="btn btn-outline-primary btn-sm float-left" v-on:click="openEmpPage">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
                             </svg>
@@ -179,7 +179,7 @@
                 employeeId: null,
                 employeeName:'',
                 employeeSex: '',
-            }]
+            }],
         },
         methods: {
             // 保存诊所信息
@@ -228,7 +228,8 @@
                         });
                         if(that.departmentList.length>0){
                             that.detail(that.departmentList[0]);
-                        }else {
+                        }
+                        if(that.departmentList.length === 0){
                             that.addDepartment();
                         }
                     },
@@ -241,6 +242,7 @@
             detail(department){
                 this.departmentAdd = department;
                 this.getDepartmentEmployeeList();
+                this.getEmployeeList();
             },
             // 获取科室成员
             getDepartmentEmployeeList(){
@@ -260,7 +262,7 @@
                     }
                 });
             },
-            // 获取没有分配科室的员工列表
+            // 初次获取没有分配科室的员工列表
             getEmployeeList(){
                 let that = this;
                 $.ajax({
@@ -272,15 +274,17 @@
                         response.forEach(item=>{
                             that.employeeList.push(item);
                         });
-                        // 去掉已经有的员工
-                        that.employeeList = that.employeeList.filter(item1 => !that.departmentEmployeeList.some(item2 => item1.employeeId === item2.employeeId));
-                        // 打开弹窗
-                        that.openEmpPage();
+                        that.getEmployeeList2();
                     },
                     error: function () {
                         layer.msg('获取没有分配科室的员工列表信息失败，请刷新重试');
                     }
                 });
+            },
+            // 后续没有分配科室成员的列表
+            getEmployeeList2(){
+                // 去掉已经有的员工
+                this.employeeList = this.employeeList.filter(item1 => !this.departmentEmployeeList.some(item2 => item1.employeeId === item2.employeeId));
             },
             // 添加员工到科室
             addEmployeeToDepartment(employee){
@@ -299,7 +303,7 @@
                         layer.msg('删除成功');
                     },
                     error: function () {
-                        layer.msg('删除科室信息失败，请刷新重试');
+                        layer.msg(error.responseJSON.message);
                     }
                 });
             },
@@ -322,9 +326,11 @@
             deleteFromList(employee){
                 const index = this.departmentEmployeeList.findIndex(item => item === employee);
                 this.departmentEmployeeList.splice(index,1);
+                this.employeeList.push(employee);
             },
             // 打开弹窗
             openEmpPage(){
+                this.getEmployeeList2();
                 this.$refs.emp.style.display = 'block';
                 this.$refs.shadow.style.display = 'block';
             },

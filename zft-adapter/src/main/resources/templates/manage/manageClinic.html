@@ -74,12 +74,16 @@
                     诊所开设时间
                 </div>
                 <div class="form-group" style="float: left;width: 400px;margin-right: 50px;">
-                    <input type="text" class="form-control" v-model="tenantInfo.tenantBeginTime" name="" placeholder="请输入诊所开设时间">
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" v-model="tenantInfo.tenantBeginTime" id="test1" placeholder="请输入诊所开设时间" style="border: 1px rgb(206,212,218) solid" readonly>
+                        </div>
+                    </div>
                 </div>
                 <div class="text">
                     诊所评级
                 </div>
-                <div id="test1"></div>
+                <div id="test2"></div>
             </div>
             <div class="input">
                 <div class="text">
@@ -207,10 +211,22 @@
                         layui.use(['rate'], function() {
                             var rate = layui.rate;
                             rate.render({
-                                elem: '#test1',
+                                elem: '#test2',
                                 value: that.tenantInfo.tenantRate,
                                 half: true,
                                 readonly: true,
+                            });
+                        });
+                        layui.use('laydate', function(){
+                            var laydate = layui.laydate;
+                            //初始赋值
+                            laydate.render({
+                                elem: '#test1'
+                                ,value: ''
+                                ,isInitValue: true
+                                ,done: function (value) {
+                                    that.tenantInfo.tenantBeginTime = value
+                                }
                             });
                         });
                     },

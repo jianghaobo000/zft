@@ -9,9 +9,12 @@ import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.Practice;
 import cdu.jhb.domain.manage.Department;
+import cdu.jhb.domain.manage.Equipment;
 import cdu.jhb.domain.manage.gateway.ManageGateway;
+import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.request.DepartmentInfoRequest;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
+import cdu.jhb.manage.database.EquipmentMapper;
 import cdu.jhb.util.Convert;
 import cdu.jhb.util.PinYinConvert;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +40,8 @@ public class ManageModExe {
     private final PracticeMapper practiceMapper;
 
     private final EmployeeMapper employeeMapper;
+
+    private final EquipmentMapper equipmentMapper;
 
 
     /**
@@ -92,6 +97,32 @@ public class ManageModExe {
         }
         if(practiceMapper.deleteById(pid)!=1){
             throw new RuntimeException(DictException.DELETE_PRACTICE_FAILED);
+        }
+        return true;
+    }
+
+    /**
+     * 保存或修改设备信息
+     * @param equipmentDTO
+     * @return
+     */
+    public Boolean saveEquipment(EquipmentDTO equipmentDTO) {
+        // 添加拼音码
+        equipmentDTO.setEquipmentPinYin(PinYinConvert.getAllPinYinAndHeadChar(equipmentDTO.getEquipmentName()));
+        // 转化实体
+        Equipment equipment = Convert.entityConvert(equipmentDTO,Equipment.class);
+        return manageGateway.saveEquipment(equipment);
+    }
+
+
+    /**
+     * 删除设备信息
+     * @param eid
+     * @return
+     */
+    public Boolean deleteEquipmentById(Long eid) {
+        if(equipmentMapper.deleteById(eid)!=1){
+            throw new RuntimeException(DictException.DELETE_EQUIPMENT_FAILED);
         }
         return true;
     }

@@ -8,16 +8,21 @@ import cdu.jhb.account.database.dataobject.AccountDO;
 import cdu.jhb.account.database.dataobject.EmployeeDO;
 import cdu.jhb.account.database.dataobject.PracticeDO;
 import cdu.jhb.common.Constant;
+import cdu.jhb.common.DictException;
 import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.Practice;
 import cdu.jhb.domain.manage.Department;
+import cdu.jhb.domain.manage.Equipment;
 import cdu.jhb.domain.manage.gateway.ManageGateway;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
+import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
 import cdu.jhb.manage.database.DepartmentMapper;
+import cdu.jhb.manage.database.EquipmentMapper;
 import cdu.jhb.manage.database.dataobject.DepartmentDO;
+import cdu.jhb.manage.database.dataobject.EquipmentDO;
 import cdu.jhb.util.Convert;
 import cdu.jhb.util.RedisUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -46,6 +51,8 @@ public class ManegeGatewayImpl implements ManageGateway {
     private final PracticeMapper practiceMapper;
 
     private final DepartmentMapper departmentMapper;
+
+    private final EquipmentMapper equipmentMapper;
 
     /**
      * 获取科室列表
@@ -131,9 +138,13 @@ public class ManegeGatewayImpl implements ManageGateway {
     public Boolean deleteDepartmentById(Long did) {
         // 先将该科室的员工的科室ID置为空
         List<EmployeeDO> employeeDOList = employeeMapper.getDepartmentEmployeeList(did,RedisUtil.getLocalTenantId());
-        employeeMapper.setDepartmentIdNull(employeeDOList.stream().map(EmployeeDO::getEmployeeId).collect(Collectors.toList()),RedisUtil.getLocalTenantId());
+        if(employeeDOList.size()>0){
+            employeeMapper.setDepartmentIdNull(employeeDOList.stream().map(EmployeeDO::getEmployeeId).collect(Collectors.toList()),RedisUtil.getLocalTenantId());
+        }
         // 删除科室信息
-        departmentMapper.deleteById(did);
+        if(departmentMapper.deleteById(did)!=1){
+            throw new RuntimeException(DictException.DELETE_DEPARTMENT_FAILED);
+        }
         return true;
     }
 
@@ -191,6 +202,47 @@ public class ManegeGatewayImpl implements ManageGateway {
             accountMapper.updateById(accountDO);
             practiceMapper.updateById(practiceDO);
             employeeMapper.updateById(employeeDO);
+        }
+
+        // 设置挂号费
+        // 判断是否为医生
+
+        return true;
+    }
+
+    /**
+     * 获取设备列表
+     * @param name
+     * @return
+     */
+    @Override
+    public List<Equipment> getEquipmentList(String name) {
+        QueryWrapper<EquipmentDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda()
+                .like(EquipmentDO::getEquipmentName,name)
+                .or()
+                .like(EquipmentDO::getEquipmentPinYin,name)
+                .eq(EquipmentDO::getEquipmentTenantId,RedisUtil.getLocalTenantId())
+                .orderByDesc(EquipmentDO::getEquipmentId);
+        List<EquipmentDO> equipmentDOList = equipmentMapper.selectList(queryWrapper);
+        return Convert.listConvert(equipmentDOList,Equipment.class);
+    }
+
+    /**
+     * 保存或修改设备信息
+     * @param equipment
+     * @return
+     */
+    @Override
+    public Boolean saveEquipment(Equipment equipment) {
+        // 转化数据库表对象
+        EquipmentDO equipmentDO = Convert.entityConvert(equipment,EquipmentDO.class);
+        // 如果ID为空则新增，不为空则修改
+        if(equipmentDO.getEquipmentId()==null){
+            equipmentDO.setEquipmentTenantId(RedisUtil.getLocalTenantId());
+            equipmentMapper.insert(equipmentDO);
+        }else{
+            equipmentMapper.updateById(equipmentDO);
         }
         return true;
     }

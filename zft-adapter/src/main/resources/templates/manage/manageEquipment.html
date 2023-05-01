@@ -7,7 +7,7 @@
 </head>
 <body style="background-color: rgb(225,228,232);">
 <div th:replace="~{common/common::headbar}"/>
-<div class="manage">
+<div class="manage" id="manageEquipment">
     <div class="left">
         <div th:replace="~{common/common::manageMeau}"/>
     </div>
@@ -24,52 +24,58 @@
             <div class="info-left">
                 <div class="title">
                     <div class="form-group float-left" style="width: 150px;">
-                        <input type="text" class="form-control" name="" placeholder="查询设备">
+                        <input type="text" class="form-control" v-on:input="getEquipmentList($event.target.value)" placeholder="查询设备">
                     </div>
-                    <div class="add" id="addEquipment">
+                    <div class="add" v-on:click="addEquipment">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill svg-text" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                         </svg>
                         新增设备
                     </div>
                 </div>
-                <div class="name">
-                    X射线诊断设备
-                </div>
-                <div class="name">
-                    核磁共振仪
-                </div>
-                <div class="name">
-                    B超诊断设备
+                <div class="name" v-for="equipment in equipmentList" v-on:click="detail(equipment)">
+                    {{equipment.equipmentName}}
+                    <span class="float-right" v-if="Math.floor((new Date() - Date.parse(equipment.equipmentPurchaseDate))/ (1000 * 60 * 60 * 24 * 365)) < equipment.equipmentUseLife - 1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill svg-text" style="color: rgb(75,210,58)" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                        </svg>
+                    </span>
+                    <span class="float-right" v-if="Math.floor((new Date() - Date.parse(equipment.equipmentPurchaseDate))/ (1000 * 60 * 60 * 24 * 365)) === equipment.equipmentUseLife - 1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill svg-text" style="color: rgb(252,196,37)" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                        </svg>
+                    </span>
+                    <span class="float-right" v-if="Math.floor((new Date() - Date.parse(equipment.equipmentPurchaseDate))/ (1000 * 60 * 60 * 24 * 365)) > equipment.equipmentUseLife - 1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill svg-text" style="color: rgb(255,101,135)" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                        </svg>
+                    </span>
                 </div>
             </div>
             <div class="info-right">
                 <div class="title">
                     <p>新增设备</p>
                     <div style="float: right;margin-left: 10px;">
-                        <button type="button" class="btn btn-primary">保存</button>
+                        <button type="button" class="btn btn-primary" v-on:click="save">保存</button>
                     </div>
                     <div style="float: right;">
-                        <button type="button" class="btn btn-outline-primary">删除</button>
+                        <button type="button" class="btn btn-outline-primary" v-on:click="deleteEquipmentById(equipmentAdd.equipmentId)">删除</button>
                     </div>
                 </div>
                 <div class="input">
                     <div class="text">
-                        <span style="color: red;">* </span>设备HIS码
+                        设备HIS码
                     </div>
                     <div class="form-group" style="float: left;width: 350px;margin-right: 50px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入设备HIS码">
+                        <input type="text" class="form-control" v-model="equipmentAdd.equipmentId" placeholder="设备HIS码自动生成" readonly>
                     </div>
                     <div class="text">
                         <span style="color: red;">* </span>所属科室
                     </div>
                     <div class="form-group" style="float: left;width: 350px;">
-                        <select class="form-control" name="">
-                            <option value="0" style="display: none">请选择所属科室</option>
-                            <option value="1">消化内科</option>
-                            <option value="2">骨科</option>
-                            <option value="3">肿瘤科</option>
-                            <option value="4">呼吸内科</option>
+                        <select class="form-control" v-model="equipmentAdd.equipmentDepartmentId">
+                            <option value="" style="display: none" selected>请选择科室</option>
+                            <option v-for="department in departmentList" :value="department.departmentId">{{department.departmentName}}</option>
                         </select>
                     </div>
                 </div>
@@ -78,27 +84,27 @@
                         <span style="color: red;">* </span>医疗设备名称
                     </div>
                     <div class="form-group" style="float: left;width: 350px;margin-right: 50px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入医疗设备名称">
+                        <input type="text" class="form-control" v-model="equipmentAdd.equipmentName" placeholder="请输入设备名称">
                     </div>
                     <div class="text">
-                        <span style="color: red;">* </span>品牌
+                        品牌
                     </div>
                     <div class="form-group" style="float: left;width: 350px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入品牌">
+                        <input type="text" class="form-control" v-model="equipmentAdd.equipmentBrand" placeholder="请输入品牌">
                     </div>
                 </div>
                 <div class="input">
                     <div class="text">
-                        <span style="color: red;">* </span>型号
+                        型号
                     </div>
                     <div class="form-group" style="float: left;width: 350px;margin-right: 50px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入型号">
+                        <input type="text" class="form-control" v-model="equipmentAdd.equipmentModel" placeholder="请输入型号">
                     </div>
                     <div class="text">
                         <span style="color: red;">* </span>产地
                     </div>
                     <div class="form-group" style="float: left;width: 350px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入产地">
+                        <input type="text" class="form-control" v-model="equipmentAdd.equipmentAddress" placeholder="请输入产地">
                     </div>
                 </div>
                 <div class="input">
@@ -108,7 +114,7 @@
                     <div style="float: left;width: 350px;margin-right: 50px;">
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                <input type="text" class="layui-input" name="patient_birthday" id="test1" placeholder="请输入购买日期" style="border: 1px rgb(206,212,218) solid" readonly>
+                                <input type="text" class="layui-input" v-model="equipmentAdd.equipmentPurchaseDate" id="test1" placeholder="请输入购买日期" style="border: 1px rgb(206,212,218) solid" readonly>
                             </div>
                         </div>
                     </div>
@@ -116,15 +122,15 @@
                         <span style="color: red;">* </span>使用年限
                     </div>
                     <div class="form-group" style="float: left;width: 350px;margin-right: 50px;">
-                        <input type="text" class="form-control" name="" placeholder="请输入使用年限">
+                        <input type="number" class="form-control" v-model="equipmentAdd.equipmentUseLife" @input="equipmentAdd.equipmentUseLife = Number($event.target.value.replace(/\D/g, ''))" placeholder="请输入使用年限">
                     </div>
                 </div>
                 <div class="input">
                     <div class="text">
-                        <span style="color: red;">* </span>产品介绍
+                        产品介绍
                     </div>
                     <div style="float: left;width: 900px;">
-                        <textarea class="form-control" style="resize:none;" rows="3" placeholder="请输入产品介绍，最多不超过200字"></textarea>
+                        <textarea class="form-control" v-model="equipmentAdd.equipmentIntroduce" style="resize:none;" rows="3" placeholder="请输入产品介绍，最多不超过200字"></textarea>
                     </div>
                 </div>
             </div>
@@ -133,15 +139,181 @@
 </div>
 
 <script>
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
+    let vm = new Vue({
+        el: "#manageEquipment",
+        data: {
+            equipmentList:[{
+                equipmentId: null,
+                equipmentDepartmentId: '',
+                equipmentName: '',
+                equipmentPinYin: '',
+                equipmentBrand: '',
+                equipmentModel: '',
+                equipmentAddress: '',
+                equipmentPurchaseDate: '',
+                equipmentUseLife: '',
+                equipmentIntroduce: '',
+                equipmentTenantId: null,
+            }],
+            equipmentAdd:{
+                equipmentId: null,
+                equipmentDepartmentId: '',
+                equipmentName: '',
+                equipmentPinYin: '',
+                equipmentBrand: '',
+                equipmentModel: '',
+                equipmentAddress: '',
+                equipmentPurchaseDate: '',
+                equipmentUseLife: '',
+                equipmentIntroduce: '',
+                equipmentTenantId: null,
+            },
+            departmentList:[{
+                departmentId: null,
+                departmentCode: '',
+                departmentName: '',
+                departmentPinYin: '',
+                departmentBedNum: '',
+                departmentHeader: '',
+                departmentTel: '',
+                departmentIntroduce: '',
+                departmentTenantId: null,
+            }],
+        },
+        methods: {
+            // 保存诊所信息
+            save(){
+                if(this.equipmentAdd.equipmentDepartmentId === null){
+                    layer.msg('设备所属科室不能为空');
+                    return;
+                }
+                if(this.equipmentAdd.equipmentName === ''){
+                    layer.msg('设备名称不能为空');
+                    return;
+                }
+                if(this.equipmentAdd.equipmentAddress === ''){
+                    layer.msg('设备产地不能为空');
+                    return;
+                }
+                if(this.equipmentAdd.equipmentPurchaseDate === ''){
+                    layer.msg('设备购买日期不能为空');
+                    return;
+                }
+                if(this.equipmentAdd.equipmentUseLife === ''){
+                    layer.msg('设备使用年限不能为空');
+                    return;
+                }
+                let that = this;
+                $.ajax({
+                    url: '/manage/saveEquipment',
+                    type: 'POST',
+                    data: JSON.stringify(this.equipmentAdd),
+                    contentType: 'application/json',
+                    success: function () {
+                        that.getEquipmentList('');
+                        layer.msg('保存成功');
+                    },
+                    error: function () {
+                        layer.msg('保存失败');
+                    }
+                });
+            },
+            // 获取设备列表
+            getEquipmentList(name){
+                let that = this;
+                $.ajax({
+                    url: '/manage/getEquipmentList?name='+name,
+                    type: 'GET',
+                    success: function (response) {
+                        // 先清空
+                        that.equipmentList.splice(0,that.equipmentList.length);
+                        response.forEach(item=>{
+                            that.equipmentList.push(item);
+                        });
+                        if(that.equipmentList.length>0){
+                            that.detail(that.equipmentList[0]);
+                        }
+                        if(that.equipmentList.length === 0){
+                            that.addEquipment();
+                        }
+                    },
+                    error: function () {
+                        layer.msg('获取设备信息失败，请刷新重试');
+                    }
+                });
+            },
+            // 设备详情
+            detail(equipment){
+                this.equipmentAdd = equipment;
+            },
+            // 删除设备
+            deleteEquipmentById(eid){
+                let that = this;
+                $.ajax({
+                    url: '/manage/deleteEquipmentById?eid='+eid,
+                    type: 'GET',
+                    success: function () {
+                        that.getEquipmentList('');
+                        layer.msg('删除成功');
+                    },
+                    error: function () {
+                        layer.msg(error.responseJSON.message);
+                    }
+                });
+            },
+            // 新增设备时清空界面
+            addEquipment(){
+                this.equipmentAdd = {
+                    equipmentId: null,
+                    equipmentDepartmentId: '',
+                    equipmentName: '',
+                    equipmentBrand: '',
+                    equipmentModel: '',
+                    equipmentAddress: '',
+                    equipmentPurchaseDate: '',
+                    equipmentUseLife: '',
+                    equipmentIntroduce: '',
+                    equipmentTenantId: null,
+                };
+            },
+            getDepartmentList(){
+                let that = this;
+                $.ajax({
+                    url: '/manage/getDepartmentList?name='+'',
+                    type: 'GET',
+                    success: function (response) {
+                        response.forEach(item=>{
+                            that.departmentList.push(item);
+                        });
+                    },
+                    error: function () {
+                        layer.msg('获取科室列表失败，请刷新重试');
+                    }
+                });
+            }
+        },
+        computed: {
 
-        //初始赋值
-        laydate.render({
-            elem: '#test1'
-            ,value: ''
-            ,isInitValue: true
-        });
+        },
+        mounted(){
+            this.equipmentList.splice(0,this.equipmentList.length);
+            this.departmentList.splice(0,this.departmentList.length);
+            this.getEquipmentList('');
+            this.getDepartmentList();
+            let that = this;
+            layui.use('laydate', function(){
+                var laydate = layui.laydate;
+                //初始赋值
+                laydate.render({
+                    elem: '#test1'
+                    ,value: ''
+                    ,isInitValue: true
+                    ,done: function (value) {
+                        that.equipmentAdd.equipmentPurchaseDate = value
+                    }
+                });
+            });
+        },
     });
 </script>
 </body>

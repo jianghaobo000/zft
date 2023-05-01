@@ -5,7 +5,9 @@ import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.Practice;
 import cdu.jhb.domain.manage.Department;
+import cdu.jhb.domain.manage.Equipment;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
+import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
 
@@ -61,5 +63,16 @@ public interface ManageGateway {
      */
     Boolean saveStaff(Employee employee, Account account, Practice practice);
 
+    /**
+     * 获取设备列表
+     * @param name
+     * @return
+     */
+    List<Equipment> getEquipmentList(String name);
 
+    /**
+     * 保存或修改设备信息
+     * @return
+     */
+    Boolean saveEquipment(Equipment equipment);
 }

@@ -28,14 +28,22 @@
         UPDATE employee_table e
         JOIN practice_table p ON e.employee_practice_id = p.practice_id
         SET p.practice_department_id = #{did}
-        WHERE e.employee_id IN #{eids} AND e.employee_tenant_id = #{tenantId}
+        WHERE e.employee_id IN
+        <foreach item="eid" collection="eids" open="(" separator="," close=")">
+            #{eid}
+        </foreach>
+        AND e.employee_tenant_id = #{tenantId}
     </update>
 
     <update id="setDepartmentIdNull">
         UPDATE employee_table e
         JOIN practice_table p ON e.employee_practice_id = p.practice_id
         SET p.practice_department_id = NULL
-        WHERE e.employee_id IN #{eids} AND e.employee_tenant_id = #{tenantId}
+        WHERE e.employee_id IN
+        <foreach item="eid" collection="eids" open="(" separator="," close=")">
+            #{eid}
+        </foreach>
+        AND e.employee_tenant_id = #{tenantId}
     </update>
 
 </mapper>
