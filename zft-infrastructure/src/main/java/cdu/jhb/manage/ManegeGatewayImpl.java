@@ -13,6 +13,7 @@ import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.Practice;
 import cdu.jhb.domain.manage.Department;
+import cdu.jhb.domain.manage.DiagnosticCharge;
 import cdu.jhb.domain.manage.Equipment;
 import cdu.jhb.domain.manage.gateway.ManageGateway;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
@@ -20,8 +21,10 @@ import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
 import cdu.jhb.manage.database.DepartmentMapper;
+import cdu.jhb.manage.database.DiagnosticChargeMapper;
 import cdu.jhb.manage.database.EquipmentMapper;
 import cdu.jhb.manage.database.dataobject.DepartmentDO;
+import cdu.jhb.manage.database.dataobject.DiagnosticChargeDO;
 import cdu.jhb.manage.database.dataobject.EquipmentDO;
 import cdu.jhb.util.Convert;
 import cdu.jhb.util.RedisUtil;
@@ -53,6 +56,8 @@ public class ManegeGatewayImpl implements ManageGateway {
     private final DepartmentMapper departmentMapper;
 
     private final EquipmentMapper equipmentMapper;
+
+    private final DiagnosticChargeMapper diagnosticChargeMapper;
 
     /**
      * 获取科室列表
@@ -197,15 +202,28 @@ public class ManegeGatewayImpl implements ManageGateway {
             employeeDO.setEmployeeAccountId(accountDO.getAccountId());
             employeeDO.setEmployeePracticeId(practiceDO.getPracticeId());
             employeeMapper.insert(employeeDO);
+
+            // 新增挂号费
+            // 获取统一挂号费
+            QueryWrapper<DiagnosticChargeDO> queryWrapper = new QueryWrapper<>();
+            queryWrapper.lambda()
+                    .eq(DiagnosticChargeDO::getDiagnosticChargeStatus,0)
+                    .eq(DiagnosticChargeDO::getDiagnosticChargeTenantId,RedisUtil.getLocalTenantId());
+            DiagnosticChargeDO diagnosticChargeDO = diagnosticChargeMapper.selectOne(queryWrapper);
+            diagnosticChargeDO.setDiagnosticChargeId(null);
+            // 设置员工ID
+            diagnosticChargeDO.setDiagnosticChargeEmployeeId(employeeDO.getEmployeeId());
+            diagnosticChargeDO.setDiagnosticChargeEmployeeName(employeeDO.getEmployeeName());
+            // 设置状态为个人
+            diagnosticChargeDO.setDiagnosticChargeStatus(1);
+            diagnosticChargeMapper.insert(diagnosticChargeDO);
+
         }else{
             // 修改
             accountMapper.updateById(accountDO);
             practiceMapper.updateById(practiceDO);
             employeeMapper.updateById(employeeDO);
         }
-
-        // 设置挂号费
-        // 判断是否为医生
 
         return true;
     }
@@ -245,6 +263,56 @@ public class ManegeGatewayImpl implements ManageGateway {
             equipmentMapper.updateById(equipmentDO);
         }
         return true;
+    }
+
+    /**
+     * 删除诊费通过员工id
+     * @param eid
+     * @return
+     */
+    @Override
+    public Boolean deleteDiagnosticChargeByEid(Long eid) {
+        QueryWrapper<DiagnosticChargeDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda()
+                .eq(DiagnosticChargeDO::getDiagnosticChargeEmployeeId,eid)
+                .eq(DiagnosticChargeDO::getDiagnosticChargeTenantId,RedisUtil.getLocalTenantId());
+        diagnosticChargeMapper.delete(queryWrapper);
+        return true;
+    }
+
+    /**
+     * 保存挂号费设置
+     * @param diagnosticChargeList
+     * @return
+     */
+    @Override
+    public Boolean saveDiagnosticCharge(List<DiagnosticCharge> diagnosticChargeList) {
+        List<DiagnosticChargeDO> diagnosticChargeDOList = Convert.listConvert(diagnosticChargeList,DiagnosticChargeDO.class);
+        diagnosticChargeDOList.forEach(diagnosticChargeMapper::updateById);
+        return true;
+    }
+
+    /**
+     * 获取挂号费设置
+     * @return
+     */
+    @Override
+    public List<DiagnosticCharge> getDiagnosticChargeList() {
+        // 查出有医护技的员工
+        QueryWrapper<EmployeeDO> employeeDOQueryWrapper = new QueryWrapper<>();
+        employeeDOQueryWrapper.lambda()
+                .eq(EmployeeDO::getEmployeeMedicalNursingSkills,1)
+                .eq(EmployeeDO::getEmployeeTenantId,RedisUtil.getLocalTenantId());
+        List<EmployeeDO> employeeDOList = employeeMapper.selectList(employeeDOQueryWrapper);
+        List<Long> eids = employeeDOList.stream().map(EmployeeDO::getEmployeeId).collect(Collectors.toList());
+        eids.add(RedisUtil.getLocalTenantId());
+
+        QueryWrapper<DiagnosticChargeDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda()
+                .in(DiagnosticChargeDO::getDiagnosticChargeEmployeeId,eids)
+                .eq(DiagnosticChargeDO::getDiagnosticChargeTenantId,RedisUtil.getLocalTenantId());
+        List<DiagnosticChargeDO> diagnosticChargeDOList = diagnosticChargeMapper.selectList(queryWrapper);
+        return Convert.listConvert(diagnosticChargeDOList,DiagnosticCharge.class);
     }
 
 

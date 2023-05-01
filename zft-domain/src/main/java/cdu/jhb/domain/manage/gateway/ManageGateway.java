@@ -5,6 +5,7 @@ import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.Practice;
 import cdu.jhb.domain.manage.Department;
+import cdu.jhb.domain.manage.DiagnosticCharge;
 import cdu.jhb.domain.manage.Equipment;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
 import cdu.jhb.manage.data.dto.EquipmentDTO;
@@ -75,4 +76,24 @@ public interface ManageGateway {
      * @return
      */
     Boolean saveEquipment(Equipment equipment);
+
+    /**
+     * 删除诊费通过员工ID
+     * @param eid
+     * @return
+     */
+    Boolean deleteDiagnosticChargeByEid(Long eid);
+
+    /**
+     * 保存挂号费设置
+     * @param diagnosticChargeList
+     * @return
+     */
+    Boolean saveDiagnosticCharge(List<DiagnosticCharge> diagnosticChargeList);
+
+    /**
+     * 获取挂号费设置
+     * @return
+     */
+    List<DiagnosticCharge> getDiagnosticChargeList();
 }

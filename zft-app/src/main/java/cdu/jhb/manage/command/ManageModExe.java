@@ -9,11 +9,14 @@ import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.Practice;
 import cdu.jhb.domain.manage.Department;
+import cdu.jhb.domain.manage.DiagnosticCharge;
 import cdu.jhb.domain.manage.Equipment;
 import cdu.jhb.domain.manage.gateway.ManageGateway;
+import cdu.jhb.manage.data.dto.DiagnosticChargeDTO;
 import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.request.DepartmentInfoRequest;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
+import cdu.jhb.manage.database.DiagnosticChargeMapper;
 import cdu.jhb.manage.database.EquipmentMapper;
 import cdu.jhb.util.Convert;
 import cdu.jhb.util.PinYinConvert;
@@ -42,6 +45,8 @@ public class ManageModExe {
     private final EmployeeMapper employeeMapper;
 
     private final EquipmentMapper equipmentMapper;
+
+    private final DiagnosticChargeMapper diagnosticChargeMapper;
 
 
     /**
@@ -98,6 +103,9 @@ public class ManageModExe {
         if(practiceMapper.deleteById(pid)!=1){
             throw new RuntimeException(DictException.DELETE_PRACTICE_FAILED);
         }
+        if(!manageGateway.deleteDiagnosticChargeByEid(eid)){
+            throw new RuntimeException(DictException.DELETE_DIAGNOSTIC_CHARGE_FAILED);
+        }
         return true;
     }
 
@@ -125,5 +133,15 @@ public class ManageModExe {
             throw new RuntimeException(DictException.DELETE_EQUIPMENT_FAILED);
         }
         return true;
+    }
+
+    /**
+     * 保存挂号费设置
+     * @param diagnosticChargeList
+     * @return
+     */
+    public Boolean saveDiagnosticCharge(List<DiagnosticChargeDTO> diagnosticChargeDTOList) {
+        List<DiagnosticCharge> diagnosticChargeList = Convert.listConvert(diagnosticChargeDTOList,DiagnosticCharge.class);
+        return manageGateway.saveDiagnosticCharge(diagnosticChargeList);
     }
 }

@@ -2,6 +2,7 @@ package cdu.jhb.manage.api;
 
 import cdu.jhb.account.data.dto.EmployeeDTO;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
+import cdu.jhb.manage.data.dto.DiagnosticChargeDTO;
 import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.request.DepartmentInfoRequest;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
@@ -90,6 +91,19 @@ public interface ManageServiceI {
      * @return
      */
     Boolean deleteEquipmentById(Long eid);
+
+    /**
+     * 保存挂号费设置
+     * @param diagnosticChargeDTOList
+     * @return
+     */
+    Boolean saveDiagnosticCharge(List<DiagnosticChargeDTO> diagnosticChargeDTOList);
+
+    /**
+     * 获取挂号费设置
+     * @return
+     */
+    List<DiagnosticChargeDTO> getDiagnosticChargeList();
 
 
 }

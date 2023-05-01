@@ -1,4 +1,4 @@
-package cdu.jhb.manage.data.dto;
+package cdu.jhb.domain.manage;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
 /**
-* @description: 挂号费DTO
+* @description: 挂号费实体
 * @author jhb
 * @date 2023/05/01 17:21
 * @version 1.0
@@ -17,18 +17,16 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DiagnosticChargeDTO {
+public class DiagnosticCharge {
 
     /**
      * 诊费ID
      */
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long diagnosticChargeId;
 
     /**
      * 诊费所属员工ID
      */
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long diagnosticChargeEmployeeId;
 
     /**
@@ -37,7 +35,7 @@ public class DiagnosticChargeDTO {
     private String diagnosticChargeEmployeeName;
 
     /**
-     * 诊费状态（0、统一，1、个人）
+     * 诊费状态（0、统一，1、医护技，2、非医护技）
      */
     private Integer diagnosticChargeStatus;
 
@@ -54,7 +52,6 @@ public class DiagnosticChargeDTO {
     /**
      * 诊费所属租户
      */
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long diagnosticChargeTenantId;
 
 }

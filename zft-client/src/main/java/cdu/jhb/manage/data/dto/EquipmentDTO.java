@@ -25,6 +25,7 @@ public class EquipmentDTO {
     /**
      * 所属科室ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long equipmentDepartmentId;
 
     /**

@@ -7,7 +7,7 @@
 </head>
 <body style="background-color: rgb(225,228,232);">
 <div th:replace="~{common/common::headbar}"/>
-<div class="manage">
+<div class="manage" id="manageRegistration">
     <div class="left">
         <div th:replace="~{common/common::manageMeau}"/>
     </div>
@@ -22,57 +22,124 @@
         </div>
         <div class="info">
             <div class="info-top">
-                <p class="float-left" style="margin-right: 30px;margin-top: 5px;">统一初诊费:10.00元 统一复诊费:5.00元</p>
-                <div class="float-left">
-                    <button type="button" class="btn btn-outline-dark btn-sm">设置</button>
+                <p class="float-left" v-if="!status" style="margin-right: 30px;margin-top: 5px;">统一初诊费:{{charge.diagnosticChargeFirst}}元 统一复诊费:{{charge.diagnosticChargeRepeat}}元</p>
+                <p class="float-left" v-if="status"  style="margin-right: 30px;margin-top: 5px;">
+                    统一初诊费:<input type="number" style="width: 50px;" v-model="charge.diagnosticChargeFirst">元
+                    统一复诊费:<input type="number" style="width: 50px;" v-model="charge.diagnosticChargeRepeat">元
+                </p>
+                <div style="float: right;margin-left: 10px;">
+                    <button type="button" class="btn btn-primary" v-if="status" v-on:click="save">保存</button>
+                </div>
+                <div class="float-right">
+                    <button type="button" class="btn btn-outline-primary" v-if="!status" v-on:click="edit">编辑</button>
+                </div>
+                <div class="float-right">
+                    <button type="button" class="btn btn-outline-primary" v-if="status" v-on:click="edit">返回</button>
                 </div>
             </div>
             <div class="info-info">
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th scope="col" width="30%">医生姓名</th>
+                        <th scope="col" width="40%">医生姓名</th>
                         <th scope="col" width="30%">初诊费(元)</th>
                         <th scope="col" width="30%">复诊费(元)</th>
-                        <th scope="col" width="10%">操作</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>姜昊波</td>
-                        <td>10.00</td>
-                        <td>5.00</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-dark btn-sm">设置</button>
-                        </td>
+                    <tr v-if="!status" v-for="diagnosticCharge in diagnosticChargeList">
+                        <td>{{diagnosticCharge.diagnosticChargeEmployeeName}}</td>
+                        <td>{{diagnosticCharge.diagnosticChargeFirst}}</td>
+                        <td>{{diagnosticCharge.diagnosticChargeRepeat}}</td>
                     </tr>
-                    <tr>
-                        <td>姜昊波</td>
-                        <td>10.00</td>
-                        <td>5.00</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-dark btn-sm">设置</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>姜昊波</td>
-                        <td>10.00</td>
-                        <td>5.00</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-dark btn-sm">设置</button>
-                        </td>
+                    <tr v-if="status" v-for="diagnosticCharge in diagnosticChargeList">
+                        <td>{{diagnosticCharge.diagnosticChargeEmployeeName}}</td>
+                        <td><input type="number" style="width: 50px" v-model="diagnosticCharge.diagnosticChargeFirst"></td>
+                        <td><input type="number" style="width: 50px" v-model="diagnosticCharge.diagnosticChargeRepeat"></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             <div class="info-bottom">
-                <p class="float-right">共3条数据</p>
+                <p class="float-right">共{{diagnosticChargeList.length}}条数据</p>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    let vm = new Vue({
+        el: '#manageRegistration',
+        data: {
+            diagnosticChargeList:[{
+                diagnosticChargeId: '',
+                diagnosticChargeEmployeeId: '',
+                diagnosticChargeEmployeeName: '',
+                diagnosticChargeStatus: 1,
+                diagnosticChargeFirst: '',
+                diagnosticChargeRepeat: '',
+                diagnosticChargeTenantId: '',
+            }],
+            charge:{
+                diagnosticChargeId: '',
+                diagnosticChargeEmployeeId: '',
+                diagnosticChargeStatus: 0,
+                diagnosticChargeFirst: '',
+                diagnosticChargeRepeat: '',
+                diagnosticChargeTenantId: '',
+            },
+            status: false,
+        },
+        methods: {
+            edit(){
+                this.status = true;
+            },
+            save(){
+                this.diagnosticChargeList.push(this.charge);
+                let that = this;
+                $.ajax({
+                    url: '/manage/saveDiagnosticCharge',
+                    type: 'POST',
+                    data: JSON.stringify(this.diagnosticChargeList),
+                    contentType: 'application/json',
+                    success: function () {
+                        that.getDiagnosticChargeList();
+                        layer.msg('保存成功');
+                    },
+                    error: function () {
+                        layer.msg('保存失败');
+                    }
+                });
+            },
+            getDiagnosticChargeList(){
+                let that = this;
+                $.ajax({
+                    url: '/manage/getDiagnosticChargeList',
+                    type: 'GET',
+                    success: function (response) {
+                        that.diagnosticChargeList.splice(0,that.diagnosticChargeList.length);
+                        response.forEach(item =>{
+                            if(item.diagnosticChargeStatus === 0){
+                                that.charge = item;
+                            }else{
+                                that.diagnosticChargeList.push(item);
+                            }
+                        });
+                        that.status = false;
+                    },
+                    error: function () {
+                        layer.msg('获取挂号费列表失败');
+                    }
+                });
+            },
+        },
+        computed: {
+
+        },
+        mounted(){
+            this.getDiagnosticChargeList();
+        },
+    });
 </script>
 </body>
 </html>

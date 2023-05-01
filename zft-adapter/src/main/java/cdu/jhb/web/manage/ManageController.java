@@ -2,6 +2,7 @@ package cdu.jhb.web.manage;
 
 import cdu.jhb.account.data.dto.EmployeeDTO;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
+import cdu.jhb.manage.data.dto.DiagnosticChargeDTO;
 import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.request.DepartmentInfoRequest;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
@@ -193,6 +194,28 @@ public class ManageController {
     @GetMapping("toRegistration")
     public String toRegistration(){
         return "manage/manageRegistration";
+    }
+
+    /**
+     * 保存挂号费设置
+     * @return
+     */
+    @PostMapping("saveDiagnosticCharge")
+    public ResponseEntity<?> saveDiagnosticCharge(@RequestBody List<DiagnosticChargeDTO> diagnosticChargeDTOList){
+        if(manageService.saveDiagnosticCharge(diagnosticChargeDTOList)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    /**
+     * 获取挂号费设置
+     * @return
+     */
+    @GetMapping("getDiagnosticChargeList")
+    public ResponseEntity<?> getDiagnosticChargeList(){
+        List<DiagnosticChargeDTO> diagnosticChargeDTOList = manageService.getDiagnosticChargeList();
+        return ResponseEntity.ok(diagnosticChargeDTOList);
     }
 
     /**

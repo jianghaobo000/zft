@@ -5,6 +5,7 @@ import cdu.jhb.manage.api.ManageServiceI;
 import cdu.jhb.manage.command.ManageModExe;
 import cdu.jhb.manage.command.ManageQryExe;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
+import cdu.jhb.manage.data.dto.DiagnosticChargeDTO;
 import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.request.DepartmentInfoRequest;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
@@ -140,5 +141,24 @@ public class ManageServiceImpl implements ManageServiceI {
     @Override
     public Boolean deleteEquipmentById(Long eid) {
         return manageModExe.deleteEquipmentById(eid);
+    }
+
+    /**
+     * 保存挂号费设置
+     * @param diagnosticChargeDTOList
+     * @return
+     */
+    @Override
+    public Boolean saveDiagnosticCharge(List<DiagnosticChargeDTO> diagnosticChargeDTOList) {
+        return manageModExe.saveDiagnosticCharge(diagnosticChargeDTOList);
+    }
+
+    /**
+     * 获取挂号费设置
+     * @return
+     */
+    @Override
+    public List<DiagnosticChargeDTO> getDiagnosticChargeList() {
+        return manageQryExe.getDiagnosticChargeList();
     }
 }

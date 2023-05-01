@@ -10,9 +10,11 @@ import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.Practice;
 import cdu.jhb.domain.manage.Department;
+import cdu.jhb.domain.manage.DiagnosticCharge;
 import cdu.jhb.domain.manage.Equipment;
 import cdu.jhb.domain.manage.gateway.ManageGateway;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
+import cdu.jhb.manage.data.dto.DiagnosticChargeDTO;
 import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
 import cdu.jhb.manage.database.EquipmentMapper;
@@ -97,5 +99,14 @@ public class ManageQryExe {
     public List<EquipmentDTO> getEquipmentList(String name) {
         List<Equipment> equipment = manageGateway.getEquipmentList(name);
         return Convert.listConvert(equipment,EquipmentDTO.class);
+    }
+
+    /**
+     * 获取挂号费设置
+     * @return
+     */
+    public List<DiagnosticChargeDTO> getDiagnosticChargeList() {
+        List<DiagnosticCharge> diagnosticChargeList = manageGateway.getDiagnosticChargeList();
+        return Convert.listConvert(diagnosticChargeList,DiagnosticChargeDTO.class);
     }
 }

@@ -33,4 +33,6 @@ public class DictException {
     public final static String DELETE_DEPARTMENT_FAILED = "删除科室详情失败";
 
     public final static String DELETE_EQUIPMENT_FAILED = "删除设备详情失败";
+
+    public final static String DELETE_DIAGNOSTIC_CHARGE_FAILED = "删除诊费失败";
 }
