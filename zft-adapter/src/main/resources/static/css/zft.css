@@ -1367,6 +1367,180 @@ tr:hover .td-hover{
     float: left;
 }
 
+.statistics{
+    width: 100%;
+    padding: 10px 15px 10px 15px;
+    position: relative;
+}
+
+.statistics .left{
+    width: 29%;
+    height: 880px;
+    margin-right: 0.5%;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 10px;
+    background-color: white;
+    float: left;
+}
+
+.statistics .left .top{
+    width: 100%;
+    height: 50px;
+    background-color: rgb(240,241,246);
+    border-bottom: 1px rgb(225,228,232) solid;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 15px 10px 0 10px;
+    float: left;
+}
+
+.statistics .left .top p{
+    font-family: '黑体';
+    font-size: 20px;
+    font-weight: 500;
+    float: left;
+}
+
+.statistics .left .info{
+    width: 100%;
+    padding: 15px 15px 15px 15px;
+    float: left;
+}
+
+.statistics .left .info .text{
+    width: 200px;
+    color: #747474;
+    font-size: 15px;
+    float: left;
+    padding-top: 6px;
+}
+
+.statistics .left .info .revenue{
+    padding-top: 20px;
+    width: 100%;
+    float: left;
+    height: 380px;
+}
+
+.statistics .left .info .revenue-line{
+    padding-top: 20px;
+    width: 100%;
+    float: left;
+    height: 300px;
+}
+
+.statistics .middle{
+    width: 29%;
+    height: 880px;
+    margin-right: 0.5%;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 10px;
+    background-color: white;
+    float: left;
+}
+
+.statistics .middle .top{
+    width: 100%;
+    height: 50px;
+    background-color: rgb(240,241,246);
+    border-bottom: 1px rgb(225,228,232) solid;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 15px 10px 0 10px;
+    float: left;
+}
+
+.statistics .middle .top p{
+    font-family: '黑体';
+    font-size: 20px;
+    font-weight: 500;
+    float: left;
+}
+
+.statistics .middle .info{
+    width: 100%;
+    padding: 15px 15px 15px 15px;
+    float: left;
+}
+
+.statistics .middle .info .moneyRate{
+    padding-top: 20px;
+    width: 100%;
+    float: left;
+    height: 350px;
+}
+
+.statistics .middle .info .numRate{
+    padding-top: 20px;
+    width: 100%;
+    float: left;
+    height: 350px;
+}
+
+.statistics .middle .info .text{
+    width: 200px;
+    color: #747474;
+    font-size: 15px;
+    float: left;
+    padding-top: 6px;
+}
+
+.statistics .right{
+    width: 41%;
+    height: 880px;
+    border: 1px rgb(207,213,215) solid;
+    border-radius: 10px;
+    background-color: white;
+    float: left;
+}
+
+.statistics .right .top{
+    width: 100%;
+    height: 50px;
+    background-color: rgb(240,241,246);
+    border-bottom: 1px rgb(225,228,232) solid;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 15px 10px 0 10px;
+    float: left;
+}
+
+.statistics .right .top p{
+    font-family: '黑体';
+    font-size: 20px;
+    font-weight: 500;
+    float: left;
+}
+
+.statistics .right .info{
+    width: 100%;
+    padding: 15px 15px 15px 15px;
+    float: left;
+    height: 760px;
+}
+
+.statistics .right .info .info-info{
+    width: 100%;
+    float: left;
+    height: 700px;
+    overflow: auto;
+}
+
+.statistics .right .bottom{
+    width: 100%;
+    padding: 15px 15px 15px 15px;
+    float: left;
+    height: 40px;
+}
+
+.statistics .right .info .text{
+    width: 200px;
+    color: #747474;
+    font-size: 15px;
+    float: left;
+    padding-top: 6px;
+}
+
 
 
 

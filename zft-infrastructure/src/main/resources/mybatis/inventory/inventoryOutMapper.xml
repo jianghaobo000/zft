@@ -15,7 +15,7 @@
             i.inventory_out_variety,
             i.inventory_out_money
         FROM inventory_out_table i
-        LEFT JOIN employee_table a ON i.inventory_out_operator_id = e.employee_id
+        LEFT JOIN employee_table e ON i.inventory_out_operator_id = e.employee_id
         WHERE
             i.inventory_out_tenant_id = #{param.inventoryOutTenantId}
         <if test="param.inventoryOutStatus != null and param.inventoryOutStatus !=''">
