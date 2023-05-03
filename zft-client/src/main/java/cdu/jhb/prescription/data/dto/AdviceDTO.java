@@ -1,5 +1,7 @@
 package cdu.jhb.prescription.data.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,11 +19,13 @@ public class AdviceDTO {
     /**
      * 医嘱ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long adviceId;
 
     /**
      * 患者ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long advicePatientId;
 
     /**
@@ -92,5 +96,6 @@ public class AdviceDTO {
     /**
      * 医嘱所属诊所
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long adviceTenantId;
 }

@@ -28,4 +28,14 @@ public class PayDictDO {
      * 支付名称
      */
     private String payName;
+
+    /**
+     * 支付方式状态（0、未启用 1、启用）
+     */
+    private Integer payStatus;
+
+    /**
+     * 支付方式所属租户
+     */
+    private Long payTenantId;
 }

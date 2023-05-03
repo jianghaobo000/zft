@@ -6,16 +6,20 @@ import cdu.jhb.account.data.dto.PracticeDTO;
 import cdu.jhb.account.database.AccountMapper;
 import cdu.jhb.account.database.EmployeeMapper;
 import cdu.jhb.account.database.PracticeMapper;
+import cdu.jhb.charge.data.dto.PayDictDTO;
 import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.Practice;
+import cdu.jhb.domain.charge.PayDict;
 import cdu.jhb.domain.manage.Department;
 import cdu.jhb.domain.manage.DiagnosticCharge;
 import cdu.jhb.domain.manage.Equipment;
+import cdu.jhb.domain.manage.PaySet;
 import cdu.jhb.domain.manage.gateway.ManageGateway;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
 import cdu.jhb.manage.data.dto.DiagnosticChargeDTO;
 import cdu.jhb.manage.data.dto.EquipmentDTO;
+import cdu.jhb.manage.data.dto.PaySetDTO;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
 import cdu.jhb.manage.database.EquipmentMapper;
 import cdu.jhb.util.Convert;
@@ -108,5 +112,23 @@ public class ManageQryExe {
     public List<DiagnosticChargeDTO> getDiagnosticChargeList() {
         List<DiagnosticCharge> diagnosticChargeList = manageGateway.getDiagnosticChargeList();
         return Convert.listConvert(diagnosticChargeList,DiagnosticChargeDTO.class);
+    }
+
+    /**
+     * 获取支付设置
+     * @return
+     */
+    public PaySetDTO getPaySet() {
+        PaySet paySet = manageGateway.getPaySet();
+        return Convert.entityConvert(paySet,PaySetDTO.class);
+    }
+
+    /**
+     * 获取支付字典列表
+     * @return
+     */
+    public List<PayDictDTO> getPayDict() {
+        List<PayDict> payDictList = manageGateway.getPayDict();
+        return Convert.listConvert(payDictList,PayDictDTO.class);
     }
 }

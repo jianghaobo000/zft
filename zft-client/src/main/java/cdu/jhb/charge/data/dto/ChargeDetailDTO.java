@@ -1,5 +1,7 @@
 package cdu.jhb.charge.data.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,16 +19,19 @@ public class ChargeDetailDTO {
     /**
      * 收费单明细ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
      private Long chargeDetailId;
 
     /**
      * 所属收费单ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
      private Long chargeId;
 
     /**
      * 收费单商品ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
      private Long chargeCommodityId;
 
     /**

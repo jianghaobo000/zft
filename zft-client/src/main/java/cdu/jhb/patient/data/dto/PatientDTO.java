@@ -1,5 +1,7 @@
 package cdu.jhb.patient.data.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,7 @@ public class PatientDTO {
     /**
      * 患者ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long patientId;
 
     /**
@@ -57,6 +60,7 @@ public class PatientDTO {
     /**
      * 患者所属科室ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long patientDepartmentId;
 
     /**
@@ -72,5 +76,6 @@ public class PatientDTO {
     /**
      * 患者所属诊所
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long patientTenantId;
 }

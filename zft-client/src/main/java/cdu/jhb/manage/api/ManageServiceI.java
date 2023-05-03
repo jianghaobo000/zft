@@ -1,10 +1,13 @@
 package cdu.jhb.manage.api;
 
 import cdu.jhb.account.data.dto.EmployeeDTO;
+import cdu.jhb.charge.data.dto.PayDictDTO;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
 import cdu.jhb.manage.data.dto.DiagnosticChargeDTO;
 import cdu.jhb.manage.data.dto.EquipmentDTO;
+import cdu.jhb.manage.data.dto.PaySetDTO;
 import cdu.jhb.manage.data.request.DepartmentInfoRequest;
+import cdu.jhb.manage.data.request.PaySetInfoRequest;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
 
@@ -104,6 +107,25 @@ public interface ManageServiceI {
      * @return
      */
     List<DiagnosticChargeDTO> getDiagnosticChargeList();
+
+    /**
+     * 获取支付设置
+     * @return
+     */
+    PaySetDTO getPaySet();
+
+    /**
+     * 获取当前诊所支付方式
+     * @return
+     */
+    List<PayDictDTO> getPayDict();
+
+    /**
+     * 保存支付设置
+     * @param request
+     * @return
+     */
+    Boolean savePaySet(PaySetInfoRequest request);
 
 
 }

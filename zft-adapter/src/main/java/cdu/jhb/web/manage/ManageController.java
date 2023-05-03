@@ -1,10 +1,13 @@
 package cdu.jhb.web.manage;
 
 import cdu.jhb.account.data.dto.EmployeeDTO;
+import cdu.jhb.charge.data.dto.PayDictDTO;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
 import cdu.jhb.manage.data.dto.DiagnosticChargeDTO;
 import cdu.jhb.manage.data.dto.EquipmentDTO;
+import cdu.jhb.manage.data.dto.PaySetDTO;
 import cdu.jhb.manage.data.request.DepartmentInfoRequest;
+import cdu.jhb.manage.data.request.PaySetInfoRequest;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
 import cdu.jhb.manage.api.ManageServiceI;
@@ -252,5 +255,37 @@ public class ManageController {
     @GetMapping("toPay")
     public String toPay(){
         return "manage/managePay";
+    }
+
+    /**
+     * 获取支付设置
+     * @return
+     */
+    @GetMapping("getPaySet")
+    public ResponseEntity<?> getPaySet(){
+        PaySetDTO paySetDTO = manageService.getPaySet();
+        return ResponseEntity.ok(paySetDTO);
+    }
+
+    /**
+     * 获取当前诊所开启支付字典列表
+     * @return
+     */
+    @GetMapping("getPayDict")
+    public ResponseEntity<?> getPayDict(){
+        List<PayDictDTO> payDictDTOList = manageService.getPayDict();
+        return ResponseEntity.ok(payDictDTOList);
+    }
+
+    /**
+     * 保存支付设置
+     * @return
+     */
+    @PostMapping("savePaySet")
+    public ResponseEntity<?> savePaySet(@RequestBody PaySetInfoRequest paySetInfoRequest){
+        if(manageService.savePaySet(paySetInfoRequest)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }

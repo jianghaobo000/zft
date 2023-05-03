@@ -1,13 +1,16 @@
 package cdu.jhb.manage.service;
 
 import cdu.jhb.account.data.dto.EmployeeDTO;
+import cdu.jhb.charge.data.dto.PayDictDTO;
 import cdu.jhb.manage.api.ManageServiceI;
 import cdu.jhb.manage.command.ManageModExe;
 import cdu.jhb.manage.command.ManageQryExe;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
 import cdu.jhb.manage.data.dto.DiagnosticChargeDTO;
 import cdu.jhb.manage.data.dto.EquipmentDTO;
+import cdu.jhb.manage.data.dto.PaySetDTO;
 import cdu.jhb.manage.data.request.DepartmentInfoRequest;
+import cdu.jhb.manage.data.request.PaySetInfoRequest;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
 import lombok.AllArgsConstructor;
@@ -160,5 +163,33 @@ public class ManageServiceImpl implements ManageServiceI {
     @Override
     public List<DiagnosticChargeDTO> getDiagnosticChargeList() {
         return manageQryExe.getDiagnosticChargeList();
+    }
+
+    /**
+     * 获取支付设置
+     * @return
+     */
+    @Override
+    public PaySetDTO getPaySet() {
+        return manageQryExe.getPaySet();
+    }
+
+    /**
+     * 获取支付字典列表
+     * @return
+     */
+    @Override
+    public List<PayDictDTO> getPayDict() {
+        return manageQryExe.getPayDict();
+    }
+
+    /**
+     * 保存支付设置
+     * @param request
+     * @return
+     */
+    @Override
+    public Boolean savePaySet(PaySetInfoRequest request) {
+        return manageModExe.savePaySet(request);
     }
 }

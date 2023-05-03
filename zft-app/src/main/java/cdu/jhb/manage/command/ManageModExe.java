@@ -8,13 +8,16 @@ import cdu.jhb.common.DictException;
 import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.Practice;
+import cdu.jhb.domain.charge.PayDict;
 import cdu.jhb.domain.manage.Department;
 import cdu.jhb.domain.manage.DiagnosticCharge;
 import cdu.jhb.domain.manage.Equipment;
+import cdu.jhb.domain.manage.PaySet;
 import cdu.jhb.domain.manage.gateway.ManageGateway;
 import cdu.jhb.manage.data.dto.DiagnosticChargeDTO;
 import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.request.DepartmentInfoRequest;
+import cdu.jhb.manage.data.request.PaySetInfoRequest;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.manage.database.DiagnosticChargeMapper;
 import cdu.jhb.manage.database.EquipmentMapper;
@@ -137,11 +140,21 @@ public class ManageModExe {
 
     /**
      * 保存挂号费设置
-     * @param diagnosticChargeList
+     * @param diagnosticChargeDTOList
      * @return
      */
     public Boolean saveDiagnosticCharge(List<DiagnosticChargeDTO> diagnosticChargeDTOList) {
         List<DiagnosticCharge> diagnosticChargeList = Convert.listConvert(diagnosticChargeDTOList,DiagnosticCharge.class);
         return manageGateway.saveDiagnosticCharge(diagnosticChargeList);
+    }
+
+    /**
+     * 保存支付设置
+     * @return
+     */
+    public Boolean savePaySet(PaySetInfoRequest request){
+        PaySet paySet = Convert.entityConvert(request.getPaySetDTO(),PaySet.class);
+        List<PayDict> payDictList = Convert.listConvert(request.getPayDictDTOList(),PayDict.class);
+        return manageGateway.savePaySet(paySet,payDictList);
     }
 }

@@ -7,14 +7,18 @@ import cdu.jhb.account.database.PracticeMapper;
 import cdu.jhb.account.database.dataobject.AccountDO;
 import cdu.jhb.account.database.dataobject.EmployeeDO;
 import cdu.jhb.account.database.dataobject.PracticeDO;
+import cdu.jhb.charge.database.PayDictMapper;
+import cdu.jhb.charge.database.dataobject.PayDictDO;
 import cdu.jhb.common.Constant;
 import cdu.jhb.common.DictException;
 import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.Practice;
+import cdu.jhb.domain.charge.PayDict;
 import cdu.jhb.domain.manage.Department;
 import cdu.jhb.domain.manage.DiagnosticCharge;
 import cdu.jhb.domain.manage.Equipment;
+import cdu.jhb.domain.manage.PaySet;
 import cdu.jhb.domain.manage.gateway.ManageGateway;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
 import cdu.jhb.manage.data.dto.EquipmentDTO;
@@ -23,9 +27,11 @@ import cdu.jhb.manage.data.response.StaffInfoResponse;
 import cdu.jhb.manage.database.DepartmentMapper;
 import cdu.jhb.manage.database.DiagnosticChargeMapper;
 import cdu.jhb.manage.database.EquipmentMapper;
+import cdu.jhb.manage.database.PaySetMapper;
 import cdu.jhb.manage.database.dataobject.DepartmentDO;
 import cdu.jhb.manage.database.dataobject.DiagnosticChargeDO;
 import cdu.jhb.manage.database.dataobject.EquipmentDO;
+import cdu.jhb.manage.database.dataobject.PaySetDO;
 import cdu.jhb.util.Convert;
 import cdu.jhb.util.RedisUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -58,6 +64,10 @@ public class ManegeGatewayImpl implements ManageGateway {
     private final EquipmentMapper equipmentMapper;
 
     private final DiagnosticChargeMapper diagnosticChargeMapper;
+
+    private final PaySetMapper paySetMapper;
+
+    private final PayDictMapper payDictMapper;
 
     /**
      * 获取科室列表
@@ -313,6 +323,49 @@ public class ManegeGatewayImpl implements ManageGateway {
                 .eq(DiagnosticChargeDO::getDiagnosticChargeTenantId,RedisUtil.getLocalTenantId());
         List<DiagnosticChargeDO> diagnosticChargeDOList = diagnosticChargeMapper.selectList(queryWrapper);
         return Convert.listConvert(diagnosticChargeDOList,DiagnosticCharge.class);
+    }
+
+    /**
+     * 获取支付设置
+     * @return
+     */
+    @Override
+    public PaySet getPaySet() {
+        QueryWrapper<PaySetDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(PaySetDO::getPaySetTenantId,RedisUtil.getLocalTenantId());
+        PaySetDO paySetDO = paySetMapper.selectOne(queryWrapper);
+        return Convert.entityConvert(paySetDO,PaySet.class);
+    }
+
+    /**
+     * 获取支付字典列表
+     * @return
+     */
+    @Override
+    public List<PayDict> getPayDict() {
+        QueryWrapper<PayDictDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(PayDictDO::getPayTenantId,RedisUtil.getLocalTenantId());
+        List<PayDictDO> payDictDOList = payDictMapper.selectList(queryWrapper);
+        return Convert.listConvert(payDictDOList,PayDict.class);
+    }
+
+    /**
+     * 保存支付设置
+     * @param paySet
+     * @param payDictList
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean savePaySet(PaySet paySet, List<PayDict> payDictList) {
+        PaySetDO paySetDO = Convert.entityConvert(paySet,PaySetDO.class);
+        List<PayDictDO> payDictDOList = Convert.listConvert(payDictList,PayDictDO.class);
+
+        // 更新支付设置信息
+        paySetMapper.updateById(paySetDO);
+        // 更新支付方式
+        payDictDOList.forEach(payDictMapper::updateById);
+        return true;
     }
 
 

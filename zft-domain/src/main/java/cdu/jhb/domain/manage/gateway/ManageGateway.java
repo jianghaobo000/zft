@@ -4,13 +4,16 @@ import cdu.jhb.account.data.dto.EmployeeDTO;
 import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.Practice;
+import cdu.jhb.domain.charge.PayDict;
 import cdu.jhb.domain.manage.Department;
 import cdu.jhb.domain.manage.DiagnosticCharge;
 import cdu.jhb.domain.manage.Equipment;
+import cdu.jhb.domain.manage.PaySet;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
 import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.List;
 
@@ -96,4 +99,24 @@ public interface ManageGateway {
      * @return
      */
     List<DiagnosticCharge> getDiagnosticChargeList();
+
+    /**
+     * 获取支付设置
+     * @return
+     */
+    PaySet getPaySet();
+
+    /**
+     * 获取支付字典列表
+     * @return
+     */
+    List<PayDict> getPayDict();
+
+    /**
+     * 保存支付设置
+     * @param paySet
+     * @param payDictList
+     * @return
+     */
+    Boolean savePaySet(PaySet paySet,List<PayDict> payDictList);
 }
