@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfig implements WebMvcConfigurer {
 
     /**
-     * 跨域配置
+     * 跨域配置 // 暂时未使用
      *       前后端分离必须配置，出现跨域之后前端无法访问后端接口
      * @param registry
      */

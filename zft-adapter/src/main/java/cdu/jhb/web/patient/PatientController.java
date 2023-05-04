@@ -1,9 +1,15 @@
 package cdu.jhb.web.patient;
 
+import cdu.jhb.patient.api.PatientServiceI;
+import cdu.jhb.patient.data.response.VisitListResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 /**
 * @description: 患者Controller
@@ -15,6 +21,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @RequestMapping("patient")
 public class PatientController {
+
+    private final PatientServiceI patientService;
+
+    /**
+     * 获取所选日期就诊列表
+     * @param date
+     * @return
+     */
+    @GetMapping("getVisitList")
+    public ResponseEntity<?> getVisitList(@RequestParam("date")String date){
+        List<VisitListResponse> visitListResponseList = patientService.getVisitList(date);
+        return ResponseEntity.ok(visitListResponseList);
+    }
+
+    /**
+     * 获取该患者历史就诊记录
+     * @return
+     */
+    @GetMapping("getPatientVisitHistory")
+    public ResponseEntity<?> getPatientVisitHistory(@RequestParam("patientId")Long patientId){
+        List<VisitListResponse> visitListResponseList = patientService.getPatientVisitHistory(patientId);
+        return ResponseEntity.ok(visitListResponseList);
+    }
 
     /**
      * 跳转患者数据界面

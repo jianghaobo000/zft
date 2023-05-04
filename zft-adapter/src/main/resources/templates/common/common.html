@@ -36,13 +36,27 @@
             <img th:src="@{/img/logo2.png}" width="50px" height="50px" class="myImg">
             <p>诊付通管家</p>
         </div>
+<!--        <div class="header-left" th:if="${session.roleId == 1 || session.roleId == 2}" onclick="window.open('http://localhost:8080/clinic/toClinic','_self')"><p>门诊</p></div>-->
+<!--        <div class="header-left" th:if="${session.roleId == 1 || session.roleId == 3}" style="width: 180px;" onclick="window.open('http://localhost:8080/charge/toCharge','_self')"><p>收费发药</p></div>-->
+<!--        <div class="header-left" th:if="${session.roleId == 1 || session.roleId == 2}" onclick="window.open('http://localhost:8080/patient/toPatientInfo','_self')"><p>患者</p></div>-->
+<!--        <div class="header-left" th:if="${session.roleId == 1 || session.roleId == 4}" onclick="window.open('http://localhost:8080/inventory/toInventory','_self')"><p>库存</p></div>-->
+<!--        <div class="header-left" th:if="${session.roleId == 1}" onclick="window.open('http://localhost:8080/statistics/toStatistics','_self')"><p>统计</p></div>-->
+<!--        <div class="header-left" th:if="${session.roleId == 1}" onclick="window.open('http://localhost:8080/manage/toClinic','_self')"><p>管理</p></div>-->
+
         <div class="header-left" onclick="window.open('http://localhost:8080/clinic/toClinic','_self')"><p>门诊</p></div>
         <div class="header-left" style="width: 180px;" onclick="window.open('http://localhost:8080/charge/toCharge','_self')"><p>收费发药</p></div>
         <div class="header-left" onclick="window.open('http://localhost:8080/patient/toPatientInfo','_self')"><p>患者</p></div>
         <div class="header-left" onclick="window.open('http://localhost:8080/inventory/toInventory','_self')"><p>库存</p></div>
         <div class="header-left" onclick="window.open('http://localhost:8080/statistics/toStatistics','_self')"><p>统计</p></div>
         <div class="header-left" onclick="window.open('http://localhost:8080/manage/toClinic','_self')"><p>管理</p></div>
-        <div class="header-right"><p>当前诊所：成都大学诊所</p></div>
+        <div class="header-logout">
+            <svg xmlns="http://www.w3.org/2000/svg" onclick="window.open('http://localhost:8080/account/logout','_self')" width="30" height="30" fill="currentColor" class="bi bi-box-arrow-right svg-text" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+            </svg>
+        </div>
+        <div class="header-right"><p th:text="'当前诊所:'+${session.tenantName} + ' 当前用户:' + ${session.employee.getEmployeeName()}
+        "></p></div>
     </div>
 </nav>
 

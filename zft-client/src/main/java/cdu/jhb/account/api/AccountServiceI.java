@@ -3,6 +3,7 @@ package cdu.jhb.account.api;
 import cdu.jhb.account.data.dto.AccountDTO;
 import cdu.jhb.account.data.dto.EmployeeDTO;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface AccountServiceI {
 
     void getMsg(HttpServletResponse response);
 
-    Boolean verification(String name,String password,String code,String countryCode);
+    Boolean verification(String name, String password, String code, String countryCode, HttpServletRequest request);
 
     List<AccountDTO> getAccountList();
 

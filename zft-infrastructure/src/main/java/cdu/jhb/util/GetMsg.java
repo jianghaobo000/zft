@@ -2,6 +2,7 @@ package cdu.jhb.util;
 
 import cdu.jhb.common.Constant;
 import redis.clients.jedis.Jedis;
+import sun.awt.image.PixelConverter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.awt.*;
@@ -26,12 +27,12 @@ public class GetMsg {
         BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
         Graphics g = image.getGraphics();
         Random random = new Random();
-        g.setColor(getRandomColor(200,250));
+        g.setColor(Color.white);
         g.fillRect(0,0,width,height);
         g.setFont(new Font(Constant.FONT_TIMES_NEW_ROMAN,Font.PLAIN,18));
-        g.setColor(getRandomColor(160,200));
+        g.setColor(new Color(12,102,255));
         //干扰线生成
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             int x = random.nextInt(width);
             int y = random.nextInt(height);
             int xl = random.nextInt(12);
@@ -39,11 +40,12 @@ public class GetMsg {
             g.drawLine(x,y,x+xl,y+yl);
         }
         String strCode = "";
+        String charStr = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         for (int i = 0; i < 4; i++) {
-            String strNumber = String.valueOf(random.nextInt(10));
-            strCode = strCode+strNumber;
+            String str = String.valueOf(charStr.charAt(random.nextInt(charStr.length())));
+            strCode = strCode + str;
             //设置字体颜色
-            g.drawString(strNumber,13*i+6,20);
+            g.drawString(str,13*i+6,20);
         }
         // 开启redis缓存
         Jedis jedis = new Jedis();

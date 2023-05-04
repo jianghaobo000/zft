@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 /**
 * @description: 处方DTO
 * @author jhb
@@ -21,6 +24,12 @@ public class PrescriptionDTO {
      */
     @JsonSerialize(using = ToStringSerializer.class)
     private Long prescriptionId;
+
+    /**
+     * 处方所对应病历ID
+     */
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long prescriptionAdviceId;
 
     /**
      * 处方类别
@@ -59,8 +68,18 @@ public class PrescriptionDTO {
     private String prescriptionPatientName;
 
     /**
+     * 处方单金额
+     */
+    private BigDecimal prescriptionMoney;
+
+    /**
      * 处方所属诊所
      */
     @JsonSerialize(using = ToStringSerializer.class)
     private Long prescriptionTenantId;
+
+    /**
+     * 处方明细列表
+     */
+    private List<PrescriptionDetailDTO> prescriptionDetailDTOList;
 }

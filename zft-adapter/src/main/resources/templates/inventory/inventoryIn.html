@@ -173,7 +173,7 @@
                             </div>
                             <input autocomplete="off" v-on:focus="onInput($event.target.value)" v-on:input="onInput($event.target.value)" v-on:blur="onBlur" type="text" id="selectCommodity" class="form-control" placeholder="请输入 药品名/国家码 搜索药品" aria-label="Example text with button addon" aria-describedby="button-addon1">
                         </div>
-                        <div class="select-input" ref="selectInput">
+                        <div class="select-input" style="width: 460px;top: 230px;left: 80px;" ref="selectInput">
                             <table id="select-input-table" class="select-input-table" style="width: 100%;">
                                 <tr v-for="inventory in inventoryList" v-on:mousedown="InsertAdd(inventory)">
                                     <td class="select-input-td" style="width: 5%"></td>

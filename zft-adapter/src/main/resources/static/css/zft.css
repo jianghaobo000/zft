@@ -55,7 +55,6 @@ body{
 
 .header .header-right{
     border: 0;
-    width: 300px;
     height: 70px;
     float: right;
     position: relative;
@@ -64,10 +63,27 @@ body{
 
 .header .header-right p{
     margin-top: 23px;
-    margin-right: 10px;
     font-family: '黑体';
     font-size: 18px;
     color: #f9fffd;
+}
+
+.header .header-logout{
+    border: 0;
+    width: 100px;
+    height: 70px;
+    float: right;
+    position: relative;
+    text-align: right;
+    margin-left: 20px;
+}
+
+.header .header-logout svg{
+    margin-top: 17px;
+    margin-right: 30px;
+    color: #f9fffd;
+    cursor: pointer;
+
 }
 /* 遮罩层 */
 .shadow{
@@ -86,7 +102,7 @@ body{
     margin: 0 auto;
     text-align: center;
     color: #3c3f41;
-    top: 10px;
+    top: 100px;
 }
 
 .svg-text{
@@ -159,11 +175,8 @@ tr:hover .td-hover{
 }
 
 .select-input{
-    width: 460px;
     position: absolute;
     z-index: 500;
-    top: 230px;
-    left: 80px;
     max-height: 300px;
     display: none;
     overflow: auto;
@@ -181,6 +194,33 @@ tr:hover .td-hover{
     height: 40px;
     border: 0;
     border-bottom: 1px rgb(207,213,215) solid;
+}
+
+/* 登录CSS */
+.login{
+    width: 65%;
+    height: 650px;
+    padding: 50px 5% 50px 5%;
+    position: absolute;
+    top: 150px;
+    left: 17.5%;
+    border-radius: 20px;
+    background-color: #FFFFFF;
+    border: rgb(241,242,247) 1px solid;
+}
+
+.login .image{
+    width: 60%;
+    height: 550px;
+    position: relative;
+    float: left;
+}
+
+.login .login-form{
+    width: 40%;
+    height: 550px;
+    position: relative;
+    float: right;
 }
 
 /* 门诊CSS */

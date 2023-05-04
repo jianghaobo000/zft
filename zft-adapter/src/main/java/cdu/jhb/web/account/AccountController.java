@@ -4,13 +4,17 @@ import cdu.jhb.account.api.AccountServiceI;
 import cdu.jhb.account.data.dto.AccountDTO;
 import cdu.jhb.account.data.dto.EmployeeDTO;
 import cdu.jhb.account.data.request.LoginData;
+import cdu.jhb.common.Constant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import redis.clients.jedis.Jedis;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -51,12 +55,29 @@ public class AccountController {
      * @return
      */
     @PostMapping(path = "login")
-    public ResponseEntity<?> login(@RequestBody LoginData loginData) {
-        if(accountService.verification(loginData.getAccountName(),loginData.getAccountPassword(),loginData.getCode(),loginData.getCountryCode())){
+    public ResponseEntity<?> login(@RequestBody LoginData loginData, HttpServletRequest request) {
+        if(accountService.verification(loginData.getAccountName(),loginData.getAccountPassword(),loginData.getCode(),loginData.getCountryCode(),request)){
+            Jedis jedis = new Jedis();
+            HttpSession session = request.getSession();
+            session.setAttribute(Constant.TENANT_NAME,jedis.get(Constant.TENANT_NAME));
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         // 状态码401
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    /**
+     * 退出登录状态
+     * @param request
+     * @return
+     */
+    @GetMapping("logout")
+    public String logout(HttpServletRequest request){
+        Jedis jedis = new Jedis();
+        HttpSession session = request.getSession();
+        session.setAttribute(Constant.TENANT_NAME,null);
+        jedis.set(Constant.TENANT_NAME,"");
+        return loginBef();
     }
 
     /**

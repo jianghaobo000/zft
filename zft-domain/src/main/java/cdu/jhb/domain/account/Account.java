@@ -7,6 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import redis.clients.jedis.Jedis;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 /**
 * @description: TODO
 * @author jhb
@@ -33,7 +36,7 @@ public class Account {
     private String accountPassword;
 
     /**
-     * 账号权限（1、老板 2、医生 3、药师 4、库管员）
+     * 账号权限（1、管理员 2、医生 3、药师 4、库管员）
      */
     private Integer accountRole;
 
@@ -45,17 +48,21 @@ public class Account {
     /**
      * 业务判断
      */
-    public boolean isOk(String password, String code) {
+    public boolean isOk(String password) {
         Jedis jedis = new Jedis();
-        if(this.getAccountPassword().equals(password)){
-            if(!jedis.get(Constant.VALID_CODE).equals(code)){
-                throw new RuntimeException(DictException.VALID_CODE_ERROR);
-            }
-        }else{
+        if(!this.getAccountPassword().equals(password)){
             throw new RuntimeException(DictException.ACCOUNT_PASSWORD_ERROR);
         }
         jedis.set(Constant.ACCOUNT_NAME,this.accountName);
         jedis.set(Constant.TENANT_ID,this.accountTenantId.toString());
+        return true;
+    }
+
+    public static boolean isCode(String code){
+        Jedis jedis = new Jedis();
+        if(!jedis.get(Constant.VALID_CODE).equals(code)){
+            throw new RuntimeException(DictException.VALID_CODE_ERROR);
+        }
         return true;
     }
 

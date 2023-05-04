@@ -23,6 +23,12 @@ public class VisitDTO {
     private Long visitId;
 
     /**
+     * 就诊记录所属病历单ID
+     */
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long visitAdviceId;
+
+    /**
      * 就诊患者ID
      */
     @JsonSerialize(using = ToStringSerializer.class)

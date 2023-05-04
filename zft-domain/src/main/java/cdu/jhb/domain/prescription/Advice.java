@@ -1,5 +1,7 @@
 package cdu.jhb.domain.prescription;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,9 +17,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Advice {
     /**
-     * 医嘱ID
+     * 病历ID
      */
     private Long adviceId;
+
+    /**
+     * 病历单对应处方单ID
+     */
+    private Long advicePrescriptionId;
 
     /**
      * 患者ID
@@ -30,6 +37,11 @@ public class Advice {
     private String adviceTime;
 
     /**
+     * 现病史
+     */
+    private String advicePresentHistory;
+
+    /**
      * 既往史
      */
     private String advicePastHistory;
@@ -38,6 +50,11 @@ public class Advice {
      * 遗传史
      */
     private String adviceGeneticHistory;
+
+    /**
+     * 婚育史
+     */
+    private String adviceMarryHistory;
 
     /**
      * 体温
@@ -63,21 +80,6 @@ public class Advice {
      * 描述症状
      */
     private String adviceDescription;
-
-    /**
-     * 婚姻状态
-     */
-    private String adviceMaritalStatus;
-
-    /**
-     * 育子状态
-     */
-    private String adviceFertileStatus;
-
-    /**
-     * 望闻问切
-     */
-    private String adviceLookHearAsk;
 
     /**
      * 诊断

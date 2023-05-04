@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cdu.jhb.patient.database.PatientMapper">
+
+    <select id="getVisitList" resultType="cdu.jhb.patient.data.response.VisitListResponse">
+        SELECT
+            *
+        FROM visit_table v
+        LEFT JOIN patient_table p ON v.visit_patient_id = p.patient_id
+        WHERE v.visit_time BETWEEN #{beginTime} AND #{endTime}
+    </select>
+
+    <select id="getPatientVisitHistory" resultType="cdu.jhb.patient.data.response.VisitListResponse">
+        SELECT
+            *
+        FROM visit_table v
+        LEFT JOIN patient_table p ON v.visit_patient_id = p.patient_id
+        WHERE p.patient_id = #{pid}
+    </select>
+
+</mapper>

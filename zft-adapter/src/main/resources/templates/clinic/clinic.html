@@ -14,7 +14,7 @@
 </head>
 <body style="background-color: rgb(225,228,232);">
     <div th:replace="~{common/common::headbar}"/>
-    <div class="clinic">
+    <div class="clinic" id="clinic">
         <div class="left">
             <div class="top">
                 <div class="text1">
@@ -36,172 +36,33 @@
                 </div>
             </div>
             <div class="visit-div" th:fragment="visitbar">
-                <div class="visit">
+                <div class="visit" v-for="visit in visitList" v-on:click="">
                     <p class="name">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" style="color: #ff6587;" class="bi bi-person-fill svg-text" viewBox="0 0 16 16">
                             <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                         </svg>
-                        甲乙丙
+                        {{visit.patient_name}}
                     </p>
-                    <p class="time">10:11</p>
+                    <p class="time">{{visit.visitTime}}</p>
                 </div>
-                <div class="visit">
-                    <p class="name">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"  style="color: #ff6587;" class="bi bi-person-fill svg-text" viewBox="0 0 16 16">
-                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                        </svg>
-                        少打
-                    </p>
-                    <p class="time">09:22</p>
-                </div>
-                <div class="visit">
-                    <p class="name">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" style="color: #5db2f1;" class="bi bi-person-fill svg-text" viewBox="0 0 16 16">
-                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                        </svg>
-                        大声道
-                    </p>
-                    <p class="time">09:16</p>
-                </div>
-                <div class="visit">
-                    <p class="name">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" style="color: #ff6587;" class="bi bi-person-fill svg-text" viewBox="0 0 16 16">
-                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                        </svg>
-                        大声道
-                    </p>
-                    <p class="time">09:16</p>
-                </div>
-                <div class="visit">
-                    <p class="name">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" style="color: #ff6587;" class="bi bi-person-fill svg-text" viewBox="0 0 16 16">
-                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                        </svg>
-                        大声道
-                    </p>
-                    <p class="time">09:16</p>
-                </div>
-                <div class="visit">
-                    <p class="name">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" style="color: #5db2f1;" class="bi bi-person-fill svg-text" viewBox="0 0 16 16">
-                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                        </svg>
-                        大声道
-                    </p>
-                    <p class="time">09:16</p>
-                </div>
-                <div class="visit">
-                    <p class="name">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" style="color: #ff6587;" class="bi bi-person-fill svg-text" viewBox="0 0 16 16">
-                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                        </svg>
-                        大声道
-                    </p>
-                    <p class="time">09:16</p>
-                </div>
-                <div class="visit">
-                    <p class="name">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" style="color: #ff6587;" class="bi bi-person-fill svg-text" viewBox="0 0 16 16">
-                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                        </svg>
-                        大声道
-                    </p>
-                    <p class="time">09:16</p>
-                </div>
-                <div class="visit">
-                    <p class="name">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" style="color: #5db2f1;" class="bi bi-person-fill svg-text" viewBox="0 0 16 16">
-                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                        </svg>
-                        大声道
-                    </p>
-                    <p class="time">09:16</p>
-                </div>
-                <div class="visit">
-                    <p class="name">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" style="color: #5db2f1;" class="bi bi-person-fill svg-text" viewBox="0 0 16 16">
-                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                        </svg>
-                        大声道
-                    </p>
-                    <p class="time">09:16</p>
-                </div>
-                <div class="visit">
-                    <p class="name">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" style="color: #ff6587;" class="bi bi-person-fill svg-text" viewBox="0 0 16 16">
-                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                        </svg>
-                        大声道
-                    </p>
-                    <p class="time">09:16</p>
-                </div>
-                <div class="visit">
-                    <p class="name">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" style="color: #5db2f1;" class="bi bi-person-fill svg-text" viewBox="0 0 16 16">
-                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                        </svg>
-                        大声道
-                    </p>
-                    <p class="time">09:16</p>
-                </div>
-                <div class="visit">
-                    <p class="name">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" style="color: #ff6587;" class="bi bi-person-fill svg-text" viewBox="0 0 16 16">
-                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                        </svg>
-                        大声道
-                    </p>
-                    <p class="time">09:16</p>
-                </div>
+                <p v-if="visitList.length === 0" class="no-data">暂无数据</p>
             </div>
             <div class="info-title">
                 <p>该患者历史就诊信息</p>
             </div>
             <div class="info-div">
-                <div class="info">
+                <div class="info" v-for="myVisit in myVisitList">
                     <table style="width: 100%;border: 0;">
                         <tr>
-                            <td style="width: 50%;height: 49px;text-align: left;">内科</td>
-                            <td style="width: 50%;height: 49px;text-align: right;">2022-03-09</td>
+                            <td style="width: 50%;height: 49px;text-align: left;">{{myVisit.patient_name}}</td>
+                            <td style="width: 50%;height: 49px;text-align: right;">{{myVisit.visitTime}}</td>
                         </tr>
                         <tr>
-                            <td colspan="2" style="text-align: left;">症状：阑尾炎、肾结石</td>
+                            <td colspan="2" style="text-align: left;">症状：{{myVisit.visitSymptom}}</td>
                         </tr>
                     </table>
                 </div>
-                <div class="info">
-                    <table style="width: 100%;border: 0;">
-                        <tr>
-                            <td style="width: 50%;height: 49px;text-align: left;">内科</td>
-                            <td style="width: 50%;height: 49px;text-align: right;">2021-03-09</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="text-align: left;">症状：直肠癌</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="info">
-                    <table style="width: 100%;border: 0;">
-                        <tr>
-                            <td style="width: 50%;height: 49px;text-align: left;">内科</td>
-                            <td style="width: 50%;height: 49px;text-align: right;">2021-02-09</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="text-align: left;">症状：肾结石</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="info">
-                    <table style="width: 100%;border: 0;">
-                        <tr>
-                            <td style="width: 50%;height: 49px;text-align: left;">内科</td>
-                            <td style="width: 50%;height: 49px;text-align: right;">2019-11-19</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="text-align: left;">症状：胃癌</td>
-                        </tr>
-                    </table>
-                </div>
+                <p v-if="myVisitList.length === 0" class="no-data">暂无数据</p>
             </div>
         </div>
         <div class="middle">
@@ -217,29 +78,26 @@
             <div class="info">
                 <button type="button" class="btn btn-outline-primary" style="float: left;margin-left: 10px;margin-right: 10px;">读卡</button>
                 <div class="form-group" style="float: left;width: 100px;margin-right: 10px;">
-                    <input type="text" class="form-control" name="patient_name" placeholder="姓名">
+                    <input type="text" class="form-control" v-model="patientInfo.patient_name" placeholder="姓名">
                 </div>
                 <div class="form-group" style="float: left;width: 70px;margin-right: 10px;">
-                    <select class="form-control" name="patient_sex">
-                        <option value="1" selected>男</option>
-                        <option value="0">女</option>
+                    <select class="form-control" v-model="patientInfo.patient_sex">
+                        <option value="男" selected>男</option>
+                        <option value="女">女</option>
                     </select>
                 </div>
                 <div style="float: left;width: 100px;margin-right: 10px;">
                     <div class="layui-inline">
                         <div class="layui-input-inline">
-                            <input type="text" class="layui-input" name="patient_birthday" id="test2" placeholder="生日" style="border: 1px rgb(206,212,218) solid" readonly>
+                            <input type="text" class="layui-input" v-model="patientInfo.patient_birthday" id="test2" placeholder="生日" style="border: 1px rgb(206,212,218) solid" readonly>
                         </div>
                     </div>
                 </div>
                 <div class="form-group" style="float: left;width: 150px;margin-right: 10px;">
-                    <input type="text" class="form-control" name="patient_phone" placeholder="手机号">
+                    <input type="text" class="form-control" v-model="patientInfo.patient_phone" placeholder="手机号">
                 </div>
                 <div class="form-group" style="float: left;width: 200px;margin-right: 10px;margin-left: 10px;">
-                    <input type="text" class="form-control" name="patient_id_number" placeholder="身份证号">
-                </div>
-                <div class="form-group" style="float: left;width: 200px;margin-right: 10px;">
-                    <input type="text" class="form-control" name="patient_medical_number" placeholder="医保号">
+                    <input type="text" class="form-control" v-model="patientInfo.patient_id_number" placeholder="身份证号">
                 </div>
                 <div class="order">
                     <div class="order-div">
@@ -247,7 +105,7 @@
                             <p>主&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;诉:</p>
                         </div>
                         <div class="order-input">
-                            <textarea id="textarea1" name="advice_description" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                            <textarea id="textarea1" v-model="adviceInfo.adviceChief" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
                         </div>
                     </div>
                     <hr>
@@ -256,7 +114,7 @@
                             <p>现&nbsp;&nbsp;病&nbsp;&nbsp;史:</p>
                         </div>
                         <div class="order-input">
-                            <textarea id="textarea2" name="advice_description" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                            <textarea id="textarea2" v-model="adviceInfo.advicePresentHistory" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
                         </div>
                     </div>
                     <hr>
@@ -265,7 +123,7 @@
                             <p>既&nbsp;&nbsp;往&nbsp;&nbsp;史:</p>
                         </div>
                         <div class="order-input">
-                            <textarea id="textarea3" name="advice_description" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                            <textarea id="textarea3" v-model="adviceInfo.advicePastHistory" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
                         </div>
                     </div>
                     <hr>
@@ -274,7 +132,7 @@
                             <p>遗&nbsp;&nbsp;传&nbsp;&nbsp;史:</p>
                         </div>
                         <div class="order-input">
-                            <textarea id="textarea4" name="advice_description" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                            <textarea id="textarea4" v-model="adviceInfo.adviceGeneticHistory" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
                         </div>
                     </div>
                     <hr>
@@ -283,7 +141,7 @@
                             <p>婚&nbsp;&nbsp;育&nbsp;&nbsp;史:</p>
                         </div>
                         <div class="order-input">
-                            <textarea id="textarea5" name="advice_description" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                            <textarea id="textarea5" v-model="adviceInfo.adviceMarryHistory" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
                         </div>
                     </div>
                     <hr>
@@ -292,7 +150,7 @@
                             <p>体格检查:</p>
                         </div>
                         <div class="order-input">
-                            <textarea id="textarea6" name="advice_description" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                            <textarea id="textarea6" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
                         </div>
                     </div>
                     <hr>
@@ -301,7 +159,7 @@
                             <p>描述症状:</p>
                         </div>
                         <div class="order-input">
-                            <textarea id="textarea7" name="advice_description" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                            <textarea id="textarea7" v-model="adviceInfo.adviceDescription" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
 <!--                            <input type="text" name="advice_description" style="border: 0;font-size: 16px;">-->
                         </div>
                     </div>
@@ -311,7 +169,7 @@
                             <p>诊&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;断:</p>
                         </div>
                         <div class="order-input">
-                            <textarea id="textarea8" name="advice_description" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                            <textarea id="textarea8" v-model="adviceInfo.adviceDiagnosis" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
                         </div>
                     </div>
                     <hr>
@@ -320,7 +178,7 @@
                             <p>治&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;法:</p>
                         </div>
                         <div class="order-input">
-                            <textarea id="textarea9" name="advice_treatment_method" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
+                            <textarea id="textarea9" v-model="adviceInfo.adviceTreatmentMethod" style="width: 95%;border: 0;resize:none;" placeholder=""></textarea>
                         </div>
                     </div>
                     <hr>
@@ -339,11 +197,10 @@
                     </p>
                 </div>
                 <div class="text2">
-                    <button type="button" class="btn btn-outline-primary" style="float: right;margin-left: 15px;">新增接诊</button>
-                    <button type="button" class="btn btn-outline-primary" style="float: right;margin-left: 15px;">删除</button>
-                    <button type="button" class="btn btn-outline-primary" style="float: right;margin-left: 15px;">完成接诊并收费</button>
-                    <button type="button" class="btn btn-primary" style="float: right;margin-left: 15px;">完成接诊</button>
-                    <p>总计：<span style="color: #eb7350">1650.87元</span></p>
+                    <button type="button" class="btn btn-outline-primary" v-on:click="" style="float: right;margin-left: 15px;">新增接诊</button>
+                    <button type="button" class="btn btn-outline-primary" v-on:click="" style="float: right;margin-left: 15px;">删除</button>
+                    <button type="button" class="btn btn-primary" v-on:click="" style="float: right;margin-left: 15px;">完成接诊</button>
+                    <p>总计：<span style="color: #eb7350">{{totalMoney}}}</span></p>
                 </div>
             </div>
             <div class="prescription">
@@ -355,9 +212,20 @@
                             </svg>
                             成都大学诊所-药品处方
                         </p>
-                        <div class="form-group" style="width: 400px;padding-top: 20px;">
-                            <input type="text" class="form-control" name="" placeholder="请输入 药品名/国家码 搜索药品">
+                        <div class="input-group mb-3 float-left" style="width: 500px;">
+                            <input autocomplete="off" v-on:focus="onInput($event.target.value)" v-on:input="onInput($event.target.value)" v-on:blur="onBlur" type="text" id="selectCommodity" class="form-control" placeholder="请输入 药品名/国家码 搜索药品" aria-label="Example text with button addon" aria-describedby="button-addon1">
                         </div>
+                    </div>
+                    <div class="select-input" style="width: 500px;top: 80px;left: 10px" ref="selectInput">
+                        <table id="select-input-table" class="select-input-table" style="width: 100%;">
+                            <tr v-for="inventory in inventoryList" v-on:mousedown="InsertAdd(inventory)">
+                                <td class="select-input-td" style="width: 5%"></td>
+                                <td class="select-input-td" style="width: 35%;text-align: left;">{{inventory.commodityName}}</td>
+                                <td class="select-input-td" style="width: 35%;text-align: center;">{{inventory.commodityManufacturer}}</td>
+                                <td class="select-input-td" style="width: 20%;text-align: right">{{inventory.inventoryLargeNum + inventory.commodityLargeUnit}}{{ inventory.commoditySplitSaleStatus === 1 ? inventory.inventorySmallNum + inventory.commoditySmallUnit : ''}}</td>
+                                <td class="select-input-td" style="width: 5%"></td>
+                            </tr>
+                        </table>
                     </div>
                     <hr>
                     <div class="center">
@@ -372,156 +240,24 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row">感冒灵</th>
-                                <td>2盒1片</td>
-                                <td>一天三次，每次一片</td>
-                                <td>12.99</td>
-                                <td>
-                                    <div class="td-hover">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
-                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                        </svg>
-                                    </div>
+                            <tr v-for="prescriptionDetail in prescription.prescriptionDetailList">
+                                <td>{{prescriptionDetail.prescriptionDetailCommodityName}}</td>
+                                <td><input type="number"
+                                           width="100px"
+                                           v-model="prescriptionDetail.prescriptionDetailLargeNum">
+                                    {{prescriptionDetail.prescriptionDetailLargeUnit}}
+                                    <input type="number"
+                                           width="100px"
+                                           v-model="prescriptionDetail.prescriptionDetailSmallNum"
+                                           v-if="prescriptionDetail.prescriptionDetailSmallUnit===1">
+                                    {{prescriptionDetail.prescriptionDetailSplitSaleStatus===1?prescriptionDetail.prescriptionDetailSmallUnit:''}}
                                 </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">布洛芬胶囊</th>
-                                <td>20盒0片</td>
-                                <td>一天一次，每次两片</td>
-                                <td>400.12</td>
+                                <td><input type="text"
+                                           width="300px"
+                                           v-model="prescriptionDetail.prescriptionDetailDosage"></td>
+                                <td>{{prescriptionDetail.prescriptionDetailLargeNum * prescriptionDetail.prescriptionDetailLargePrice + prescriptionDetail.prescriptionDetailSmallNum * prescriptionDetail.prescriptionDetailSmallPrice}}</td>
                                 <td>
-                                    <div class="td-hover">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
-                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                        </svg>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">板蓝根颗粒</th>
-                                <td>5盒1片</td>
-                                <td>一天三次，每次一片</td>
-                                <td>162.99</td>
-                                <td>
-                                    <div class="td-hover">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
-                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                        </svg>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">感冒灵</th>
-                                <td>2盒1片</td>
-                                <td>一天三次，每次一片</td>
-                                <td>12.99</td>
-                                <td>
-                                    <div class="td-hover">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
-                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                        </svg>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">布洛芬胶囊</th>
-                                <td>20盒0片</td>
-                                <td>一天一次，每次两片</td>
-                                <td>400.12</td>
-                                <td>
-                                    <div class="td-hover">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
-                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                        </svg>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">板蓝根颗粒</th>
-                                <td>5盒1片</td>
-                                <td>一天三次，每次一片</td>
-                                <td>162.99</td>
-                                <td>
-                                    <div class="td-hover">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
-                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                        </svg>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">感冒灵</th>
-                                <td>2盒1片</td>
-                                <td>一天三次，每次一片</td>
-                                <td>12.99</td>
-                                <td>
-                                    <div class="td-hover">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
-                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                        </svg>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">布洛芬胶囊</th>
-                                <td>20盒0片</td>
-                                <td>一天一次，每次两片</td>
-                                <td>400.12</td>
-                                <td>
-                                    <div class="td-hover">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
-                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                        </svg>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">板蓝根颗粒</th>
-                                <td>5盒1片</td>
-                                <td>一天三次，每次一片</td>
-                                <td>162.99</td>
-                                <td>
-                                    <div class="td-hover">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
-                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                        </svg>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">感冒灵</th>
-                                <td>2盒1片</td>
-                                <td>一天三次，每次一片</td>
-                                <td>12.99</td>
-                                <td>
-                                    <div class="td-hover">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
-                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                        </svg>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">布洛芬胶囊</th>
-                                <td>20盒0片</td>
-                                <td>一天一次，每次两片</td>
-                                <td>400.12</td>
-                                <td>
-                                    <div class="td-hover">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
-                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                        </svg>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">板蓝根颗粒</th>
-                                <td>5盒1片</td>
-                                <td>一天三次，每次一片</td>
-                                <td>162.99</td>
-                                <td>
-                                    <div class="td-hover">
+                                    <div class="td-hover" v-on:click="delAdd(prescriptionDetail)">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
                                             <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                                         </svg>
@@ -530,12 +266,13 @@
                             </tr>
                             </tbody>
                         </table>
+                        <p v-if="prescription.prescriptionDetailList.length === 0" class="no-data">暂无数据</p>
                     </div>
                     <hr>
                     <div class="bottom">
                         <p class="text1">医嘱事项:</p>
                         <div class="textarea">
-                            <textarea name="" style="border: 0;width: 100%;height: 90px;resize:none;" placeholder="1、注意饮食，宜清淡为主&#10;2、注意休息，避免熬夜"></textarea>
+                            <textarea v-model="prescription.prescriptionOrder" style="border: 0;width: 100%;height: 90px;resize:none;" placeholder="1、注意饮食，宜清淡为主&#10;2、注意休息，避免熬夜"></textarea>
                         </div>
                     </div>
                 </div>
@@ -543,6 +280,314 @@
         </div>
     </div>
     <script>
+        let vm = new Vue({
+            el: '#clinic',
+            data: {
+                visitList:[{
+                    visitId: null,
+                    visitAdviceId: null,
+                    visitPatientId: null,
+                    visitTime: '',
+                    visitSymptom: '',
+                    visitDoctorName: '',
+                    visitTenantId: '',
+                    patient_id: null,
+                    patient_name: '',
+                    patient_sex: '',
+                    patient_birthday: '',
+                    patient_phone: '',
+                    patient_id_number: '',
+                    patient_disease: '',
+                    patient_tenant_id: null,
+                }],
+                myVisitList:[{
+                    visitId: null,
+                    visitAdviceId: null,
+                    visitPatientId: null,
+                    visitTime: '',
+                    visitSymptom: '',
+                    visitDoctorName: '',
+                    visitTenantId: '',
+                    patient_id: null,
+                    patient_name: '',
+                    patient_sex: '',
+                    patient_birthday: '',
+                    patient_phone: '',
+                    patient_id_number: '',
+                    patient_disease: '',
+                    patient_tenant_id: null,
+                }],
+                adviceInfo:{
+                    adviceId: null,
+                    advicePrescriptionId: null,
+                    advicePatientId: null,
+                    adviceTime: '',
+                    adviceChief: '',
+                    advicePresentHistory: '',
+                    advicePastHistory: '',
+                    adviceGeneticHistory: '',
+                    adviceMarryHistory: '',
+                    adviceTemperature: '',
+                    adviceHighPressure: '',
+                    adviceLowPressure: '',
+                    adviceHeartRate: '',
+                    adviceDescription: '',
+                    adviceDiagnosis: '',
+                    adviceTreatmentMethod: '',
+                    adviceTenantId: '',
+                },
+                prescription:{
+                    prescriptionId: null,
+                    prescriptionAdviceId: null,
+                    prescriptionCategory: '',
+                    prescriptionOrder: '',
+                    prescriptionTime: '',
+                    prescriptionDoctorId: null,
+                    prescriptionDoctorName: '',
+                    prescriptionPatientId: null,
+                    prescriptionPatientName: '',
+                    prescriptionTenantId: null,
+                    prescriptionDetailList:[{
+                        prescriptionDetailId: null,
+                        prescriptionId: null,
+                        prescriptionDetailCommodityId: null,
+                        prescriptionDetailCommodityName: '',
+                        prescriptionDetailDosage: '',
+                        prescriptionDetailSplitSaleStatus: '',
+                        prescriptionDetailDosageForm: '',
+                        prescriptionDetailLargePrice: '',
+                        prescriptionDetailSmallPrice: '',
+                        prescriptionDetailLargeNum: '',
+                        prescriptionDetailSmallNum: '',
+                        prescriptionDetailLargeUnit: '',
+                        prescriptionDetailSmallUnit: '',
+                    }],
+                },
+                patientInfo:{
+                    patient_id: null,
+                    patient_name: '',
+                    patient_sex: '',
+                    patient_birthday: '',
+                    patient_phone: '',
+                    patient_id_number: '',
+                    patient_disease: '',
+                    patient_tenant_id: null,
+                },
+                inventoryList:[{
+                    commodityId: '',
+                    commodityName: '',
+                    commodityCountryCode: '',
+                    commodityCategory: '',
+                    commodityBarCode: '',
+                    commodityManufacturer: '',
+                    commodityApprovalNo: '',
+                    commoditySpecification: '',
+                    commodityLargeUnit: '',
+                    commoditySmallUnit: '',
+                    inventoryLargeNum: '',
+                    inventorySmallNum: '',
+                    commoditySplitSaleStatus: '',
+                    commodityLargePrice: '',
+                    commoditySmallPrice: '',
+                    commodityDosageForm: '',
+                    commodityEnableStatus: '',
+                }],
+            },
+            methods: {
+                // 获取就诊记录
+                getVisitList(date){
+                    let that = this;
+                    $.ajax({
+                        url: '/patient/getVisitList?date='+date,
+                        type: 'GET',
+                        success(response){
+                            // 清空
+                            that.visitList.splice(0,that.visitList.length);
+                            response.forEach(item=>{
+                                that.visitList.push(item);
+                            })
+                        },
+                        error(){
+                            layer.msg("获取就诊记录失败，请刷新重试");
+                        }
+                    })
+                },
+                // 获取该患者历史就诊记录
+                getPatientVisitHistory(pid){
+                    let that = this;
+                    $.ajax({
+                        url: '/patient/getPatientVisitHistory?patientId='+pid,
+                        type: 'GET',
+                        success(response){
+                            // 清空
+                            that.myVisitList.splice(0,that.myVisitList.length);
+                            response.forEach(item=>{
+                                that.myVisitList.push(item);
+                            })
+                        },
+                        error(){
+                            layer.msg("获取该患者历史就诊记录失败，请刷新重试");
+                        }
+                    })
+                },
+                // 新增接诊
+                addVisit(){
+                    // 清空
+                    this.adviceInfo ={
+                        adviceId: null,
+                        advicePrescriptionId: null,
+                        advicePatientId: null,
+                        adviceTime: '',
+                        adviceChief: '',
+                        advicePresentHistory: '',
+                        advicePastHistory: '',
+                        adviceGeneticHistory: '',
+                        adviceMarryHistory: '',
+                        adviceTemperature: '',
+                        adviceHighPressure: '',
+                        adviceLowPressure: '',
+                        adviceHeartRate: '',
+                        adviceDescription: '',
+                        adviceDiagnosis: '',
+                        adviceTreatmentMethod: '',
+                        adviceTenantId: '',
+                    };
+                    this.prescription={
+                        prescriptionId: null,
+                        prescriptionAdviceId: null,
+                        prescriptionCategory: '',
+                        prescriptionOrder: '',
+                        prescriptionTime: '',
+                        prescriptionDoctorId: null,
+                        prescriptionDoctorName: '',
+                        prescriptionPatientId: null,
+                        prescriptionPatientName: '',
+                        prescriptionTenantId: null,
+                        prescriptionDetailList:[],
+                    };
+                    this.patientInfo={
+                        patient_id: null,
+                        patient_name: '',
+                        patient_sex: '',
+                        patient_birthday: '',
+                        patient_phone: '',
+                        patient_id_number: '',
+                        patient_disease: '',
+                        patient_tenant_id: null,
+                    };
+                },
+                // 完成接诊
+                save(){
+                    let that = this;
+                    $.ajax({
+                        url: '/prescription/saveVisit',
+                        type: 'POST',
+                        data:{
+                            patientInfo: that.patientInfo,
+                            adviceInfo: that.adviceInfo,
+                            prescription: that.prescription,
+                        },
+                        contentType: 'application/json',
+                        success(){
+
+                        },
+                        error(){
+
+                        }
+                    })
+                },
+                // 删除就诊
+                delVisit(id){
+                    let that = this;
+                    $.ajax({
+                        url:'/patient/delVisit?vid='+vid,
+                        type: 'GET',
+                        success(response){
+
+                        },
+                        error(){
+
+                        }
+                    })
+                },
+                // 搜索药品输入框焦点事件监听
+                onFocus(){
+                    this.showSelect();
+                },
+                // 搜索药品输入框变化事件监听
+                onInput(inputValue){
+                    // 防止回调中this指向ajax回调函数本身导致失效
+                    let that = this;
+                    // 请求商品数据
+                    $.ajax({
+                        url: '/inventory/selectInventoryByName?status=2&name='+inputValue,
+                        type: 'GET',
+                        success: function(response) {
+                            that.showSelect();
+                            that.inventoryList.splice(0, that.inventoryList.length);
+                            // 处理响应数据
+                            response.forEach((item)=>{
+                                that.inventoryList.push(item);
+                            });
+                        },
+                        error: function() {
+                            layer.msg("请求商品列表失败，请刷新重试");
+                        }
+                    });
+                },
+                // 搜索药品输入框失去焦点事件监听
+                onBlur(){
+                    this.hideSelect();
+                },
+                // 显示搜索商品列表
+                showSelect(){
+                    this.$refs.selectInput.style.display = "block";
+                },
+                // 隐藏搜索商品列表
+                hideSelect(){
+                    this.$refs.selectInput.style.display = "none";
+                },
+                // 点击添加药品到入库单新增列表
+                InsertAdd(inventory){
+                    // 不存在才加入
+                    const exist = this.prescription.prescriptionDetailList.find(detail => detail.prescriptionDetailCommodityId === inventory.commodityId);
+                    if(exist === undefined){
+                        this.prescription.prescriptionDetailList.push({
+                            prescriptionDetailId: null,
+                            prescriptionId: null,
+                            prescriptionDetailCommodityId: inventory.commodityId,
+                            prescriptionDetailCommodityName: inventory.commodityName,
+                            prescriptionDetailDosage: '',
+                            prescriptionDetailSplitSaleStatus: inventory.commoditySplitSaleStatus,
+                            prescriptionDetailDosageForm: inventory.commodityDosageForm,
+                            prescriptionDetailLargePrice: inventory.commodityLargePrice,
+                            prescriptionDetailSmallPrice: inventory.commoditySmallPrice,
+                            prescriptionDetailLargeNum: '',
+                            prescriptionDetailSmallNum: '',
+                            prescriptionDetailLargeUnit: inventory.commodityLargeUnit,
+                            prescriptionDetailSmallUnit: inventory.commoditySmallUnit,
+                        });
+                    }
+                },
+                // 点击从列表删除
+                delAdd(add){
+                    const index = this.prescription.prescriptionDetailList.findIndex(item => item === add);
+                    this.prescription.prescriptionDetailList.splice(index,1);
+                },
+            },
+            computed: {
+                totalMoney(){
+
+                }
+            },
+            mounted(){
+                this.prescription.prescriptionDetailList.splice(0,this.prescription.prescriptionDetailList.length);
+                this.inventoryList.splice(0,this.inventoryList.length);
+                this.visitList.splice(0,this.visitList.length);
+                this.myVisitList.splice(0,this.myVisitList.length);
+            }
+        });
+
         layui.use('laydate', function(){
             var laydate = layui.laydate;
 

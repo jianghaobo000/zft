@@ -1,8 +1,13 @@
 package cdu.jhb.domain.prescription;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
 * @description: 处方实体
@@ -17,7 +22,12 @@ public class Prescription {
     /**
      * 处方ID
      */
-    private long prescriptionId;
+    private Long prescriptionId;
+
+    /**
+     * 处方所对应病历ID
+     */
+    private Long prescriptionAdviceId;
 
     /**
      * 处方类别
@@ -55,7 +65,17 @@ public class Prescription {
     private String prescriptionPatientName;
 
     /**
+     * 处方单金额
+     */
+    private BigDecimal prescriptionMoney;
+
+    /**
      * 处方所属诊所
      */
     private Long prescriptionTenantId;
+
+    /**
+     * 处方明细集合
+     */
+    private List<PrescriptionDetail> prescriptionDetailList;
 }

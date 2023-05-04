@@ -1,5 +1,7 @@
 package cdu.jhb.domain.patient;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +20,11 @@ public class Visit {
      * 就诊ID
      */
     private Long visitId;
+
+    /**
+     * 就诊记录所属病历单ID
+     */
+    private Long visitAdviceId;
 
     /**
      * 就诊患者ID

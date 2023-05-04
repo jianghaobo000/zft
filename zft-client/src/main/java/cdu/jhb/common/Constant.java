@@ -1,5 +1,7 @@
 package cdu.jhb.common;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 /**
 * @description: 常量池
 * @author jhb
@@ -20,11 +22,26 @@ public class Constant {
     // 租户ID字段
     public final static String TENANT_ID = "tenantId";
 
+    // 租户名
+    public final static String TENANT_NAME = "tenantName";
+
     // 账户名字段
     public final static String ACCOUNT_NAME = "accountName";
 
     // 验证码字段
     public final static String VALID_CODE = "validCode";
+
+    // 权限ID
+    public final static String ROLE_ID = "roleId";
+
+    // 账号实体
+    public final static String ACCOUNT = "account";
+
+    // 员工实体
+    public final static String EMPLOYEE = "employee";
+
+    // 错误信息
+    public final static String ERROR_INFO = "errorInfo";
 
     // 字体1
     public final static String FONT_TIMES_NEW_ROMAN = "Times New Roman";

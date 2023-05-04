@@ -6,6 +6,7 @@ import cdu.jhb.account.data.dto.AccountDTO;
 import cdu.jhb.account.database.EmployeeMapper;
 import cdu.jhb.account.database.PracticeMapper;
 import cdu.jhb.account.database.dataobject.EmployeeDO;
+import cdu.jhb.common.Constant;
 import cdu.jhb.domain.account.Account;
 import cdu.jhb.domain.account.Employee;
 import cdu.jhb.domain.account.gateway.AccountGateway;
@@ -16,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -42,9 +45,11 @@ public class AccountQryExe {
      * @param countryCode
      * @return
      */
-    public Boolean findAccountByName(String name,String password,String code,String countryCode) {
-        Account account = accountGateway.findAccountByName(name,countryCode);
-        return account.isOk(password, code);
+    public Boolean findAccountByName(String name, String password, String code, String countryCode, HttpServletRequest request) {
+        Account account = accountGateway.findAccountByName(name,countryCode,request);
+        HttpSession session = request.getSession();
+        session.setAttribute(Constant.ROLE_ID,account.getAccountRole());
+        return account.isOk(password);
     }
 
     /**

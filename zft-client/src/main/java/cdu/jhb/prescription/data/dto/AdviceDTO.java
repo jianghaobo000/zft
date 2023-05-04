@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
-* @description: 医嘱DTO
+* @description: 病历DTO
 * @author jhb
 * @date 2023/2/20 21:44
 * @version 1.0
@@ -17,10 +17,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AdviceDTO {
     /**
-     * 医嘱ID
+     * 病历ID
      */
     @JsonSerialize(using = ToStringSerializer.class)
     private Long adviceId;
+
+    /**
+     * 病历单对应处方单ID
+     */
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long advicePrescriptionId;
 
     /**
      * 患者ID
@@ -34,6 +40,11 @@ public class AdviceDTO {
     private String adviceTime;
 
     /**
+     * 现病史
+     */
+    private String advicePresentHistory;
+
+    /**
      * 既往史
      */
     private String advicePastHistory;
@@ -42,6 +53,11 @@ public class AdviceDTO {
      * 遗传史
      */
     private String adviceGeneticHistory;
+
+    /**
+     * 婚育史
+     */
+    private String adviceMarryHistory;
 
     /**
      * 体温
@@ -67,21 +83,6 @@ public class AdviceDTO {
      * 描述症状
      */
     private String adviceDescription;
-
-    /**
-     * 婚姻状态
-     */
-    private String adviceMaritalStatus;
-
-    /**
-     * 育子状态
-     */
-    private String adviceFertileStatus;
-
-    /**
-     * 望闻问切
-     */
-    private String adviceLookHearAsk;
 
     /**
      * 诊断
