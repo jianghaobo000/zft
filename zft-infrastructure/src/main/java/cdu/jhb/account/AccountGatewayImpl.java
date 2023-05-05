@@ -44,7 +44,7 @@ public class AccountGatewayImpl implements AccountGateway {
      * @return
      */
     @Override
-    public Account findAccountByName(String name, String countryCode,HttpServletRequest request) {
+    public Account findAccountByName(String name, String countryCode) {
         AccountDO accountDO = accountMapper.selectAccount(name,countryCode);
         if(accountDO == null){
             throw new RuntimeException(DictException.ACCOUNT_NOT_EXIST);
@@ -54,8 +54,8 @@ public class AccountGatewayImpl implements AccountGateway {
                 .eq(EmployeeDO::getEmployeeAccountId,accountDO.getAccountId())
                 .eq(EmployeeDO::getEmployeeTenantId, RedisUtil.getLocalTenantId());
         EmployeeDO employeeDO = employeeMapper.selectOne(queryWrapper);
-        HttpSession session = request.getSession();
-        session.setAttribute(Constant.EMPLOYEE,employeeDO);
+        RedisUtil.setRedis(Constant.EMPLOYEE_NAME,employeeDO.getEmployeeName());
+        RedisUtil.setRedis(Constant.EMPLOYEE_ID,employeeDO.getEmployeeId().toString());
         return Convert.entityConvert(accountDO,Account.class);
     }
 
@@ -72,8 +72,7 @@ public class AccountGatewayImpl implements AccountGateway {
         if(tenantDO==null){
             throw new RuntimeException(DictException.COUNTRY_CODE_NOT_EXIST);
         }else{
-            Jedis jedis = new Jedis();
-            jedis.set(Constant.TENANT_NAME,tenantDO.getTenantName());
+            RedisUtil.setRedis(Constant.TENANT_NAME,tenantDO.getTenantName());
         }
         return true;
     }

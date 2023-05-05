@@ -1,6 +1,9 @@
 package cdu.jhb.prescription.service;
 
 import cdu.jhb.prescription.api.PrescriptionServiceI;
+import cdu.jhb.prescription.command.PrescriptionModExe;
+import cdu.jhb.prescription.command.PrescriptionQryExe;
+import cdu.jhb.prescription.data.request.SaveVisitInfoRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,4 +16,18 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class PrescriptionServiceImpl implements PrescriptionServiceI {
+
+    private final PrescriptionModExe prescriptionModExe;
+
+    private final PrescriptionQryExe prescriptionQryExe;
+
+    /**
+     * 保存就诊信息
+     * @param request
+     * @return
+     */
+    @Override
+    public Boolean saveVisit(SaveVisitInfoRequest request) {
+        return prescriptionModExe.saveVisit(request);
+    }
 }

@@ -35,4 +35,26 @@ public class DictException {
     public final static String DELETE_EQUIPMENT_FAILED = "删除设备详情失败";
 
     public final static String DELETE_DIAGNOSTIC_CHARGE_FAILED = "删除诊费失败";
+
+    public final static String INSERT_PATIENT_FAILED = "添加患者信息失败";
+
+    public final static String UPDATE_PATIENT_FAILED = "更新患者信息失败";
+
+    public final static String DELETE_PATIENT_FAILED = "删除患者信息失败";
+
+    public final static String INSERT_ADVICE_FAILED = "添加病历信息失败";
+
+    public final static String UPDATE_ADVICE_FAILED = "更新病历信息失败";
+
+    public final static String DELETE_ADVICE_FAILED = "删除病历信息失败";
+
+    public final static String INSERT_PRESCRIPTION_FAILED = "添加处方主表信息失败";
+
+    public final static String INSERT_PRESCRIPTION_DETAIL_FAILED = "添加处方明细信息失败";
+
+    public final static String OUT_OF_STACK_PREFIX = "商品ID为";
+
+    public final static String OUT_OF_STACK_SUFFIX = "的商品库存不足";
+
+
 }

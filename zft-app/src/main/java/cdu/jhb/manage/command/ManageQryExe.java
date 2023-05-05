@@ -115,6 +115,15 @@ public class ManageQryExe {
     }
 
     /**
+     * 获取当前用户挂号费
+     * @return
+     */
+    public DiagnosticChargeDTO getDiagnosticCharge() {
+        DiagnosticCharge diagnosticCharge = manageGateway.getDiagnosticCharge();
+        return Convert.entityConvert(diagnosticCharge,DiagnosticChargeDTO.class);
+    }
+
+    /**
      * 获取支付设置
      * @return
      */

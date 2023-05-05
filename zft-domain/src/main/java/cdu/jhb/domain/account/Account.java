@@ -59,10 +59,10 @@ public class Account {
     }
 
     public static boolean isCode(String code){
-        Jedis jedis = new Jedis();
-        if(!jedis.get(Constant.VALID_CODE).equals(code)){
-            throw new RuntimeException(DictException.VALID_CODE_ERROR);
-        }
+//        Jedis jedis = new Jedis();
+//        if(!jedis.get(Constant.VALID_CODE).equals(code)){
+//            throw new RuntimeException(DictException.VALID_CODE_ERROR);
+//        }
         return true;
     }
 

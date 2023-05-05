@@ -222,6 +222,16 @@ public class ManageController {
     }
 
     /**
+     * 获取当前登录用户的挂号费
+     * @return
+     */
+    @GetMapping("getDiagnosticCharge")
+    public ResponseEntity<?> getDiagnosticCharge(){
+        DiagnosticChargeDTO diagnosticChargeDTO = manageService.getDiagnosticCharge();
+        return ResponseEntity.ok(diagnosticChargeDTO);
+    }
+
+    /**
      * 跳转检查检验界面
      * @return
      */

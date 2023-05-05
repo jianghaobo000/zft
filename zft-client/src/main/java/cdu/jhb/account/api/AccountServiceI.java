@@ -17,7 +17,7 @@ public interface AccountServiceI {
 
     void getMsg(HttpServletResponse response);
 
-    Boolean verification(String name, String password, String code, String countryCode, HttpServletRequest request);
+    Boolean verification(String name, String password, String code, String countryCode);
 
     List<AccountDTO> getAccountList();
 

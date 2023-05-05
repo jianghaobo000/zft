@@ -45,10 +45,9 @@ public class AccountQryExe {
      * @param countryCode
      * @return
      */
-    public Boolean findAccountByName(String name, String password, String code, String countryCode, HttpServletRequest request) {
-        Account account = accountGateway.findAccountByName(name,countryCode,request);
-        HttpSession session = request.getSession();
-        session.setAttribute(Constant.ROLE_ID,account.getAccountRole());
+    public Boolean findAccountByName(String name, String password, String countryCode) {
+        Account account = accountGateway.findAccountByName(name,countryCode);
+        RedisUtil.setRedis(Constant.ROLE_ID,account.getAccountRole().toString());
         return account.isOk(password);
     }
 

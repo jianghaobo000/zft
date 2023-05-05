@@ -68,12 +68,12 @@ public class PrescriptionDetailDO {
     private BigDecimal prescriptionDetailSmallPrice;
 
     /**
-     * 处方药品（大单位）
+     * 收费单药品数量（大单位）
      */
     private Integer prescriptionDetailLargeNum;
 
     /**
-     * 处方药品（小单位）
+     * 收费单药品数量（小单位）
      */
     private Integer prescriptionDetailSmallNum;
 
@@ -86,9 +86,4 @@ public class PrescriptionDetailDO {
      * 处方药品小单位
      */
     private String prescriptionDetailSmallUnit;
-
-    /**
-     * 处方药品价格
-     */
-    private BigDecimal prescriptionDetailMoney;
 }

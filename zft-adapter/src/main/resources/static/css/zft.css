@@ -99,10 +99,9 @@ body{
 
 .no-data{
     width: 100%;
-    margin: 0 auto;
     text-align: center;
     color: #3c3f41;
-    top: 100px;
+    margin: 40px auto 0;
 }
 
 .svg-text{

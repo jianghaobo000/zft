@@ -27,16 +27,6 @@ public class PrescriptionDO {
     private Long prescriptionId;
 
     /**
-     * 处方所对应病历ID
-     */
-    private Long prescriptionAdviceId;
-
-    /**
-     * 处方类别
-     */
-    private String prescriptionCategory;
-
-    /**
      * 处方医嘱
      */
     private String prescriptionOrder;
@@ -49,7 +39,7 @@ public class PrescriptionDO {
     /**
      * 处方开设医生ID
      */
-    private Integer prescriptionDoctorId;
+    private Long prescriptionDoctorId;
 
     /**
      * 处方开设医生名字

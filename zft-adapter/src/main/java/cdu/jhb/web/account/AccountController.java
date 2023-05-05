@@ -5,6 +5,7 @@ import cdu.jhb.account.data.dto.AccountDTO;
 import cdu.jhb.account.data.dto.EmployeeDTO;
 import cdu.jhb.account.data.request.LoginData;
 import cdu.jhb.common.Constant;
+import cdu.jhb.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,10 +57,12 @@ public class AccountController {
      */
     @PostMapping(path = "login")
     public ResponseEntity<?> login(@RequestBody LoginData loginData, HttpServletRequest request) {
-        if(accountService.verification(loginData.getAccountName(),loginData.getAccountPassword(),loginData.getCode(),loginData.getCountryCode(),request)){
-            Jedis jedis = new Jedis();
+        if(accountService.verification(loginData.getAccountName(),loginData.getAccountPassword(),loginData.getCode(),loginData.getCountryCode())){
             HttpSession session = request.getSession();
-            session.setAttribute(Constant.TENANT_NAME,jedis.get(Constant.TENANT_NAME));
+            session.setAttribute(Constant.TENANT_NAME, RedisUtil.getString(Constant.TENANT_NAME));
+            session.setAttribute(Constant.EMPLOYEE_NAME,RedisUtil.getString(Constant.EMPLOYEE_NAME));
+            session.setAttribute(Constant.EMPLOYEE_ID,RedisUtil.getString(Constant.EMPLOYEE_ID));
+            session.setAttribute(Constant.ROLE_ID,RedisUtil.getInteger(Constant.ROLE_ID));
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         // 状态码401
@@ -73,10 +76,17 @@ public class AccountController {
      */
     @GetMapping("logout")
     public String logout(HttpServletRequest request){
-        Jedis jedis = new Jedis();
+        // 将所有缓存置为空
         HttpSession session = request.getSession();
-        session.setAttribute(Constant.TENANT_NAME,null);
-        jedis.set(Constant.TENANT_NAME,"");
+        session.setAttribute(Constant.TENANT_NAME, null);
+        session.setAttribute(Constant.EMPLOYEE_NAME,null);
+        session.setAttribute(Constant.EMPLOYEE_ID,null);
+        session.setAttribute(Constant.ROLE_ID,null);
+
+        RedisUtil.setRedis(Constant.TENANT_NAME,"");
+        RedisUtil.setRedis(Constant.EMPLOYEE_NAME,"");
+        RedisUtil.setRedis(Constant.EMPLOYEE_ID,"");
+        RedisUtil.setRedis(Constant.ROLE_ID,"");
         return loginBef();
     }
 

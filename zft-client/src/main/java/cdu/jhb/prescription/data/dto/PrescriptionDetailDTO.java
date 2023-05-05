@@ -85,9 +85,4 @@ public class PrescriptionDetailDTO {
      * 处方药品小单位
      */
     private String prescriptionDetailSmallUnit;
-
-    /**
-     * 处方药品价格
-     */
-    private BigDecimal prescriptionDetailMoney;
 }

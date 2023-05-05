@@ -109,6 +109,12 @@ public interface ManageServiceI {
     List<DiagnosticChargeDTO> getDiagnosticChargeList();
 
     /**
+     * 获取挂号费
+     * @return
+     */
+    DiagnosticChargeDTO getDiagnosticCharge();
+
+    /**
      * 获取支付设置
      * @return
      */

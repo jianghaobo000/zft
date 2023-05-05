@@ -35,6 +35,16 @@ public class AdviceDO {
     private Long advicePatientId;
 
     /**
+     * 病历单开设医生ID
+     */
+    private Long adviceDoctorId;
+
+    /**
+     * 病历单开设医生名称
+     */
+    private String adviceDoctorName;
+
+    /**
      * 时间
      */
     private String adviceTime;

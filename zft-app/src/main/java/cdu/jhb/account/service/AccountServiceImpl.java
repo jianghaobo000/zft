@@ -57,10 +57,10 @@ public class AccountServiceImpl implements AccountServiceI {
      * @return
      */
     @Override
-    public Boolean verification(String name, String password, String code, String countryCode, HttpServletRequest request){
+    public Boolean verification(String name, String password, String code, String countryCode){
         if(Account.isCode(code)){
             if(accountQryExe.findCountryCode(countryCode)) {
-                return accountQryExe.findAccountByName(name,password,code,countryCode,request);
+                return accountQryExe.findAccountByName(name,password,countryCode);
             }
         }
         return false;

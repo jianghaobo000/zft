@@ -26,17 +26,6 @@ public class PrescriptionDTO {
     private Long prescriptionId;
 
     /**
-     * 处方所对应病历ID
-     */
-    @JsonSerialize(using = ToStringSerializer.class)
-    private Long prescriptionAdviceId;
-
-    /**
-     * 处方类别
-     */
-    private String prescriptionCategory;
-
-    /**
      * 处方医嘱
      */
     private String prescriptionOrder;
@@ -49,7 +38,8 @@ public class PrescriptionDTO {
     /**
      * 处方开设医生ID
      */
-    private Integer prescriptionDoctorId;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long prescriptionDoctorId;
 
     /**
      * 处方开设医生名字

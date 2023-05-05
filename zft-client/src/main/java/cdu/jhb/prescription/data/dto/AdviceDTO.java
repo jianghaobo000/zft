@@ -35,6 +35,17 @@ public class AdviceDTO {
     private Long advicePatientId;
 
     /**
+     * 病历单开设医生ID
+     */
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long adviceDoctorId;
+
+    /**
+     * 病历单开设医生名称
+     */
+    private String adviceDoctorName;
+
+    /**
      * 时间
      */
     private String adviceTime;

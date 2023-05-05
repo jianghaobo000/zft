@@ -21,6 +21,7 @@ import cdu.jhb.domain.manage.Equipment;
 import cdu.jhb.domain.manage.PaySet;
 import cdu.jhb.domain.manage.gateway.ManageGateway;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
+import cdu.jhb.manage.data.dto.DiagnosticChargeDTO;
 import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
@@ -323,6 +324,20 @@ public class ManegeGatewayImpl implements ManageGateway {
                 .eq(DiagnosticChargeDO::getDiagnosticChargeTenantId,RedisUtil.getLocalTenantId());
         List<DiagnosticChargeDO> diagnosticChargeDOList = diagnosticChargeMapper.selectList(queryWrapper);
         return Convert.listConvert(diagnosticChargeDOList,DiagnosticCharge.class);
+    }
+
+    /**
+     * 获取当前用户的挂号费
+     * @return
+     */
+    @Override
+    public DiagnosticCharge getDiagnosticCharge() {
+        QueryWrapper<DiagnosticChargeDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda()
+                .eq(DiagnosticChargeDO::getDiagnosticChargeTenantId,RedisUtil.getLocalTenantId())
+                .eq(DiagnosticChargeDO::getDiagnosticChargeEmployeeId,RedisUtil.getLong(Constant.EMPLOYEE_ID));
+        DiagnosticChargeDO diagnosticChargeDO = diagnosticChargeMapper.selectOne(queryWrapper);
+        return Convert.entityConvert(diagnosticChargeDO,DiagnosticCharge.class);
     }
 
     /**

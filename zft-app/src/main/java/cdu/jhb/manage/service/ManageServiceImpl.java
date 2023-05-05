@@ -166,6 +166,15 @@ public class ManageServiceImpl implements ManageServiceI {
     }
 
     /**
+     * 获取当前用户挂号费
+     * @return
+     */
+    @Override
+    public DiagnosticChargeDTO getDiagnosticCharge() {
+        return manageQryExe.getDiagnosticCharge();
+    }
+
+    /**
      * 获取支付设置
      * @return
      */

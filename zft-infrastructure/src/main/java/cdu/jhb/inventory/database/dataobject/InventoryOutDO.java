@@ -39,7 +39,7 @@ public class InventoryOutDO {
     private String inventoryOutTime;
 
     /**
-     * 出库单状态
+     * 出库单创建时间
      */
     private String inventoryOutCreateTime;
 

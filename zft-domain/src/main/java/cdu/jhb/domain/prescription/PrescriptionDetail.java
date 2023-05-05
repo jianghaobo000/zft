@@ -83,8 +83,4 @@ public class PrescriptionDetail {
      */
     private String prescriptionDetailSmallUnit;
 
-    /**
-     * 处方药品价格
-     */
-    private BigDecimal prescriptionDetailMoney;
 }

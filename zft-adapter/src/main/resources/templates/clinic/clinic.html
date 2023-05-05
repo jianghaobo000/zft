@@ -29,14 +29,14 @@
                 <div class="text2">
                     <div class="layui-inline">
                         <div class="layui-input-inline">
-                            <input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd" readonly
+                            <input type="text" v-model="date" v-on:input="getVisitList(date)" class="layui-input" id="test1" placeholder="yyyy-MM-dd" readonly
                                    style="border: 0;background-color: transparent;font-size: 20px;color: rgb(54,85,204);">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="visit-div" th:fragment="visitbar">
-                <div class="visit" v-for="visit in visitList" v-on:click="">
+            <div class="visit-div">
+                <div class="visit" v-for="visit in visitList" v-on:click="visitDetail(visit)">
                     <p class="name">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" style="color: #ff6587;" class="bi bi-person-fill svg-text" viewBox="0 0 16 16">
                             <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
@@ -212,11 +212,11 @@
                             </svg>
                             成都大学诊所-药品处方
                         </p>
-                        <div class="input-group mb-3 float-left" style="width: 500px;">
+                        <div class="input-group mb-3 float-left" style="width: 500px;margin-top: 10px;">
                             <input autocomplete="off" v-on:focus="onInput($event.target.value)" v-on:input="onInput($event.target.value)" v-on:blur="onBlur" type="text" id="selectCommodity" class="form-control" placeholder="请输入 药品名/国家码 搜索药品" aria-label="Example text with button addon" aria-describedby="button-addon1">
                         </div>
                     </div>
-                    <div class="select-input" style="width: 500px;top: 80px;left: 10px" ref="selectInput">
+                    <div class="select-input" style="width: 500px;top: 180px;left: 995px" ref="selectInput">
                         <table id="select-input-table" class="select-input-table" style="width: 100%;">
                             <tr v-for="inventory in inventoryList" v-on:mousedown="InsertAdd(inventory)">
                                 <td class="select-input-td" style="width: 5%"></td>
@@ -321,6 +321,8 @@
                     adviceId: null,
                     advicePrescriptionId: null,
                     advicePatientId: null,
+                    adviceDoctorId: null,
+                    adviceDoctorName: '',
                     adviceTime: '',
                     adviceChief: '',
                     advicePresentHistory: '',
@@ -338,8 +340,6 @@
                 },
                 prescription:{
                     prescriptionId: null,
-                    prescriptionAdviceId: null,
-                    prescriptionCategory: '',
                     prescriptionOrder: '',
                     prescriptionTime: '',
                     prescriptionDoctorId: null,
@@ -364,14 +364,14 @@
                     }],
                 },
                 patientInfo:{
-                    patient_id: null,
-                    patient_name: '',
-                    patient_sex: '',
-                    patient_birthday: '',
-                    patient_phone: '',
-                    patient_id_number: '',
-                    patient_disease: '',
-                    patient_tenant_id: null,
+                    patientId: null,
+                    patientName: '',
+                    patientSex: '',
+                    patientBirthday: '',
+                    patientPhone: '',
+                    patientIdNumber: '',
+                    patientDisease: '',
+                    patientTenantId: null,
                 },
                 inventoryList:[{
                     commodityId: '',
@@ -392,6 +392,8 @@
                     commodityDosageForm: '',
                     commodityEnableStatus: '',
                 }],
+                registrationFee: 0,
+                date:'',
             },
             methods: {
                 // 获取就诊记录
@@ -437,6 +439,8 @@
                         adviceId: null,
                         advicePrescriptionId: null,
                         advicePatientId: null,
+                        adviceDoctorId: null,
+                        adviceDoctorName: '',
                         adviceTime: '',
                         adviceChief: '',
                         advicePresentHistory: '',
@@ -454,8 +458,6 @@
                     };
                     this.prescription={
                         prescriptionId: null,
-                        prescriptionAdviceId: null,
-                        prescriptionCategory: '',
                         prescriptionOrder: '',
                         prescriptionTime: '',
                         prescriptionDoctorId: null,
@@ -466,14 +468,14 @@
                         prescriptionDetailList:[],
                     };
                     this.patientInfo={
-                        patient_id: null,
-                        patient_name: '',
-                        patient_sex: '',
-                        patient_birthday: '',
-                        patient_phone: '',
-                        patient_id_number: '',
-                        patient_disease: '',
-                        patient_tenant_id: null,
+                        patientId: null,
+                        patientName: '',
+                        patientSex: '',
+                        patientBirthday: '',
+                        patientPhone: '',
+                        patientIdNumber: '',
+                        patientDisease: '',
+                        patientTenantId: null,
                     };
                 },
                 // 完成接诊
@@ -483,30 +485,16 @@
                         url: '/prescription/saveVisit',
                         type: 'POST',
                         data:{
-                            patientInfo: that.patientInfo,
-                            adviceInfo: that.adviceInfo,
-                            prescription: that.prescription,
+                            patientDTO: that.patientInfo,
+                            adviceDTO: that.adviceInfo,
+                            prescriptionDTO: that.prescription,
                         },
                         contentType: 'application/json',
                         success(){
-
+                            layer.msg("完成接诊成功");
                         },
-                        error(){
-
-                        }
-                    })
-                },
-                // 删除就诊
-                delVisit(id){
-                    let that = this;
-                    $.ajax({
-                        url:'/patient/delVisit?vid='+vid,
-                        type: 'GET',
-                        success(response){
-
-                        },
-                        error(){
-
+                        error(error){
+                            layer.msg(error.responseJSON.message);
                         }
                     })
                 },
@@ -574,6 +562,42 @@
                     const index = this.prescription.prescriptionDetailList.findIndex(item => item === add);
                     this.prescription.prescriptionDetailList.splice(index,1);
                 },
+                // 获取挂号费
+                getDiagnosticCharge(status){
+                    let that = this;
+                    // 获取挂号费
+                    $.ajax({
+                        url: '/manage/getDiagnosticCharge',
+                        type: 'GET',
+                        success(response){
+                            if(status===1){
+                                // 初诊状态
+                                that.registrationFee = response.diagnosticChargeFirst;
+                            }else{
+                                // 复诊状态
+                                that.registrationFee = response.diagnosticChargeRepeat;
+                            }
+                        },
+                        error(){
+                            layer.msg("获取挂号费失败，请刷新重试");
+                        }
+                    })
+                },
+                // 点击就诊记录
+                visitDetail(visit){
+                    let that = this;
+                    // 通过病历ID获取相关的信息
+                    $.ajax({
+                        url: 'clinic/getClinicInfo?aid='+visit.visitAdviceId,
+                        type: 'GET',
+                        success(response){
+
+                        },
+                        error(){
+
+                        },
+                    })
+                },
             },
             computed: {
                 totalMoney(){
@@ -585,6 +609,9 @@
                 this.inventoryList.splice(0,this.inventoryList.length);
                 this.visitList.splice(0,this.visitList.length);
                 this.myVisitList.splice(0,this.myVisitList.length);
+                // 获取初诊费
+                this.getDiagnosticCharge(1);
+                this.getVisitList(this.date);
             }
         });
 

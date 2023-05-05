@@ -10,6 +10,7 @@ import cdu.jhb.domain.manage.DiagnosticCharge;
 import cdu.jhb.domain.manage.Equipment;
 import cdu.jhb.domain.manage.PaySet;
 import cdu.jhb.manage.data.dto.DepartmentDTO;
+import cdu.jhb.manage.data.dto.DiagnosticChargeDTO;
 import cdu.jhb.manage.data.dto.EquipmentDTO;
 import cdu.jhb.manage.data.request.StaffInfoRequest;
 import cdu.jhb.manage.data.response.StaffInfoResponse;
@@ -99,6 +100,12 @@ public interface ManageGateway {
      * @return
      */
     List<DiagnosticCharge> getDiagnosticChargeList();
+
+    /**
+     * 获取当前用户的挂号费
+     * @return
+     */
+    DiagnosticCharge getDiagnosticCharge();
 
     /**
      * 获取支付设置

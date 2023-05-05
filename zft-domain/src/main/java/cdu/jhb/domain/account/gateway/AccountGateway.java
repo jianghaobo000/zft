@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 * @version 1.0
 */
 public interface AccountGateway {
-    Account findAccountByName(String name, String countryCode, HttpServletRequest request);
+    Account findAccountByName(String name, String countryCode);
 
     Boolean findCountryCode(String countryCode);
 }

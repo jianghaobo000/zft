@@ -1,6 +1,7 @@
 package cdu.jhb.inventory;
 
 import cdu.jhb.common.Constant;
+import cdu.jhb.common.DictException;
 import cdu.jhb.domain.inventory.InventoryInInfo;
 import cdu.jhb.domain.inventory.InventoryOut;
 import cdu.jhb.domain.inventory.InventoryOutDetail;
@@ -132,7 +133,7 @@ public class InventoryOutGatewayImpl implements InventoryOutGateway {
         QueryWrapper<InventoryOutDetailDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(InventoryOutDetailDO::getInventoryOutId,id);
         List<InventoryOutDetailDO> outDetailDOList = inventoryOutDetailMapper.selectList(queryWrapper);
-        // 组装库存数量数据
+        // 组装库存数量数据并新增
         AssemblyData(outDetailDOList,inventoryOutDO,2);
         return true;
     }
@@ -179,7 +180,7 @@ public class InventoryOutGatewayImpl implements InventoryOutGateway {
                     inventoryDO.getInventorySmallNum() - inventoryOutDetailDO.getInventoryOutSmallNum(),
                     inventoryDO.getInventoryDosageForm());
             if(map2.get(Constant.LARGE_NUM) < 0){
-                throw new RuntimeException("商品ID为"+inventoryDO.getInventoryCommodityId()+"的商品库存不足！");
+                throw new RuntimeException(DictException.OUT_OF_STACK_PREFIX +inventoryDO.getInventoryCommodityId()+DictException.OUT_OF_STACK_SUFFIX);
             }
             // 库存主表设置出库操作之后的库存数
             inventoryDO.setInventoryLargeNum(map2.get(Constant.LARGE_NUM));

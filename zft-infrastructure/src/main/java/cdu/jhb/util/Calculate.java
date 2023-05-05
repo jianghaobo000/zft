@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
-* @description: 计算
+* @description: 计算工具类
 * @author jhb
 * @date 2023/04/26 16:26
 * @version 1.0

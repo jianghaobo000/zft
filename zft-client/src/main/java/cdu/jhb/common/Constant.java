@@ -40,6 +40,12 @@ public class Constant {
     // 员工实体
     public final static String EMPLOYEE = "employee";
 
+    // 员工名字实体
+    public final static String EMPLOYEE_NAME = "employee_name";
+
+    // 员工ID实体
+    public final static String EMPLOYEE_ID = "employee_id";
+
     // 错误信息
     public final static String ERROR_INFO = "errorInfo";
 
@@ -72,6 +78,21 @@ public class Constant {
 
     // 盘平
     public final static String CHECK_EQUAL = "盘平";
+
+    // 销售出库
+    public final static String SALE_OUTBOUND = "销售出库";
+
+    // 销售出库备注
+    public final static String SALE_OUTBOUND_REMARKS = "出库单来源于门诊";
+
+    // 待收
+    public final static String WAIT_CHARGE = "待收";
+
+    // 已发
+    public final static String ALREADY_CHARGE = "已发";
+
+    // 已退
+    public final static String ALREADY_REFUND = "已退";
 
     // 大单位数量
     public final static String LARGE_NUM = "largeNum";
