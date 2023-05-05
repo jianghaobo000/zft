@@ -197,10 +197,9 @@
                     </p>
                 </div>
                 <div class="text2">
-                    <button type="button" class="btn btn-outline-primary" v-on:click="" style="float: right;margin-left: 15px;">新增接诊</button>
-                    <button type="button" class="btn btn-outline-primary" v-on:click="" style="float: right;margin-left: 15px;">删除</button>
-                    <button type="button" class="btn btn-primary" v-on:click="" style="float: right;margin-left: 15px;">完成接诊</button>
-                    <p>总计：<span style="color: #eb7350">{{totalMoney}}}</span></p>
+                    <button type="button" class="btn btn-primary" v-on:click="save" style="float: right;margin-left: 15px;">完成接诊</button>
+                    <button type="button" class="btn btn-outline-primary" v-on:click="addVisit" style="float: right;margin-left: 15px;">新增接诊</button>
+                    <p>挂号费:<span style="color: #eb7350">{{(registrationFee).toFixed(2)}}</span>元 处方金额:<span style="color: #eb7350">{{prescription.prescriptionMoney.toFixed(2)}}</span>元 总计:<span style="color: #eb7350">{{totalMoney}}</span>元</p>
                 </div>
             </div>
             <div class="prescription">
@@ -243,19 +242,19 @@
                             <tr v-for="prescriptionDetail in prescription.prescriptionDetailList">
                                 <td>{{prescriptionDetail.prescriptionDetailCommodityName}}</td>
                                 <td><input type="number"
-                                           width="100px"
+                                           style="width: 50px;"
                                            v-model="prescriptionDetail.prescriptionDetailLargeNum">
                                     {{prescriptionDetail.prescriptionDetailLargeUnit}}
                                     <input type="number"
-                                           width="100px"
+                                           style="width: 50px;"
                                            v-model="prescriptionDetail.prescriptionDetailSmallNum"
-                                           v-if="prescriptionDetail.prescriptionDetailSmallUnit===1">
+                                           v-if="prescriptionDetail.prescriptionDetailSplitSaleStatus===1">
                                     {{prescriptionDetail.prescriptionDetailSplitSaleStatus===1?prescriptionDetail.prescriptionDetailSmallUnit:''}}
                                 </td>
                                 <td><input type="text"
-                                           width="300px"
+                                           style="width: 220px;"
                                            v-model="prescriptionDetail.prescriptionDetailDosage"></td>
-                                <td>{{prescriptionDetail.prescriptionDetailLargeNum * prescriptionDetail.prescriptionDetailLargePrice + prescriptionDetail.prescriptionDetailSmallNum * prescriptionDetail.prescriptionDetailSmallPrice}}</td>
+                                <td>{{(prescriptionDetail.prescriptionDetailLargeNum * prescriptionDetail.prescriptionDetailLargePrice + prescriptionDetail.prescriptionDetailSmallNum * prescriptionDetail.prescriptionDetailSmallPrice).toFixed(2) + '元'}}</td>
                                 <td>
                                     <div class="td-hover" v-on:click="delAdd(prescriptionDetail)">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg svg-text" viewBox="0 0 16 16">
@@ -346,6 +345,7 @@
                     prescriptionDoctorName: '',
                     prescriptionPatientId: null,
                     prescriptionPatientName: '',
+                    prescriptionMoney: 0,
                     prescriptionTenantId: null,
                     prescriptionDetailList:[{
                         prescriptionDetailId: null,
@@ -464,6 +464,7 @@
                         prescriptionDoctorName: '',
                         prescriptionPatientId: null,
                         prescriptionPatientName: '',
+                        prescriptionMoney: 0,
                         prescriptionTenantId: null,
                         prescriptionDetailList:[],
                     };
@@ -591,18 +592,50 @@
                         url: 'clinic/getClinicInfo?aid='+visit.visitAdviceId,
                         type: 'GET',
                         success(response){
-
+                            that.adviceInfo = response.adviceDTO;
+                            that.patientInfo = response.patientDTO;
+                            that.prescription = response.prescriptionDTO;
+                            // 获取该患者历史就诊记录
+                            that.getPatientVisitHistory(that.patientInfo.patientId);
                         },
                         error(){
-
+                            layer.msg("获取就诊详细信息失败");
                         },
                     })
                 },
+                getDate(){
+                    let date = new Date(); // 获取时间
+                    let year = date.getFullYear(); // 获取年
+                    let month = date.getMonth() + 1; // 获取月
+                    let strDate = date.getDate(); // 获取日
+                    this.date = year + '-' + (month < 10 ? '0' + month : month) + '-' + (strDate < 10 ? '0' + strDate : strDate);
+                    let that = this;
+                    layui.use('laydate', function(){
+                        //初始赋值
+                        laydate.render({
+                            elem: '#test1'
+                            ,value: that.date
+                            ,isInitValue: true
+                        });
+                        laydate.render({
+                            elem: '#test2'
+                            ,value: ''
+                            ,isInitValue: true
+                        });
+                    });
+                }
             },
             computed: {
                 totalMoney(){
-
-                }
+                    let money = 0;
+                    this.prescription.prescriptionDetailList.forEach(item =>{
+                        money += item.prescriptionDetailLargePrice * item.prescriptionDetailLargeNum + item.prescriptionDetailSmallPrice * item.prescriptionDetailSmallNum;
+                    });
+                    // 挂号费
+                    money += this.registrationFee;
+                    this.prescription.prescriptionMoney = money;
+                    return money.toFixed(2);
+                },
             },
             mounted(){
                 this.prescription.prescriptionDetailList.splice(0,this.prescription.prescriptionDetailList.length);
@@ -612,59 +645,10 @@
                 // 获取初诊费
                 this.getDiagnosticCharge(1);
                 this.getVisitList(this.date);
+                this.getDate();
+
             }
         });
-
-        layui.use('laydate', function(){
-            var laydate = layui.laydate;
-
-            //初始赋值
-            laydate.render({
-                elem: '#test1'
-                ,value: getDate()
-                ,isInitValue: true
-            });
-            laydate.render({
-                elem: '#test2'
-                ,value: ''
-                ,isInitValue: true
-            });
-        });
-
-        function getDate() {
-            var date = new Date(); // 获取时间
-            var year = date.getFullYear(); // 获取年
-            var month = date.getMonth() + 1; // 获取月
-            var strDate = date.getDate(); // 获取日
-            // var hour = date.getHours(); // 获取小时
-            // var minute = date.getMinutes(); // 获取分钟
-            // var second = date.getSeconds(); // 获取秒
-            // 由于部分业务处理 是需要月份日份前面有0 故新增一个函数
-            this.getNum();
-            // console.log(
-            //     year +
-            //     '-' +
-            //     this.getNum(month) +
-            //     '-' +
-            //     this.getNum(strDate) +
-            //     '_' +
-            //     hour +
-            //     '-' +
-            //     minute +
-            //     '-' +
-            //     second
-            // );
-            return year + '-' + this.getNum(month) + '-' + this.getNum(strDate);
-        }
-        function getNum(i) {
-            return i < 10 ? '0' + i : i
-        }
-        // 再加一个定时器每秒获取
-        function getTime() {
-            setInterval(() => {
-                this.getDate()
-            }, 1000)
-        }
 
         const textarea1 = document.getElementById('textarea1');
         const textarea2 = document.getElementById('textarea2');

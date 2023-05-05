@@ -1,5 +1,6 @@
 package cdu.jhb.prescription.service;
 
+import cdu.jhb.patient.data.response.VisitInfoResponse;
 import cdu.jhb.prescription.api.PrescriptionServiceI;
 import cdu.jhb.prescription.command.PrescriptionModExe;
 import cdu.jhb.prescription.command.PrescriptionQryExe;
@@ -29,5 +30,15 @@ public class PrescriptionServiceImpl implements PrescriptionServiceI {
     @Override
     public Boolean saveVisit(SaveVisitInfoRequest request) {
         return prescriptionModExe.saveVisit(request);
+    }
+
+    /**
+     * 通过病历ID获取门诊信息
+     * @param aid
+     * @return
+     */
+    @Override
+    public VisitInfoResponse getClinicInfo(Long aid) {
+        return prescriptionQryExe.getClinicInfo(aid);
     }
 }

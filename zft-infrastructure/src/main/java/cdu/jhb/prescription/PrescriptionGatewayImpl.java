@@ -9,6 +9,7 @@ import cdu.jhb.common.DictException;
 import cdu.jhb.domain.patient.Patient;
 import cdu.jhb.domain.prescription.Advice;
 import cdu.jhb.domain.prescription.Prescription;
+import cdu.jhb.domain.prescription.PrescriptionDetail;
 import cdu.jhb.domain.prescription.gateway.PrescriptionGateway;
 import cdu.jhb.inventory.database.InventoryMapper;
 import cdu.jhb.inventory.database.InventoryOutDetailMapper;
@@ -16,10 +17,15 @@ import cdu.jhb.inventory.database.InventoryOutMapper;
 import cdu.jhb.inventory.database.dataobject.InventoryDO;
 import cdu.jhb.inventory.database.dataobject.InventoryOutDO;
 import cdu.jhb.inventory.database.dataobject.InventoryOutDetailDO;
+import cdu.jhb.patient.data.dto.PatientDTO;
+import cdu.jhb.patient.data.response.VisitInfoResponse;
 import cdu.jhb.patient.database.PatientMapper;
 import cdu.jhb.patient.database.VisitMapper;
 import cdu.jhb.patient.database.dataobject.PatientDO;
 import cdu.jhb.patient.database.dataobject.VisitDO;
+import cdu.jhb.prescription.data.dto.AdviceDTO;
+import cdu.jhb.prescription.data.dto.PrescriptionDTO;
+import cdu.jhb.prescription.data.dto.PrescriptionDetailDTO;
 import cdu.jhb.prescription.database.AdviceMapper;
 import cdu.jhb.prescription.database.PrescriptionDetailMapper;
 import cdu.jhb.prescription.database.PrescriptionMapper;
@@ -310,4 +316,36 @@ public class PrescriptionGatewayImpl implements PrescriptionGateway {
         visitDO.setVisitTime(adviceDO.getAdviceTime());
         visitMapper.insert(visitDO);
     }
+
+
+    /**
+     * 通过病历ID获取门诊信息
+     * @param aid
+     * @return
+     */
+    @Override
+    public VisitInfoResponse getClinicInfo(Long aid) {
+        // 获取病历信息
+        Advice advice = Convert.entityConvert(adviceMapper.selectById(aid),Advice.class);
+        // 获取患者信息
+        Patient patient = Convert.entityConvert(patientMapper.selectById(advice.getAdvicePatientId()),Patient.class);
+        // 获取处方主表信息
+        Prescription prescription = Convert.entityConvert(prescriptionMapper.selectById(advice.getAdvicePrescriptionId()),Prescription.class);
+        // 获取处方明细表信息
+        QueryWrapper<PrescriptionDetailDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(PrescriptionDetailDO::getPrescriptionId,advice.getAdvicePrescriptionId());
+        List<PrescriptionDetail> prescriptionDetailList = Convert.listConvert(prescriptionDetailMapper.selectList(queryWrapper),PrescriptionDetail.class);
+
+        PrescriptionDTO prescriptionDTO = Convert.entityConvert(prescription,PrescriptionDTO.class);
+        List<PrescriptionDetailDTO> prescriptionDetailDTOList = Convert.listConvert(prescriptionDetailList,PrescriptionDetailDTO.class);
+        prescriptionDTO.setPrescriptionDetailDTOList(prescriptionDetailDTOList);
+
+        // 组装数据
+        VisitInfoResponse visitInfoResponse = new VisitInfoResponse();
+        visitInfoResponse.setAdviceDTO(Convert.entityConvert(advice, AdviceDTO.class));
+        visitInfoResponse.setPatientDTO(Convert.entityConvert(patient, PatientDTO.class));
+        visitInfoResponse.setPrescriptionDTO(prescriptionDTO);
+        return visitInfoResponse;
+    }
 }
+

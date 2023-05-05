@@ -3,6 +3,7 @@ package cdu.jhb.domain.prescription.gateway;
 import cdu.jhb.domain.patient.Patient;
 import cdu.jhb.domain.prescription.Advice;
 import cdu.jhb.domain.prescription.Prescription;
+import cdu.jhb.patient.data.response.VisitInfoResponse;
 
 /**
 * @description: TODO
@@ -20,4 +21,11 @@ public interface PrescriptionGateway {
      * @return
      */
     Boolean saveVisit(Patient patient, Advice advice, Prescription prescription);
+
+    /**
+     * 通过病历ID获取吗门诊信息
+     * @param aid
+     * @return
+     */
+    VisitInfoResponse getClinicInfo(Long aid);
 }

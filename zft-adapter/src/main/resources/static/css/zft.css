@@ -446,7 +446,8 @@ tr:hover .td-hover{
 .clinic .right .top .text2 p{
     font-size: 20px;
     margin-top: 10px;
-    font-weight: 300;
+    font-family: "微软雅黑";
+    font-weight: 500;
     float: right;
 }
 
